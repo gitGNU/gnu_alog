@@ -1,0 +1,77 @@
+--
+--  Copyright (c) 2008,
+--  Reto Buerki, Adrian-Ken Rueegsegger
+--  secunet SwissIT AG
+--
+--  This file is part of Alog.
+--
+--  Alog is free software; you can redistribute it and/or modify
+--  it under the terms of the GNU Lesser General Public License as published
+--  by the Free Software Foundation; either version 2.1 of the License, or
+--  (at your option) any later version.
+--
+--  Alog is distributed in the hope that it will be useful,
+--  but WITHOUT ANY WARRANTY; without even the implied warranty of
+--  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+--  GNU Lesser General Public License for more details.
+--
+--  You should have received a copy of the GNU Lesser General Public License
+--  along with Alog; if not, write to the Free Software
+--  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,
+--  MA  02110-1301  USA
+--
+
+with Ada.Text_IO; use Ada.Text_IO;
+with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
+with Ada.Calendar; use Ada.Calendar;
+with GNAT.Calendar.Time_IO; use GNAT.Calendar.Time_IO;
+
+--  File_Descriptor facility. Used to log to
+--  a console or file. If no file is specified
+--  by a Set_Logfile()-call, console logging is used.
+package Alog.Facilities.File_Descriptor is
+
+   type Facility_Fd is new Facility with private;
+   --  File Descriptor based logging facility.
+
+   overriding
+   procedure Write_Message (F     : in Facility_Fd;
+                            Msg   : in String;
+                            Level : in Log_Level);
+   --  Implementation of Write_Message.
+
+   overriding
+   procedure Teardown (F : in out Facility_Fd);
+   --  Implementation of Teardown-procedure.
+
+
+   procedure Set_Logfile (F : in out Facility_Fd; Path : String);
+   --  Set logfile to use. If not set, standard output is used
+   --  for logging (e.g. stdout).
+
+   function Get_Logfile (F : in Facility_Fd) return File_Type;
+   --  Get currently used logfile.
+
+   procedure Close_Logfile (F      : in out Facility_Fd;
+                            Remove : in Boolean := False);
+   --  Close opened logfile.
+
+private
+
+   type Facility_Fd is limited new Facility with
+      record
+         Log_File         : aliased File_Type;
+         --  Logfile used for file based logging.
+
+         Log_File_Ptr     : File_Access := Standard_Output;
+         --  Reference to actual log file. Default is Standard_Output.
+
+         Log_File_Name    : BS_Path.Bounded_String :=
+           To_Bounded_String ("none");
+         --  File name of log file.
+
+         Timestamp_Format : String (1 .. 14) := "%d. %b. %Y %T ";
+         --  Default timestamp format to use in this facility.
+      end record;
+
+end Alog.Facilities.File_Descriptor;
