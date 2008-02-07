@@ -22,6 +22,7 @@
 --
 
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
+with Ada.Exceptions;
 with Ada.IO_Exceptions; use Ada.IO_Exceptions;
 with Ada.Text_IO;
 with Ahven; use Ahven;
@@ -70,6 +71,14 @@ package body Facility_Tests is
       Delete (File => F);
 
       Finalize (Test_Case (T));
+   exception
+      when Error : Ada.IO_Exceptions.Name_Error =>
+         null;
+         --  File did not exist. Carry on.
+      when Event : others =>
+         Put_Line ("Error occured while cleaning up: ");
+         Put_Line (Ada.Exceptions.Exception_Name (Event));
+         Put_Line (Ada.Exceptions.Exception_Message (Event));
    end Finalize;
 
    --------------
