@@ -21,10 +21,12 @@
 --  MA  02110-1301  USA
 --
 
-with Ada.Text_IO; use Ada.Text_IO;
-with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
-with Ada.Calendar; use Ada.Calendar;
-with GNAT.Calendar.Time_IO; use GNAT.Calendar.Time_IO;
+with Ada.Text_IO;
+with Ada.Strings.Unbounded;
+with Ada.Calendar;
+with GNAT.Calendar.Time_IO;
+
+use Ada;
 
 --  File_Descriptor facility. Used to log to
 --  a console or file. If no file is specified
@@ -49,7 +51,7 @@ package Alog.Facilities.File_Descriptor is
    --  Set logfile to use. If not set, standard output is used
    --  for logging (e.g. stdout).
 
-   function Get_Logfile (F : in Facility_Fd) return File_Type;
+   function Get_Logfile (F : in Facility_Fd) return Text_IO.File_Type;
    --  Get currently used logfile.
 
    procedure Close_Logfile (F      : in out Facility_Fd;
@@ -60,10 +62,10 @@ private
 
    type Facility_Fd is limited new Facility with
       record
-         Log_File         : aliased File_Type;
+         Log_File         : aliased Text_IO.File_Type;
          --  Logfile used for file based logging.
 
-         Log_File_Ptr     : File_Access := Standard_Output;
+         Log_File_Ptr     : Text_IO.File_Access := Text_IO.Standard_Output;
          --  Reference to actual log file. Default is Standard_Output.
 
          Log_File_Name    : BS_Path.Bounded_String :=

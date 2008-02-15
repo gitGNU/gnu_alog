@@ -31,22 +31,23 @@ package body Alog.Facilities.File_Descriptor is
                             Msg   : in String;
                             Level : Log_Level)
    is
-      Logfile   : File_Type renames F.Log_File_Ptr.all;
-      Timestamp : String :=
-        Image (Date => Clock,
-               Picture => Picture_String (F.Timestamp_Format));
+      use GNAT.Calendar.Time_IO;
+      Logfile   : Text_IO.File_Type renames F.Log_File_Ptr.all;
+      Timestamp : String := Image
+        (Date    => Calendar.Clock,
+         Picture => Picture_String (F.Timestamp_Format));
    begin
       if Level >= F.Get_Threshold then
-         Put (File  => Logfile,
-              Item  => Timestamp);
-         Put (File  => Logfile,
-              Item  => Log_Level'Image (Level));
-         Put (File  => Logfile,
-              Item  => " => ");
-         Put (File  => Logfile,
-              Item  => Msg);
+         Text_IO.Put (File  => Logfile,
+                      Item  => Timestamp);
+         Text_IO.Put (File  => Logfile,
+                      Item  => Log_Level'Image (Level));
+         Text_IO.Put (File  => Logfile,
+                      Item  => " => ");
+         Text_IO.Put (File  => Logfile,
+                      Item  => Msg);
 
-         New_Line (File => Logfile);
+         Text_IO.New_Line (File => Logfile);
       end if;
    end Write_Message;
 
@@ -66,17 +67,15 @@ package body Alog.Facilities.File_Descriptor is
 
    procedure Set_Logfile (F : in out Facility_Fd; Path : String) is
    begin
-      Create (File => F.Log_File,
+      Text_IO.Create (File => F.Log_File,
               Name => Path,
-              Mode => Out_File);
+              Mode => Text_IO.Out_File);
 
       F.Log_File_Name := To_Bounded_String (Path);
       F.Log_File_Ptr  := F.Log_File'Unrestricted_Access;
       --  Set logfile name and pointer to newly created file.
       --  TODO: Unrestricted_Access is needed here since we use
       --        a pointer which is defined in a library (File_Access).
-      --        Compiler complains that it is not local ...
-      --        Look out for a better solution.
 
       F.Write_Message (Level => INFO,
                        Msg   => "** Alog: new logging session initialized.");
@@ -86,7 +85,7 @@ package body Alog.Facilities.File_Descriptor is
    -- Get_Logfile --
    -----------------
 
-   function Get_Logfile (F : in Facility_Fd) return File_Type is
+   function Get_Logfile (F : in Facility_Fd) return Text_IO.File_Type is
    begin
       return F.Log_File_Ptr.all;
    end Get_Logfile;
@@ -97,14 +96,15 @@ package body Alog.Facilities.File_Descriptor is
 
    procedure Close_Logfile (F      : in out Facility_Fd;
                             Remove : in Boolean := False) is
+      use Ada.Text_IO;
    begin
       if F.Log_File_Ptr /= Standard_Output
-        and Is_Open (File => F.Log_File) then
+        and Text_IO.Is_Open (File => F.Log_File) then
          if Remove then
-            Delete (File => F.Log_File);
+            Text_IO.Delete (File => F.Log_File);
             --  Close and delete.
          else
-            Close (File => F.Log_File);
+            Text_IO.Close (File => F.Log_File);
             --   Close only.
          end if;
       end if;
