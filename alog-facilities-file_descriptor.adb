@@ -68,8 +68,8 @@ package body Alog.Facilities.File_Descriptor is
    procedure Set_Logfile (F : in out Facility_Fd; Path : String) is
    begin
       Text_IO.Create (File => F.Log_File,
-              Name => Path,
-              Mode => Text_IO.Out_File);
+                      Name => Path,
+                      Mode => Text_IO.Append_File);
 
       F.Log_File_Name := To_Bounded_String (Path);
       F.Log_File_Ptr  := F.Log_File'Unrestricted_Access;
