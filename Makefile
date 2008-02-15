@@ -6,3 +6,7 @@ clean:
 
 distclean:
 	@rm -rf obj
+
+tests: all
+	@obj/runner
+
