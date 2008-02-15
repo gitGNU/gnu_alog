@@ -21,36 +21,20 @@
 --  MA  02110-1301  USA
 --
 
-with Ahven; use Ahven;
-with Alog.Logger;
+with Alog.Facilities; use Alog.Facilities;
 
-package body Logger_Tests is
+package Alog.Logger is
 
-   procedure Initialize (T : in out LTest) is
-   begin
-      Set_Name (T, "Tests for Alog Logger");
-      Ahven.Framework.Add_Test_Routine
-        (T, Attach_Facility'Access, "Attach a Facility");
-      Ahven.Framework.Add_Test_Routine
-        (T, Detach_Facility'Access, "Detach a Facility");
-   end Initialize;
+   type Instance is tagged private;
+   --  Logger instance.
 
-   ---------------------
-   -- Attach_Facility --
-   ---------------------
+   procedure Attach_Facility (I : in Instance; F : in Facility);
+   --  Attach a facility to logger instance.
 
-   procedure Attach_Facility is
-   begin
-      Fail ("Not yet implemented!");
-   end Attach_Facility;
+private
+   type Instance is tagged
+      record
+         null;
+      end record;
 
-   ---------------------
-   -- Detach_Facility --
-   ---------------------
-
-   procedure Detach_Facility is
-   begin
-      Fail ("Not yet implemented!");
-   end Detach_Facility;
-
-end Logger_Tests;
+end Alog.Logger;

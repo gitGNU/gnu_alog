@@ -33,34 +33,34 @@ use Ada;
 --  by a Set_Logfile()-call, console logging is used.
 package Alog.Facilities.File_Descriptor is
 
-   type Facility_Fd is new Facility with private;
+   type Instance is new Facility with private;
    --  File Descriptor based logging facility.
 
    overriding
-   procedure Write_Message (F     : in Facility_Fd;
+   procedure Write_Message (F     : in Instance;
                             Msg   : in String;
                             Level : in Log_Level);
    --  Implementation of Write_Message.
 
    overriding
-   procedure Teardown (F : in out Facility_Fd);
+   procedure Teardown (F : in out Instance);
    --  Implementation of Teardown-procedure.
 
 
-   procedure Set_Logfile (F : in out Facility_Fd; Path : String);
+   procedure Set_Logfile (F : in out Instance; Path : String);
    --  Set logfile to use. If not set, standard output is used
    --  for logging (e.g. stdout).
 
-   function Get_Logfile (F : in Facility_Fd) return Text_IO.File_Type;
+   function Get_Logfile (F : in Instance) return Text_IO.File_Type;
    --  Get currently used logfile.
 
-   procedure Close_Logfile (F      : in out Facility_Fd;
+   procedure Close_Logfile (F      : in out Instance;
                             Remove : in Boolean := False);
    --  Close opened logfile.
 
 private
 
-   type Facility_Fd is limited new Facility with
+   type Instance is limited new Facility with
       record
          Log_File         : aliased Text_IO.File_Type;
          --  Logfile used for file based logging.

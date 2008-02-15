@@ -27,7 +27,7 @@ package body Alog.Facilities.File_Descriptor is
    -- Write_Message --
    -------------------
 
-   procedure Write_Message (F     : in Facility_Fd;
+   procedure Write_Message (F     : in Instance;
                             Msg   : in String;
                             Level : Log_Level)
    is
@@ -55,7 +55,7 @@ package body Alog.Facilities.File_Descriptor is
    -- Cleanup --
    -------------
 
-   procedure Teardown (F : in out Facility_Fd) is
+   procedure Teardown (F : in out Instance) is
    begin
       F.Close_Logfile;
       --  Close logfile if still open.
@@ -65,7 +65,7 @@ package body Alog.Facilities.File_Descriptor is
    -- Set_Logfile --
    -----------------
 
-   procedure Set_Logfile (F : in out Facility_Fd; Path : String) is
+   procedure Set_Logfile (F : in out Instance; Path : String) is
    begin
       Text_IO.Create (File => F.Log_File,
                       Name => Path,
@@ -85,7 +85,7 @@ package body Alog.Facilities.File_Descriptor is
    -- Get_Logfile --
    -----------------
 
-   function Get_Logfile (F : in Facility_Fd) return Text_IO.File_Type is
+   function Get_Logfile (F : in Instance) return Text_IO.File_Type is
    begin
       return F.Log_File_Ptr.all;
    end Get_Logfile;
@@ -94,7 +94,7 @@ package body Alog.Facilities.File_Descriptor is
    -- Close_Logfile --
    -------------------
 
-   procedure Close_Logfile (F      : in out Facility_Fd;
+   procedure Close_Logfile (F      : in out Instance;
                             Remove : in Boolean := False) is
       use Ada.Text_IO;
    begin

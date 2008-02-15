@@ -28,7 +28,7 @@ with Ada.Text_IO;
 with Ahven; use Ahven;
 with Alog; use Alog;
 with Alog.Facilities.File_Descriptor;
-use Alog.Facilities.File_Descriptor;
+use Alog.Facilities;
 
 package body Facility_Tests is
 
@@ -86,7 +86,7 @@ package body Facility_Tests is
    --------------
 
    procedure Set_Name is
-      F        : Facility_Fd;
+      F        : File_Descriptor.Instance;
       Expected : String := "TEST";
    begin
       F.Set_Name (Name => Expected);
@@ -100,7 +100,7 @@ package body Facility_Tests is
 
    procedure Set_Name_too_Long is
       use Ada.Strings;
-      F        : Facility_Fd;
+      F        : File_Descriptor.Instance;
       Expected : String := "NAMETOOLONG";
    begin
       F.Set_Name (Name => Expected);
@@ -117,7 +117,7 @@ package body Facility_Tests is
 
    procedure Set_Valid_Logfile is
       use Ada.Text_IO;
-      F : Facility_Fd;
+      F : File_Descriptor.Instance;
    begin
       F.Set_Logfile (Path => "./data/Set_Valid_Logfile");
       Assert (Condition => Is_Open (F.Get_Logfile),
@@ -130,7 +130,7 @@ package body Facility_Tests is
    --------------------
 
    procedure Set_Invalid_Logfile is
-      F : Facility_Fd;
+      F : File_Descriptor.Instance;
    begin
       F.Set_Logfile (Path => "/not/allowed.log");
       Fail (Message => "No exception raised!");
@@ -145,7 +145,7 @@ package body Facility_Tests is
    -------------------
 
    procedure Set_Threshold is
-      F        : Facility_Fd;
+      F        : File_Descriptor.Instance;
       Expected : Log_Level := DEBUG;
    begin
       F.Set_Threshold (Expected);
@@ -168,7 +168,7 @@ package body Facility_Tests is
 
    procedure Teardown_Fd is
       use Ada.Text_IO;
-      F : Facility_Fd;
+      F : File_Descriptor.Instance;
    begin
       F.Set_Logfile (Path => "./data/Teardown_Fd");
       Assert (Condition => Is_Open (File => F.Get_Logfile),
