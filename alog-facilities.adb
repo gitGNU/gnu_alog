@@ -27,7 +27,7 @@ package body Alog.Facilities is
    -- Set_Name --
    --------------
 
-   procedure Set_Name (F : in out Facility'Class; Name : in String) is
+   procedure Set_Name (F : in out Instance'Class; Name : in String) is
    begin
       F.Name := BS_Name.To_Bounded_String (Name);
    end Set_Name;
@@ -36,7 +36,7 @@ package body Alog.Facilities is
    -- Get_Name --
    --------------
 
-   function Get_Name (F : in Facility'Class) return String is
+   function Get_Name (F : in Instance'Class) return String is
    begin
       return To_String (F.Name);
    end Get_Name;
@@ -45,7 +45,7 @@ package body Alog.Facilities is
    -- Set_Threshold --
    -------------------
 
-   procedure Set_Threshold (F     : in out Facility'Class;
+   procedure Set_Threshold (F     : in out Instance'Class;
                             Level : in Log_Level) is
    begin
       F.Threshold := Level;
@@ -55,7 +55,7 @@ package body Alog.Facilities is
    -- Get_Threshold --
    -------------------
 
-   function Get_Threshold (F : in Facility'Class) return Log_Level is
+   function Get_Threshold (F : in Instance'Class) return Log_Level is
    begin
       return F.Threshold;
    end Get_Threshold;

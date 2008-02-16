@@ -27,9 +27,20 @@ package body Alog.Logger is
    --  Attach_Facility --
    ----------------------
 
-   procedure Attach_Facility (I : in Instance; F : in Facility) is
+   procedure Attach_Facility (L : in out Alog.Logger.Instance;
+                              F : in     Alog.Facilities.Handle) is
    begin
-      null;
+      L.F_Array (L.F_Index) := F;
+      L.F_Index := L.F_Index + 1;
    end Attach_Facility;
+
+   ---------------------
+   --  Facility_Count --
+   ---------------------
+
+   function Facility_Count (L : in Alog.Logger.Instance) return Natural is
+   begin
+      return L.F_Index;
+   end Facility_Count;
 
 end Alog.Logger;

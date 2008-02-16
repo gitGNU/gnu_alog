@@ -31,10 +31,14 @@ package Alog is
    --  to categorize log messages.
 
 private
-   Max_Facility_Name_Length : constant Integer := 8;
+   Max_Facility_Name_Length : constant Natural := 8;
    --  Maximal length of facility names.
 
-   Max_Path_Length : constant Integer := 255;
+   Max_Path_Length : constant Natural := 255;
    --  Maximal length of path names.
+
+   Max_Facilities : constant Natural := 5;
+   --  Maximum number of facilities a single logger instance
+   --  can manage.
 
 end Alog;

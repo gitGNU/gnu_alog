@@ -21,20 +21,43 @@
 --  MA  02110-1301  USA
 --
 
-with Alog.Facilities; use Alog.Facilities;
+with Alog.Facilities;
 
+--  Logger instance. Facilities can be attached to a logger
+--  instance in order to log to different targets simultaneously.
+--  A logger provides different helper functions for logging facilities
+--  configuration.
 package Alog.Logger is
 
    type Instance is tagged private;
    --  Logger instance.
 
-   procedure Attach_Facility (I : in Instance; F : in Facility);
+   procedure Attach_Facility (L : in out Alog.Logger.Instance;
+                              F : in     Alog.Facilities.Handle);
    --  Attach a facility to logger instance.
 
+   function Facility_Count (L : in Alog.Logger.Instance) return Natural;
+   --  Return number of attached facilites.
+
+   Max_Facilites_Reached : exception;
+   --  Exception is raised if attached Max_Facilities is already reached
+   --  when calling Attach_Facility().
+
 private
+
+   subtype Index_Range is Natural range 0 .. Max_Facilities;
+   --  Allowed range of array, index.
+
+   type Facility_Array is array (Index_Range)
+     of Alog.Facilities.Handle;
+   --  Manages attached facilities for logger instance.
+
    type Instance is tagged
       record
-         null;
+         F_Index : Index_Range := 0;
+         --  Stores number of attached facilities. Default ist 0.
+
+         F_Array : Facility_Array;
       end record;
 
 end Alog.Logger;

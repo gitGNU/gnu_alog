@@ -27,29 +27,33 @@ with Ada.Strings.Bounded; use Ada.Strings.Bounded;
 --  methods used by all Alog facilities.
 package Alog.Facilities is
 
-   type Facility is abstract tagged limited private;
-   --  Abstract type Facility. All facilities in the
+   type Instance is abstract tagged limited private;
+   --  Abstract type facility instance. All facilities in the
    --  Alog framework must implement this type.
 
-   procedure Set_Name (F : in out Facility'Class; Name : in String);
+   subtype Class is Instance'Class;
+
+   type Handle is access all Class;
+
+   procedure Set_Name (F : in out Instance'Class; Name : in String);
    --  Set facility name.
 
-   function Get_Name (F : in Facility'Class) return String;
+   function Get_Name (F : in Instance'Class) return String;
    --  Get facility name.
 
-   procedure Set_Threshold (F     : in out Facility'Class;
+   procedure Set_Threshold (F     : in out Instance'Class;
                             Level : in Log_Level);
    --  Set facility log level treshold.
 
-   function Get_Threshold (F : in Facility'Class) return Log_Level;
+   function Get_Threshold (F : in Instance'Class) return Log_Level;
    --  Get facility log level treshold.
 
-   procedure Write_Message (F     : in Facility;
+   procedure Write_Message (F     : in Instance;
                             Msg   : in String;
                             Level : in Log_Level) is abstract;
    --  Write message with specified log level.
 
-   procedure Teardown (F : in out Facility) is abstract;
+   procedure Teardown (F : in out Instance) is abstract;
    --  Each facility must provide a Teardown-procedure.
    --  These procedures are called by Logger instances when
    --  detaching Facilities or when the object gets out of scope.
@@ -65,7 +69,7 @@ private
    --  bounded string with length Max_Path_Length. Used in methods
    --  which involve filesystem operations.
 
-   type Facility is abstract tagged
+   type Instance is abstract tagged
       limited record
          Name      : BS_Name.Bounded_String :=
            To_Bounded_String ("none");

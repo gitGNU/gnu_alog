@@ -23,6 +23,7 @@
 
 with Ahven; use Ahven;
 with Alog.Logger;
+with Alog.Facilities.File_Descriptor;
 
 package body Logger_Tests is
 
@@ -30,27 +31,32 @@ package body Logger_Tests is
    begin
       Set_Name (T, "Tests for Alog Logger");
       Ahven.Framework.Add_Test_Routine
-        (T, Attach_Facility'Access, "Attach a Facility");
+        (T, Attach_A_Facility'Access, "Attach a Facility");
       Ahven.Framework.Add_Test_Routine
-        (T, Detach_Facility'Access, "Detach a Facility");
+        (T, Detach_A_Facility'Access, "Detach a Facility");
    end Initialize;
 
    ---------------------
    -- Attach_Facility --
    ---------------------
 
-   procedure Attach_Facility is
+   procedure Attach_A_Facility is
+      Logger   : Alog.Logger.Instance;
+      Facility : Alog.Facilities.Handle := new
+        Alog.Facilities.File_Descriptor.Instance;
    begin
-      Fail ("Not yet implemented!");
-   end Attach_Facility;
+      Logger.Attach_Facility (F => Facility);
+      Assert (Condition => Logger.Facility_Count = 1,
+              Message => "Could not attach facility");
+   end Attach_A_Facility;
 
    ---------------------
    -- Detach_Facility --
    ---------------------
 
-   procedure Detach_Facility is
+   procedure Detach_A_Facility is
    begin
       Fail ("Not yet implemented!");
-   end Detach_Facility;
+   end Detach_A_Facility;
 
 end Logger_Tests;

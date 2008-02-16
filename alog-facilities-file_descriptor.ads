@@ -15,7 +15,7 @@
 --  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 --  GNU Lesser General Public License for more details.
 --
---  You should have received a copy of the GNU Lesser General Public License
+--  You should have received a copy of t4he GNU Lesser General Public License
 --  along with Alog; if not, write to the Free Software
 --  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,
 --  MA  02110-1301  USA
@@ -33,8 +33,12 @@ use Ada;
 --  by a Set_Logfile()-call, console logging is used.
 package Alog.Facilities.File_Descriptor is
 
-   type Instance is new Facility with private;
+   type Instance is new Alog.Facilities.Instance with private;
    --  File Descriptor based logging facility.
+
+   subtype Class is Instance'Class;
+
+   type Handle is access all Class;
 
    overriding
    procedure Write_Message (F     : in Instance;
@@ -60,7 +64,7 @@ package Alog.Facilities.File_Descriptor is
 
 private
 
-   type Instance is limited new Facility with
+   type Instance is limited new Alog.Facilities.Instance with
       record
          Log_File         : aliased Text_IO.File_Type;
          --  Logfile used for file based logging.

@@ -31,10 +31,10 @@ package Logger_Tests is
    procedure Initialize (T : in out LTest);
    --  Initialize Test suite
 
-   procedure Attach_Facility;
+   procedure Attach_A_Facility;
    --  Test Facility attaching
 
-   procedure Detach_Facility;
+   procedure Detach_A_Facility;
    --  Test Facility detaching
 
 end Logger_Tests;
