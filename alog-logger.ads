@@ -21,6 +21,7 @@
 --  MA  02110-1301  USA
 --
 
+with Ada.Finalization;
 with Alog.Facilities;
 
 --  Logger instance. Facilities can be attached to a logger
@@ -29,14 +30,14 @@ with Alog.Facilities;
 --  configuration.
 package Alog.Logger is
 
-   type Instance is tagged private;
+   type Instance is new Ada.Finalization.Controlled with private;
    --  Logger instance.
 
    procedure Attach_Facility (L : in out Alog.Logger.Instance;
                               F : in     Alog.Facilities.Handle);
    --  Attach a facility to logger instance.
 
-   function Facility_Count (L : in Alog.Logger.Instance) return Natural;
+   function Facility_Count (L : in Instance) return Natural;
    --  Return number of attached facilites.
 
    Max_Facilites_Reached : exception;
@@ -52,12 +53,14 @@ private
      of Alog.Facilities.Handle;
    --  Manages attached facilities for logger instance.
 
-   type Instance is tagged
+   type Instance is new Ada.Finalization.Controlled with
       record
          F_Index : Index_Range := 0;
          --  Stores number of attached facilities. Default ist 0.
 
          F_Array : Facility_Array;
       end record;
+
+   procedure Finalize (L : in out Instance);
 
 end Alog.Logger;

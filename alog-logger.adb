@@ -43,4 +43,12 @@ package body Alog.Logger is
       return L.F_Index;
    end Facility_Count;
 
+   procedure Finalize (L : in out Instance) is
+      Counter : Natural := 0;
+   begin
+      while Counter < L.F_Index loop
+         L.F_Array (Counter).Teardown;
+      end loop;
+   end Finalize;
+
 end Alog.Logger;
