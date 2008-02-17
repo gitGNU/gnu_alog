@@ -23,6 +23,9 @@
 
 with Ada.Finalization;
 with Alog.Facilities;
+with Alog.Facilities.File_Descriptor;
+
+with Ada.Unchecked_Deallocation;
 
 --  Logger instance. Facilities can be attached to a logger
 --  instance in order to log to different targets simultaneously.
@@ -62,5 +65,9 @@ private
       end record;
 
    procedure Finalize (L : in out Instance);
+
+   procedure Free is new Ada.Unchecked_Deallocation
+     (Object => Alog.Facilities.File_Descriptor.Instance,
+      Name   => Alog.Facilities.File_Descriptor.Handle);
 
 end Alog.Logger;

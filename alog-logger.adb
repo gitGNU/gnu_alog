@@ -21,6 +21,8 @@
 --  MA  02110-1301  USA
 --
 
+with Alog.Facilities.File_Descriptor;
+
 package body Alog.Logger is
 
    ----------------------
@@ -48,6 +50,8 @@ package body Alog.Logger is
    begin
       while Counter < L.F_Index loop
          L.F_Array (Counter).Teardown;
+         Free (Alog.Facilities.File_Descriptor.Handle (L.F_Array (Counter)));
+         Counter := Counter + 1;
       end loop;
    end Finalize;
 

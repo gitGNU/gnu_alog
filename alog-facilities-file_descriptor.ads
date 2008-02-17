@@ -25,7 +25,6 @@ with Ada.Text_IO;
 with Ada.Strings.Unbounded;
 with Ada.Calendar;
 with GNAT.Calendar.Time_IO;
-with Ada.Unchecked_Deallocation;
 
 use Ada;
 
@@ -37,7 +36,7 @@ package Alog.Facilities.File_Descriptor is
    type Instance is new Alog.Facilities.Instance with private;
    --  File Descriptor based logging facility.
 
-   type Handle is access Instance;
+   type Handle is access all Instance;
 
    overriding
    procedure Write_Message (F     : in Instance;
@@ -78,9 +77,5 @@ private
          Timestamp_Format : String (1 .. 14) := "%d. %b. %Y %T ";
          --  Default timestamp format to use in this facility.
       end record;
-
-   procedure Free is new Ada.Unchecked_Deallocation
-     (Object => Instance, Name => Handle);
-
 
 end Alog.Facilities.File_Descriptor;
