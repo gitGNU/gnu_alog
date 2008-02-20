@@ -70,13 +70,13 @@ private
    --  which involve filesystem operations.
 
    type Instance is abstract tagged
-      limited record
-         Name      : BS_Name.Bounded_String :=
-           To_Bounded_String ("none");
-         --  Facility Name. Defaults to "none".
+   limited record
+      Name      : BS_Name.Bounded_String :=
+        To_Bounded_String ("none");
+      --  Facility Name. Defaults to "none".
 
-         Threshold : Log_Level := DEBUG;
-         --  Facility default threshold.
-      end record;
+      Threshold : Log_Level := DEBUG;
+      --  Facility default threshold.
+   end record;
 
 end Alog.Facilities;
