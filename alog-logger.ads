@@ -43,17 +43,13 @@ package Alog.Logger is
    function Facility_Count (L : in Instance) return Natural;
    --  Return number of attached facilites.
 
-   Max_Facilites_Reached : exception;
-   --  Exception is raised if attached Max_Facilities is already reached
-   --  when calling Attach_Facility().
-
 private
 
    subtype Index_Range is Natural range 0 .. Max_Facilities;
    --  Allowed range of array, index.
 
    type Facility_Array is array (Index_Range)
-     of Alog.Facilities.Handle;
+   of Alog.Facilities.Handle;
    --  Manages attached facilities for logger instance.
 
    type Instance is new Ada.Finalization.Controlled with
@@ -66,8 +62,11 @@ private
 
    procedure Finalize (L : in out Instance);
 
+   --  Free-Procedures for all known Facility-types. If you implement
+   --  your own logging-facility, add a Free()-procedure for your facility
+   --  here too.
    procedure Free is new Ada.Unchecked_Deallocation
-     (Object => Alog.Facilities.File_Descriptor.Instance,
-      Name   => Alog.Facilities.File_Descriptor.Handle);
+     (Object => Alog.Facilities.Class,
+      Name   => Alog.Facilities.Handle);
 
 end Alog.Logger;
