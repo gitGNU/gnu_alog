@@ -31,9 +31,9 @@ package body Logger_Tests is
    begin
       Set_Name (T, "Tests for Alog Logger");
       Ahven.Framework.Add_Test_Routine
-        (T, Attach_A_Facility'Access, "Attach a Facility");
+        (T, Attach_A_Facility'Access, "attach a facility");
       Ahven.Framework.Add_Test_Routine
-        (T, Detach_A_Facility'Access, "Detach a Facility");
+        (T, Detach_A_Facility'Access, "detach a facility");
    end Initialize;
 
    ---------------------

@@ -38,14 +38,16 @@ package body Alog.Facilities.File_Descriptor is
          Picture => Picture_String (F.Timestamp_Format));
    begin
       if Level >= F.Get_Threshold then
+         if F.Is_Write_Timestamp then
+            Text_IO.Put (File  => Logfile,
+                         Item  => Timestamp);
+         end if;
+         if F.Is_Write_Loglevel then
+            Text_IO.Put (File  => Logfile,
+                         Item  => Log_Level'Image (Level));
+         end if;
          Text_IO.Put (File  => Logfile,
-                      Item  => Timestamp);
-         Text_IO.Put (File  => Logfile,
-                      Item  => Log_Level'Image (Level));
-         Text_IO.Put (File  => Logfile,
-                      Item  => " => ");
-         Text_IO.Put (File  => Logfile,
-                      Item  => Msg);
+                      Item  => " " & Msg);
 
          Text_IO.New_Line (File => Logfile);
       end if;
@@ -109,5 +111,44 @@ package body Alog.Facilities.File_Descriptor is
          end if;
       end if;
    end Close_Logfile;
+
+   ----------------------------
+   -- Toggle_Write_Timestamp --
+   ----------------------------
+
+   procedure Toggle_Write_Timestamp (F   : in out Instance;
+                                     Set : in Boolean) is
+   begin
+      F.Write_Timestamp := Set;
+   end Toggle_Write_Timestamp;
+
+   ------------------------
+   -- Is_Write_Timestamp --
+   ------------------------
+
+   function Is_Write_Timestamp (F : in Instance) return Boolean is
+   begin
+      return F.Write_Timestamp;
+   end Is_Write_Timestamp;
+
+
+   ---------------------------
+   -- Toggle_Write_Loglevel --
+   ---------------------------
+
+   procedure Toggle_Write_Loglevel (F   : in out Instance;
+                                    Set : in Boolean) is
+   begin
+      F.Write_Loglevel := Set;
+   end Toggle_Write_Loglevel;
+
+   -----------------------
+   -- Is_Write_Loglevel --
+   -----------------------
+
+   function Is_Write_Loglevel (F : in Instance) return Boolean is
+   begin
+      return F.Write_Loglevel;
+   end Is_Write_Loglevel;
 
 end Alog.Facilities.File_Descriptor;

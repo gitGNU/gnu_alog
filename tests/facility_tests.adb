@@ -40,19 +40,23 @@ package body Facility_Tests is
    begin
       Set_Name (T, "Tests for Alog Facilites");
       Ahven.Framework.Add_Test_Routine
-        (T, Set_Name'Access, "Set Facility Name");
+        (T, Set_Name'Access, "set facility name");
       Ahven.Framework.Add_Test_Routine
-        (T, Set_Name_too_Long'Access, "Set overlength Name");
+        (T, Set_Name_too_Long'Access, "set overlength name");
       Ahven.Framework.Add_Test_Routine
-        (T, Set_Valid_Logfile'Access, "Set valid Logfile");
+        (T, Set_Valid_Logfile_Fd'Access, "set valid logfile");
       Ahven.Framework.Add_Test_Routine
-        (T, Set_Invalid_Logfile'Access, "Set invalid Logfile");
+        (T, Set_Invalid_Logfile_Fd'Access, "set invalid logfile");
       Ahven.Framework.Add_Test_Routine
-        (T, Set_Threshold'Access, "Set Threshold");
+        (T, Set_Threshold'Access, "set threshold");
       Ahven.Framework.Add_Test_Routine
-        (T, Log_Message_Fd'Access, "Log a Message");
+        (T, Log_Message_Fd'Access, "log a message");
       Ahven.Framework.Add_Test_Routine
-        (T, Teardown_Fd'Access, "Teardown Fd Facility");
+        (T, Teardown_Fd'Access, "teardown FD facility");
+      Ahven.Framework.Add_Test_Routine
+        (T, Disable_Write_Timestamp_Fd'Access, "disable timestamp");
+      Ahven.Framework.Add_Test_Routine
+        (T, Disable_Write_Loglevel_Fd'Access, "disable loglevel");
    end Initialize;
 
    --------------
@@ -76,7 +80,7 @@ package body Facility_Tests is
          null;
          --  File did not exist. Carry on.
       when Event : others =>
-         Put_Line ("Error occured while cleaning up: ");
+         Put_Line ("error occured while cleaning up: ");
          Put_Line (Ada.Exceptions.Exception_Name (Event));
          Put_Line (Ada.Exceptions.Exception_Message (Event));
    end Finalize;
@@ -91,7 +95,7 @@ package body Facility_Tests is
    begin
       F.Set_Name (Name => Expected);
       Assert (Condition => F.Get_Name = Expected,
-             Message => "Name not equal");
+             Message => "name not equal");
    end Set_Name;
 
    -----------------------
@@ -104,41 +108,12 @@ package body Facility_Tests is
       Expected : String := "NAMETOOLONG";
    begin
       F.Set_Name (Name => Expected);
-      Fail ("No exception raised!");
+      Fail ("no exception raised!");
    exception
       when Length_Error =>
          Assert (Condition => True,
-                 Message => "Expected exception occured!");
+                 Message => "expected exception occured!");
    end Set_Name_too_Long;
-
-   -----------------------
-   -- Set_Valid_Logfile --
-   -----------------------
-
-   procedure Set_Valid_Logfile is
-      use Ada.Text_IO;
-      F : File_Descriptor.Instance;
-   begin
-      F.Set_Logfile (Path => "./data/Set_Valid_Logfile");
-      Assert (Condition => Is_Open (F.Get_Logfile),
-              Message   => "Could not set logfile!");
-      F.Close_Logfile (Remove => True);
-   end Set_Valid_Logfile;
-
-   --------------------
-   -- Set_Illegal_Fd --
-   --------------------
-
-   procedure Set_Invalid_Logfile is
-      F : File_Descriptor.Instance;
-   begin
-      F.Set_Logfile (Path => "/not/allowed.log");
-      Fail (Message => "No exception raised!");
-   exception
-      when Name_Error =>
-         Assert (Condition => True,
-                 Message => "Expected exception occured!");
-   end Set_Invalid_Logfile;
 
    -------------------
    -- Set_Threshold --
@@ -153,13 +128,42 @@ package body Facility_Tests is
              Message => "Log_Level not equal");
    end Set_Threshold;
 
+   -----------------------
+   -- Set_Valid_Logfile --
+   -----------------------
+
+   procedure Set_Valid_Logfile_Fd is
+      use Ada.Text_IO;
+      F : File_Descriptor.Instance;
+   begin
+      F.Set_Logfile (Path => "./data/Set_Valid_Logfile");
+      Assert (Condition => Is_Open (F.Get_Logfile),
+              Message   => "could not set logfile!");
+      F.Close_Logfile (Remove => True);
+   end Set_Valid_Logfile_Fd;
+
+   --------------------
+   -- Set_Illegal_Fd --
+   --------------------
+
+   procedure Set_Invalid_Logfile_Fd is
+      F : File_Descriptor.Instance;
+   begin
+      F.Set_Logfile (Path => "/not/allowed.log");
+      Fail (Message => "no exception raised!");
+   exception
+      when Name_Error =>
+         Assert (Condition => True,
+                 Message => "expected exception occured!");
+   end Set_Invalid_Logfile_Fd;
+
    --------------------
    -- Log_Message_Fd --
    --------------------
 
    procedure Log_Message_Fd is
    begin
-      Fail (Message => "Not yet implemented!");
+      Fail (Message => "not yet implemented!");
    end Log_Message_Fd;
 
    -----------------
@@ -172,10 +176,34 @@ package body Facility_Tests is
    begin
       F.Set_Logfile (Path => "./data/Teardown_Fd");
       Assert (Condition => Is_Open (File => F.Get_Logfile),
-              Message   => "Could not set logfile!");
+              Message   => "could not set logfile!");
       F.Teardown;
       Assert (Condition => not Is_Open (File => F.Get_Logfile),
-              Message   => "Logfile still open!");
+              Message   => "logfile still open!");
    end Teardown_Fd;
+
+   --------------------------------
+   -- Disable_Write_Timestamp_Fd --
+   --------------------------------
+
+   procedure Disable_Write_Timestamp_Fd is
+      F : File_Descriptor.Instance;
+   begin
+      F.Toggle_Write_Timestamp (Set => False);
+      Assert (Condition => not F.Is_Write_Timestamp,
+              Message   => "unable to disable timestamp");
+   end Disable_Write_Timestamp_Fd;
+
+   -------------------------------
+   -- Disable_Write_Loglevel_Fd --
+   -------------------------------
+
+   procedure Disable_Write_Loglevel_Fd is
+      F : File_Descriptor.Instance;
+   begin
+      F.Toggle_Write_Loglevel (Set => False);
+      Assert (Condition => not F.Is_Write_Loglevel,
+              Message   => "unable to disable loglevel");
+   end Disable_Write_Loglevel_Fd;
 
 end Facility_Tests;

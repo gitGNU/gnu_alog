@@ -60,6 +60,20 @@ package Alog.Facilities.File_Descriptor is
                             Remove : in Boolean := False);
    --  Close opened logfile.
 
+   procedure Toggle_Write_Timestamp (F   : in out Instance;
+                                     Set : in Boolean);
+   --  Enable/disable whether a timestamp is written for log messages.
+
+   function Is_Write_Timestamp (F : in Instance) return Boolean;
+   --  Returns the current value of Write_Timestamp.
+
+   procedure Toggle_Write_Loglevel (F   : in out Instance;
+                                    Set : in Boolean);
+   --  Enable/disable whether the loglevel is written for log messages.
+
+   function Is_Write_Loglevel (F : in Instance) return Boolean;
+   --  Returns the current value of Write_Loglevel.
+
 private
 
    type Instance is limited new Alog.Facilities.Instance with
@@ -76,6 +90,14 @@ private
 
          Timestamp_Format : String (1 .. 14) := "%d. %b. %Y %T ";
          --  Default timestamp format to use in this facility.
+
+         Write_Timestamp  : Boolean := True;
+         --  If True, a timestamp is written with the log message.
+         --  Default is True.
+
+         Write_Loglevel   : Boolean := True;
+         --  If True, the loglevel associated with the log message is
+         --  written. Default is True.
       end record;
 
 end Alog.Facilities.File_Descriptor;
