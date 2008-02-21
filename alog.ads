@@ -31,6 +31,9 @@ package Alog is
    --  to categorize log messages.
 
 private
+   Version : constant Float := 0.1;
+   --  Alog library version.
+
    Max_Facility_Name_Length : constant Natural := 8;
    --  Maximal length of facility names.
 

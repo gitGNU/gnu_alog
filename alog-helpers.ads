@@ -21,36 +21,23 @@
 --  MA  02110-1301  USA
 --
 
-package body Alog.Logger is
+with Ada.Direct_IO;
 
-   ----------------------
-   --  Attach_Facility --
-   ----------------------
+--  Alog helper functions/procedures.
+package Alog.Helpers is
 
-   procedure Attach_Facility (L : in out Alog.Logger.Instance;
-                              F : in     Alog.Facilities.Handle) is
-   begin
-      L.F_Array (L.F_Index) := F;
-      L.F_Index := L.F_Index + 1;
-   end Attach_Facility;
+   function Assert_Files_Equal (Filename1 : String;
+                                Filename2 : String) return Boolean;
+   --  Compare two files byte-wise. Returns True if both files are equal.
+   --  The two files are closed but not removed after comparison.
 
-   ---------------------
-   --  Facility_Count --
-   ---------------------
+private
+   type MY_REC is
+      record
+         Char : Character;
+      end record;
 
-   function Facility_Count (L : in Alog.Logger.Instance) return Natural is
-   begin
-      return L.F_Index;
-   end Facility_Count;
+   package D_IO is new Ada.Direct_IO (MY_REC);
+   use D_IO;
 
-   procedure Finalize (L : in out Instance) is
-      Counter : Natural := 0;
-   begin
-      while Counter < L.F_Index loop
-         L.F_Array (Counter).Teardown;
-         Free (L.F_Array (Counter));
-         Counter := Counter + 1;
-      end loop;
-   end Finalize;
-
-end Alog.Logger;
+end Alog.Helpers;

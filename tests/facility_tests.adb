@@ -21,14 +21,20 @@
 --  MA  02110-1301  USA
 --
 
+--  Ada
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
 with Ada.Exceptions;
-with Ada.IO_Exceptions; use Ada.IO_Exceptions;
+with Ada.IO_Exceptions;
 with Ada.Text_IO;
+use Ada;
+
+--  Ahven
 with Ahven; use Ahven;
+
+--  Alog
 with Alog; use Alog;
-with Alog.Facilities.File_Descriptor;
-use Alog.Facilities;
+with Alog.Helpers;
+with Alog.Facilities.File_Descriptor; use Alog.Facilities;
 
 package body Facility_Tests is
 
@@ -50,7 +56,7 @@ package body Facility_Tests is
       Ahven.Framework.Add_Test_Routine
         (T, Set_Threshold'Access, "set threshold");
       Ahven.Framework.Add_Test_Routine
-        (T, Log_Message_Fd'Access, "log a message");
+        (T, Write_Message_Fd'Access, "log a message");
       Ahven.Framework.Add_Test_Routine
         (T, Teardown_Fd'Access, "teardown FD facility");
       Ahven.Framework.Add_Test_Routine
@@ -67,8 +73,8 @@ package body Facility_Tests is
       use Ada.Text_IO;
       use Ahven.Framework;
 
-      Files : String := "./data/Teardown_Fd";
-      --  Atm. we have only one file to clean.
+      Files : String := ("./data/Teardown_Fd");
+      --  Files to clean after tests.
       F     : File_Type;
    begin
       Open (File => F, Mode => In_File, Name => Files);
@@ -147,6 +153,8 @@ package body Facility_Tests is
    --------------------
 
    procedure Set_Invalid_Logfile_Fd is
+      use Ada.IO_Exceptions;
+
       F : File_Descriptor.Instance;
    begin
       F.Set_Logfile (Path => "/not/allowed.log");
@@ -157,14 +165,33 @@ package body Facility_Tests is
                  Message => "expected exception occured!");
    end Set_Invalid_Logfile_Fd;
 
-   --------------------
-   -- Log_Message_Fd --
-   --------------------
+   ----------------------
+   -- Write_Message_Fd --
+   ----------------------
 
-   procedure Log_Message_Fd is
+   procedure Write_Message_Fd is
+      F        : File_Descriptor.Instance;
+      Testfile : String := "./data/Write_Message_Fd";
+      Reffile  : String := "./data/Write_Message_Fd.ref";
    begin
-      Fail (Message => "not yet implemented!");
-   end Log_Message_Fd;
+      --  We have to disable timestamps, since its changing all
+      --  the time :)
+      F.Toggle_Write_Timestamp (Set => False);
+
+      --  Open logfile, write test message.
+      F.Set_Logfile (Path => Testfile);
+      F.Write_Message (Msg => "This is a test log-message");
+
+      F.Close_Logfile;
+
+      --  Compare both files.
+      Assert (Condition => Helpers.Assert_Files_Equal
+              (Filename1 => Reffile, Filename2 => Testfile),
+              Message   => "files not equal");
+
+      --  Cleanup
+      F.Teardown;
+   end Write_Message_Fd;
 
    -----------------
    -- Teardown_Fd --

@@ -53,8 +53,8 @@ package Facility_Tests is
    procedure Set_Invalid_Logfile_Fd;
    --  Set illegal Fd test.
 
-   procedure Log_Message_Fd;
-   --  Test message logging.
+   procedure Write_Message_Fd;
+   --  Test message writing.
 
    procedure Teardown_Fd;
    --  Test Facility cleanup;

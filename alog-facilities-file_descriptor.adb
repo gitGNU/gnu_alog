@@ -29,7 +29,7 @@ package body Alog.Facilities.File_Descriptor is
 
    procedure Write_Message (F     : in Instance;
                             Msg   : in String;
-                            Level : Log_Level)
+                            Level : Log_Level := INFO)
    is
       use GNAT.Calendar.Time_IO;
       Logfile   : Text_IO.File_Type renames F.Log_File_Ptr.all;
@@ -53,9 +53,9 @@ package body Alog.Facilities.File_Descriptor is
       end if;
    end Write_Message;
 
-   -------------
-   -- Cleanup --
-   -------------
+   --------------
+   -- Teardown --
+   --------------
 
    procedure Teardown (F : in out Instance) is
    begin
@@ -76,8 +76,8 @@ package body Alog.Facilities.File_Descriptor is
       F.Log_File_Name := To_Bounded_String (Path);
       F.Log_File_Ptr  := F.Log_File'Unrestricted_Access;
       --  Set logfile name and pointer to newly created file.
-      --  TODO: Unrestricted_Access is needed here since we use
-      --        a pointer which is defined in a library (File_Access).
+      --  Unrestricted_Access is needed here since we use a pointer
+      --  which is defined externaly in the Text_IO library.
 
       F.Write_Message (Level => INFO,
                        Msg   => "** Alog: new logging session initialized.");
@@ -101,12 +101,12 @@ package body Alog.Facilities.File_Descriptor is
       use Ada.Text_IO;
    begin
       if F.Log_File_Ptr /= Standard_Output
-        and Text_IO.Is_Open (File => F.Log_File) then
+        and Is_Open (File => F.Log_File) then
          if Remove then
-            Text_IO.Delete (File => F.Log_File);
+            Delete (File => F.Log_File);
             --  Close and delete.
          else
-            Text_IO.Close (File => F.Log_File);
+            Close (File => F.Log_File);
             --   Close only.
          end if;
       end if;
