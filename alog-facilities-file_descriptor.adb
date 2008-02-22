@@ -59,8 +59,8 @@ package body Alog.Facilities.File_Descriptor is
 
    procedure Teardown (F : in out Instance) is
    begin
-      F.Close_Logfile;
       --  Close logfile if still open.
+      F.Close_Logfile;
    end Teardown;
 
    -----------------
@@ -68,19 +68,33 @@ package body Alog.Facilities.File_Descriptor is
    -----------------
 
    procedure Set_Logfile (F : in out Instance; Path : String) is
+      use Ada.IO_Exceptions;
    begin
-      Text_IO.Create (File => F.Log_File,
-                      Name => Path,
-                      Mode => Text_IO.Append_File);
+      --  Somehow it's not possible to use Create() with Append_File,
+      --  the file always gets truncated.
+      if not Text_IO.Is_Open (File => F.Log_File) then
+         Text_IO.Open (File => F.Log_File,
+                       Name => Path,
+                       Mode => Text_IO.Append_File);
+      end if;
 
       F.Log_File_Name := To_Bounded_String (Path);
-      F.Log_File_Ptr  := F.Log_File'Unrestricted_Access;
+
       --  Set logfile name and pointer to newly created file.
       --  Unrestricted_Access is needed here since we use a pointer
       --  which is defined externaly in the Text_IO library.
+      F.Log_File_Ptr  := F.Log_File'Unrestricted_Access;
 
       F.Write_Message (Level => INFO,
                        Msg   => "** Alog: new logging session initialized.");
+   exception
+      when Name_Error =>
+         --  Create file and re-call Set_Logfile.
+         Text_IO.Create (File => F.Log_File,
+                         Mode => Text_IO.Append_File,
+                         Name => Path);
+         F.Set_Logfile (Path => Path);
+
    end Set_Logfile;
 
    -----------------
@@ -103,11 +117,11 @@ package body Alog.Facilities.File_Descriptor is
       if F.Log_File_Ptr /= Standard_Output
         and Is_Open (File => F.Log_File) then
          if Remove then
-            Delete (File => F.Log_File);
             --  Close and delete.
+            Delete (File => F.Log_File);
          else
-            Close (File => F.Log_File);
             --   Close only.
+            Close (File => F.Log_File);
          end if;
       end if;
    end Close_Logfile;

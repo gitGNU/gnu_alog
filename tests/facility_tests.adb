@@ -34,7 +34,8 @@ with Ahven; use Ahven;
 --  Alog
 with Alog; use Alog;
 with Alog.Helpers;
-with Alog.Facilities.File_Descriptor; use Alog.Facilities;
+with Alog.Facilities.File_Descriptor;
+with Alog.Facilities; use Alog.Facilities;
 
 package body Facility_Tests is
 
@@ -58,7 +59,7 @@ package body Facility_Tests is
       Ahven.Framework.Add_Test_Routine
         (T, Write_Message_Fd'Access, "log a message");
       Ahven.Framework.Add_Test_Routine
-        (T, Teardown_Fd'Access, "teardown FD facility");
+        (T, Teardown_Fd'Access, "teardown fd facility");
       Ahven.Framework.Add_Test_Routine
         (T, Disable_Write_Timestamp_Fd'Access, "disable timestamp");
       Ahven.Framework.Add_Test_Routine
@@ -73,14 +74,25 @@ package body Facility_Tests is
       use Ada.Text_IO;
       use Ahven.Framework;
 
-      Files : String := ("./data/Teardown_Fd");
       --  Files to clean after tests.
+      subtype Count is Natural range 1 .. 3;
+
+      Files : array (Count) of BS_Path.Bounded_String :=
+        (BS_Path.To_Bounded_String ("./data/Teardown_Fd"),
+         BS_Path.To_Bounded_String ("./data/Write_Message_Fd"),
+         BS_Path.To_Bounded_String ("./data/Disable_Write_Timestamp_Fd")
+        );
       F     : File_Type;
    begin
-      Open (File => F, Mode => In_File, Name => Files);
-      Delete (File => F);
+      for c in Count loop
+         Open (File => F,
+               Mode => In_File,
+               Name => BS_Path.To_String (Files (c)));
+         Delete (File => F);
+      end loop;
 
       Finalize (Test_Case (T));
+
    exception
       when Error : Ada.IO_Exceptions.Name_Error =>
          null;
@@ -101,7 +113,7 @@ package body Facility_Tests is
    begin
       F.Set_Name (Name => Expected);
       Assert (Condition => F.Get_Name = Expected,
-             Message => "name not equal");
+              Message => "name not equal");
    end Set_Name;
 
    -----------------------
@@ -131,7 +143,7 @@ package body Facility_Tests is
    begin
       F.Set_Threshold (Expected);
       Assert (Condition => F.Get_Threshold = Expected,
-             Message => "Log_Level not equal");
+              Message => "Log_Level not equal");
    end Set_Threshold;
 
    -----------------------
@@ -215,10 +227,22 @@ package body Facility_Tests is
 
    procedure Disable_Write_Timestamp_Fd is
       F : File_Descriptor.Instance;
+      Testfile : String := "./data/Disable_Write_Timestamp_Fd";
+      Reffile  : String := "./data/Disable_Write_Timestamp_Fd.ref";
    begin
       F.Toggle_Write_Timestamp (Set => False);
-      Assert (Condition => not F.Is_Write_Timestamp,
+      F.Set_Logfile (Path => Testfile);
+      F.Write_Message ("This is a testmessage without timestamp");
+
+      F.Close_Logfile;
+
+      Assert (Condition => Helpers.Assert_Files_Equal
+              (Filename1 => Reffile, Filename2 => Testfile),
               Message   => "unable to disable timestamp");
+
+      --  Cleanup.
+      F.Teardown;
+
    end Disable_Write_Timestamp_Fd;
 
    -------------------------------

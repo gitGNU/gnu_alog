@@ -23,6 +23,7 @@
 
 with Ada.Text_IO;
 with Ada.Strings.Unbounded;
+with Ada.IO_Exceptions;
 with Ada.Calendar;
 with GNAT.Calendar.Time_IO;
 

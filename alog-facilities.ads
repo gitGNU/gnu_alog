@@ -58,16 +58,19 @@ package Alog.Facilities is
    --  These procedures are called by Logger instances when
    --  detaching Facilities or when the object gets out of scope.
 
-private
+
+   --  Bounded String definitions.
 
    package BS_Name is new Generic_Bounded_Length (Max_Facility_Name_Length);
    use BS_Name;
-   --  bounded string with length Max_Facility_Name_Length.
+   --  Bounded string with length Max_Facility_Name_Length.
 
    package BS_Path is new Generic_Bounded_Length (Max_Path_Length);
    use BS_Path;
-   --  bounded string with length Max_Path_Length. Used in methods
+   --  Bounded string with length Max_Path_Length. Used in methods
    --  which involve filesystem operations.
+
+private
 
    type Instance is abstract tagged
    limited record

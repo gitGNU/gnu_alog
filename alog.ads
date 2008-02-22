@@ -30,10 +30,6 @@ package Alog is
    --  Provided log levels. These log levels can be used
    --  to categorize log messages.
 
-private
-   Version : constant Float := 0.1;
-   --  Alog library version.
-
    Max_Facility_Name_Length : constant Natural := 8;
    --  Maximal length of facility names.
 
@@ -43,5 +39,9 @@ private
    Max_Facilities : constant Natural := 5;
    --  Maximum number of facilities a single logger instance
    --  can manage.
+
+private
+   Version : constant Float := 0.1;
+   --  Alog library version.
 
 end Alog;
