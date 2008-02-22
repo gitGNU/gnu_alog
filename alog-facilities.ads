@@ -49,8 +49,8 @@ package Alog.Facilities is
    --  Get facility log level treshold.
 
    procedure Write_Message (F     : in Instance;
-                            Msg   : in String;
-                            Level : in Log_Level) is abstract;
+                            Level : in Log_Level;
+                            Msg   : in String) is abstract;
    --  Write message with specified log level.
 
    procedure Teardown (F : in out Instance) is abstract;

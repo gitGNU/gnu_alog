@@ -33,7 +33,7 @@ package Alog is
    Max_Facility_Name_Length : constant Natural := 8;
    --  Maximal length of facility names.
 
-   Max_Path_Length : constant Natural := 255;
+   Max_Path_Length : constant Natural := 80;
    --  Maximal length of path names.
 
    Max_Facilities : constant Natural := 5;

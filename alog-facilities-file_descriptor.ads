@@ -41,8 +41,8 @@ package Alog.Facilities.File_Descriptor is
 
    overriding
    procedure Write_Message (F     : in Instance;
-                            Msg   : in String;
-                            Level : in Log_Level := INFO);
+                            Level : in Log_Level := INFO;
+                            Msg   : in String);
    --  Implementation of Write_Message.
 
    overriding

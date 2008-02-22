@@ -28,8 +28,8 @@ package body Alog.Facilities.File_Descriptor is
    -------------------
 
    procedure Write_Message (F     : in Instance;
-                            Msg   : in String;
-                            Level : Log_Level := INFO)
+                            Level : Log_Level := INFO;
+                            Msg   : in String)
    is
       use GNAT.Calendar.Time_IO;
       Logfile   : Text_IO.File_Type renames F.Log_File_Ptr.all;

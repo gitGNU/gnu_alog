@@ -57,13 +57,15 @@ package body Facility_Tests is
       Ahven.Framework.Add_Test_Routine
         (T, Set_Threshold'Access, "set threshold");
       Ahven.Framework.Add_Test_Routine
-        (T, Write_Message_Fd'Access, "log a message");
+        (T, Write_Message_Fd'Access, "log a fd message");
       Ahven.Framework.Add_Test_Routine
         (T, Teardown_Fd'Access, "teardown fd facility");
       Ahven.Framework.Add_Test_Routine
-        (T, Disable_Write_Timestamp_Fd'Access, "disable timestamp");
+        (T, Disable_Write_Timestamp_Fd'Access, "disable fd timestamp");
       Ahven.Framework.Add_Test_Routine
-        (T, Disable_Write_Loglevel_Fd'Access, "disable loglevel");
+        (T, Disable_Write_Loglevel_Fd'Access, "disable fd loglevel");
+      Ahven.Framework.Add_Test_Routine
+        (T, Set_Threshold_Fd'Access, "set fd threshold");
    end Initialize;
 
    --------------
@@ -75,12 +77,14 @@ package body Facility_Tests is
       use Ahven.Framework;
 
       --  Files to clean after tests.
-      subtype Count is Natural range 1 .. 3;
+      subtype Count is Natural range 1 .. 5;
 
       Files : array (Count) of BS_Path.Bounded_String :=
         (BS_Path.To_Bounded_String ("./data/Teardown_Fd"),
          BS_Path.To_Bounded_String ("./data/Write_Message_Fd"),
-         BS_Path.To_Bounded_String ("./data/Disable_Write_Timestamp_Fd")
+         BS_Path.To_Bounded_String ("./data/Disable_Write_Timestamp_Fd"),
+         BS_Path.To_Bounded_String ("./data/Disable_Write_Loglevel_Fd"),
+         BS_Path.To_Bounded_String ("./data/Set_Threshold_Fd")
         );
       F     : File_Type;
    begin
@@ -198,7 +202,8 @@ package body Facility_Tests is
 
       --  Compare both files.
       Assert (Condition => Helpers.Assert_Files_Equal
-              (Filename1 => Reffile, Filename2 => Testfile),
+              (Filename1 => Reffile,
+               Filename2 => Testfile),
               Message   => "files not equal");
 
       --  Cleanup
@@ -232,13 +237,14 @@ package body Facility_Tests is
    begin
       F.Toggle_Write_Timestamp (Set => False);
       F.Set_Logfile (Path => Testfile);
-      F.Write_Message ("This is a testmessage without timestamp");
+      F.Write_Message (Msg => "This is a message without timestamp");
 
       F.Close_Logfile;
 
       Assert (Condition => Helpers.Assert_Files_Equal
-              (Filename1 => Reffile, Filename2 => Testfile),
-              Message   => "unable to disable timestamp");
+              (Filename1 => Reffile,
+               Filename2 => Testfile),
+              Message   => "unable to disable");
 
       --  Cleanup.
       F.Teardown;
@@ -251,10 +257,51 @@ package body Facility_Tests is
 
    procedure Disable_Write_Loglevel_Fd is
       F : File_Descriptor.Instance;
+      Testfile : String := "./data/Disable_Write_Loglevel_Fd";
+      Reffile  : String := "./data/Disable_Write_Loglevel_Fd.ref";
    begin
+      F.Toggle_Write_Timestamp (Set => False);
       F.Toggle_Write_Loglevel (Set => False);
-      Assert (Condition => not F.Is_Write_Loglevel,
-              Message   => "unable to disable loglevel");
+      F.Set_Logfile (Path => Testfile);
+      F.Write_Message (Msg => "This is a message without loglevel");
+
+      F.Close_Logfile;
+
+      Assert (Condition => Helpers.Assert_Files_Equal
+              (Filename1 => Reffile,
+               Filename2 => Testfile),
+              Message   => "unable to disable");
+
+      F.Teardown;
+
    end Disable_Write_Loglevel_Fd;
+
+   ----------------------
+   -- Set_Threshold_Fd --
+   ----------------------
+
+   procedure Set_Threshold_Fd is
+      F : File_Descriptor.Instance;
+      Testfile : String := "./data/Set_Threshold_Fd";
+      Reffile  : String := "./data/Set_Threshold_Fd.ref";
+   begin
+      F.Toggle_Write_Timestamp (Set => False);
+      F.Set_Logfile (Path => Testfile);
+      F.Write_Message (Level => DEBUG,
+                       Msg   => "this message should appear in log");
+      F.Set_Threshold (Level => INFO);
+      F.Write_Message (Level => DEBUG,
+                       Msg   => "this message should not appear");
+      F.Write_Message (Level => INFO,
+                       Msg   => "this message should appear again");
+
+      F.Close_Logfile;
+      Assert (Condition => Helpers.Assert_Files_Equal
+              (Filename1 => Reffile, Filename2 => Testfile),
+              Message   => "threshold does not work");
+
+      F.Teardown;
+
+   end Set_Threshold_Fd;
 
 end Facility_Tests;
