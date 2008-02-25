@@ -43,6 +43,17 @@ package Alog.Logger is
    function Facility_Count (L : in Instance) return Natural;
    --  Return number of attached facilites.
 
+   procedure Clear (L : in out Instance);
+   --  Clear logger instance. Detach and teardown all attached
+   --  facilities.
+
+   procedure Log_Message (L     : in Instance;
+                          Level : in Log_Level;
+                          Msg   : in String);
+   --  Log a message. Write_Message() procedure of all attached logger is
+   --  called. Depending on the Log-Threshold set, the message is logged
+   --  to different targets (depending on the facilites) automatically.
+
 private
 
    subtype Index_Range is Natural range 0 .. Max_Facilities;

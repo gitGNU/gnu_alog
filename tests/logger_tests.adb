@@ -21,11 +21,24 @@
 --  MA  02110-1301  USA
 --
 
+--  Ada
+with Ada.Text_IO;
+with Ada.IO_Exceptions;
+with Ada.Exceptions;
+--  Ahven
 with Ahven; use Ahven;
+--  Alog
+with Alog;
 with Alog.Logger;
+with Alog.Helpers;
+with Alog.Facilities; use Alog.Facilities;
 with Alog.Facilities.File_Descriptor;
 
 package body Logger_Tests is
+
+   ----------------
+   -- Initialize --
+   ----------------
 
    procedure Initialize (T : in out LTest) is
    begin
@@ -34,7 +47,37 @@ package body Logger_Tests is
         (T, Attach_A_Facility'Access, "attach a facility");
       Ahven.Framework.Add_Test_Routine
         (T, Detach_A_Facility'Access, "detach a facility");
+      Ahven.Framework.Add_Test_Routine
+        (T, Log_One_FD_Facility'Access, "log to one fd facility");
    end Initialize;
+
+   --------------
+   -- Finalize --
+   --------------
+
+   procedure Finalize (T : in out LTest) is
+      use Ada.Text_IO;
+      use Ahven.Framework;
+
+      Files : String := "./data/Log_One_FD_Facility";
+      F     : File_Type;
+   begin
+      Open (File => F,
+            Mode => In_File,
+            Name => Files);
+      Delete (File => F);
+
+      Finalize (Test_Case (T));
+
+   exception
+      when Error : Ada.IO_Exceptions.Name_Error =>
+         null;
+         --  File did not exist. Carry on.
+      when Event : others =>
+         Put_Line ("error occured while cleaning up: ");
+         Put_Line (Ada.Exceptions.Exception_Name (Event));
+         Put_Line (Ada.Exceptions.Exception_Message (Event));
+   end Finalize;
 
    ---------------------
    -- Attach_Facility --
@@ -42,12 +85,12 @@ package body Logger_Tests is
 
    procedure Attach_A_Facility is
       Logger   : Alog.Logger.Instance;
-      Facility : Alog.Facilities.Handle := new
-        Alog.Facilities.File_Descriptor.Instance;
+      Facility : Alog.Facilities.Handle :=
+        new Alog.Facilities.File_Descriptor.Instance;
    begin
       Logger.Attach_Facility (F => Facility);
       Assert (Condition => Logger.Facility_Count = 1,
-              Message => "Could not attach facility");
+              Message => "could not attach facility");
    end Attach_A_Facility;
 
    ---------------------
@@ -56,7 +99,37 @@ package body Logger_Tests is
 
    procedure Detach_A_Facility is
    begin
-      Fail ("Not yet implemented!");
+      Fail ("not yet implemented!");
    end Detach_A_Facility;
+
+   -------------------------
+   -- Log_One_FD_Facility --
+   -------------------------
+
+   procedure Log_One_FD_Facility is
+      Logger   : Alog.Logger.Instance;
+      Facility : Alog.Facilities.Handle :=
+        new Alog.Facilities.File_Descriptor.Instance;
+      Testfile : String := "./data/Log_One_FD_Facility";
+      Reffile  : String := "./data/Log_One_FD_Facility.ref";
+   begin
+      --  Call facility fd specific procedures.
+      Alog.Facilities.File_Descriptor.Handle
+        (Facility).Toggle_Write_Timestamp (Set => False);
+      Alog.Facilities.File_Descriptor.Handle
+        (Facility).Set_Logfile ("./data/Log_One_FD_Facility");
+
+      Logger.Attach_Facility (F => Facility);
+      Logger.Log_Message (Level => Alog.DEBUG,
+                          Msg   => "Logger testmessage, one fd facility");
+
+      --  Cleanup
+      Logger.Clear;
+
+      Assert (Condition => Alog.Helpers.Assert_Files_Equal
+              (Filename1 => Reffile,
+               Filename2 => Testfile),
+              Message   => "files are not equal");
+   end Log_One_FD_Facility;
 
 end Logger_Tests;

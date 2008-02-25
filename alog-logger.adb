@@ -38,7 +38,7 @@ package body Alog.Logger is
    --  Facility_Count --
    ---------------------
 
-   function Facility_Count (L : in Alog.Logger.Instance) return Natural is
+   function Facility_Count (L : in Instance) return Natural is
    begin
       return L.F_Index;
    end Facility_Count;
@@ -52,5 +52,32 @@ package body Alog.Logger is
          Counter := Counter + 1;
       end loop;
    end Finalize;
+
+   ------------
+   --  Clear --
+   ------------
+
+   procedure Clear (L : in out Instance) is
+   begin
+      L.Finalize;
+      L.F_Index := 0;
+   end Clear;
+
+   ------------------
+   --  Log_Message --
+   ------------------
+
+   procedure Log_Message (L     : in Instance;
+                          Level : in Log_Level;
+                          Msg   : in String) is
+      --  TODO: write iterator.
+      Counter : Natural := 0;
+   begin
+      while Counter < L.F_Index loop
+         L.F_Array (Counter).Write_Message (Level => Level,
+                                            Msg   => Msg);
+         Counter := Counter + 1;
+      end loop;
+   end Log_Message;
 
 end Alog.Logger;

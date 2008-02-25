@@ -29,12 +29,18 @@ package Logger_Tests is
    type LTest is new Ahven.Framework.Test_Case with null record;
 
    procedure Initialize (T : in out LTest);
-   --  Initialize Test suite
+   --  Initialize Test suite.
+
+   procedure Finalize (T : in out LTest);
+   --  Teardown Test suite.
 
    procedure Attach_A_Facility;
-   --  Test Facility attaching
+   --  Test Facility attaching.
 
    procedure Detach_A_Facility;
-   --  Test Facility detaching
+   --  Test Facility detaching.
+
+   procedure Log_One_FD_Facility;
+   --  Test logging to one fd based facility.
 
 end Logger_Tests;
