@@ -39,9 +39,6 @@ package Facility_Tests is
    procedure Set_Name;
    --  Set name of Facility test.
 
-   procedure Set_Name_too_Long;
-   --  Set a too long name test.
-
    procedure Set_Threshold;
    --  Test set threshold.
 

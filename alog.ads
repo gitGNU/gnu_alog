@@ -39,10 +39,7 @@ package Alog is
    --  Provided log levels. These log levels can be used
    --  to categorize log messages.
 
-   Max_Facility_Name_Length : constant Natural := 8;
-   --  Maximal length of facility names.
-
-   Max_Path_Length : constant Natural := 80;
+   Max_Path_Length : constant Natural := 255;
    --  Maximal length of path names.
 
    Max_Facilities : constant Natural := 5;

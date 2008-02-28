@@ -21,7 +21,8 @@
 --  MA  02110-1301  USA
 --
 
-with Ada.Strings.Bounded; use Ada.Strings.Bounded;
+with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
+with Ada.Strings.Bounded;   use Ada.Strings.Bounded;
 
 --  Abstract package Facilities. Provides common data and
 --  methods used by all Alog facilities.
@@ -59,12 +60,6 @@ package Alog.Facilities is
    --  detaching Facilities or when the object gets out of scope.
 
 
-   --  Bounded String definitions.
-
-   package BS_Name is new Generic_Bounded_Length (Max_Facility_Name_Length);
-   use BS_Name;
-   --  Bounded string with length Max_Facility_Name_Length.
-
    package BS_Path is new Generic_Bounded_Length (Max_Path_Length);
    use BS_Path;
    --  Bounded string with length Max_Path_Length. Used in methods
@@ -74,8 +69,8 @@ private
 
    type Instance is abstract tagged
    limited record
-      Name      : BS_Name.Bounded_String :=
-        To_Bounded_String ("none");
+      Name      : Unbounded_String :=
+        To_Unbounded_String ("none");
       --  Facility Name. Defaults to "none".
 
       Threshold : Log_Level := DEBUG;

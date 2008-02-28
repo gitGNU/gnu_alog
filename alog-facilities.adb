@@ -29,7 +29,7 @@ package body Alog.Facilities is
 
    procedure Set_Name (F : in out Instance'Class; Name : in String) is
    begin
-      F.Name := BS_Name.To_Bounded_String (Name);
+      F.Name := To_Unbounded_String (Name);
    end Set_Name;
 
    --------------

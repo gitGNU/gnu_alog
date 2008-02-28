@@ -51,8 +51,6 @@ package body Facility_Tests is
       Ahven.Framework.Add_Test_Routine
         (T, Set_Name'Access, "set facility name");
       Ahven.Framework.Add_Test_Routine
-        (T, Set_Name_too_Long'Access, "set overlength name");
-      Ahven.Framework.Add_Test_Routine
         (T, Set_Valid_Logfile_Fd'Access, "set valid logfile");
       Ahven.Framework.Add_Test_Routine
         (T, Set_Invalid_Logfile_Fd'Access, "set invalid logfile");
@@ -123,23 +121,6 @@ package body Facility_Tests is
       Assert (Condition => F.Get_Name = Expected,
               Message => "name not equal");
    end Set_Name;
-
-   -----------------------
-   -- Set_Name_too_Long --
-   -----------------------
-
-   procedure Set_Name_too_Long is
-      use Ada.Strings;
-      F        : File_Descriptor.Instance;
-      Expected : String := "NAMETOOLONG";
-   begin
-      F.Set_Name (Name => Expected);
-      Fail ("no exception raised!");
-   exception
-      when Length_Error =>
-         Assert (Condition => True,
-                 Message => "expected exception occured!");
-   end Set_Name_too_Long;
 
    -------------------
    -- Set_Threshold --
