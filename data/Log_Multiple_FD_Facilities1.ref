@@ -1,0 +1,3 @@
+INFO ** Alog: new logging session initialized.
+DEBUG Logger testmessage, multiple facilities
+INFO Logger testmessage, multiple facilities

@@ -44,11 +44,17 @@ package body Logger_Tests is
    begin
       Set_Name (T, "Tests for Alog Logger");
       Ahven.Framework.Add_Test_Routine
-        (T, Attach_A_Facility'Access, "attach a facility");
+        (T, Attach_A_Facility'Access,
+         "attach a facility");
       Ahven.Framework.Add_Test_Routine
-        (T, Detach_A_Facility'Access, "detach a facility");
+        (T, Detach_A_Facility'Access,
+         "detach a facility");
       Ahven.Framework.Add_Test_Routine
-        (T, Log_One_FD_Facility'Access, "log to one fd facility");
+        (T, Log_One_FD_Facility'Access,
+         "log to one fd facility");
+      Ahven.Framework.Add_Test_Routine
+        (T, Log_Multiple_FD_Facilities'Access,
+         "log to multiple fd facilities");
    end Initialize;
 
    --------------
@@ -59,13 +65,22 @@ package body Logger_Tests is
       use Ada.Text_IO;
       use Ahven.Framework;
 
-      Files : String := "./data/Log_One_FD_Facility";
+      --  Files to clean after tests.
+      subtype Count is Natural range 1 .. 3;
+
+      Files : array (Count) of BS_Path.Bounded_String :=
+        (BS_Path.To_Bounded_String ("./data/Log_One_FD_Facility"),
+         BS_Path.To_Bounded_String ("./data/Log_Multiple_FD_Facilities1"),
+         BS_Path.To_Bounded_String ("./data/Log_Multiple_FD_Facilities2")
+        );
       F     : File_Type;
    begin
-      Open (File => F,
-            Mode => In_File,
-            Name => Files);
-      Delete (File => F);
+      for c in Count loop
+         Open (File => F,
+               Mode => In_File,
+               Name => BS_Path.To_String (Files (c)));
+         Delete (File => F);
+      end loop;
 
       Finalize (Test_Case (T));
 
@@ -117,7 +132,7 @@ package body Logger_Tests is
       Alog.Facilities.File_Descriptor.Handle
         (Facility).Toggle_Write_Timestamp (Set => False);
       Alog.Facilities.File_Descriptor.Handle
-        (Facility).Set_Logfile ("./data/Log_One_FD_Facility");
+        (Facility).Set_Logfile (Testfile);
 
       Logger.Attach_Facility (F => Facility);
       Logger.Log_Message (Level => Alog.DEBUG,
@@ -131,5 +146,60 @@ package body Logger_Tests is
                Filename2 => Testfile),
               Message   => "files are not equal");
    end Log_One_FD_Facility;
+
+   --------------------------------
+   -- Log_Multiple_FD_Facilities --
+   --------------------------------
+
+   procedure Log_Multiple_FD_Facilities is
+      Logger    : Alog.Logger.Instance;
+
+      Facility1 : Alog.Facilities.Handle :=
+        new Alog.Facilities.File_Descriptor.Instance;
+      Testfile1 : String := "./data/Log_Multiple_FD_Facilities1";
+      Reffile1  : String := "./data/Log_Multiple_FD_Facilities1.ref";
+
+      Facility2 : Alog.Facilities.Handle :=
+        new Alog.Facilities.File_Descriptor.Instance;
+      Testfile2 : String := "./data/Log_Multiple_FD_Facilities2";
+      Reffile2  : String := "./data/Log_Multiple_FD_Facilities2.ref";
+   begin
+      --  Call facility fd specific procedures.
+      Alog.Facilities.File_Descriptor.Handle
+        (Facility1).Toggle_Write_Timestamp (Set => False);
+      Alog.Facilities.File_Descriptor.Handle
+        (Facility1).Set_Logfile (Testfile1);
+
+      Alog.Facilities.File_Descriptor.Handle
+        (Facility2).Toggle_Write_Timestamp (Set => False);
+      Alog.Facilities.File_Descriptor.Handle
+        (Facility2).Set_Logfile (Testfile2);
+
+      --  Set INFO-threshold for second facility.
+      Facility2.Set_Threshold (Level => Alog.INFO);
+
+      --  Attach both facilities to logger instance.
+      Logger.Attach_Facility (F => Facility1);
+      Logger.Attach_Facility (F => Facility2);
+
+      --  Log two messages with different loglevels.
+      Logger.Log_Message (Level => Alog.DEBUG,
+                          Msg   => "Logger testmessage, multiple facilities");
+      Logger.Log_Message (Level => Alog.INFO,
+                          Msg   => "Logger testmessage, multiple facilities");
+
+      --  Cleanup
+      Logger.Clear;
+
+      Assert (Condition => Alog.Helpers.Assert_Files_Equal
+              (Filename1 => Reffile1,
+               Filename2 => Testfile1),
+              Message   => "file1 is not equal");
+
+      Assert (Condition => Alog.Helpers.Assert_Files_Equal
+              (Filename1 => Reffile2,
+               Filename2 => Testfile2),
+              Message   => "file2 is not equal");
+   end Log_Multiple_FD_Facilities;
 
 end Logger_Tests;

@@ -43,4 +43,7 @@ package Logger_Tests is
    procedure Log_One_FD_Facility;
    --  Test logging to one fd based facility.
 
+   procedure Log_Multiple_FD_Facilities;
+   --  Test logging to multiple fd based facilities.
+
 end Logger_Tests;
