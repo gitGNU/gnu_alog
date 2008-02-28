@@ -37,7 +37,7 @@ package body Alog.Facilities.File_Descriptor is
         (Date    => Calendar.Clock,
          Picture => Picture_String (F.Timestamp_Format));
    begin
-      if Level >= F.Get_Threshold then
+      if Level <= F.Get_Threshold then
          if F.Is_Write_Timestamp then
             Text_IO.Put (File  => Logfile,
                          Item  => Timestamp);

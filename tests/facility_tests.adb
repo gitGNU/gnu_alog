@@ -312,7 +312,10 @@ package body Facility_Tests is
    -----------------
 
    procedure Init_Syslog is
+      Facility : Alog.Facilities.Syslog.Instance;
    begin
+      Facility.Write_Message (Level => DEBUG,
+                              Msg   => "Test");
       Fail (Message => "not yet implemented");
    end Init_Syslog;
 

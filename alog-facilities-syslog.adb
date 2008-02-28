@@ -30,8 +30,20 @@ package body Alog.Facilities.Syslog is
    procedure Write_Message (F     : in Instance;
                             Level : in Log_Level := INFO;
                             Msg   : in String) is
+
+      procedure C_Syslog (Prio : Natural;
+                          Msg  : Interfaces.C.Strings.chars_ptr);
+      pragma Import (C, C_Syslog, "syslog");
+      Char_Ptr : Interfaces.C.Strings.chars_ptr;
    begin
-      null;
+      if Level <= F.Get_Threshold then
+         Char_Ptr := Interfaces.C.Strings.New_String (Str => Msg);
+         C_Syslog (Prio => Log_Level'Pos (Level),
+                   Msg  => Char_Ptr);
+
+         --  Free message memory.
+         Interfaces.C.Strings.Free (Char_Ptr);
+      end if;
    end Write_Message;
 
    --------------

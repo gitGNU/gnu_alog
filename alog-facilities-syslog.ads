@@ -20,7 +20,12 @@
 --  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,
 --  MA  02110-1301  USA
 
+with Interfaces.C.Strings;
+with Interfaces.C;
+
 --  Syslog facility. Used to log to systems syslog.
+--  At the moment, this facility is a thin binding to syslog
+--  function calls.
 package Alog.Facilities.Syslog is
 
    type Instance is new Alog.Facilities.Instance with private;
