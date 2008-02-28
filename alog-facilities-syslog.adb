@@ -49,8 +49,10 @@ package body Alog.Facilities.Syslog is
    --------------
    -- Teardown --
    --------------
+
    procedure Teardown (F : in out Instance) is
    begin
+      --  Nothing to do for now.
       null;
    end Teardown;
 
