@@ -34,8 +34,10 @@ with Ahven; use Ahven;
 --  Alog
 with Alog; use Alog;
 with Alog.Helpers;
-with Alog.Facilities.File_Descriptor;
 with Alog.Facilities; use Alog.Facilities;
+with Alog.Facilities.File_Descriptor;
+with Alog.Facilities.Syslog;
+
 
 package body Facility_Tests is
 
@@ -66,6 +68,8 @@ package body Facility_Tests is
         (T, Disable_Write_Loglevel_Fd'Access, "disable fd loglevel");
       Ahven.Framework.Add_Test_Routine
         (T, Set_Threshold_Fd'Access, "set fd threshold");
+      Ahven.Framework.Add_Test_Routine
+        (T, Init_Syslog'Access, "init syslog facility");
    end Initialize;
 
    --------------
@@ -301,7 +305,15 @@ package body Facility_Tests is
               Message   => "threshold does not work");
 
       F.Teardown;
-
    end Set_Threshold_Fd;
+
+   -----------------
+   -- Init_Syslog --
+   -----------------
+
+   procedure Init_Syslog is
+   begin
+      Fail (Message => "not yet implemented");
+   end Init_Syslog;
 
 end Facility_Tests;

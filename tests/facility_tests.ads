@@ -68,4 +68,9 @@ package Facility_Tests is
    procedure Set_Threshold_Fd;
    --  Test Threshold-functionality with fd facility.
 
+   --  Syslog Facility
+
+   procedure Init_Syslog;
+   --  Test initialization of syslog-facility.
+
 end Facility_Tests;
