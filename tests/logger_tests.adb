@@ -50,6 +50,9 @@ package body Logger_Tests is
         (T, Detach_A_Facility'Access,
          "detach a facility");
       Ahven.Framework.Add_Test_Routine
+        (T, Clear_A_Logger'Access,
+         "clear logger");
+      Ahven.Framework.Add_Test_Routine
         (T, Log_One_FD_Facility'Access,
          "log to one fd facility");
       Ahven.Framework.Add_Test_Routine
@@ -116,6 +119,25 @@ package body Logger_Tests is
    begin
       Fail ("not yet implemented!");
    end Detach_A_Facility;
+
+   --------------------
+   -- Clear_A_Logger --
+   --------------------
+
+   procedure Clear_A_Logger is
+      Logger   : Alog.Logger.Instance;
+      Facility : Alog.Facilities.Handle :=
+        new Alog.Facilities.File_Descriptor.Instance;
+   begin
+      Logger.Attach_Facility (F => Facility);
+      Assert (Condition => Logger.Facility_Count = 1,
+              Message   => "could not attach facility");
+
+      --  Clear it.
+      Logger.Clear;
+      Assert (Condition => Logger.Facility_Count = 0,
+              Message   => "could not clear logger");
+   end Clear_A_Logger;
 
    -------------------------
    -- Log_One_FD_Facility --

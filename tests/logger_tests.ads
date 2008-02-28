@@ -40,6 +40,9 @@ package Logger_Tests is
    procedure Detach_A_Facility;
    --  Test Facility detaching.
 
+   procedure Clear_A_Logger;
+   --  Test Logger cleanup.
+
    procedure Log_One_FD_Facility;
    --  Test logging to one fd based facility.
 
