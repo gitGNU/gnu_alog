@@ -36,8 +36,7 @@ package body Alog.Facilities.SMTP is
                             Msg   : in String) is
 
       Status      : AWS.SMTP.Status;
-      SMTP_Server : AWS.SMTP.Receiver
-        := AWS.SMTP.Client.Initialize ("mailx.swiss-it.ch");
+      SMTP_Server : AWS.SMTP.Receiver;
    begin
       --  Raise No_Recipient if no recipient has been set
       --  by calling Set_Recipient().
@@ -50,6 +49,9 @@ package body Alog.Facilities.SMTP is
       if not F.Is_Server then
          raise No_Server;
       end if;
+
+      --  Init receiving server.
+      SMTP_Server := AWS.SMTP.Client.Initialize (To_String (F.Server));
 
       --  Try to send message.
       AWS.SMTP.Client.Send
