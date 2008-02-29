@@ -55,9 +55,9 @@ package Alog.Facilities is
    --  Write message with specified log level.
 
    procedure Teardown (F : in out Instance) is abstract;
-   --  Each facility must provide a Teardown-procedure.
-   --  These procedures are called by Logger instances when
-   --  detaching Facilities or when the object gets out of scope.
+   --  Each facility must provide a Teardown-procedure. These procedures
+   --  are called by Logger instances when detaching Facilities or when
+   --  the logger object gets out of scope.
 
 
    package BS_Path is new Generic_Bounded_Length (Max_Path_Length);

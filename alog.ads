@@ -22,27 +22,24 @@
 --
 
 --  Alog: Ada Logging Components. Provides easy to use API for
---  different logging facilities.
+--  different logging facilities and log message transforms.
 package Alog is
 
-   type Log_Level is
-     (
-      EMERGENCY,
-      ALERT,
-      CRITICAL,
-      ERROR,
-      WARNING,
-      NOTICE,
-      INFO,
-      DEBUG
-     );
+   type Log_Level is (EMERGENCY,
+                      ALERT,
+                      CRITICAL,
+                      ERROR,
+                      WARNING,
+                      NOTICE,
+                      INFO,
+                      DEBUG);
    --  Provided log levels. These log levels can be used
    --  to categorize log messages.
 
-   Max_Path_Length : constant Natural := 255;
+   Max_Path_Length : constant Natural := 128;
    --  Maximal length of path names.
 
-   Max_Facilities : constant Natural := 5;
+   Max_Facilities : constant Natural := 15;
    --  Maximum number of facilities a single logger instance
    --  can manage.
 

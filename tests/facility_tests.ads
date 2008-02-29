@@ -34,7 +34,9 @@ package Facility_Tests is
    procedure Finalize (T : in out FTest);
    --  Teardown Test suite.
 
+
    --  GENERIC
+
 
    procedure Set_Name;
    --  Set name of Facility test.
@@ -42,7 +44,9 @@ package Facility_Tests is
    procedure Set_Threshold;
    --  Test set threshold.
 
+
    --  FD Facility
+
 
    procedure Set_Valid_Logfile_Fd;
    --  Set correct Fd test.

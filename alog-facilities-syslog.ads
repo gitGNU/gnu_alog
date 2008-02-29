@@ -34,26 +34,21 @@ package Alog.Facilities.Syslog is
    type Instance is new Alog.Facilities.Instance with private;
    --  Syslog based logging facility.
 
-   type S_Facility is (
-                       LOG_AUTH,
+   type S_Facility is (LOG_AUTH,
                        LOG_USER,
                        LOG_MAIL,
                        LOG_DAEMON,
                        LOG_SYSLOG,
-                       LOG_CRON
-                      );
-   --  Corresponding Ada-Implementation of syslogs "facility" parameter for
-   --  openlog() call. Only the important/usable facilities are mapped.
+                       LOG_CRON);
+   --  Corresponding Ada-Implementation of syslogs "facility" parameter.
+   --  Only the important/usable facilities are mapped.
 
-   for S_Facility use
-     (
-      LOG_AUTH   => 0,
-      LOG_USER   => 8,
-      LOG_MAIL   => 16,
-      LOG_DAEMON => 24,
-      LOG_SYSLOG => 40,
-      LOG_CRON   => 72
-     );
+   for S_Facility use (LOG_AUTH   => 0,
+                       LOG_USER   => 8,
+                       LOG_MAIL   => 16,
+                       LOG_DAEMON => 24,
+                       LOG_SYSLOG => 40,
+                       LOG_CRON   => 72);
    --  Facility map table.
 
    type Handle is access all Instance;
@@ -62,9 +57,7 @@ package Alog.Facilities.Syslog is
    procedure Write_Message (F     : in Instance;
                             Level : in Log_Level := INFO;
                             Msg   : in String);
-   --  Implementation of Write_Message. If Write_Message is called without
-   --  calling Openlog() first, probably system dependent default values
-   --  will be used as arguments for an implicit call to libc openlog().
+   --  Implementation of Write_Message.
 
    overriding
    procedure Teardown (F : in out Instance);
