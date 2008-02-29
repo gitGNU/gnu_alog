@@ -19,34 +19,27 @@
 --  along with Alog; if not, write to the Free Software
 --  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,
 --  MA  02110-1301  USA
---
 
-project Alog is
+package body Alog.Facilities.SMTP is
 
-   for Languages use ("Ada", "Makefile");
-   for Object_Dir use "obj";
-   for Main use ("runner.adb");
-   for Source_Dirs use (".", "tests//**");
+   -------------------
+   -- Write_Message --
+   -------------------
 
-   package Naming is
-      for Specification_Suffix ("c") use ".h";
-      for Implementation_Suffix ("c") use ".c";
-      for Specification_Suffix ("makefile") use "Makefile";
-      for Implementation_Suffix ("makefile") use "<no suffix defined>";
-   end Naming;
+   procedure Write_Message (F     : in Instance;
+                            Level : in Log_Level := INFO;
+                            Msg   : in String) is
+   begin
+      null;
+   end Write_Message;
 
-   package Compiler is
-      for Default_Switches ("ada") use ("-gnat05", "-gnaty", "-g", "-gnata", "-gnatf", "-gnato", "-fstack-check");
-   end Compiler;
+   --------------
+   -- Teardown --
+   --------------
 
-   package Binder is
-      for Default_Switches ("ada") use ("-E");
-   end Binder;
+   procedure Teardown (F : in out Instance) is
+   begin
+      null;
+   end Teardown;
 
-   package Linker is
-      for Default_Switches ("ada") use ("-g");
-      for Linker_Options use ();
-   end Linker;
-
-end Alog;
-
+end Alog.Facilities.SMTP;

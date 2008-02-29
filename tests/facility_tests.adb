@@ -37,6 +37,7 @@ with Alog.Helpers;
 with Alog.Facilities; use Alog.Facilities;
 with Alog.Facilities.File_Descriptor;
 with Alog.Facilities.Syslog;
+with Alog.Facilities.SMTP;
 
 
 package body Facility_Tests is
@@ -68,6 +69,8 @@ package body Facility_Tests is
         (T, Set_Threshold_Fd'Access, "set fd threshold");
       Ahven.Framework.Add_Test_Routine
         (T, Init_Syslog'Access, "init syslog facility");
+      Ahven.Framework.Add_Test_Routine
+        (T, Send_Simple_Mail'Access, "send simple mail");
    end Initialize;
 
    --------------
@@ -297,5 +300,15 @@ package body Facility_Tests is
    begin
       Fail (Message => "not yet implemented");
    end Init_Syslog;
+
+   ----------------------
+   -- Send_Simple_Mail --
+   ----------------------
+
+   procedure Send_Simple_Mail is
+      F : SMTP.Instance;
+   begin
+      Fail (Message => "not yet implemented");
+   end Send_Simple_Mail;
 
 end Facility_Tests;

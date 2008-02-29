@@ -34,19 +34,11 @@ package Facility_Tests is
    procedure Finalize (T : in out FTest);
    --  Teardown Test suite.
 
-
-   --  GENERIC
-
-
    procedure Set_Name;
    --  Set name of Facility test.
 
    procedure Set_Threshold;
    --  Test set threshold.
-
-
-   --  FD Facility
-
 
    procedure Set_Valid_Logfile_Fd;
    --  Set correct Fd test.
@@ -69,9 +61,10 @@ package Facility_Tests is
    procedure Set_Threshold_Fd;
    --  Test Threshold-functionality with fd facility.
 
-   --  Syslog Facility
-
    procedure Init_Syslog;
    --  Test initialization of syslog-facility.
+
+   procedure Send_Simple_Mail;
+   --  Test mail sending facility.
 
 end Facility_Tests;

@@ -20,38 +20,14 @@
 --  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,
 --  MA  02110-1301  USA
 
-with Interfaces.C.Strings;
-with Interfaces.C;
-
---  Syslog facility. Used to log to systems syslog.
---  At the moment, this facility is a thin binding to syslog
---  function calls. The implementation attempts to resemble
---  the native libc-functions of your system, so that anyone
---  being familiar with syslog.h should be able to use this
---  module right away.
-package Alog.Facilities.Syslog is
+--  SMTP-Logging facility. Used to send log-messages to a configurable
+--  mailserver. AWS must be installed for this facility to work.
+package Alog.Facilities.SMTP is
 
    type Instance is new Alog.Facilities.Instance with private;
-   --  Syslog based logging facility.
+   --  SMTP based logging facility.
 
    type Handle is access all Instance;
-
-   type S_Facility is (LOG_AUTH,
-                       LOG_USER,
-                       LOG_MAIL,
-                       LOG_DAEMON,
-                       LOG_SYSLOG,
-                       LOG_CRON);
-   --  Corresponding Ada-Implementation of syslogs "facility" parameter.
-   --  Only the important/usable facilities are mapped.
-
-   for S_Facility use (LOG_AUTH   => 0,
-                       LOG_USER   => 8,
-                       LOG_MAIL   => 16,
-                       LOG_DAEMON => 24,
-                       LOG_SYSLOG => 40,
-                       LOG_CRON   => 72);
-   --  Facility map table.
 
    overriding
    procedure Write_Message (F     : in Instance;
@@ -67,4 +43,5 @@ private
 
    type Instance is limited new Alog.Facilities.Instance with null record;
 
-end Alog.Facilities.Syslog;
+
+end Alog.Facilities.SMTP;
