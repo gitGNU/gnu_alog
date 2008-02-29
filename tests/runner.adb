@@ -30,6 +30,7 @@ procedure Runner is
    S : Ahven.Framework.Test_Suite_Access :=
      Ahven.Framework.Create_Suite ("All Alog tests");
    pragma Linker_Options ("-lahven");
+   pragma Linker_Options ("-laws");
 begin
    Ahven.Framework.Add_Test (S.all, new Facility_Tests.FTest);
    Ahven.Framework.Add_Test (S.all, new Logger_Tests.LTest);

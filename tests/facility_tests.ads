@@ -64,6 +64,9 @@ package Facility_Tests is
    procedure Init_Syslog;
    --  Test initialization of syslog-facility.
 
+   procedure Send_No_Recipient;
+   --  Test sending mail with no recipient specified.
+
    procedure Send_Simple_Mail;
    --  Test mail sending facility.
 

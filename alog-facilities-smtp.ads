@@ -39,9 +39,43 @@ package Alog.Facilities.SMTP is
    procedure Teardown (F : in out Instance);
    --  Implementation of Teardown-procedure.
 
+   type Mail_Address is tagged
+      record
+         Name  : Unbounded_String;
+         EMail : Unbounded_String;
+      end record;
+   --  Holds Sender / Recipient information.
+
+   No_Recipient    : exception;
+   --  No recipient specified. Cannot send mail.
+
+   Delivery_Failed : exception;
+   --  Mail could not be delivered.
+
 private
 
-   type Instance is limited new Alog.Facilities.Instance with null record;
+   type Instance is limited new Alog.Facilities.Instance with
+      record
+         Server       : Unbounded_String;
+         --  Server to connect when sending log-mails.
 
+         Sender       : Mail_Address :=
+           (Name  => To_Unbounded_String ("Alog-Alert"),
+            EMail => To_Unbounded_String ("alog@localhost"));
+         --  Notification sender address/name.
+
+         Recipient    : Mail_Address;
+         --  Recipient for log-mails. Must be specified before
+         --  calling Write_Message(), else No_Recipient exception
+         --  is thrown.
+
+         Is_Recipient : Boolean := False;
+         --  Indicates wheter a recipient is set.
+
+         Subject      : Unbounded_String := To_Unbounded_String
+           ("Alog: Log-Message");
+         --  Subject of messages from Alog-System
+         --  (default: Alog: Log-Message).
+      end record;
 
 end Alog.Facilities.SMTP;

@@ -70,6 +70,8 @@ package body Facility_Tests is
       Ahven.Framework.Add_Test_Routine
         (T, Init_Syslog'Access, "init syslog facility");
       Ahven.Framework.Add_Test_Routine
+        (T, Send_No_Recipient'Access, "send with no recipient");
+      Ahven.Framework.Add_Test_Routine
         (T, Send_Simple_Mail'Access, "send simple mail");
    end Initialize;
 
@@ -300,6 +302,26 @@ package body Facility_Tests is
    begin
       Fail (Message => "not yet implemented");
    end Init_Syslog;
+
+   -----------------------
+   -- Send_No_Recipient --
+   -----------------------
+
+   procedure Send_No_Recipient is
+      use Alog.Facilities;
+      F : SMTP.Instance;
+   begin
+      --  Try to send a log-message with no recipient
+      --  specified first, should raise No_Recipient exception.
+      F.Write_Message (Level => DEBUG,
+                       Msg   => "this should not work");
+
+      Fail (Message => "exception not thrown");
+   exception
+      when SMTP.No_Recipient =>
+         --  all is well, do nothing.
+         null;
+   end Send_No_Recipient;
 
    ----------------------
    -- Send_Simple_Mail --

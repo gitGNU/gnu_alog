@@ -20,6 +20,11 @@
 --  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,
 --  MA  02110-1301  USA
 
+with AWS;
+with AWS.SMTP.Client;
+
+with Ada.Text_IO;
+
 package body Alog.Facilities.SMTP is
 
    -------------------
@@ -29,8 +34,33 @@ package body Alog.Facilities.SMTP is
    procedure Write_Message (F     : in Instance;
                             Level : in Log_Level := INFO;
                             Msg   : in String) is
+
+      Status      : AWS.SMTP.Status;
+      SMTP_Server : AWS.SMTP.Receiver
+        := AWS.SMTP.Client.Initialize ("mailx.swiss-it.ch");
    begin
-      null;
+      --  Raise No_Recipient if no recipient has been set
+      --  by calling Set_Recipient().
+      if not F.Is_Recipient then
+         raise No_Recipient;
+      end if;
+
+      --  Try to send message.
+      AWS.SMTP.Client.Send
+        (SMTP_Server,
+         From    => AWS.SMTP.E_Mail
+           (To_String (F.Sender.Name), To_String (F.Sender.EMail)),
+         To      => AWS.SMTP.E_Mail
+           (To_String (F.Recipient.Name), To_String (F.Recipient.EMail)),
+         Subject => To_String (F.Subject),
+         Message => Msg,
+         Status  => Status);
+
+      --  Raise Delivery_Failure exception if SMTP-Status is not O.K.
+      if not AWS.SMTP.Is_Ok (Status) then
+         raise Delivery_Failed with AWS.SMTP.Status_Message (Status);
+      end if;
+
    end Write_Message;
 
    --------------
