@@ -1,0 +1,7 @@
+For Alog to compile, you need the following
+two libraries/frameworks installed:
+
+* AWS (Ada Web Server)
+	https://libre.adacore.com/aws/main.html
+* Ahven (Test-Framework)
+	http://home.gna.org/ahven/
