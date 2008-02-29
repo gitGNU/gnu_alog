@@ -72,6 +72,8 @@ package body Facility_Tests is
       Ahven.Framework.Add_Test_Routine
         (T, Send_No_Recipient'Access, "send with no recipient");
       Ahven.Framework.Add_Test_Routine
+        (T, Send_No_Server'Access, "send with no server");
+      Ahven.Framework.Add_Test_Routine
         (T, Send_Simple_Mail'Access, "send simple mail");
    end Initialize;
 
@@ -323,14 +325,47 @@ package body Facility_Tests is
          null;
    end Send_No_Recipient;
 
+   --------------------
+   -- Send_No_Server --
+   --------------------
+
+   procedure Send_No_Server is
+      use Alog.Facilities;
+      F : SMTP.Instance;
+   begin
+      F.Set_Recipient (Name  => "Send_No_Server",
+                       EMail => "Testcase");
+      --  Try to send a log-message with no server
+      --  specified first, should raise No_Server exception.
+      F.Write_Message (Level => DEBUG,
+                       Msg   => "this should not work");
+
+      Fail (Message => "exception not thrown");
+   exception
+      when SMTP.No_Server =>
+         --  all is well, do nothing.
+         null;
+   end Send_No_Server;
+
    ----------------------
    -- Send_Simple_Mail --
    ----------------------
 
    procedure Send_Simple_Mail is
+      use Alog.Facilities;
       F : SMTP.Instance;
    begin
-      Fail (Message => "not yet implemented");
+      --  Set recipient.
+      F.Set_Recipient (Name  => "Facility-Test",
+                       EMail => "buerki@swiss-it.ch");
+      --  Set server.
+      F.Set_Server (Name => "mailx.swiss-it.ch");
+
+      F.Write_Message (Level => DEBUG,
+                       Msg   => "This is a testmessage from Alog!");
+   exception
+      when SMTP.Delivery_Failed =>
+         Fail (Message => "could not deliver msg");
    end Send_Simple_Mail;
 
 end Facility_Tests;

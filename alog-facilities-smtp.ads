@@ -39,6 +39,29 @@ package Alog.Facilities.SMTP is
    procedure Teardown (F : in out Instance);
    --  Implementation of Teardown-procedure.
 
+
+   procedure Set_Recipient (F      : in out Instance;
+                            Name   : in     String;
+                            EMail  : in     String);
+   --  Set recipient for log-messages. This procedure MUST be called
+   --  before subsequent calls to Write_Message().
+
+   procedure Set_Server (F      : in out Instance;
+                         Name   : in     String);
+   --  Set server for log-messages. This procedure MUST be called
+   --  before subsequent calls to Write_Message().
+
+   No_Recipient    : exception;
+   --  No recipient specified. Cannot send mail.
+
+   No_Server       : exception;
+   --  No server specified. Cannot send mail.
+
+   Delivery_Failed : exception;
+   --  Mail could not be delivered.
+
+private
+
    type Mail_Address is tagged
       record
          Name  : Unbounded_String;
@@ -46,23 +69,13 @@ package Alog.Facilities.SMTP is
       end record;
    --  Holds Sender / Recipient information.
 
-   No_Recipient    : exception;
-   --  No recipient specified. Cannot send mail.
-
-   Delivery_Failed : exception;
-   --  Mail could not be delivered.
-
-private
-
    type Instance is limited new Alog.Facilities.Instance with
       record
          Server       : Unbounded_String;
          --  Server to connect when sending log-mails.
 
-         Sender       : Mail_Address :=
-           (Name  => To_Unbounded_String ("Alog-Alert"),
-            EMail => To_Unbounded_String ("alog@localhost"));
-         --  Notification sender address/name.
+         Is_Server    : Boolean := False;
+         --  Indicates whether a server is set.
 
          Recipient    : Mail_Address;
          --  Recipient for log-mails. Must be specified before
@@ -70,7 +83,12 @@ private
          --  is thrown.
 
          Is_Recipient : Boolean := False;
-         --  Indicates wheter a recipient is set.
+         --  Indicates whether a recipient is set.
+
+         Sender       : Mail_Address :=
+           (Name  => To_Unbounded_String ("Alog-Alert"),
+            EMail => To_Unbounded_String ("alog@localhost"));
+         --  Notification sender address/name.
 
          Subject      : Unbounded_String := To_Unbounded_String
            ("Alog: Log-Message");

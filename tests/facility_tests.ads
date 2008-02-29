@@ -67,6 +67,9 @@ package Facility_Tests is
    procedure Send_No_Recipient;
    --  Test sending mail with no recipient specified.
 
+   procedure Send_No_Server;
+   --  Test sending mail with no server specified.
+
    procedure Send_Simple_Mail;
    --  Test mail sending facility.
 

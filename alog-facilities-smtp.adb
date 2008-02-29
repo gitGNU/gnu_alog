@@ -45,6 +45,12 @@ package body Alog.Facilities.SMTP is
          raise No_Recipient;
       end if;
 
+      --  Raise No_Server if no server has been set by calling
+      --  Set_Server().
+      if not F.Is_Server then
+         raise No_Server;
+      end if;
+
       --  Try to send message.
       AWS.SMTP.Client.Send
         (SMTP_Server,
@@ -69,7 +75,32 @@ package body Alog.Facilities.SMTP is
 
    procedure Teardown (F : in out Instance) is
    begin
+      --  Nothing to do for now.
       null;
    end Teardown;
+
+   -------------------
+   -- Set_Recipient --
+   -------------------
+
+   procedure Set_Recipient (F      : in out Instance;
+                            Name   : in     String;
+                            EMail  : in     String) is
+   begin
+      F.Recipient := (Name  => To_Unbounded_String (Name),
+                      EMail => To_Unbounded_String (EMail));
+      F.Is_Recipient := True;
+   end Set_Recipient;
+
+   ----------------
+   -- Set_Server --
+   ----------------
+
+   procedure Set_Server (F      : in out Instance;
+                         Name   : in     String) is
+   begin
+      F.Server := To_Unbounded_String (Name);
+      F.Is_Server := True;
+   end Set_Server;
 
 end Alog.Facilities.SMTP;
