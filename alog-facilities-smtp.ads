@@ -20,6 +20,9 @@
 --  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,
 --  MA  02110-1301  USA
 
+with AWS;
+with AWS.SMTP.Client;
+
 --  SMTP-Logging facility. Used to send log-messages to a configurable
 --  mailserver. AWS must be installed for this facility to work.
 package Alog.Facilities.SMTP is

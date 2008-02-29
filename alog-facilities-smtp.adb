@@ -20,11 +20,6 @@
 --  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,
 --  MA  02110-1301  USA
 
-with AWS;
-with AWS.SMTP.Client;
-
-with Ada.Text_IO;
-
 package body Alog.Facilities.SMTP is
 
    -------------------
