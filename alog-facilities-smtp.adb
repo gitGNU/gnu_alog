@@ -45,6 +45,9 @@ package body Alog.Facilities.SMTP is
          raise No_Server;
       end if;
 
+      --  Check threshold first.
+      if Level > F.Get_Threshold then return; end if;
+
       --  Init receiving server.
       SMTP_Server := AWS.SMTP.Client.Initialize (To_String (F.Server));
 

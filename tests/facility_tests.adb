@@ -137,7 +137,7 @@ package body Facility_Tests is
       F        : File_Descriptor.Instance;
       Expected : Log_Level := DEBUG;
    begin
-      F.Set_Threshold (Expected);
+      F.Set_Threshold (Level => Expected);
       Assert (Condition => F.Get_Threshold = Expected,
               Message => "Log_Level not equal");
    end Set_Threshold;
@@ -170,7 +170,7 @@ package body Facility_Tests is
    exception
       when Name_Error =>
          Assert (Condition => True,
-                 Message => "expected exception occured!");
+                 Message   => "expected exception occured!");
    end Set_Invalid_Logfile_Fd;
 
    ----------------------
@@ -357,12 +357,13 @@ package body Facility_Tests is
    begin
       --  Set recipient.
       F.Set_Recipient (Name  => "Facility-Test",
-                       EMail => "buerki@swiss-it.ch");
+                       EMail => "test@alog.ch");
       --  Set server.
-      F.Set_Server (Name => "mailx.swiss-it.ch");
+      F.Set_Server (Name => "localhost");
 
-      F.Write_Message (Level => DEBUG,
-                       Msg   => "This is a testmessage from Alog!");
+      --  F.Write_Message (Level => DEBUG,
+      --                   Msg   => "This is a testmessage from Alog!");
+      Fail (Message => "not yet implemented");
    exception
       when SMTP.Delivery_Failed =>
          Fail (Message => "could not deliver msg");
