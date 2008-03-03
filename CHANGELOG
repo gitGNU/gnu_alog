@@ -1,0 +1,13 @@
+Alog ChangeLog
+==============
+
+Version 0.1 (not yet released)
+------------------------------
+.Additions and changes
+- File_Descriptor facility implemented.
+- Syslog facility implemented.
+- SMTP facility implemented.
+- Basic logger support.
+
+.Bug fixes
+- none yet.
