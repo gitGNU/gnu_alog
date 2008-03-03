@@ -26,12 +26,12 @@ with Ahven.Framework;
 --  Tests for Alog logger component.
 package Logger_Tests is
 
-   type LTest is new Ahven.Framework.Test_Case with null record;
+   type L_Test is new Ahven.Framework.Test_Case with null record;
 
-   procedure Initialize (T : in out LTest);
+   procedure Initialize (T : in out L_Test);
    --  Initialize Test suite.
 
-   procedure Finalize (T : in out LTest);
+   procedure Finalize (T : in out L_Test);
    --  Teardown Test suite.
 
    procedure Attach_A_Facility;

@@ -26,12 +26,12 @@ with Ahven.Framework;
 --  Tests for Alog facility components.
 package Facility_Tests is
 
-   type FTest is new Ahven.Framework.Test_Case with null record;
+   type F_Test is new Ahven.Framework.Test_Case with null record;
 
-   procedure Initialize (T : in out FTest);
+   procedure Initialize (T : in out F_Test);
    --  Initialize Test suite.
 
-   procedure Finalize (T : in out FTest);
+   procedure Finalize (T : in out F_Test);
    --  Teardown Test suite.
 
    procedure Set_Name;

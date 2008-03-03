@@ -32,8 +32,8 @@ procedure Runner is
    pragma Linker_Options ("-lahven");
    pragma Linker_Options ("-laws");
 begin
-   Ahven.Framework.Add_Test (S.all, new Facility_Tests.FTest);
-   Ahven.Framework.Add_Test (S.all, new Logger_Tests.LTest);
+   Ahven.Framework.Add_Test (S.all, new Facility_Tests.F_Test);
+   Ahven.Framework.Add_Test (S.all, new Logger_Tests.L_Test);
 
    Ahven.Text_Runner.Run (S);
    Ahven.Framework.Release_Suite (S);

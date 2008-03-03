@@ -32,12 +32,12 @@ package Alog.Helpers is
    --  The two files are closed but not removed after comparison.
 
 private
-   type MY_REC is
+   type My_Rec is
       record
          Char : Character;
       end record;
 
-   package D_IO is new Ada.Direct_IO (MY_REC);
+   package D_IO is new Ada.Direct_IO (My_Rec);
    use D_IO;
 
 end Alog.Helpers;

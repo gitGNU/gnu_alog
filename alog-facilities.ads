@@ -21,8 +21,10 @@
 --  MA  02110-1301  USA
 --
 
-with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
-with Ada.Strings.Bounded;   use Ada.Strings.Bounded;
+with Ada.Strings.Unbounded;
+use Ada.Strings.Unbounded;
+with Ada.Strings.Bounded;
+use Ada.Strings.Bounded;
 
 --  Abstract package Facilities. Provides common data and
 --  methods used by all Alog facilities.

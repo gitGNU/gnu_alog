@@ -46,7 +46,7 @@ package body Facility_Tests is
    -- Initialize --
    ----------------
 
-   procedure Initialize (T : in out FTest) is
+   procedure Initialize (T : in out F_Test) is
    begin
       Set_Name (T, "Tests for Alog Facilites");
       Ahven.Framework.Add_Test_Routine
@@ -81,7 +81,7 @@ package body Facility_Tests is
    -- Finalize --
    --------------
 
-   procedure Finalize (T : in out FTest) is
+   procedure Finalize (T : in out F_Test) is
       use Ada.Text_IO;
       use Ahven.Framework;
 

@@ -34,7 +34,7 @@ package body Alog.Helpers is
    is
       File1        : D_IO.File_Type;
       File2        : D_IO.File_Type;
-      Char1, Char2 : MY_REC;
+      Char1, Char2 : My_Rec;
       Result       : Boolean := True;
    begin
       --  Open both files.

@@ -40,7 +40,7 @@ package body Logger_Tests is
    -- Initialize --
    ----------------
 
-   procedure Initialize (T : in out LTest) is
+   procedure Initialize (T : in out L_Test) is
    begin
       Set_Name (T, "Tests for Alog Logger");
       Ahven.Framework.Add_Test_Routine
@@ -64,7 +64,7 @@ package body Logger_Tests is
    -- Finalize --
    --------------
 
-   procedure Finalize (T : in out LTest) is
+   procedure Finalize (T : in out L_Test) is
       use Ada.Text_IO;
       use Ahven.Framework;
 
