@@ -29,6 +29,8 @@ system wide.
   $ make
   $ make PREFIX=/usr/local install
 
+If no `PREFIX` is specified, `$(HOME)/libraries` is used.
+
 Obtaining Alog
 --------------
 The latest Alog version and online documentation can be found at
