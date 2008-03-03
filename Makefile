@@ -13,7 +13,7 @@ distclean:
 
 control:
 	@rm -f obj/*.adt objects/*.ali
-	cd obj && adactl -f ../rules/alog.aru ../*.ad[bs]
+	cd obj && adactl -f ../rules/alog.aru ../src/*.ad[bs]
 
 tests: all
 	@obj/runner
