@@ -26,12 +26,14 @@ with Ada.Text_IO;
 with Ada.IO_Exceptions;
 with Ada.Exceptions;
 --  Ahven
-with Ahven; use Ahven;
+with Ahven;
+use Ahven;
 --  Alog
 with Alog;
 with Alog.Logger;
 with Alog.Helpers;
-with Alog.Facilities; use Alog.Facilities;
+with Alog.Facilities;
+use Alog.Facilities;
 with Alog.Facilities.File_Descriptor;
 
 package body Logger_Tests is

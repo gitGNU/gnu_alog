@@ -22,7 +22,8 @@
 --
 
 --  Ada
-with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
+with Ada.Strings.Unbounded;
+use Ada.Strings.Unbounded;
 with Ada.Exceptions;
 with Ada.IO_Exceptions;
 with Ada.Text_IO;
@@ -32,9 +33,11 @@ use Ada;
 with Ahven; use Ahven;
 
 --  Alog
-with Alog; use Alog;
+with Alog;
+use Alog;
 with Alog.Helpers;
-with Alog.Facilities; use Alog.Facilities;
+with Alog.Facilities;
+use Alog.Facilities;
 with Alog.Facilities.File_Descriptor;
 with Alog.Facilities.Syslog;
 with Alog.Facilities.SMTP;
