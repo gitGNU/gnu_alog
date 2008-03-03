@@ -1,5 +1,5 @@
 all:
-	@mkdir -p obj data
+	@mkdir -p data lib obj
 	@gnatmake -Palog
 	@gnatmake -Palog_lib
 
@@ -9,6 +9,7 @@ clean:
 
 distclean:
 	@rm -rf obj
+	@rm -rf lib
 
 control:
 	@rm -f obj/*.adt objects/*.ali
