@@ -1,8 +1,11 @@
 all:
 	@mkdir -p obj data
 	@gnatmake -Palog
+	@gnatmake -Palog_lib
+
 clean:
 	@rm -rf obj/*
+	@rm -rf lib/*
 
 distclean:
 	@rm -rf obj

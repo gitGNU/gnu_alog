@@ -26,20 +26,11 @@ project Alog is
    for Languages use ("Ada", "Makefile");
    for Object_Dir use "obj";
    for Main use ("runner.adb");
-   for Source_Dirs use (".", "tests//**");
+   for Source_Dirs use ("src", "tests//**");
 
-   package Linker is
-      for Default_Switches ("ada") use ("-g");
-      for Linker_Options use ();
-   end Linker;
-
-   package Binder is
-      for Default_Switches ("ada") use ("-E");
-   end Binder;
-
-   package Compiler is
-      for Default_Switches ("ada") use ("-gnat05", "-gnaty", "-g", "-gnata", "-gnatf", "-gnato", "-fstack-check");
-   end Compiler;
+   package Ide is
+      for Default_Switches ("adacontrol") use ("-f", "./rules/alog.aru");
+   end Ide;
 
    package Naming is
       for Specification_Suffix ("c") use ".h";
@@ -48,9 +39,22 @@ project Alog is
       for Implementation_Suffix ("makefile") use "<no suffix defined>";
    end Naming;
 
-   package Ide is
-      for Default_Switches ("adacontrol") use ("-f", "./rules/alog.aru");
-   end Ide;
+   package Compiler is
+      for Default_Switches ("ada") use ("-gnat05", "-gnaty", "-g", "-gnata", "-gnatf", "-gnato", "-fstack-check", "-O2");
+   end Compiler;
+
+   package Binder is
+      for Default_Switches ("ada") use ("-E");
+   end Binder;
+
+   package Linker is
+      for Default_Switches ("ada") use ("-g");
+      for Linker_Options use ();
+   end Linker;
+
+   for Library_Name use "ahven";
+   for Library_Kind use "dynamic";
+   for Library_Version use "0.1";
 
 end Alog;
 
