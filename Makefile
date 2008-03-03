@@ -1,5 +1,5 @@
 all:
-	@mkdir -p data lib obj
+	@mkdir -p lib obj
 	@gnatmake -Palog
 	@gnatmake -Palog_lib
 
