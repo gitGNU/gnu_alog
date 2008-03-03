@@ -7,6 +7,10 @@ clean:
 distclean:
 	@rm -rf obj
 
+control:
+	@rm -f obj/*.adt objects/*.ali
+	cd obj && adactl -f ../rules/alog.aru ../*.ad[bs]
+
 tests: all
 	@obj/runner
 
