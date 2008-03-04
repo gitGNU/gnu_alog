@@ -108,7 +108,7 @@ package body Logger_Tests is
       Facility : Alog.Facilities.Handle :=
         new Alog.Facilities.File_Descriptor.Instance;
    begin
-      Logger.Attach_Facility (F => Facility);
+      Logger.Attach_Facility (Facility => Facility);
       Assert (Condition => Logger.Facility_Count = 1,
               Message => "could not attach facility");
    end Attach_A_Facility;
@@ -131,7 +131,7 @@ package body Logger_Tests is
       Facility : Alog.Facilities.Handle :=
         new Alog.Facilities.File_Descriptor.Instance;
    begin
-      Logger.Attach_Facility (F => Facility);
+      Logger.Attach_Facility (Facility => Facility);
       Assert (Condition => Logger.Facility_Count = 1,
               Message   => "could not attach facility");
 
@@ -158,7 +158,7 @@ package body Logger_Tests is
       Alog.Facilities.File_Descriptor.Handle
         (Facility).Set_Logfile (Testfile);
 
-      Logger.Attach_Facility (F => Facility);
+      Logger.Attach_Facility (Facility => Facility);
       Logger.Log_Message (Level => Alog.DEBUG,
                           Msg   => "Logger testmessage, one fd facility");
 
@@ -207,8 +207,8 @@ package body Logger_Tests is
       Facility2.Set_Threshold (Level => Alog.INFO);
 
       --  Attach both facilities to logger instance.
-      Logger.Attach_Facility (F => Facility1);
-      Logger.Attach_Facility (F => Facility2);
+      Logger.Attach_Facility (Facility => Facility1);
+      Logger.Attach_Facility (Facility => Facility2);
 
       --  Log two messages with different loglevels.
       Logger.Log_Message (Level => Alog.DEBUG,

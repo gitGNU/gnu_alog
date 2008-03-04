@@ -23,44 +23,43 @@
 
 package body Alog.Logger is
 
-   --------------------
-   --  Hash_Facility --
-   --------------------
-
-   function Hash_Facility (Element : Alog.Facilities.Handle)
-                           return Hash_Type is
-   begin
-      return Ada.Strings.Unbounded.Hash
-        (Key => Ada.Strings.Unbounded.To_Unbounded_String (Element.Get_Name));
-   end Hash_Facility;
-
    ----------------------
    --  Attach_Facility --
    ----------------------
 
-   procedure Attach_Facility (L : in out Alog.Logger.Instance;
-                              F : in     Alog.Facilities.Handle) is
+   procedure Attach_Facility (Logger   : in out Alog.Logger.Instance;
+                              Facility : in     Alog.Facilities.Handle) is
    begin
-      L.F_Stack.Insert (New_Item => F);
+      Logger.F_Stack.Insert (New_Item => Facility);
    end Attach_Facility;
+
+   ----------------------
+   --  Detach_Facility --
+   ----------------------
+
+   procedure Detach_Facility (Logger   : in out Instance;
+                              Facility : in Alog.Facilities.Handle) is
+   begin
+      null;
+   end Detach_Facility;
 
    ---------------------
    --  Facility_Count --
    ---------------------
 
-   function Facility_Count (L : in Instance) return Natural is
+   function Facility_Count (Logger : in Instance) return Natural is
    begin
-      return Natural (L.F_Stack.Length);
+      return Natural (Logger.F_Stack.Length);
    end Facility_Count;
 
-   procedure Finalize (L : in out Instance) is
+   procedure Finalize (Logger : in out Instance) is
       use Facilities_Stack_Package;
 
       --  Forward specs.
-      procedure Free_Facility (C : Cursor);
+      procedure Free_Facility (Position : Cursor);
 
-      procedure Free_Facility (C : Cursor) is
-         Facility_Handle : Alog.Facilities.Handle := Element (C);
+      procedure Free_Facility (Position : Cursor) is
+         Facility_Handle : Alog.Facilities.Handle := Element (Position);
       begin
          --  Cleanup this facility.
          Facility_Handle.Teardown;
@@ -68,9 +67,9 @@ package body Alog.Logger is
       end Free_Facility;
    begin
       --  Iterate over all attached facilities.
-      Iterate (Container => L.F_Stack,
+      Iterate (Container => Logger.F_Stack,
                Process => Free_Facility'Access);
-      L.F_Stack.Clear;
+      Logger.F_Stack.Clear;
    end Finalize;
 
    ------------
@@ -86,20 +85,31 @@ package body Alog.Logger is
    --  Log_Message --
    ------------------
 
-   procedure Log_Message (L     : in Instance;
-                          Level : in Log_Level;
-                          Msg   : in String) is
+   procedure Log_Message (Logger : in Instance;
+                          Level  : in Log_Level;
+                          Msg    : in String) is
       use Facilities_Stack_Package;
 
-      C : Cursor := L.F_Stack.First;
-      E : Alog.Facilities.Handle;
+      Position : Cursor := Logger.F_Stack.First;
+      Item     : Alog.Facilities.Handle;
    begin
-      while Has_Element (C) loop
-         E := Element (C);
-         E.Write_Message (Level => Level,
-                          Msg   => Msg);
-         Next (C);
+      while Has_Element (Position) loop
+         Item := Element (Position);
+         Item.Write_Message (Level => Level,
+                             Msg   => Msg);
+         Next (Position);
       end loop;
    end Log_Message;
+
+   --------------------
+   --  Hash_Facility --
+   --------------------
+
+   function Hash_Facility (Element : Alog.Facilities.Handle)
+                           return Hash_Type is
+   begin
+      return Ada.Strings.Unbounded.Hash
+        (Key => Ada.Strings.Unbounded.To_Unbounded_String (Element.Get_Name));
+   end Hash_Facility;
 
 end Alog.Logger;

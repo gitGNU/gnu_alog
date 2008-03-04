@@ -39,20 +39,24 @@ package Alog.Logger is
    type Instance is new Ada.Finalization.Controlled with private;
    --  Logger instance.
 
-   procedure Attach_Facility (L : in out Alog.Logger.Instance;
-                              F : in     Alog.Facilities.Handle);
+   procedure Attach_Facility (Logger   : in out Alog.Logger.Instance;
+                              Facility : in     Alog.Facilities.Handle);
    --  Attach a facility to logger instance.
 
-   function Facility_Count (L : in Instance) return Natural;
+   procedure Detach_Facility (Logger   : in out Instance;
+                              Facility : in Alog.Facilities.Handle);
+   --  Detach a facility by name.
+
+   function Facility_Count (Logger : in Instance) return Natural;
    --  Return number of attached facilites.
 
    procedure Clear (L : in out Instance);
    --  Clear logger instance. Detach and teardown all attached
    --  facilities.
 
-   procedure Log_Message (L     : in Instance;
-                          Level : in Log_Level;
-                          Msg   : in String);
+   procedure Log_Message (Logger : in Instance;
+                          Level  : in Log_Level;
+                          Msg    : in String);
    --  Log a message. Write_Message() procedure of all attached logger is
    --  called. Depending on the Log-Threshold set, the message is logged
    --  to different targets (depending on the facilites) automatically.
@@ -83,7 +87,7 @@ private
          --  Stack of attached Facilities.
       end record;
 
-   procedure Finalize (L : in out Instance);
+   procedure Finalize (Logger : in out Instance);
 
    --  Free-Procedures for all known Facility-types. If you implement
    --  your own logging-facility, add a Free()-procedure for your facility
