@@ -27,22 +27,22 @@ package body Alog.Facilities.File_Descriptor is
    -- Write_Message --
    -------------------
 
-   procedure Write_Message (F     : in Instance;
-                            Level : Log_Level := INFO;
-                            Msg   : in String)
+   procedure Write_Message (Facility : in Instance;
+                            Level    : Log_Level := INFO;
+                            Msg      : in String)
    is
       use GNAT.Calendar.Time_IO;
-      Logfile   : Text_IO.File_Type renames F.Log_File_Ptr.all;
+      Logfile   : Text_IO.File_Type renames Facility.Log_File_Ptr.all;
       Timestamp : String := Image
         (Date    => Calendar.Clock,
-         Picture => Picture_String (F.Timestamp_Format));
+         Picture => Picture_String (Facility.Timestamp_Format));
    begin
-      if Level <= F.Get_Threshold then
-         if F.Is_Write_Timestamp then
+      if Level <= Facility.Get_Threshold then
+         if Facility.Is_Write_Timestamp then
             Text_IO.Put (File  => Logfile,
                          Item  => Timestamp);
          end if;
-         if F.Is_Write_Loglevel then
+         if Facility.Is_Write_Loglevel then
             Text_IO.Put (File  => Logfile,
                          Item  => Log_Level'Image (Level));
          end if;
@@ -57,43 +57,44 @@ package body Alog.Facilities.File_Descriptor is
    -- Teardown --
    --------------
 
-   procedure Teardown (F : in out Instance) is
+   procedure Teardown (Facility : in out Instance) is
    begin
       --  Close logfile if still open.
-      F.Close_Logfile;
+      Facility.Close_Logfile;
    end Teardown;
 
    -----------------
    -- Set_Logfile --
    -----------------
 
-   procedure Set_Logfile (F : in out Instance; Path : String) is
+   procedure Set_Logfile (Facility : in out Instance; Path : String) is
       use Ada.IO_Exceptions;
    begin
       --  Somehow it's not possible to use Create() with Append_File,
       --  the file always gets truncated.
-      if not Text_IO.Is_Open (File => F.Log_File) then
-         Text_IO.Open (File => F.Log_File,
+      if not Text_IO.Is_Open (File => Facility.Log_File) then
+         Text_IO.Open (File => Facility.Log_File,
                        Name => Path,
                        Mode => Text_IO.Append_File);
       end if;
 
-      F.Log_File_Name := To_Bounded_String (Path);
+      Facility.Log_File_Name := To_Bounded_String (Path);
 
       --  Set logfile name and pointer to newly created file.
       --  Unrestricted_Access is needed here since we use a pointer
       --  which is defined externaly in the Text_IO library.
-      F.Log_File_Ptr  := F.Log_File'Unrestricted_Access;
+      Facility.Log_File_Ptr  := Facility.Log_File'Unrestricted_Access;
 
-      F.Write_Message (Level => INFO,
-                       Msg   => "** Alog: new logging session initialized.");
+      Facility.Write_Message
+        (Level => INFO,
+         Msg   => "** Alog: new logging session initialized.");
    exception
       when Name_Error =>
          --  Create file and re-call Set_Logfile.
-         Text_IO.Create (File => F.Log_File,
+         Text_IO.Create (File => Facility.Log_File,
                          Mode => Text_IO.Append_File,
                          Name => Path);
-         F.Set_Logfile (Path => Path);
+         Facility.Set_Logfile (Path => Path);
 
    end Set_Logfile;
 
@@ -101,27 +102,27 @@ package body Alog.Facilities.File_Descriptor is
    -- Get_Logfile --
    -----------------
 
-   function Get_Logfile (F : in Instance) return Text_IO.File_Type is
+   function Get_Logfile (Facility : in Instance) return Text_IO.File_Type is
    begin
-      return F.Log_File_Ptr.all;
+      return Facility.Log_File_Ptr.all;
    end Get_Logfile;
 
    -------------------
    -- Close_Logfile --
    -------------------
 
-   procedure Close_Logfile (F      : in out Instance;
-                            Remove : in Boolean := False) is
+   procedure Close_Logfile (Facility : in out Instance;
+                            Remove   : in Boolean := False) is
       use Ada.Text_IO;
    begin
-      if F.Log_File_Ptr /= Standard_Output
-        and Is_Open (File => F.Log_File) then
+      if Facility.Log_File_Ptr /= Standard_Output
+        and Is_Open (File => Facility.Log_File) then
          if Remove then
             --  Close and delete.
-            Delete (File => F.Log_File);
+            Delete (File => Facility.Log_File);
          else
             --   Close only.
-            Close (File => F.Log_File);
+            Close (File => Facility.Log_File);
          end if;
       end if;
    end Close_Logfile;
@@ -130,19 +131,19 @@ package body Alog.Facilities.File_Descriptor is
    -- Toggle_Write_Timestamp --
    ----------------------------
 
-   procedure Toggle_Write_Timestamp (F   : in out Instance;
-                                     Set : in Boolean) is
+   procedure Toggle_Write_Timestamp (Facility : in out Instance;
+                                     Set      : in Boolean) is
    begin
-      F.Write_Timestamp := Set;
+      Facility.Write_Timestamp := Set;
    end Toggle_Write_Timestamp;
 
    ------------------------
    -- Is_Write_Timestamp --
    ------------------------
 
-   function Is_Write_Timestamp (F : in Instance) return Boolean is
+   function Is_Write_Timestamp (Facility : in Instance) return Boolean is
    begin
-      return F.Write_Timestamp;
+      return Facility.Write_Timestamp;
    end Is_Write_Timestamp;
 
 
@@ -150,19 +151,19 @@ package body Alog.Facilities.File_Descriptor is
    -- Toggle_Write_Loglevel --
    ---------------------------
 
-   procedure Toggle_Write_Loglevel (F   : in out Instance;
-                                    Set : in Boolean) is
+   procedure Toggle_Write_Loglevel (Facility : in out Instance;
+                                    Set      : in Boolean) is
    begin
-      F.Write_Loglevel := Set;
+      Facility.Write_Loglevel := Set;
    end Toggle_Write_Loglevel;
 
    -----------------------
    -- Is_Write_Loglevel --
    -----------------------
 
-   function Is_Write_Loglevel (F : in Instance) return Boolean is
+   function Is_Write_Loglevel (Facility : in Instance) return Boolean is
    begin
-      return F.Write_Loglevel;
+      return Facility.Write_Loglevel;
    end Is_Write_Loglevel;
 
 end Alog.Facilities.File_Descriptor;

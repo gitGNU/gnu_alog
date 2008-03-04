@@ -54,13 +54,13 @@ package Alog.Facilities.Syslog is
    --  Facility map table.
 
    overriding
-   procedure Write_Message (F     : in Instance;
-                            Level : in Log_Level := INFO;
-                            Msg   : in String);
+   procedure Write_Message (Facility : in Instance;
+                            Level    : in Log_Level := INFO;
+                            Msg      : in String);
    --  Implementation of Write_Message.
 
    overriding
-   procedure Teardown (F : in out Instance);
+   procedure Teardown (Facility : in out Instance);
    --  Implementation of Teardown-procedure.
 
 private

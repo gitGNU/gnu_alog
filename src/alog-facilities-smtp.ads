@@ -33,24 +33,24 @@ package Alog.Facilities.SMTP is
    type Handle is access all Instance;
 
    overriding
-   procedure Write_Message (F     : in Instance;
-                            Level : in Log_Level := INFO;
-                            Msg   : in String);
+   procedure Write_Message (Facility : in Instance;
+                            Level    : in Log_Level := INFO;
+                            Msg      : in String);
    --  Implementation of Write_Message.
 
    overriding
-   procedure Teardown (F : in out Instance);
+   procedure Teardown (Facility : in out Instance);
    --  Implementation of Teardown-procedure.
 
 
-   procedure Set_Recipient (F      : in out Instance;
-                            Name   : in     String;
-                            EMail  : in     String);
+   procedure Set_Recipient (Facility : in out Instance;
+                            Name     : in     String;
+                            EMail    : in     String);
    --  Set recipient for log-messages. This procedure MUST be called
    --  before subsequent calls to Write_Message().
 
-   procedure Set_Server (F      : in out Instance;
-                         Name   : in     String);
+   procedure Set_Server (Facility : in out Instance;
+                         Name     : in     String);
    --  Set server for log-messages. This procedure MUST be called
    --  before subsequent calls to Write_Message().
 

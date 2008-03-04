@@ -42,27 +42,27 @@ package Alog.Facilities is
                  Right : Handle) return Boolean;
    --  Equal function.
 
-   procedure Set_Name (F : in out Instance'Class; Name : in String);
+   procedure Set_Name (Facility : in out Instance'Class; Name : in String);
    --  Set facility name.
 
-   function Get_Name (F : in Instance'Class) return Unbounded_String;
+   function Get_Name (Facility : in Instance'Class) return Unbounded_String;
 
-   function Get_Name (F : in Instance'Class) return String;
+   function Get_Name (Facility : in Instance'Class) return String;
    --  Get facility name.
 
-   procedure Set_Threshold (F     : in out Instance'Class;
-                            Level : in Log_Level);
+   procedure Set_Threshold (Facility : in out Instance'Class;
+                            Level    : in Log_Level);
    --  Set facility log level treshold.
 
-   function Get_Threshold (F : in Instance'Class) return Log_Level;
+   function Get_Threshold (Facility : in Instance'Class) return Log_Level;
    --  Get facility log level treshold.
 
-   procedure Write_Message (F     : in Instance;
-                            Level : in Log_Level;
-                            Msg   : in String) is abstract;
+   procedure Write_Message (Facility : in Instance;
+                            Level    : in Log_Level;
+                            Msg      : in String) is abstract;
    --  Write message with specified log level.
 
-   procedure Teardown (F : in out Instance) is abstract;
+   procedure Teardown (Facility : in out Instance) is abstract;
    --  Each facility must provide a Teardown-procedure. These procedures
    --  are called by Logger instances when detaching Facilities or when
    --  the logger object gets out of scope.

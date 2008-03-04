@@ -37,42 +37,42 @@ package body Alog.Facilities is
    -- Set_Name --
    --------------
 
-   procedure Set_Name (F : in out Instance'Class; Name : in String) is
+   procedure Set_Name (Facility : in out Instance'Class; Name : in String) is
    begin
-      F.Name := To_Unbounded_String (Name);
+      Facility.Name := To_Unbounded_String (Name);
    end Set_Name;
 
    --------------
    -- Get_Name --
    --------------
 
-   function Get_Name (F : in Instance'Class) return Unbounded_String is
+   function Get_Name (Facility : in Instance'Class) return Unbounded_String is
    begin
-      return F.Name;
+      return Facility.Name;
    end Get_Name;
 
-   function Get_Name (F : in Instance'Class) return String is
+   function Get_Name (Facility : in Instance'Class) return String is
    begin
-      return To_String (F.Name);
+      return To_String (Facility.Name);
    end Get_Name;
 
    -------------------
    -- Set_Threshold --
    -------------------
 
-   procedure Set_Threshold (F     : in out Instance'Class;
-                            Level : in Log_Level) is
+   procedure Set_Threshold (Facility : in out Instance'Class;
+                            Level    : in Log_Level) is
    begin
-      F.Threshold := Level;
+      Facility.Threshold := Level;
    end Set_Threshold;
 
    -------------------
    -- Get_Threshold --
    -------------------
 
-   function Get_Threshold (F : in Instance'Class) return Log_Level is
+   function Get_Threshold (Facility : in Instance'Class) return Log_Level is
    begin
-      return F.Threshold;
+      return Facility.Threshold;
    end Get_Threshold;
 
 end Alog.Facilities;
