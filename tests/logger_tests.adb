@@ -29,12 +29,12 @@ with Ada.Exceptions;
 with Ahven;
 use Ahven;
 --  Alog
-with Alog;
+with Alog; use Alog;
 with Alog.Logger;
 with Alog.Helpers;
 with Alog.Facilities;
-use Alog.Facilities;
 with Alog.Facilities.File_Descriptor;
+with Alog.Facilities.Syslog;
 
 package body Logger_Tests is
 
@@ -46,11 +46,14 @@ package body Logger_Tests is
    begin
       Set_Name (T, "Tests for Alog Logger");
       Ahven.Framework.Add_Test_Routine
-        (T, Attach_A_Facility'Access,
+        (T, Attach_Facility'Access,
          "attach a facility");
       Ahven.Framework.Add_Test_Routine
-        (T, Detach_A_Facility'Access,
-         "detach a facility");
+        (T, Detach_Facility_Instance'Access,
+         "detach facility:instance");
+      Ahven.Framework.Add_Test_Routine
+        (T, Detach_Facility_Unattached'Access,
+         "detach not attached facility");
       Ahven.Framework.Add_Test_Routine
         (T, Clear_A_Logger'Access,
          "clear logger");
@@ -69,6 +72,7 @@ package body Logger_Tests is
    procedure Finalize (T : in out L_Test) is
       use Ada.Text_IO;
       use Ahven.Framework;
+      use Alog.Facilities;
 
       --  Files to clean after tests.
       subtype Count is Natural range 1 .. 3;
@@ -103,24 +107,51 @@ package body Logger_Tests is
    -- Attach_Facility --
    ---------------------
 
-   procedure Attach_A_Facility is
+   procedure Attach_Facility is
       Logger   : Alog.Logger.Instance;
-      Facility : Alog.Facilities.Handle :=
-        new Alog.Facilities.File_Descriptor.Instance;
+      Facility : Facilities.Handle :=
+        new Facilities.File_Descriptor.Instance;
    begin
       Logger.Attach_Facility (Facility => Facility);
       Assert (Condition => Logger.Facility_Count = 1,
               Message => "could not attach facility");
-   end Attach_A_Facility;
+   end Attach_Facility;
 
-   ---------------------
-   -- Detach_Facility --
-   ---------------------
+   ------------------------------
+   -- Detach_Facility_Instance --
+   ------------------------------
 
-   procedure Detach_A_Facility is
+   procedure Detach_Facility_Instance is
+      Logger   : Alog.Logger.Instance;
+      Facility : Facilities.Handle :=
+        new Facilities.Syslog.Instance;
    begin
-      Fail ("not yet implemented!");
-   end Detach_A_Facility;
+      Facility.Set_Name ("Syslog_Facility");
+      Logger.Attach_Facility (Facility => Facility);
+      Assert (Condition => Logger.Facility_Count = 1,
+              Message   => "could not attach");
+      Logger.Detach_Facility (Facility => Facility);
+      Assert (Condition => Logger.Facility_Count = 0,
+              Message   => "could not detach");
+   end Detach_Facility_Instance;
+
+   --------------------------------
+   -- Detach_Facility_Unattached --
+   --------------------------------
+
+   procedure Detach_Facility_Unattached is
+      Logger   : Alog.Logger.Instance;
+      Facility : Facilities.Handle :=
+        new Facilities.Syslog.Instance;
+   begin
+      Facility.Set_Name ("Syslog_Facility");
+      Logger.Detach_Facility (Facility => Facility);
+      Fail (Message => "not yet implemented");
+   exception
+      when Alog.Logger.Facility_Not_Found =>
+         null;
+         --  Test passed.
+   end Detach_Facility_Unattached;
 
    --------------------
    -- Clear_A_Logger --
@@ -128,8 +159,8 @@ package body Logger_Tests is
 
    procedure Clear_A_Logger is
       Logger   : Alog.Logger.Instance;
-      Facility : Alog.Facilities.Handle :=
-        new Alog.Facilities.File_Descriptor.Instance;
+      Facility : Facilities.Handle :=
+        new Facilities.File_Descriptor.Instance;
    begin
       Logger.Attach_Facility (Facility => Facility);
       Assert (Condition => Logger.Facility_Count = 1,
@@ -147,15 +178,15 @@ package body Logger_Tests is
 
    procedure Log_One_FD_Facility is
       Logger   : Alog.Logger.Instance;
-      Facility : Alog.Facilities.Handle :=
-        new Alog.Facilities.File_Descriptor.Instance;
+      Facility : Facilities.Handle :=
+        new Facilities.File_Descriptor.Instance;
       Testfile : String := "./data/Log_One_FD_Facility";
       Reffile  : String := "./data/Log_One_FD_Facility.ref";
    begin
       --  Call facility fd specific procedures.
-      Alog.Facilities.File_Descriptor.Handle
+      Facilities.File_Descriptor.Handle
         (Facility).Toggle_Write_Timestamp (Set => False);
-      Alog.Facilities.File_Descriptor.Handle
+      Facilities.File_Descriptor.Handle
         (Facility).Set_Logfile (Testfile);
 
       Logger.Attach_Facility (Facility => Facility);
@@ -165,7 +196,7 @@ package body Logger_Tests is
       --  Cleanup
       Logger.Clear;
 
-      Assert (Condition => Alog.Helpers.Assert_Files_Equal
+      Assert (Condition => Helpers.Assert_Files_Equal
               (Filename1 => Reffile,
                Filename2 => Testfile),
               Message   => "files are not equal");
@@ -178,13 +209,13 @@ package body Logger_Tests is
    procedure Log_Multiple_FD_Facilities is
       Logger    : Alog.Logger.Instance;
 
-      Facility1 : Alog.Facilities.Handle :=
-        new Alog.Facilities.File_Descriptor.Instance;
+      Facility1 : Facilities.Handle :=
+        new Facilities.File_Descriptor.Instance;
       Testfile1 : String := "./data/Log_Multiple_FD_Facilities1";
       Reffile1  : String := "./data/Log_Multiple_FD_Facilities1.ref";
 
-      Facility2 : Alog.Facilities.Handle :=
-        new Alog.Facilities.File_Descriptor.Instance;
+      Facility2 : Facilities.Handle :=
+        new Facilities.File_Descriptor.Instance;
       Testfile2 : String := "./data/Log_Multiple_FD_Facilities2";
       Reffile2  : String := "./data/Log_Multiple_FD_Facilities2.ref";
    begin
@@ -193,14 +224,14 @@ package body Logger_Tests is
       Facility2.Set_Name (Name => "Facility2");
 
       --  Call facility fd specific procedures.
-      Alog.Facilities.File_Descriptor.Handle
+      Facilities.File_Descriptor.Handle
         (Facility1).Toggle_Write_Timestamp (Set => False);
-      Alog.Facilities.File_Descriptor.Handle
+      Facilities.File_Descriptor.Handle
         (Facility1).Set_Logfile (Testfile1);
 
-      Alog.Facilities.File_Descriptor.Handle
+      Facilities.File_Descriptor.Handle
         (Facility2).Toggle_Write_Timestamp (Set => False);
-      Alog.Facilities.File_Descriptor.Handle
+      Facilities.File_Descriptor.Handle
         (Facility2).Set_Logfile (Testfile2);
 
       --  Set INFO-threshold for second facility.
@@ -219,12 +250,12 @@ package body Logger_Tests is
       --  Cleanup
       Logger.Clear;
 
-      Assert (Condition => Alog.Helpers.Assert_Files_Equal
+      Assert (Condition => Helpers.Assert_Files_Equal
               (Filename1 => Reffile1,
                Filename2 => Testfile1),
               Message   => "file1 is not equal");
 
-      Assert (Condition => Alog.Helpers.Assert_Files_Equal
+      Assert (Condition => Helpers.Assert_Files_Equal
               (Filename1 => Reffile2,
                Filename2 => Testfile2),
               Message   => "file2 is not equal");

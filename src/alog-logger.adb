@@ -40,7 +40,10 @@ package body Alog.Logger is
    procedure Detach_Facility (Logger   : in out Instance;
                               Facility : in Alog.Facilities.Handle) is
    begin
-      null;
+      Logger.F_Stack.Delete (Item => Facility);
+   exception
+      when Constraint_Error =>
+         raise Facility_Not_Found;
    end Detach_Facility;
 
    ---------------------

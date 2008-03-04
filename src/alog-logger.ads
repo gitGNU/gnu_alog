@@ -61,6 +61,9 @@ package Alog.Logger is
    --  called. Depending on the Log-Threshold set, the message is logged
    --  to different targets (depending on the facilites) automatically.
 
+   Facility_Not_Found : exception;
+   --  Will be raised if a requested facility is not found.
+
 private
 
    use Ada.Containers;

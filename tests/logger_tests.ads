@@ -34,11 +34,15 @@ package Logger_Tests is
    procedure Finalize (T : in out L_Test);
    --  Teardown Test suite.
 
-   procedure Attach_A_Facility;
+   procedure Attach_Facility;
    --  Test Facility attaching.
 
-   procedure Detach_A_Facility;
-   --  Test Facility detaching.
+   procedure Detach_Facility_Instance;
+   --  Test Facility detaching by instance.
+
+   procedure Detach_Facility_Unattached;
+   --  Test Facility detaching with a not attached instance
+   --  (should fail).
 
    procedure Clear_A_Logger;
    --  Test Logger cleanup.
