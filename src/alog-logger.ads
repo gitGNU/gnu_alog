@@ -21,11 +21,14 @@
 --  MA  02110-1301  USA
 --
 
+--  Ada
 with Ada.Finalization;
+with Ada.Unchecked_Deallocation;
+with Ada.Containers.Hashed_Sets;
+with Ada.Strings.Unbounded.Hash;
+--  Alog
 with Alog.Facilities;
 with Alog.Facilities.File_Descriptor;
-
-with Ada.Unchecked_Deallocation;
 
 --  Logger instance. Facilities can be attached to a logger
 --  instance in order to log to different targets simultaneously.
@@ -56,19 +59,28 @@ package Alog.Logger is
 
 private
 
-   subtype Index_Range is Natural range 0 .. Max_Facilities;
-   --  Allowed range of array, index.
+   use Ada.Containers;
+   use Alog.Facilities;
 
-   type Facility_Array is array (Index_Range)
-   of Alog.Facilities.Handle;
+   function Hash_Facility (Element : Alog.Facilities.Handle)
+                           return Hash_Type;
+   --  Helper function to hash facility names.
+
+   package Facilities_Stack_Package is
+     new Ada.Containers.Hashed_Sets
+       (Element_Type        => Alog.Facilities.Handle,
+        Hash                => Hash_Facility,
+        Equivalent_Elements => "=");
+   --  Storage for attached facilities. Equal-Function is provided
+   --  by facility.
+
+   subtype Facilities_Stack is Facilities_Stack_Package.Set;
    --  Manages attached facilities for logger instance.
 
    type Instance is new Ada.Finalization.Controlled with
       record
-         F_Index : Index_Range := 0;
-         --  Stores number of attached facilities. Default ist 0.
-
-         F_Array : Facility_Array;
+         F_Stack : Facilities_Stack;
+         --  Stack of attached Facilities.
       end record;
 
    procedure Finalize (L : in out Instance);

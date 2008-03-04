@@ -38,8 +38,14 @@ package Alog.Facilities is
 
    type Handle is access all Class;
 
+   function "=" (Left  : Handle;
+                 Right : Handle) return Boolean;
+   --  Equal function.
+
    procedure Set_Name (F : in out Instance'Class; Name : in String);
    --  Set facility name.
+
+   function Get_Name (F : in Instance'Class) return Unbounded_String;
 
    function Get_Name (F : in Instance'Class) return String;
    --  Get facility name.

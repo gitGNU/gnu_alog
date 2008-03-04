@@ -23,6 +23,17 @@
 
 package body Alog.Logger is
 
+   --------------------
+   --  Hash_Facility --
+   --------------------
+
+   function Hash_Facility (Element : Alog.Facilities.Handle)
+                           return Hash_Type is
+   begin
+      return Ada.Strings.Unbounded.Hash
+        (Key => Ada.Strings.Unbounded.To_Unbounded_String (Element.Get_Name));
+   end Hash_Facility;
+
    ----------------------
    --  Attach_Facility --
    ----------------------
@@ -30,8 +41,7 @@ package body Alog.Logger is
    procedure Attach_Facility (L : in out Alog.Logger.Instance;
                               F : in     Alog.Facilities.Handle) is
    begin
-      L.F_Array (L.F_Index) := F;
-      L.F_Index := L.F_Index + 1;
+      L.F_Stack.Insert (New_Item => F);
    end Attach_Facility;
 
    ---------------------
@@ -40,17 +50,27 @@ package body Alog.Logger is
 
    function Facility_Count (L : in Instance) return Natural is
    begin
-      return L.F_Index;
+      return Natural (L.F_Stack.Length);
    end Facility_Count;
 
    procedure Finalize (L : in out Instance) is
-      Counter : Natural := 0;
+      use Facilities_Stack_Package;
+
+      --  Forward specs.
+      procedure Free_Facility (C : Cursor);
+
+      procedure Free_Facility (C : Cursor) is
+         Facility_Handle : Alog.Facilities.Handle := Element (C);
+      begin
+         --  Cleanup this facility.
+         Facility_Handle.Teardown;
+         Free (Facility_Handle);
+      end Free_Facility;
    begin
-      while Counter < L.F_Index loop
-         L.F_Array (Counter).Teardown;
-         Free (L.F_Array (Counter));
-         Counter := Counter + 1;
-      end loop;
+      --  Iterate over all attached facilities.
+      Iterate (Container => L.F_Stack,
+               Process => Free_Facility'Access);
+      L.F_Stack.Clear;
    end Finalize;
 
    ------------
@@ -60,7 +80,6 @@ package body Alog.Logger is
    procedure Clear (L : in out Instance) is
    begin
       L.Finalize;
-      L.F_Index := 0;
    end Clear;
 
    ------------------
@@ -70,13 +89,16 @@ package body Alog.Logger is
    procedure Log_Message (L     : in Instance;
                           Level : in Log_Level;
                           Msg   : in String) is
-      --  TODO: write iterator.
-      Counter : Natural := 0;
+      use Facilities_Stack_Package;
+
+      C : Cursor := L.F_Stack.First;
+      E : Alog.Facilities.Handle;
    begin
-      while Counter < L.F_Index loop
-         L.F_Array (Counter).Write_Message (Level => Level,
-                                            Msg   => Msg);
-         Counter := Counter + 1;
+      while Has_Element (C) loop
+         E := Element (C);
+         E.Write_Message (Level => Level,
+                          Msg   => Msg);
+         Next (C);
       end loop;
    end Log_Message;
 

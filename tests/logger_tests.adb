@@ -188,6 +188,10 @@ package body Logger_Tests is
       Testfile2 : String := "./data/Log_Multiple_FD_Facilities2";
       Reffile2  : String := "./data/Log_Multiple_FD_Facilities2.ref";
    begin
+      --  Set unique names.
+      Facility1.Set_Name (Name => "Facility1");
+      Facility2.Set_Name (Name => "Facility2");
+
       --  Call facility fd specific procedures.
       Alog.Facilities.File_Descriptor.Handle
         (Facility1).Toggle_Write_Timestamp (Set => False);

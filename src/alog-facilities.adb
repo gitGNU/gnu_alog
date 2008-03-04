@@ -23,6 +23,16 @@
 
 package body Alog.Facilities is
 
+   ------------
+   -- Equals --
+   ------------
+
+   function "=" (Left  : Handle;
+                 Right : Handle) return Boolean is
+   begin
+      return Left.Get_Name = Right.Get_Name;
+   end "=";
+
    --------------
    -- Set_Name --
    --------------
@@ -35,6 +45,11 @@ package body Alog.Facilities is
    --------------
    -- Get_Name --
    --------------
+
+   function Get_Name (F : in Instance'Class) return Unbounded_String is
+   begin
+      return F.Name;
+   end Get_Name;
 
    function Get_Name (F : in Instance'Class) return String is
    begin
