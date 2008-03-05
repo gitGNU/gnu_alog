@@ -69,6 +69,8 @@ package body Facility_Tests is
       Ahven.Framework.Add_Test_Routine
         (T, Disable_Write_Loglevel_Fd'Access, "disable fd loglevel");
       Ahven.Framework.Add_Test_Routine
+        (T, Trim_Loglevels_Fd'Access, "fd loglevel align");
+      Ahven.Framework.Add_Test_Routine
         (T, Set_Threshold_Fd'Access, "set fd threshold");
       Ahven.Framework.Add_Test_Routine
         (T, Init_Syslog'Access, "init syslog facility");
@@ -89,13 +91,14 @@ package body Facility_Tests is
       use Ahven.Framework;
 
       --  Files to clean after tests.
-      subtype Count is Natural range 1 .. 5;
+      subtype Count is Natural range 1 .. 6;
 
       Files : array (Count) of BS_Path.Bounded_String :=
         (BS_Path.To_Bounded_String ("./data/Teardown_Fd"),
          BS_Path.To_Bounded_String ("./data/Write_Message_Fd"),
          BS_Path.To_Bounded_String ("./data/Disable_Write_Timestamp_Fd"),
          BS_Path.To_Bounded_String ("./data/Disable_Write_Loglevel_Fd"),
+         BS_Path.To_Bounded_String ("./data/Trim_Loglevels_Fd"),
          BS_Path.To_Bounded_String ("./data/Set_Threshold_Fd")
         );
       F     : File_Type;
@@ -138,7 +141,7 @@ package body Facility_Tests is
 
    procedure Set_Threshold is
       F        : File_Descriptor.Instance;
-      Expected : Log_Level := DEBUG;
+      Expected : Log_Level := DEBU;
    begin
       F.Set_Threshold (Level => Expected);
       Assert (Condition => F.Get_Threshold = Expected,
@@ -243,7 +246,6 @@ package body Facility_Tests is
 
       --  Cleanup.
       F.Teardown;
-
    end Disable_Write_Timestamp_Fd;
 
    -------------------------------
@@ -268,8 +270,30 @@ package body Facility_Tests is
               Message   => "unable to disable");
 
       F.Teardown;
-
    end Disable_Write_Loglevel_Fd;
+
+   -----------------------
+   -- Trim_Loglevels_Fd --
+   -----------------------
+
+   procedure Trim_Loglevels_Fd is
+      F : File_Descriptor.Instance;
+      Testfile : String := "./data/Trim_Loglevels_Fd";
+      Reffile  : String := "./data/Trim_Loglevels_Fd.ref";
+   begin
+      F.Toggle_Write_Timestamp (Set => False);
+      F.Set_Logfile (Path => Testfile);
+      for Lvl in Alog.Log_Level loop
+         F.Write_Message (Level => Lvl,
+                          Msg   => "Testmessage");
+      end loop;
+
+      F.Close_Logfile;
+      Assert (Condition => Helpers.Assert_Files_Equal
+              (Filename1 => Reffile, Filename2 => Testfile),
+              Message   => "alignment incorrect");
+      F.Teardown;
+   end Trim_Loglevels_Fd;
 
    ----------------------
    -- Set_Threshold_Fd --
@@ -282,10 +306,10 @@ package body Facility_Tests is
    begin
       F.Toggle_Write_Timestamp (Set => False);
       F.Set_Logfile (Path => Testfile);
-      F.Write_Message (Level => DEBUG,
+      F.Write_Message (Level => DEBU,
                        Msg   => "this message should appear in log");
       F.Set_Threshold (Level => INFO);
-      F.Write_Message (Level => DEBUG,
+      F.Write_Message (Level => DEBU,
                        Msg   => "this message should not appear");
       F.Write_Message (Level => INFO,
                        Msg   => "this message should appear again");
@@ -318,7 +342,7 @@ package body Facility_Tests is
    begin
       --  Try to send a log-message with no recipient
       --  specified first, should raise No_Recipient exception.
-      F.Write_Message (Level => DEBUG,
+      F.Write_Message (Level => DEBU,
                        Msg   => "this should not work");
 
       Fail (Message => "exception not thrown");
@@ -340,7 +364,7 @@ package body Facility_Tests is
                        EMail => "Testcase");
       --  Try to send a log-message with no server
       --  specified first, should raise No_Server exception.
-      F.Write_Message (Level => DEBUG,
+      F.Write_Message (Level => DEBU,
                        Msg   => "this should not work");
 
       Fail (Message => "exception not thrown");

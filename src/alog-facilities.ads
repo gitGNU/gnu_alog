@@ -79,7 +79,7 @@ private
         To_Unbounded_String ("none");
       --  Facility Name. Defaults to "none".
 
-      Threshold : Log_Level := DEBUG;
+      Threshold : Log_Level := DEBU;
       --  Facility default threshold.
    end record;
 

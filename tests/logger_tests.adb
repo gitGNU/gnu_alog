@@ -190,7 +190,7 @@ package body Logger_Tests is
         (Facility).Set_Logfile (Testfile);
 
       Log.Attach_Facility (Facility => Facility);
-      Log.Log_Message (Level => Alog.DEBUG,
+      Log.Log_Message (Level => DEBU,
                        Msg   => "Logger testmessage, one fd facility");
 
       --  Cleanup
@@ -199,7 +199,7 @@ package body Logger_Tests is
       Assert (Condition => Helpers.Assert_Files_Equal
               (Filename1 => Reffile,
                Filename2 => Testfile),
-              Message   => "files are not equal");
+              Message   => "files not equal");
    end Log_One_FD_Facility;
 
    --------------------------------
@@ -235,16 +235,16 @@ package body Logger_Tests is
         (Facility2).Set_Logfile (Testfile2);
 
       --  Set INFO-threshold for second facility.
-      Facility2.Set_Threshold (Level => Alog.INFO);
+      Facility2.Set_Threshold (Level => INFO);
 
       --  Attach both facilities to logger instance.
       Log.Attach_Facility (Facility => Facility1);
       Log.Attach_Facility (Facility => Facility2);
 
       --  Log two messages with different loglevels.
-      Log.Log_Message (Level => Alog.DEBUG,
+      Log.Log_Message (Level => DEBU,
                        Msg   => "Logger testmessage, multiple facilities");
-      Log.Log_Message (Level => Alog.INFO,
+      Log.Log_Message (Level => INFO,
                        Msg   => "Logger testmessage, multiple facilities");
 
       --  Cleanup
@@ -253,12 +253,12 @@ package body Logger_Tests is
       Assert (Condition => Helpers.Assert_Files_Equal
               (Filename1 => Reffile1,
                Filename2 => Testfile1),
-              Message   => "file1 is not equal");
+              Message   => "file1 not equal");
 
       Assert (Condition => Helpers.Assert_Files_Equal
               (Filename1 => Reffile2,
                Filename2 => Testfile2),
-              Message   => "file2 is not equal");
+              Message   => "file2 not equal");
    end Log_Multiple_FD_Facilities;
 
 end Logger_Tests;

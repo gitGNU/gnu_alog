@@ -1,0 +1,9 @@
+[INFO] => Alog: new logging session initialized.
+[EMER] Testmessage
+[ALER] Testmessage
+[CRIT] Testmessage
+[ERRO] Testmessage
+[WARN] Testmessage
+[NOTI] Testmessage
+[INFO] Testmessage
+[DEBU] Testmessage

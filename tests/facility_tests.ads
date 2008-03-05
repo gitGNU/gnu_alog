@@ -58,6 +58,9 @@ package Facility_Tests is
    procedure Disable_Write_Loglevel_Fd;
    --  Test the loglevel enable/disable functionality.
 
+   procedure Trim_Loglevels_Fd;
+   --  Test alignment of loglevels.
+
    procedure Set_Threshold_Fd;
    --  Test Threshold-functionality with fd facility.
 

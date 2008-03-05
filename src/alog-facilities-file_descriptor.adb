@@ -44,7 +44,7 @@ package body Alog.Facilities.File_Descriptor is
          end if;
          if Facility.Is_Write_Loglevel then
             Text_IO.Put (File  => Logfile,
-                         Item  => Log_Level'Image (Level));
+                         Item  => "[" & Log_Level'Image (Level) & "]");
          end if;
          Text_IO.Put (File  => Logfile,
                       Item  => " " & Msg);
@@ -87,7 +87,7 @@ package body Alog.Facilities.File_Descriptor is
 
       Facility.Write_Message
         (Level => INFO,
-         Msg   => "** Alog: new logging session initialized.");
+         Msg   => "=> Alog: new logging session initialized.");
    exception
       when Name_Error =>
          --  Create file and re-call Set_Logfile.

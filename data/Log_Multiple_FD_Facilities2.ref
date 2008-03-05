@@ -1,2 +1,2 @@
-INFO ** Alog: new logging session initialized.
-INFO Logger testmessage, multiple facilities
+[INFO] => Alog: new logging session initialized.
+[INFO] Logger testmessage, multiple facilities

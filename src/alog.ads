@@ -25,14 +25,14 @@
 --  different logging facilities and log message transforms.
 package Alog is
 
-   type Log_Level is (EMERGENCY,
-                      ALERT,
-                      CRITICAL,
-                      ERROR,
-                      WARNING,
-                      NOTICE,
-                      INFO,
-                      DEBUG);
+   type Log_Level is (EMER,  -- EMERGENCY
+                      ALER,  -- ALERT
+                      CRIT,  -- CRITICAL
+                      ERRO,  -- ERROR
+                      WARN,  -- WARNING
+                      NOTI,  -- NOTICE
+                      INFO,  -- INFO
+                      DEBU); -- DEBUG
    --  Provided log levels. These log levels can be used
    --  to categorize log messages.
 
