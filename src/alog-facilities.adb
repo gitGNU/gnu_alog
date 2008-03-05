@@ -46,11 +46,6 @@ package body Alog.Facilities is
    -- Get_Name --
    --------------
 
-   function Get_Name (Facility : in Instance'Class) return Unbounded_String is
-   begin
-      return Facility.Name;
-   end Get_Name;
-
    function Get_Name (Facility : in Instance'Class) return String is
    begin
       return To_String (Facility.Name);

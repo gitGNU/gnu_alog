@@ -45,8 +45,6 @@ package Alog.Facilities is
    procedure Set_Name (Facility : in out Instance'Class; Name : in String);
    --  Set facility name.
 
-   function Get_Name (Facility : in Instance'Class) return Unbounded_String;
-
    function Get_Name (Facility : in Instance'Class) return String;
    --  Get facility name.
 

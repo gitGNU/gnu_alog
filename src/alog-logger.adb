@@ -110,9 +110,10 @@ package body Alog.Logger is
 
    function Hash_Facility (Element : Alog.Facilities.Handle)
                            return Hash_Type is
+      use Ada.Strings.Unbounded;
    begin
       return Ada.Strings.Unbounded.Hash
-        (Key => Ada.Strings.Unbounded.To_Unbounded_String (Element.Get_Name));
+        (Key => To_Unbounded_String (Element.Get_Name));
    end Hash_Facility;
 
 end Alog.Logger;
