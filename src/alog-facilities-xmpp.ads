@@ -88,7 +88,7 @@ private
    type Instance is limited new Alog.Facilities.Instance with
       record
          Sender       : Sender_Account :=
-           (JID  => To_Unbounded_String ("alog@localhost"),
+           (JID      => To_Unbounded_String ("alog@localhost"),
             Password => To_Unbounded_String (""));
          --  Notification sender JID/password.
 
@@ -109,8 +109,8 @@ private
          Is_Recipient : Boolean := False;
          --  Indicates whether a recipient is set.
 
-         Subject      : Unbounded_String := To_Unbounded_String
-           ("Alog: Log-Message");
+         Subject      : Unbounded_String :=
+           To_Unbounded_String ("Alog: Log-Message");
          --  Subject of messages from Alog-System
          --  (default: Alog: Log-Message).
       end record;

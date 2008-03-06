@@ -28,11 +28,7 @@ with Ada.Exceptions;
 with Ahven; use Ahven;
 
 --  Alog
-with Alog;
-use Alog;
-with Alog.Helpers;
-with Alog.Facilities;
-use Alog.Facilities;
+with Alog;  use Alog;
 with Alog.Facilities.XMPP;
 
 package body Facility_Tests.XMPP is

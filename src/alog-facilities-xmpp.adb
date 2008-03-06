@@ -74,11 +74,11 @@ package body Alog.Facilities.XMPP is
 
       AWS.Jabber.Close (Server);
 
-      --  Raise Delivery_Failure exception if something goes wrong.
    exception
       when Error : Server_Error =>
          --  Make sure that connecion to server is closed.
          AWS.Jabber.Close (Server);
+         --  Raise Delivery_Failure exception, something went wrong.
          raise Delivery_Failed with Ada.Exceptions.Exception_Message (Error);
    end Write_Message;
 
