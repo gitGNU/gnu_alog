@@ -74,12 +74,6 @@ package body Facility_Tests is
         (T, Set_Threshold_Fd'Access, "set fd threshold");
       Ahven.Framework.Add_Test_Routine
         (T, Init_Syslog'Access, "init syslog facility");
-      Ahven.Framework.Add_Test_Routine
-        (T, Send_No_Recipient'Access, "send with no recipient");
-      Ahven.Framework.Add_Test_Routine
-        (T, Send_No_Server'Access, "send with no server");
-      Ahven.Framework.Add_Test_Routine
-        (T, Send_Simple_Mail'Access, "send simple mail");
    end Initialize;
 
    --------------
@@ -331,69 +325,5 @@ package body Facility_Tests is
    begin
       Fail (Message => "not yet implemented");
    end Init_Syslog;
-
-   -----------------------
-   -- Send_No_Recipient --
-   -----------------------
-
-   procedure Send_No_Recipient is
-      use Alog.Facilities;
-      F : SMTP.Instance;
-   begin
-      --  Try to send a log-message with no recipient
-      --  specified first, should raise No_Recipient exception.
-      F.Write_Message (Level => DEBU,
-                       Msg   => "this should not work");
-
-      Fail (Message => "exception not thrown");
-   exception
-      when SMTP.No_Recipient =>
-         --  all is well, do nothing.
-         null;
-   end Send_No_Recipient;
-
-   --------------------
-   -- Send_No_Server --
-   --------------------
-
-   procedure Send_No_Server is
-      use Alog.Facilities;
-      F : SMTP.Instance;
-   begin
-      F.Set_Recipient (Name  => "Send_No_Server",
-                       EMail => "Testcase");
-      --  Try to send a log-message with no server
-      --  specified first, should raise No_Server exception.
-      F.Write_Message (Level => DEBU,
-                       Msg   => "this should not work");
-
-      Fail (Message => "exception not thrown");
-   exception
-      when SMTP.No_Server =>
-         --  all is well, do nothing.
-         null;
-   end Send_No_Server;
-
-   ----------------------
-   -- Send_Simple_Mail --
-   ----------------------
-
-   procedure Send_Simple_Mail is
-      use Alog.Facilities;
-      F : SMTP.Instance;
-   begin
-      --  Set recipient.
-      F.Set_Recipient (Name  => "Facility-Test",
-                       EMail => "test@alog.ch");
-      --  Set server.
-      F.Set_Server (Name => "localhost");
-
-      --  F.Write_Message (Level => DEBUG,
-      --                   Msg   => "This is a testmessage from Alog!");
-      Fail (Message => "not yet implemented");
-   exception
-      when SMTP.Delivery_Failed =>
-         Fail (Message => "could not deliver msg");
-   end Send_Simple_Mail;
 
 end Facility_Tests;
