@@ -21,23 +21,26 @@
 --  MA  02110-1301  USA
 --
 
-with Ahven.Text_Runner;
 with Ahven.Framework;
-with Facility_Tests;
-with Facility_Tests.XMPP;
-with Logger_Tests;
 
-procedure Runner is
-   S : Ahven.Framework.Test_Suite_Access :=
-     Ahven.Framework.Create_Suite ("All Alog tests");
-   pragma Linker_Options ("-lahven");
-   pragma Linker_Options ("-laws");
-begin
-   --  Facility tests
-   Ahven.Framework.Add_Test (S.all, new Facility_Tests.F_Test);
-   Ahven.Framework.Add_Test (S.all, new Facility_Tests.XMPP.F_Test);
-   Ahven.Framework.Add_Test (S.all, new Logger_Tests.L_Test);
+--  Tests for Alog XMPP facility.
+package Facility_Tests.XMPP is
 
-   Ahven.Text_Runner.Run (S);
-   Ahven.Framework.Release_Suite (S);
-end Runner;
+   type F_Test is new Ahven.Framework.Test_Case with null record;
+
+   procedure Initialize (T : in out F_Test);
+   --  Initialize Test suite.
+
+   procedure Send_No_Sender;
+   --  Test sending message with no sender specified.
+
+   procedure Send_No_Recipient;
+   --  Test sending message with no recipient specified.
+
+   procedure Send_No_Server;
+   --  Test sending message with no server specified.
+
+   procedure Send_XMPP_Message;
+   --  Test sending XMPP message.
+
+end Facility_Tests.XMPP;
