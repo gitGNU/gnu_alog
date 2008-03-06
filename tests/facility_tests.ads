@@ -31,38 +31,11 @@ package Facility_Tests is
    procedure Initialize (T : in out F_Test);
    --  Initialize Test suite.
 
-   procedure Finalize (T : in out F_Test);
-   --  Teardown Test suite.
-
    procedure Set_Name;
    --  Set name of Facility test.
 
    procedure Set_Threshold;
    --  Test set threshold.
-
-   procedure Set_Valid_Logfile_Fd;
-   --  Set correct Fd test.
-
-   procedure Set_Invalid_Logfile_Fd;
-   --  Set illegal Fd test.
-
-   procedure Write_Message_Fd;
-   --  Test message writing.
-
-   procedure Teardown_Fd;
-   --  Test Facility cleanup;
-
-   procedure Disable_Write_Timestamp_Fd;
-   --  Test the timestamp enable/disable functionality.
-
-   procedure Disable_Write_Loglevel_Fd;
-   --  Test the loglevel enable/disable functionality.
-
-   procedure Trim_Loglevels_Fd;
-   --  Test alignment of loglevels.
-
-   procedure Set_Threshold_Fd;
-   --  Test Threshold-functionality with fd facility.
 
    procedure Init_Syslog;
    --  Test initialization of syslog-facility.

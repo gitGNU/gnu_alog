@@ -149,7 +149,9 @@ package body Logger_Tests is
       Fail (Message => "not yet implemented");
    exception
       when Logger.Facility_Not_Found =>
-         null;
+         --  Free not attached facility, this is not done
+         --  by the logger (since it was never attached).
+         Alog.Logger.Free (Facility);
          --  Test passed.
    end Detach_Facility_Unattached;
 

@@ -61,6 +61,11 @@ package Alog.Logger is
    --  called. Depending on the Log-Threshold set, the message is logged
    --  to different targets (depending on the facilites) automatically.
 
+   procedure Free is new Ada.Unchecked_Deallocation
+     (Object => Alog.Facilities.Class,
+      Name   => Alog.Facilities.Handle);
+   --  Free memory allocated by a facility.
+
    Facility_Not_Found : exception;
    --  Will be raised if a requested facility is not found.
 
@@ -68,6 +73,9 @@ private
 
    use Ada.Containers;
    use Alog.Facilities;
+
+   procedure Finalize (Logger : in out Instance);
+   --  Finalize procedure used to cleanup.
 
    function Hash_Facility (Element : Alog.Facilities.Handle)
                            return Hash_Type;
@@ -89,14 +97,5 @@ private
          F_Stack : Facilities_Stack;
          --  Stack of attached Facilities.
       end record;
-
-   procedure Finalize (Logger : in out Instance);
-
-   --  Free-Procedures for all known Facility-types. If you implement
-   --  your own logging-facility, add a Free()-procedure for your facility
-   --  here too.
-   procedure Free is new Ada.Unchecked_Deallocation
-     (Object => Alog.Facilities.Class,
-      Name   => Alog.Facilities.Handle);
 
 end Alog.Logger;

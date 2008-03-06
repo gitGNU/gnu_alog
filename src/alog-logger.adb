@@ -39,8 +39,18 @@ package body Alog.Logger is
 
    procedure Detach_Facility (Logger   : in out Instance;
                               Facility : in Alog.Facilities.Handle) is
+      use Facilities_Stack_Package;
+
+      Position        : Cursor;
+      Facility_Handle : Alog.Facilities.Handle;
    begin
+      --  Find element first. If not found, exception is raised.
+      Position := Logger.F_Stack.Find (Item => Facility);
+      Facility_Handle := Element (Position);
+
       Logger.F_Stack.Delete (Item => Facility);
+      --  Free memory.
+      Free (Facility_Handle);
    exception
       when Constraint_Error =>
          raise Facility_Not_Found;
@@ -54,26 +64,6 @@ package body Alog.Logger is
    begin
       return Natural (Logger.F_Stack.Length);
    end Facility_Count;
-
-   procedure Finalize (Logger : in out Instance) is
-      use Facilities_Stack_Package;
-
-      --  Forward specs.
-      procedure Free_Facility (Position : Cursor);
-
-      procedure Free_Facility (Position : Cursor) is
-         Facility_Handle : Alog.Facilities.Handle := Element (Position);
-      begin
-         --  Cleanup this facility.
-         Facility_Handle.Teardown;
-         Free (Facility_Handle);
-      end Free_Facility;
-   begin
-      --  Iterate over all attached facilities.
-      Iterate (Container => Logger.F_Stack,
-               Process => Free_Facility'Access);
-      Logger.F_Stack.Clear;
-   end Finalize;
 
    ------------
    --  Clear --
@@ -103,6 +93,30 @@ package body Alog.Logger is
          Next (Position);
       end loop;
    end Log_Message;
+
+   ---------------
+   --  Finalize --
+   ---------------
+
+   procedure Finalize (Logger : in out Instance) is
+      use Facilities_Stack_Package;
+
+      --  Forward specs.
+      procedure Free_Facility (Position : Cursor);
+
+      procedure Free_Facility (Position : Cursor) is
+         Facility_Handle : Alog.Facilities.Handle := Element (Position);
+      begin
+         --  Cleanup this facility.
+         Facility_Handle.Teardown;
+         Free (Facility_Handle);
+      end Free_Facility;
+   begin
+      --  Iterate over all attached facilities.
+      Iterate (Container => Logger.F_Stack,
+               Process => Free_Facility'Access);
+      Logger.F_Stack.Clear;
+   end Finalize;
 
    --------------------
    --  Hash_Facility --
