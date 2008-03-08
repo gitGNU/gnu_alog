@@ -43,8 +43,6 @@ package body Facility_Tests is
         (T, Set_Name'Access, "set facility name");
       Ahven.Framework.Add_Test_Routine
         (T, Set_Threshold'Access, "set threshold");
-      Ahven.Framework.Add_Test_Routine
-        (T, Init_Syslog'Access, "init syslog facility");
    end Initialize;
 
    --------------
@@ -72,15 +70,5 @@ package body Facility_Tests is
       Assert (Condition => F.Get_Threshold = Expected,
               Message => "Log_Level not equal");
    end Set_Threshold;
-
-   -----------------
-   -- Init_Syslog --
-   -----------------
-
-   procedure Init_Syslog is
-      F : Syslog.Instance;
-   begin
-      Fail (Message => "not yet implemented");
-   end Init_Syslog;
 
 end Facility_Tests;

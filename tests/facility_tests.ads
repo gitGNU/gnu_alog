@@ -37,7 +37,4 @@ package Facility_Tests is
    procedure Set_Threshold;
    --  Test set threshold.
 
-   procedure Init_Syslog;
-   --  Test initialization of syslog-facility.
-
 end Facility_Tests;
