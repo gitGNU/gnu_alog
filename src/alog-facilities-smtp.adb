@@ -29,9 +29,6 @@ package body Alog.Facilities.SMTP is
    procedure Write_Message (Facility : in Instance;
                             Level    : in Log_Level := INFO;
                             Msg      : in String) is
-
-      Status      : AWS.SMTP.Status;
-      SMTP_Server : AWS.SMTP.Receiver;
    begin
       --  Raise No_Recipient if no recipient has been set
       --  by calling Set_Recipient().
@@ -48,26 +45,33 @@ package body Alog.Facilities.SMTP is
       --  Check threshold first.
       if Level > Facility.Get_Threshold then return; end if;
 
-      --  Init receiving server.
-      SMTP_Server := AWS.SMTP.Client.Initialize (To_String (Facility.Server));
+      declare
+         Status      : AWS.SMTP.Status;
+         SMTP_Server : AWS.SMTP.Receiver;
+      begin
+         --  Init receiving server.
+         SMTP_Server := AWS.SMTP.Client.Initialize
+           (To_String (Facility.Server));
 
-      --  Try to send message.
-      AWS.SMTP.Client.Send
-        (SMTP_Server,
-         From    => AWS.SMTP.E_Mail
-           (To_String (Facility.Sender.Name),
-            To_String (Facility.Sender.EMail)),
-         To      => AWS.SMTP.E_Mail
-           (To_String (Facility.Recipient.Name),
-            To_String (Facility.Recipient.EMail)),
-         Subject => To_String (Facility.Subject),
-         Message => Msg,
-         Status  => Status);
+         --  Try to send message.
+         AWS.SMTP.Client.Send
+           (SMTP_Server,
+            From    => AWS.SMTP.E_Mail
+              (To_String (Facility.Sender.Name),
+               To_String (Facility.Sender.EMail)),
+            To      => AWS.SMTP.E_Mail
+              (To_String (Facility.Recipient.Name),
+               To_String (Facility.Recipient.EMail)),
+            Subject => To_String (Facility.Subject),
+            Message => Msg,
+            Status  => Status);
 
-      --  Raise Delivery_Failure exception if SMTP-Status is not O.K.
-      if not AWS.SMTP.Is_Ok (Status) then
-         raise Delivery_Failed with AWS.SMTP.Status_Message (Status);
-      end if;
+         --  Raise Delivery_Failure exception if SMTP-Status is not O.K.
+         if not AWS.SMTP.Is_Ok (Status) then
+            raise Delivery_Failed with AWS.SMTP.Status_Message (Status);
+         end if;
+      end;
+
 
    end Write_Message;
 

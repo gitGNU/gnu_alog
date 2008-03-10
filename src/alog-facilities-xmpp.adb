@@ -30,8 +30,6 @@ package body Alog.Facilities.XMPP is
                             Level    : in Log_Level := INFO;
                             Msg      : in String) is
       use AWS.Jabber;
-      Server : AWS.Jabber.Server;
-      Status : AWS.Jabber.Presence_Status;
    begin
       --  Raise exception if no sender has been set.
       if not Facility.Is_Sender then
@@ -51,35 +49,41 @@ package body Alog.Facilities.XMPP is
       --  Check threshold first.
       if Level > Facility.Get_Threshold then return; end if;
 
-      --  Init xmpp server.
-      AWS.Jabber.Connect (Server,
-                          To_String (Facility.Server),
-                          To_String (Facility.Sender.JID),
-                          To_String (Facility.Sender.Password));
+      declare
+         Server : AWS.Jabber.Server;
+         Status : AWS.Jabber.Presence_Status;
+      begin
+         --  Init xmpp server.
+         AWS.Jabber.Connect (Server,
+                             To_String (Facility.Server),
+                             To_String (Facility.Sender.JID),
+                             To_String (Facility.Sender.Password));
 
-      --  Check presence of recipient
-      AWS.Jabber.Check_Presence (Server,
-                                 To_String (Facility.Recipient),
-                                 Status);
-      if Status not in Available .. Do_Not_Disturb then
-         raise Recipient_Not_Present;
-      end if;
+         --  Check presence of recipient
+         AWS.Jabber.Check_Presence (Server,
+                                    To_String (Facility.Recipient),
+                                    Status);
+         if Status not in Available .. Do_Not_Disturb then
+            raise Recipient_Not_Present;
+         end if;
 
-      --  Try to send message.
-      Send_Message
-        (Server,
-         JID     => To_String (Facility.Recipient),
-         Subject => To_String (Facility.Subject),
-         Content => Msg);
+         --  Try to send message.
+         Send_Message
+           (Server,
+            JID     => To_String (Facility.Recipient),
+            Subject => To_String (Facility.Subject),
+            Content => Msg);
 
-      AWS.Jabber.Close (Server);
-
-   exception
-      when Error : Server_Error =>
-         --  Make sure that connecion to server is closed.
          AWS.Jabber.Close (Server);
-         --  Raise Delivery_Failure exception, something went wrong.
-         raise Delivery_Failed with Ada.Exceptions.Exception_Message (Error);
+
+      exception
+         when Error : Server_Error =>
+            --  Make sure that connecion to server is closed.
+            AWS.Jabber.Close (Server);
+            --  Raise Delivery_Failure exception, something went wrong.
+            raise Delivery_Failed
+              with Ada.Exceptions.Exception_Message (Error);
+      end;
    end Write_Message;
 
    --------------
