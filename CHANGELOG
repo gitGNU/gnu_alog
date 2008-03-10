@@ -1,8 +1,8 @@
 Alog ChangeLog
 ==============
 
-Version 0.1 (not yet released)
-------------------------------
+Version 0.1
+-----------
 .Additions and changes
 - File_Descriptor facility implemented.
 - Syslog facility implemented.
