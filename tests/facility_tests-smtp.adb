@@ -41,8 +41,6 @@ package body Facility_Tests.SMTP is
         (T, Send_No_Recipient'Access, "send with no recipient");
       Ahven.Framework.Add_Test_Routine
         (T, Send_No_Server'Access, "send with no server");
-      Ahven.Framework.Add_Test_Routine
-        (T, Send_Simple_Mail'Access, "send simple mail");
    end Initialize;
 
    -----------------------
@@ -84,26 +82,5 @@ package body Facility_Tests.SMTP is
          --  all is well, do nothing.
          null;
    end Send_No_Server;
-
-   ----------------------
-   -- Send_Simple_Mail --
-   ----------------------
-
-   procedure Send_Simple_Mail is
-      F : Alog.Facilities.SMTP.Instance;
-   begin
-      --  Set recipient.
-      F.Set_Recipient (Name  => "Facility-Test",
-                       EMail => "test@alog.ch");
-      --  Set server.
-      F.Set_Server (Name => "localhost");
-
-      --  F.Write_Message (Level => DEBUG,
-      --                   Msg   => "This is a testmessage from Alog!");
-      Fail (Message => "not yet implemented");
-   exception
-      when Alog.Facilities.SMTP.Delivery_Failed =>
-         Fail (Message => "could not deliver msg");
-   end Send_Simple_Mail;
 
 end Facility_Tests.SMTP;

@@ -37,7 +37,4 @@ package Facility_Tests.SMTP is
    procedure Send_No_Server;
    --  Test sending mail with no server specified.
 
-   procedure Send_Simple_Mail;
-   --  Test mail sending facility.
-
 end Facility_Tests.SMTP;
