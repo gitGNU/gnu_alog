@@ -65,7 +65,7 @@ package Alog.Facilities.SMTP is
                          Header   : in     String);
    --  Set Message-Header of log-messages.
 
-   function Get_Header (Facility : Instance) return String;
+   function Get_Header (Facility : in Instance) return String;
    --  Get actual Message-Header of log-messages.
 
 
@@ -81,6 +81,12 @@ package Alog.Facilities.SMTP is
    --  Mail could not be delivered.
 
 private
+
+   function Format_Message (Facility : in Instance;
+                            Level    : in Log_Level;
+                            Msg      : in String)
+                            return String;
+   --  Compose a message from Msg, Header, Loglevel, Timestamp, PID.
 
    EOL : constant Character := Ada.Characters.Latin_1.LF;
    --  EOL used in mail-messages.

@@ -96,7 +96,7 @@ package body Facility_Tests.SMTP is
    begin
       --  Set recipient.
       F.Set_Recipient (Name  => "Facility-Test",
-                       EMail => "test@alog.net");
+                       EMail => "test@example.ch");
       --  Set server.
       F.Set_Server (Name => "mta.example.ch");
 

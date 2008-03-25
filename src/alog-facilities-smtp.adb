@@ -48,9 +48,6 @@ package body Alog.Facilities.SMTP is
       declare
          Status      : AWS.SMTP.Status;
          SMTP_Server : AWS.SMTP.Receiver;
-         Message     : String := Facility.Get_Header
-           & "( " & Log_Level'Image (Level) & " ) : " & Msg
-           & EOL & EOL & "Generated: " & Facility.Get_Timestamp;
       begin
          --  Init receiving server.
          SMTP_Server := AWS.SMTP.Client.Initialize
@@ -67,7 +64,8 @@ package body Alog.Facilities.SMTP is
                To_String (Facility.Recipient.EMail)),
             Subject => To_String (Facility.Subject & " (" &
               Log_Level'Image (Level) & ")"),
-            Message => Message,
+            Message => Facility.Format_Message (Level => Level,
+                                                Msg   => Msg),
             Status  => Status);
 
          --  Raise Delivery_Failure exception if SMTP-Status is not O.K.
@@ -125,9 +123,33 @@ package body Alog.Facilities.SMTP is
    -- Get_Header --
    ----------------
 
-   function Get_Header (Facility : Instance) return String is
+   function Get_Header (Facility : in Instance) return String is
    begin
       return To_String (Facility.Header);
    end Get_Header;
+
+   --------------------
+   -- Format_Message --
+   --------------------
+
+   function Format_Message (Facility : in Instance;
+                            Level    : in Log_Level;
+                            Msg      : in String)
+                            return String
+   is
+      Message : String :=
+      --  Header
+        Facility.Get_Header
+      --  Log-Level
+        & "( " & Log_Level'Image (Level) & " ) : "
+      --  Log-Message
+        & Msg & EOL & EOL
+      --  Footer
+        & "Generated: " & Facility.Get_Timestamp
+        & "by " & Facility.Get_Name & " (PID:"
+        & Integer'Image (Facility.Get_Pid) & ")";
+   begin
+      return Message;
+   end Format_Message;
 
 end Alog.Facilities.SMTP;

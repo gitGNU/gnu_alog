@@ -24,6 +24,8 @@
 --  Ada
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
 with Ada.Strings.Bounded; use Ada.Strings.Bounded;
+with Ada.Unchecked_Conversion;
+with Ada.Command_Line;
 with Ada.Calendar;
 
 --  System
@@ -66,6 +68,9 @@ package Alog.Facilities is
    function Get_Timestamp (Facility : in Instance'Class) return String;
    --  Creates a timestamp and returns it as String.
 
+   function Get_Pid (Facility : in Instance'Class) return Integer;
+   --  Get PID of process logging the message.
+
    procedure Write_Message (Facility : in Instance;
                             Level    : in Log_Level;
                             Msg      : in String) is abstract;
@@ -87,8 +92,9 @@ private
    type Instance is abstract tagged
    limited record
       Name      : Unbounded_String :=
-        To_Unbounded_String ("none");
-      --  Facility Name. Defaults to "none".
+        To_Unbounded_String (Ada.Command_Line.Command_Name);
+      --  Facility Name. Defaults to command-name (first argument).
+      --  If multiple facilities are used, names must be set differently.
 
       Threshold : Log_Level := DEBU;
       --  Facility default threshold.

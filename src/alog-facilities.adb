@@ -21,7 +21,6 @@
 --  MA  02110-1301  USA
 --
 
-with Interfaces.C; use Interfaces.C;
 package body Alog.Facilities is
 
    ------------
@@ -83,5 +82,19 @@ package body Alog.Facilities is
    begin
       return Timestamp;
    end Get_Timestamp;
+
+   -------------
+   -- Get_Pid --
+   -------------
+
+   function Get_Pid (Facility : in Instance'Class) return Integer is
+      use System.OS_Interface;
+
+      function pid_t_To_Integer is
+        new Ada.Unchecked_Conversion (Source => pid_t,
+                                      Target => Integer);
+   begin
+      return pid_t_To_Integer (System.OS_Interface.getpid);
+   end Get_Pid;
 
 end Alog.Facilities;
