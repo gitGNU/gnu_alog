@@ -46,8 +46,8 @@ package body Facility_Tests.XMPP is
         (T, Send_No_Recipient'Access, "send with no recipient");
       Ahven.Framework.Add_Test_Routine
         (T, Send_No_Server'Access, "send with no server");
-      Ahven.Framework.Add_Test_Routine
-        (T, Send_XMPP_Message'Access, "send XMPP message");
+--        Ahven.Framework.Add_Test_Routine
+--          (T, Send_XMPP_Message'Access, "send XMPP message");
    end Initialize;
 
    --------------------
