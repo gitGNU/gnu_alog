@@ -20,8 +20,15 @@
 --  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,
 --  MA  02110-1301  USA
 
+--  Ada
+with Ada.Characters.Latin_1;
+
+--  AWS
 with AWS;
 with AWS.SMTP.Client;
+
+--  GNAT
+with GNAT.Sockets; use GNAT.Sockets;
 
 --  SMTP-Logging facility. Used to send log-messages to a configurable
 --  mailserver. AWS must be installed for this facility to work.
@@ -54,6 +61,16 @@ package Alog.Facilities.SMTP is
    --  Set server for log-messages. This procedure MUST be called
    --  before subsequent calls to Write_Message().
 
+   procedure Set_Header (Facility : in out Instance;
+                         Header   : in     String);
+   --  Set Message-Header of log-messages.
+
+   function Get_Header (Facility : Instance) return String;
+   --  Get actual Message-Header of log-messages.
+
+
+   --  Exceptions.
+
    No_Recipient    : exception;
    --  No recipient specified. Cannot send mail.
 
@@ -64,6 +81,9 @@ package Alog.Facilities.SMTP is
    --  Mail could not be delivered.
 
 private
+
+   EOL : constant Character := Ada.Characters.Latin_1.LF;
+   --  EOL used in mail-messages.
 
    type Mail_Address is tagged
       record
@@ -89,14 +109,19 @@ private
          --  Indicates whether a recipient is set.
 
          Sender       : Mail_Address :=
-           (Name  => To_Unbounded_String ("Alog-Alert"),
-            EMail => To_Unbounded_String ("alog@localhost"));
+           (Name  => To_Unbounded_String ("alog"),
+            EMail => To_Unbounded_String ("alog@" & Host_Name));
          --  Notification sender address/name.
 
          Subject      : Unbounded_String := To_Unbounded_String
-           ("Alog: Log-Message");
+           ("Log-Message");
          --  Subject of messages from Alog-System
          --  (default: Alog: Log-Message).
+
+         Header       : Unbounded_String := To_Unbounded_String
+           ("This is a message from the alog-logsystem running on '"
+            & Host_Name & "' :" & EOL & EOL);
+         --  Message-Header. Can be set by calling Set_Header().
       end record;
 
 end Alog.Facilities.SMTP;

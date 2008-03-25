@@ -41,8 +41,10 @@ package body Facility_Tests.SMTP is
         (T, Send_No_Recipient'Access, "send with no recipient");
       Ahven.Framework.Add_Test_Routine
         (T, Send_No_Server'Access, "send with no server");
+--        Ahven.Framework.Add_Test_Routine
+--          (T, Send_Simple_Mail'Access, "send simple mail");
       Ahven.Framework.Add_Test_Routine
-        (T, Send_Simple_Mail'Access, "send simple mail");
+        (T, Set_Header'Access, "set message header");
    end Initialize;
 
    -----------------------
@@ -94,16 +96,28 @@ package body Facility_Tests.SMTP is
    begin
       --  Set recipient.
       F.Set_Recipient (Name  => "Facility-Test",
-                       EMail => "test@alog.ch");
+                       EMail => "test@alog.net");
       --  Set server.
-      F.Set_Server (Name => "localhost");
+      F.Set_Server (Name => "mta.example.ch");
 
-      --  F.Write_Message (Level => DEBUG,
-      --                   Msg   => "This is a testmessage from Alog!");
-      Fail (Message => "not yet implemented");
+      F.Write_Message (Level => DEBU,
+                       Msg   => "Testmessage");
    exception
       when Alog.Facilities.SMTP.Delivery_Failed =>
          Fail (Message => "could not deliver msg");
    end Send_Simple_Mail;
+
+   ----------------
+   -- Set_Header --
+   ----------------
+
+   procedure Set_Header is
+      F : Alog.Facilities.SMTP.Instance;
+      H : String := "Expected Header";
+   begin
+      F.Set_Header (Header => H);
+      Assert (Condition => F.Get_Header = H,
+              Message   => "headers not equal");
+   end Set_Header;
 
 end Facility_Tests.SMTP;

@@ -21,10 +21,18 @@
 --  MA  02110-1301  USA
 --
 
-with Ada.Strings.Unbounded;
-use Ada.Strings.Unbounded;
-with Ada.Strings.Bounded;
-use Ada.Strings.Bounded;
+--  Ada
+with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
+with Ada.Strings.Bounded; use Ada.Strings.Bounded;
+with Ada.Calendar;
+
+--  System
+with System.OS_Interface;
+
+use Ada;
+
+--  GNAT
+with GNAT.Calendar.Time_IO;
 
 --  Abstract package Facilities. Provides common data and
 --  methods used by all Alog facilities.
@@ -55,6 +63,9 @@ package Alog.Facilities is
    function Get_Threshold (Facility : in Instance'Class) return Log_Level;
    --  Get facility log level treshold.
 
+   function Get_Timestamp (Facility : in Instance'Class) return String;
+   --  Creates a timestamp and returns it as String.
+
    procedure Write_Message (Facility : in Instance;
                             Level    : in Log_Level;
                             Msg      : in String) is abstract;
@@ -81,6 +92,9 @@ private
 
       Threshold : Log_Level := DEBU;
       --  Facility default threshold.
+
+      Timestamp_Format : String (1 .. 14) := "%d. %b. %Y %T ";
+      --  Default timestamp format to use in this facility.
    end record;
 
 end Alog.Facilities;

@@ -21,6 +21,7 @@
 --  MA  02110-1301  USA
 --
 
+with Interfaces.C; use Interfaces.C;
 package body Alog.Facilities is
 
    ------------
@@ -69,5 +70,18 @@ package body Alog.Facilities is
    begin
       return Facility.Threshold;
    end Get_Threshold;
+
+   ----------------------
+   -- Create_Timestamp --
+   ----------------------
+
+   function Get_Timestamp (Facility : in Instance'Class) return String is
+      use GNAT.Calendar.Time_IO;
+      Timestamp : String := Image
+        (Date    => Calendar.Clock,
+         Picture => Picture_String (Facility.Timestamp_Format));
+   begin
+      return Timestamp;
+   end Get_Timestamp;
 
 end Alog.Facilities;

@@ -40,4 +40,7 @@ package Facility_Tests.SMTP is
    procedure Send_Simple_Mail;
    --  Test mail sending facility.
 
+   procedure Set_Header;
+   --  Test Message-Header setter.
+
 end Facility_Tests.SMTP;

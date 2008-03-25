@@ -24,8 +24,6 @@
 with Ada.Text_IO;
 with Ada.Strings.Unbounded;
 with Ada.IO_Exceptions;
-with Ada.Calendar;
-with GNAT.Calendar.Time_IO;
 
 use Ada;
 
@@ -88,9 +86,6 @@ private
          Log_File_Name    : BS_Path.Bounded_String :=
            To_Bounded_String ("none");
          --  File name of log file.
-
-         Timestamp_Format : String (1 .. 14) := "%d. %b. %Y %T ";
-         --  Default timestamp format to use in this facility.
 
          Write_Timestamp  : Boolean := True;
          --  If True, a timestamp is written with the log message.

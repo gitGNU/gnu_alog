@@ -31,11 +31,8 @@ package body Alog.Facilities.File_Descriptor is
                             Level    : Log_Level := INFO;
                             Msg      : in String)
    is
-      use GNAT.Calendar.Time_IO;
       Logfile   : Text_IO.File_Type renames Facility.Log_File_Ptr.all;
-      Timestamp : String := Image
-        (Date    => Calendar.Clock,
-         Picture => Picture_String (Facility.Timestamp_Format));
+      Timestamp : String := Facility.Get_Timestamp;
    begin
       if Level <= Facility.Get_Threshold then
          if Facility.Is_Write_Timestamp then
