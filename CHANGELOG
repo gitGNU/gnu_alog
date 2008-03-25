@@ -7,7 +7,8 @@ Version 0.1
 - File_Descriptor facility implemented.
 - Syslog facility implemented.
 - SMTP facility implemented.
+- XMPP facility implemented.
 - Basic logger support.
 
 .Bug fixes
-- none yet.
+- none.
