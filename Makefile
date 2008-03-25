@@ -24,6 +24,10 @@
 PREFIX?=$(HOME)/libraries
 INSTALL=install
 
+VERSION=`grep " Version" src/alog.ads | cut -d\" -f2`
+ALOG=libalog-$(VERSION)
+DISTFILES=`ls`
+
 SOURCES=src/*
 ALI_FILES=lib/*.ali
 SO_LIBRARY=libalog.so.0.1
@@ -44,6 +48,12 @@ distclean:
 control:
 	@rm -f obj/*.adt objects/*.ali
 	cd obj && adactl -f ../rules/alog.aru ../src/*.ad[bs]
+
+dist: distclean
+	@mkdir -p /tmp/$(ALOG)
+	@cp -R $(DISTFILES) /tmp/$(ALOG)
+	@tar cvjf $(ALOG).tar.bz2 /tmp/$(ALOG)
+	@rm -r /tmp/$(ALOG)
 
 tests: all
 	@obj/runner

@@ -44,7 +44,7 @@ package Alog is
    --  can manage.
 
 private
-   Version : constant Float := 0.1;
+   Version : constant String := "0.1";
    --  Alog library version.
 
 end Alog;
