@@ -26,7 +26,7 @@ INSTALL=install
 
 VERSION=`grep " Version" src/alog.ads | cut -d\" -f2`
 ALOG=libalog-$(VERSION)
-DISTFILES=`ls`
+DISTFILES=`ls | grep -v libalog`
 
 SOURCES=src/*
 ALI_FILES=lib/*.ali
@@ -50,10 +50,10 @@ control:
 	cd obj && adactl -f ../rules/alog.aru ../src/*.ad[bs]
 
 dist: distclean
-	@mkdir -p /tmp/$(ALOG)
-	@cp -R $(DISTFILES) /tmp/$(ALOG)
-	@tar cvjf $(ALOG).tar.bz2 /tmp/$(ALOG)
-	@rm -r /tmp/$(ALOG)
+	@mkdir -p $(ALOG)
+	@cp -R $(DISTFILES) $(ALOG)
+	@tar cvjf $(ALOG).tar.bz2 $(ALOG)
+	@rm -r $(ALOG)
 
 tests: all
 	@obj/runner
