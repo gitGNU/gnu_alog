@@ -31,13 +31,5 @@ project Alog_Lib is
    for Library_Dir use "lib";
    for Library_Kind use "dynamic";
    for Library_Version use "libalog.so." & Version;
-   package Builder is
-      for Default_Switches ("Ada") use ("-Iinclude","-x","-g","-gnatf",
-                                        "-gnatVa",
-                                        "-gnato",
-                                        "-gnatwe",
-                                        "-gnatwa",
-                                        "-gnaty3ibmhesux", "-gnat95");
-   end Builder;
 
 end Alog_Lib;
