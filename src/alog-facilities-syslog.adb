@@ -46,6 +46,16 @@ package body Alog.Facilities.Syslog is
       end if;
    end Write_Message;
 
+   -----------
+   -- Setup --
+   -----------
+
+   procedure Setup (Facility : in out Instance) is
+   begin
+      --  Nothing to do for now.
+      null;
+   end Setup;
+
    --------------
    -- Teardown --
    --------------

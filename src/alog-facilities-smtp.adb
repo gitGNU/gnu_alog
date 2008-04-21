@@ -75,6 +75,16 @@ package body Alog.Facilities.SMTP is
       end;
    end Write_Message;
 
+   -----------
+   -- Setup --
+   -----------
+
+   procedure Setup (Facility : in out Instance) is
+   begin
+      --  Nothing to do for now.
+      null;
+   end Setup;
+
    --------------
    -- Teardown --
    --------------
