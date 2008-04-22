@@ -22,7 +22,6 @@
 --
 
 --  Ada
-with APQ;
 with Ada.Exceptions;
 
 --  Ahven
@@ -32,6 +31,9 @@ with Ahven; use Ahven;
 with Alog;  use Alog;
 with Alog.Facilities; use Alog.Facilities;
 with Alog.Facilities.Pgsql;
+
+--  APQ
+with APQ;
 
 package body Facility_Tests.PGSQL is
 

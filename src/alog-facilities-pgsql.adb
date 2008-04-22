@@ -38,6 +38,12 @@ package body Alog.Facilities.Pgsql is
          --  Clone connection since Facility is an "in" parameter
          C.Connect (Same_As => Facility.Log_Connection);
 
+         --  Open SQL trace if enabled
+         if Facility.Is_SQL_Trace then
+            C.Open_DB_Trace (Filename => To_String (Facility.Trace_Filename),
+                             Mode     => Facility.Trace_Mode);
+         end if;
+
          Q.Prepare (SQL   => "INSERT INTO ");
 
          Q.Append (SQL   => Facility.Get_Table_Name,
@@ -73,6 +79,11 @@ package body Alog.Facilities.Pgsql is
          Execute (Query      => Q,
                   Connection => C);
 
+         --  Close SQL trace if enabled
+         if Facility.Is_SQL_Trace then
+            C.Close_DB_Trace;
+         end if;
+
          C.Disconnect;
       end if;
    end Write_Message;
@@ -83,7 +94,7 @@ package body Alog.Facilities.Pgsql is
 
    procedure Setup (Facility : in out Instance) is
    begin
-      null;
+      Facility.Log_Connection.Set_Trace (False);
    end Setup;
 
    --------------
@@ -141,6 +152,36 @@ package body Alog.Facilities.Pgsql is
    begin
       return Natural (Facility.Log_Connection.Port);
    end Get_Host_Port;
+
+   -------------------
+   -- Set_SQL_Trace --
+   -------------------
+
+   procedure Set_SQL_Trace (Facility : in out Instance;
+                            Filename : String;
+                            Mode     : APQ.Trace_Mode_Type) is
+   begin
+      Facility.Trace_Filename := To_Unbounded_String (Filename);
+      Facility.Trace_Mode := Mode;
+   end Set_SQL_Trace;
+
+   ----------------------
+   -- Toggle_SQL_Trace --
+   ----------------------
+
+   procedure Toggle_SQL_Trace (Facility : in out Instance; Set : Boolean) is
+   begin
+      Facility.Log_Connection.Set_Trace (Set);
+   end Toggle_SQL_Trace;
+
+   ----------------------
+   -- Is_SQL_Trace --
+   ----------------------
+
+   function Is_SQL_Trace (Facility : in Instance) return Boolean is
+   begin
+      return Facility.Log_Connection.Is_Trace;
+   end Is_SQL_Trace;
 
    -----------------
    -- Set_DB_Name --

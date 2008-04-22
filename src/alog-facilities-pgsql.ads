@@ -65,6 +65,17 @@ package Alog.Facilities.Pgsql is
    function Get_Host_Port (Facility : in Instance) return Natural;
    --  Get port of database server.
 
+   procedure Set_SQL_Trace (Facility : in out Instance;
+                            Filename : String;
+                            Mode     : APQ.Trace_Mode_Type);
+   --  Set SQL trace parameters.
+
+   procedure Toggle_SQL_Trace (Facility : in out Instance; Set : Boolean);
+   --  Toggles tracing of SQL statements.
+
+   function Is_SQL_Trace (Facility : in Instance) return Boolean;
+   --  Tells whether sql tracing is enabled.
+
    procedure Set_DB_Name (Facility : in out Instance; DB_Name : String);
    --  Set name of database.
 
@@ -143,6 +154,11 @@ private
       record
          Log_Connection  : APQ.PostgreSQL.Client.Connection_Type;
          --  Database connection used for logging.
+
+         Trace_Filename  : Unbounded_String :=
+                             To_Unbounded_String ("./data/trace.sql");
+         Trace_Mode      :  APQ.Trace_Mode_Type := APQ.Trace_APQ;
+         --  SQL trace parameters
 
          Log_Table       : Log_SQL_Table;
          --  Table to insert messages
