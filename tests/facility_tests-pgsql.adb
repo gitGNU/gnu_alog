@@ -23,17 +23,13 @@
 
 --  Ada
 with APQ;
-with Ada.Text_IO;
-use Ada.Text_IO;
 with Ada.Exceptions;
-with Ada.IO_Exceptions;
 
 --  Ahven
 with Ahven; use Ahven;
 
 --  Alog
 with Alog;  use Alog;
-with Alog.Helpers;
 with Alog.Facilities; use Alog.Facilities;
 with Alog.Facilities.Pgsql;
 

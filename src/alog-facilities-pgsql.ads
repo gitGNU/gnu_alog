@@ -21,14 +21,11 @@
 --  MA  02110-1301  USA
 --
 
-with Ada.Text_IO;
 with Ada.Strings.Unbounded;
-with Ada.IO_Exceptions;
 with APQ;
 with APQ.PostgreSQL.Client;
 
 use APQ.PostgreSQL.Client;
-use Ada;
 
 --  PGSQL facility. Used to log to
 --  a Postgresql database

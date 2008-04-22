@@ -265,7 +265,6 @@ package body Alog.Facilities.Pgsql is
    ----------------------
 
    procedure Close_Connection (Facility : in out Instance) is
-      use Ada.Text_IO;
    begin
       Facility.Log_Connection.Reset;
    end Close_Connection;
