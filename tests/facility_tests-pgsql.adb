@@ -64,7 +64,7 @@ package body Facility_Tests.PGSQL is
       --  Setup facility (open db connection, etc)
       F.Setup;
 
-      F.Write_Message (Msg   => "Test message");
+      F.Write_Message (Msg => "Test message");
 
       --  Cleanup
       F.Teardown;

@@ -44,7 +44,7 @@ package body Alog.Facilities.Pgsql is
                              Mode     => Facility.Trace_Mode);
          end if;
 
-         Q.Prepare (SQL   => "INSERT INTO ");
+         Q.Prepare (SQL => "INSERT INTO ");
 
          Q.Append (SQL   => Facility.Get_Table_Name,
                    After => " (");
@@ -174,9 +174,9 @@ package body Alog.Facilities.Pgsql is
       Facility.Log_Connection.Set_Trace (Set);
    end Toggle_SQL_Trace;
 
-   ----------------------
+   ------------------
    -- Is_SQL_Trace --
-   ----------------------
+   ------------------
 
    function Is_SQL_Trace (Facility : in Instance) return Boolean is
    begin
@@ -260,9 +260,9 @@ package body Alog.Facilities.Pgsql is
       return To_String (Facility.Log_Table.Timestamp_Column);
    end Get_Timestamp_Column_Name;
 
-   -------------------------------
+   -----------------------------
    -- Set_Message_Column_Name --
-   -------------------------------
+   -----------------------------
 
    procedure Set_Message_Column_Name (Facility    : in out Instance;
                                       Column_Name : String) is
@@ -271,9 +271,9 @@ package body Alog.Facilities.Pgsql is
         To_Unbounded_String (Column_Name);
    end Set_Message_Column_Name;
 
-   -------------------------------
+   -----------------------------
    -- Get_Message_Column_Name --
-   -------------------------------
+   -----------------------------
 
    function Get_Message_Column_Name (Facility : in Instance) return String is
    begin
