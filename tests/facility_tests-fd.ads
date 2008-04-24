@@ -43,7 +43,7 @@ package Facility_Tests.FD is
    --  Test message writing.
 
    procedure Teardown_Fd;
-   --  Test Facility cleanup;
+   --  Test Facility cleanup.
 
    procedure Disable_Write_Timestamp_Fd;
    --  Test the timestamp enable/disable functionality.
