@@ -31,31 +31,31 @@ package Facility_Tests.PGSQL is
    --  Initialize Test suite.
 
    procedure Set_Host_Name;
-   --  Test set/get Host_Name
+   --  Test set/get Host_Name.
 
    procedure Set_Host_Address;
-   --  Test set Host_Address
+   --  Test set Host_Address.
 
    procedure Set_Host_Port;
-   --  Test set/get Host_Port
+   --  Test set/get Host_Port.
 
    procedure Set_DB_Name;
-   --  Test set/get DB_Name
+   --  Test set/get DB_Name.
 
    procedure Set_Table_Name;
-   --  Test set/get Table_Name
+   --  Test set/get Table_Name.
 
    procedure Set_Level_Column_Name;
-   --  Test set/get Level_Column_Name
+   --  Test set/get Level_Column_Name.
 
    procedure Set_Timestamp_Column_Name;
-   --  Test set/get Timestamp_Column_Name
+   --  Test set/get Timestamp_Column_Name.
 
    procedure Set_Message_Column_Name;
-   --  Test set/get Message_Column_Name
+   --  Test set/get Message_Column_Name.
 
    procedure Set_Credentials;
-   --  Test set/get Credentials
+   --  Test set/get Credentials.
 
    procedure Enable_SQL_Trace;
    --  Test the sql trace enable/disable functionality.
