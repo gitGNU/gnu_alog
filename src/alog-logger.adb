@@ -21,9 +21,6 @@
 --  MA  02110-1301  USA
 --
 
-with Ada.Text_IO;
-use Ada.Text_IO;
-
 package body Alog.Logger is
 
    ----------------------
@@ -42,6 +39,7 @@ package body Alog.Logger is
 
    procedure Detach_Facility (Logger   : in out Instance;
                               Facility : in Alog.Facilities.Handle) is
+
       use Facilities_Stack_Package;
 
       Position        : Cursor;
@@ -126,8 +124,6 @@ package body Alog.Logger is
    procedure Log_Message (Logger : in Instance;
                           Level  : in Log_Level;
                           Msg    : in String) is
---        use Facilities_Stack_Package;
---        use Transforms_Stack_Package;
 
       F_Position : Facilities_Stack_Package.Cursor := Logger.F_Stack.First;
       T_Position : Transform_List_Package.Cursor;
@@ -140,12 +136,9 @@ package body Alog.Logger is
       while Facilities_Stack_Package.Has_Element (F_Position) loop
          F_Item := Facilities_Stack_Package.Element (F_Position);
 
-         --  Apply all transformations
+         --  Apply all transformations.
          if F_Item.Transform_Count > 0 then
             T_List := F_Item.Get_Transforms;
-            Put_Line ("Applying "& Ada.Containers.Count_Type'Image
-                      (T_List.Length) &
-                      " transforms for facility " & F_Item.Get_Name);
             T_Position := T_List.First;
             while Transform_List_Package.Has_Element (T_Position) loop
                T_Item := Transform_List_Package.Element (T_Position);

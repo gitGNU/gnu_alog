@@ -89,7 +89,7 @@ package body Alog.Facilities is
    function Get_Timestamp (Facility : in Instance'Class) return String is
       use GNAT.Calendar.Time_IO;
       Timestamp : String := Image
-        (Date    => Calendar.Clock,
+        (Date    => Ada.Calendar.Clock,
          Picture => Picture_String (Facility.Timestamp_Format));
    begin
       return Timestamp;

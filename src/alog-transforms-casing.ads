@@ -50,7 +50,7 @@ package Alog.Transforms.Casing is
    --  Implementation of Teardown-procedure.
 
    procedure Set_Mode (Transform : in out Instance; Mode : Operation_Mode);
-   --  Set operation mode of transform
+   --  Set operation mode of transform.
 
 private
 

@@ -22,8 +22,7 @@
 --
 
 --  Ada
-with Ada.Strings.Unbounded;
-use Ada.Strings.Unbounded;
+with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
 
 --  Alog
 with Alog;  use Alog;

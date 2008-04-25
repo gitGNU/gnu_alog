@@ -23,8 +23,8 @@
 
 --  Ada
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
-with Ada.Strings.Unbounded.Hash;
 with Ada.Strings.Bounded; use Ada.Strings.Bounded;
+with Ada.Strings.Unbounded.Hash;
 with Ada.Unchecked_Conversion;
 with Ada.Command_Line;
 with Ada.Calendar;
@@ -36,8 +36,6 @@ with Alog.Transforms;
 
 --  System
 with System.OS_Interface;
-
-use Ada;
 
 --  GNAT
 with GNAT.Calendar.Time_IO;
@@ -125,20 +123,20 @@ package Alog.Facilities is
 private
 
    type Instance is abstract tagged
-   limited record
-      Name      : Unbounded_String :=
-        To_Unbounded_String (Ada.Command_Line.Command_Name);
-      --  Facility Name. Defaults to command-name (first argument).
-      --  If multiple facilities are used, names must be set differently.
+      limited record
+         Name      : Unbounded_String :=
+           To_Unbounded_String (Ada.Command_Line.Command_Name);
+         --  Facility Name. Defaults to command-name (first argument).
+         --  If multiple facilities are used, names must be set differently.
 
-      Threshold : Log_Level := DEBU;
-      --  Facility default threshold.
+         Threshold : Log_Level := DEBU;
+         --  Facility default threshold.
 
-      Timestamp_Format : String (1 .. 14) := "%d. %b. %Y %T ";
-      --  Default timestamp format to use in this facility.
+         Timestamp_Format : String (1 .. 14) := "%d. %b. %Y %T ";
+         --  Default timestamp format to use in this facility.
 
-      Transforms : Transform_List_Package.List;
-      --  List of transforms.
-   end record;
+         Transforms : Transform_List_Package.List;
+         --  List of transforms.
+      end record;
 
 end Alog.Facilities;

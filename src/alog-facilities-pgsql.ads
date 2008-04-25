@@ -25,8 +25,6 @@ with Ada.Strings.Unbounded;
 with APQ;
 with APQ.PostgreSQL.Client;
 
-use APQ.PostgreSQL.Client;
-
 --  PGSQL facility. Used to log to
 --  a Postgresql database
 package Alog.Facilities.Pgsql is

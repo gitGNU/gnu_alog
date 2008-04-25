@@ -28,7 +28,7 @@ with AWS;
 with AWS.SMTP.Client;
 
 --  GNAT
-with GNAT.Sockets; use GNAT.Sockets;
+with GNAT.Sockets;
 
 --  SMTP-Logging facility. Used to send log-messages to a configurable
 --  mailserver. AWS must be installed for this facility to work.
@@ -120,7 +120,8 @@ private
 
          Sender       : Mail_Address :=
            (Name  => To_Unbounded_String ("alog"),
-            EMail => To_Unbounded_String ("alog@" & Host_Name));
+            EMail => To_Unbounded_String ("alog@" &
+              GNAT.Sockets.Host_Name));
          --  Notification sender address/name.
 
          Subject      : Unbounded_String := To_Unbounded_String
@@ -130,7 +131,7 @@ private
 
          Header       : Unbounded_String := To_Unbounded_String
            ("This is a message from the alog-logsystem running on '"
-            & Host_Name & "' :" & EOL & EOL);
+            & GNAT.Sockets.Host_Name & "' :" & EOL & EOL);
          --  Message-Header. Can be set by calling Set_Header().
       end record;
 

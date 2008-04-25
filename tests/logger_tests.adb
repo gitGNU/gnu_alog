@@ -22,12 +22,13 @@
 --
 
 --  Ada
-with Ada.Text_IO;
-with Ada.IO_Exceptions;
 with Ada.Exceptions;
+with Ada.IO_Exceptions;
+with Ada.Text_IO; use Ada.Text_IO;
+
 --  Ahven
-with Ahven;
-use Ahven;
+with Ahven; use Ahven;
+
 --  Alog
 with Alog; use Alog;
 with Alog.Logger;
@@ -37,8 +38,6 @@ with Alog.Facilities.File_Descriptor;
 with Alog.Facilities.Syslog;
 with Alog.Transforms;
 with Alog.Transforms.Casing;
-
-use Ada.Text_IO;
 
 package body Logger_Tests is
 
@@ -87,7 +86,7 @@ package body Logger_Tests is
    --------------
 
    procedure Finalize (T : in out L_Test) is
-      use Ada.Text_IO;
+
       use Ahven.Framework;
       use Alog.Facilities;
 

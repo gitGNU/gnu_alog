@@ -30,6 +30,9 @@ package body Alog.Facilities.Pgsql is
    procedure Write_Message (Facility : in Instance;
                             Level    : Log_Level := INFO;
                             Msg      : in String) is
+
+      use APQ.PostgreSQL.Client;
+
       C         : Connection_Type;
       Q         : Query_Type;
    begin
