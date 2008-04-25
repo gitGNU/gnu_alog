@@ -35,6 +35,10 @@ with Alog.Helpers;
 with Alog.Facilities;
 with Alog.Facilities.File_Descriptor;
 with Alog.Facilities.Syslog;
+with Alog.Transforms;
+with Alog.Transforms.Casing;
+
+use Ada.Text_IO;
 
 package body Logger_Tests is
 
@@ -55,6 +59,15 @@ package body Logger_Tests is
         (T, Detach_Facility_Unattached'Access,
          "detach not attached facility");
       Ahven.Framework.Add_Test_Routine
+        (T, Attach_Transform'Access,
+         "attach a transform");
+      Ahven.Framework.Add_Test_Routine
+        (T, Detach_Transform_Instance'Access,
+         "detach transform:instance");
+      Ahven.Framework.Add_Test_Routine
+        (T, Detach_Transform_Unattached'Access,
+         "detach not attached transform");
+      Ahven.Framework.Add_Test_Routine
         (T, Clear_A_Logger'Access,
          "clear logger");
       Ahven.Framework.Add_Test_Routine
@@ -63,6 +76,10 @@ package body Logger_Tests is
       Ahven.Framework.Add_Test_Routine
         (T, Log_Multiple_FD_Facilities'Access,
          "log to multiple fd facilities");
+      Ahven.Framework.Add_Test_Routine
+        (T, Log_FD_Facility_with_Transform'Access,
+         "log to fd facility with lowercase transform");
+
    end Initialize;
 
    --------------
@@ -75,12 +92,13 @@ package body Logger_Tests is
       use Alog.Facilities;
 
       --  Files to clean after tests.
-      subtype Count is Natural range 1 .. 3;
+      subtype Count is Natural range 1 .. 4;
 
       Files : array (Count) of BS_Path.Bounded_String :=
         (BS_Path.To_Bounded_String ("./data/Log_One_FD_Facility"),
          BS_Path.To_Bounded_String ("./data/Log_Multiple_FD_Facilities1"),
-         BS_Path.To_Bounded_String ("./data/Log_Multiple_FD_Facilities2")
+         BS_Path.To_Bounded_String ("./data/Log_Multiple_FD_Facilities2"),
+         BS_Path.To_Bounded_String ("./data/Log_FD_Facility_Lowercase")
         );
       F     : File_Type;
    begin
@@ -155,23 +173,83 @@ package body Logger_Tests is
          --  Test passed.
    end Detach_Facility_Unattached;
 
+   ----------------------
+   -- Attach_Transform --
+   ----------------------
+
+   procedure Attach_Transform is
+      Log      : Logger.Instance;
+      Transform : Transforms.Handle :=
+                    new Transforms.Casing.Instance;
+   begin
+      Log.Attach_Transform (Transform => Transform);
+      Assert (Condition => Log.Transform_Count = 1,
+              Message => "could not attach transform");
+   end Attach_Transform;
+
+   -------------------------------
+   -- Detach_Transform_Instance --
+   -------------------------------
+
+   procedure Detach_Transform_Instance is
+      Log      : Logger.Instance;
+      Transform : Transforms.Handle :=
+                    new Transforms.Casing.Instance;
+   begin
+      Transform.Set_Name ("Casing_Transform");
+      Log.Attach_Transform (Transform => Transform);
+      Assert (Condition => Log.Transform_Count = 1,
+              Message   => "could not attach");
+      Log.Detach_Transform (Transform => Transform);
+      Assert (Condition => Log.Transform_Count = 0,
+              Message   => "could not detach");
+   end Detach_Transform_Instance;
+
+   ---------------------------------
+   -- Detach_Transform_Unattached --
+   ---------------------------------
+
+   procedure Detach_Transform_Unattached is
+      Log      : Logger.Instance;
+      Transform : Transforms.Handle :=
+                    new Transforms.Casing.Instance;
+   begin
+      Transform.Set_Name ("Casing_Transform");
+      Log.Detach_Transform (Transform => Transform);
+      Fail (Message => "could detach unattached transform");
+   exception
+      when Logger.Transform_Not_Found =>
+         --  Free not attached Transform, this is not done
+         --  by the logger (since it was never attached).
+         Alog.Logger.Free (Transform);
+         --  Test passed.
+   end Detach_Transform_Unattached;
+
    --------------------
    -- Clear_A_Logger --
    --------------------
 
    procedure Clear_A_Logger is
-      Log      : Logger.Instance;
-      Facility : Facilities.Handle :=
-        new Facilities.File_Descriptor.Instance;
+      Log       : Logger.Instance;
+      Facility  : Facilities.Handle :=
+                    new Facilities.File_Descriptor.Instance;
+      Transform : Transforms.Handle :=
+                    new Transforms.Casing.Instance;
    begin
       Log.Attach_Facility (Facility => Facility);
       Assert (Condition => Log.Facility_Count = 1,
               Message   => "could not attach facility");
 
+      Log.Attach_Transform (Transform => Transform);
+      Assert (Condition => Log.Transform_Count = 1,
+              Message   => "could not attach transform");
+
       --  Clear it.
       Log.Clear;
       Assert (Condition => Log.Facility_Count = 0,
-              Message   => "could not clear logger");
+              Message   => "facility count is not 0");
+      Assert (Condition => Log.Transform_Count = 0,
+              Message   => "transform count is not 0");
    end Clear_A_Logger;
 
    -------------------------
@@ -262,5 +340,46 @@ package body Logger_Tests is
                Filename2 => Testfile2),
               Message   => "file2 not equal");
    end Log_Multiple_FD_Facilities;
+
+   ------------------------------------
+   -- Log_FD_Facility_with_Transform --
+   ------------------------------------
+
+   procedure Log_FD_Facility_with_Transform is
+      Log       : Logger.Instance;
+      Facility  : Facilities.Handle :=
+                    new Facilities.File_Descriptor.Instance;
+      Transform : Transforms.Handle :=
+                    new Transforms.Casing.Instance;
+      Testfile  : String := "./data/Log_FD_Facility_Lowercase";
+      Reffile   : String := "./data/Log_FD_Facility_Lowercase.ref";
+   begin
+      --  Call facility fd specific procedures.
+      Facilities.File_Descriptor.Handle
+        (Facility).Toggle_Write_Timestamp (Set => False);
+      Facilities.File_Descriptor.Handle
+        (Facility).Set_Logfile (Testfile);
+
+      --  Call casing transform specific procedures.
+      Transforms.Casing.Handle
+        (Transform).Set_Name ("lowercase");
+
+      Log.Attach_Facility (Facility => Facility);
+      Log.Attach_Transform (Transform => Transform);
+
+      Facility.Add_Transform (Transform);
+
+      Log.Log_Message (Level => DEBU,
+                       Msg   => "Logger Test Message, " &
+                       "FD Facility With Lowercase Transform");
+
+      --  Cleanup
+      Log.Clear;
+
+      Assert (Condition => Helpers.Assert_Files_Equal
+              (Filename1 => Reffile,
+               Filename2 => Testfile),
+              Message   => "files not equal");
+   end Log_FD_Facility_with_Transform;
 
 end Logger_Tests;

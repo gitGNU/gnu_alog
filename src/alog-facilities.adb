@@ -51,6 +51,18 @@ package body Alog.Facilities is
       return To_String (Facility.Name);
    end Get_Name;
 
+   -----------
+   --  Hash --
+   -----------
+
+   function Hash (Element : Alog.Facilities.Handle)
+                           return Ada.Containers.Hash_Type is
+      use Ada.Strings.Unbounded;
+   begin
+      return Ada.Strings.Unbounded.Hash
+        (Key => To_Unbounded_String (Element.Get_Name));
+   end Hash;
+
    -------------------
    -- Set_Threshold --
    -------------------
@@ -96,5 +108,50 @@ package body Alog.Facilities is
    begin
       return pid_t_To_Integer (System.OS_Interface.getpid);
    end Get_Pid;
+
+   -------------------
+   -- Add_Transform --
+   -------------------
+
+   procedure Add_Transform (Facility  : in out Instance'Class;
+                            Transform : in     Alog.Transforms.Handle) is
+   begin
+      Facility.Transforms.Append (Transform);
+   end Add_Transform;
+
+   ----------------------
+   -- Remove_Transform --
+   ----------------------
+
+   procedure Remove_Transform (Facility  : in out Instance'Class;
+                               Transform : in     Alog.Transforms.Handle) is
+      use Transform_List_Package;
+      Position : Cursor;
+   begin
+      Position := Facility.Transforms.Find (Transform);
+      if Position /= No_Element then
+         Facility.Transforms.Delete (Position);
+      end if;
+   end Remove_Transform;
+
+   ---------------------
+   -- Transform_Count --
+   ---------------------
+
+   function Transform_Count (Facility : in Instance'Class)
+                             return  Ada.Containers.Count_Type is
+   begin
+      return Facility.Transforms.Length;
+   end Transform_Count;
+
+   --------------------
+   -- Get_Transforms --
+   --------------------
+
+   function Get_Transforms (Facility : in Instance'Class)
+                            return Transform_List_Package.List is
+   begin
+      return Facility.Transforms;
+   end Get_Transforms;
 
 end Alog.Facilities;

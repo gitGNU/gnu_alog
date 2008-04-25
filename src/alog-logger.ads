@@ -28,7 +28,7 @@ with Ada.Containers.Hashed_Sets;
 with Ada.Strings.Unbounded.Hash;
 --  Alog
 with Alog.Facilities;
-with Alog.Facilities.File_Descriptor;
+with Alog.Transforms;
 
 --  Logger instance. Facilities can be attached to a logger
 --  instance in order to log to different targets simultaneously.
@@ -50,6 +50,17 @@ package Alog.Logger is
    function Facility_Count (Logger : in Instance) return Natural;
    --  Return number of attached facilites.
 
+   procedure Attach_Transform (Logger    : in out Instance;
+                               Transform : in     Alog.Transforms.Handle);
+   --  Attach a transform to logger instance.
+
+   procedure Detach_Transform (Logger    : in out Instance;
+                               Transform : in     Alog.Transforms.Handle);
+   --  Detach a transform by name.
+
+   function Transform_Count (Logger : in Instance) return Natural;
+   --  Return number of attached transforms.
+
    procedure Clear (L : in out Instance);
    --  Clear logger instance. Detach and teardown all attached
    --  facilities.
@@ -66,25 +77,29 @@ package Alog.Logger is
       Name   => Alog.Facilities.Handle);
    --  Free memory allocated by a facility.
 
+   procedure Free is new Ada.Unchecked_Deallocation
+     (Object => Alog.Transforms.Class,
+      Name   => Alog.Transforms.Handle);
+   --  Free memory allocated by a transform.
+
    Facility_Not_Found : exception;
    --  Will be raised if a requested facility is not found.
+   Transform_Not_Found : exception;
+   --  Will be raised if a requested transform is not found.
 
 private
 
    use Ada.Containers;
    use Alog.Facilities;
+   use Alog.Transforms;
 
    procedure Finalize (Logger : in out Instance);
    --  Finalize procedure used to cleanup.
 
-   function Hash_Facility (Element : Alog.Facilities.Handle)
-                           return Hash_Type;
-   --  Helper function to hash facility names.
-
    package Facilities_Stack_Package is
      new Ada.Containers.Hashed_Sets
        (Element_Type        => Alog.Facilities.Handle,
-        Hash                => Hash_Facility,
+        Hash                => Alog.Facilities.Hash,
         Equivalent_Elements => "=");
    --  Storage for attached facilities. Equal-Function is provided
    --  by facility.
@@ -92,10 +107,23 @@ private
    subtype Facilities_Stack is Facilities_Stack_Package.Set;
    --  Manages attached facilities for logger instance.
 
+   package Transforms_Stack_Package is
+     new Ada.Containers.Hashed_Sets
+       (Element_Type        => Alog.Transforms.Handle,
+        Hash                => Alog.Transforms.Hash,
+        Equivalent_Elements => "=");
+   --  Storage for attached transforms. Equal-Function is provided
+   --  by transform.
+
+   subtype Transforms_Stack is Transforms_Stack_Package.Set;
+   --  Manages attached transforms for transforms instance.
+
    type Instance is new Ada.Finalization.Controlled with
       record
          F_Stack : Facilities_Stack;
          --  Stack of attached Facilities.
+         T_Stack : Transforms_Stack;
+         --  Stack of attached Transforms.
       end record;
 
 end Alog.Logger;

@@ -23,10 +23,16 @@
 
 --  Ada
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
+with Ada.Strings.Unbounded.Hash;
 with Ada.Strings.Bounded; use Ada.Strings.Bounded;
 with Ada.Unchecked_Conversion;
 with Ada.Command_Line;
 with Ada.Calendar;
+with Ada.Containers;
+with Ada.Containers.Doubly_Linked_Lists;
+
+--  Alog
+with Alog.Transforms;
 
 --  System
 with System.OS_Interface;
@@ -52,11 +58,20 @@ package Alog.Facilities is
                  Right : Handle) return Boolean;
    --  Equal function.
 
+   package Transform_List_Package is new
+     Ada.Containers.Doubly_Linked_Lists (Alog.Transforms.Handle,
+                                         Alog.Transforms."=");
+   --  Transforms list.
+
    procedure Set_Name (Facility : in out Instance'Class; Name : in String);
    --  Set facility name.
 
    function Get_Name (Facility : in Instance'Class) return String;
    --  Get facility name.
+
+   function Hash (Element : Alog.Facilities.Handle)
+                  return Ada.Containers.Hash_Type;
+   --  Return Hash value of facility.
 
    procedure Set_Threshold (Facility : in out Instance'Class;
                             Level    : in Log_Level);
@@ -86,6 +101,21 @@ package Alog.Facilities is
    --  are called by Logger instances when detaching Facilities or when
    --  the logger object gets out of scope.
 
+   procedure Add_Transform (Facility  : in out Instance'Class;
+                            Transform : in     Alog.Transforms.Handle);
+   --  Adds a Transform to the facility's transform list.
+
+   procedure Remove_Transform (Facility  : in out Instance'Class;
+                               Transform : in     Alog.Transforms.Handle);
+   --  Removes a Transform to the facility's transform list.
+
+   function Transform_Count (Facility : in Instance'Class)
+                             return Ada.Containers.Count_Type;
+   --  Returns the number of transforms in the facility's transform list.
+
+   function Get_Transforms (Facility : in Instance'Class)
+                                return Transform_List_Package.List;
+   --  Returns the number of transforms in the facility's transform list.
 
    package BS_Path is new Generic_Bounded_Length (Max_Path_Length);
    use BS_Path;
@@ -106,6 +136,9 @@ private
 
       Timestamp_Format : String (1 .. 14) := "%d. %b. %Y %T ";
       --  Default timestamp format to use in this facility.
+
+      Transforms : Transform_List_Package.List;
+      --  List of transforms.
    end record;
 
 end Alog.Facilities;

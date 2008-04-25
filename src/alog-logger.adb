@@ -21,6 +21,9 @@
 --  MA  02110-1301  USA
 --
 
+with Ada.Text_IO;
+use Ada.Text_IO;
+
 package body Alog.Logger is
 
    ----------------------
@@ -65,6 +68,48 @@ package body Alog.Logger is
       return Natural (Logger.F_Stack.Length);
    end Facility_Count;
 
+   ----------------------
+   -- Attach_Transform --
+   ----------------------
+
+   procedure Attach_Transform (Logger   : in out Instance;
+                               Transform : in     Alog.Transforms.Handle) is
+   begin
+      Logger.T_Stack.Insert (New_Item => Transform);
+   end Attach_Transform;
+
+   ----------------------
+   -- Detach_Transform --
+   ----------------------
+
+   procedure Detach_Transform (Logger   : in out Instance;
+                               Transform : in Alog.Transforms.Handle) is
+      use Transforms_Stack_Package;
+
+      Position        : Cursor;
+      Transform_Handle : Alog.Transforms.Handle;
+   begin
+      --  Find element first. If not found, exception is raised.
+      Position := Logger.T_Stack.Find (Item => Transform);
+      Transform_Handle := Element (Position);
+
+      Logger.T_Stack.Delete (Item => Transform);
+      --  Free memory.
+      Free (Transform_Handle);
+   exception
+      when Constraint_Error =>
+         raise Transform_Not_Found;
+   end Detach_Transform;
+
+   ---------------------
+   -- Transform_Count --
+   ---------------------
+
+   function Transform_Count (Logger : in Instance) return Natural is
+   begin
+      return Natural (Logger.T_Stack.Length);
+   end Transform_Count;
+
    ------------
    --  Clear --
    ------------
@@ -81,16 +126,37 @@ package body Alog.Logger is
    procedure Log_Message (Logger : in Instance;
                           Level  : in Log_Level;
                           Msg    : in String) is
-      use Facilities_Stack_Package;
+--        use Facilities_Stack_Package;
+--        use Transforms_Stack_Package;
 
-      Position : Cursor := Logger.F_Stack.First;
-      Item     : Alog.Facilities.Handle;
+      F_Position : Facilities_Stack_Package.Cursor := Logger.F_Stack.First;
+      T_Position : Transform_List_Package.Cursor;
+      F_Item     : Alog.Facilities.Handle;
+      T_Item     : Alog.Transforms.Handle;
+      T_List     : Alog.Facilities.Transform_List_Package.List;
+      Out_Msg    : String := Msg;
    begin
-      while Has_Element (Position) loop
-         Item := Element (Position);
-         Item.Write_Message (Level => Level,
-                             Msg   => Msg);
-         Next (Position);
+      --  Loop over all facilities.
+      while Facilities_Stack_Package.Has_Element (F_Position) loop
+         F_Item := Facilities_Stack_Package.Element (F_Position);
+
+         --  Apply all transformations
+         if F_Item.Transform_Count > 0 then
+            T_List := F_Item.Get_Transforms;
+            Put_Line ("Applying "& Ada.Containers.Count_Type'Image
+                      (T_List.Length) &
+                      " transforms for facility " & F_Item.Get_Name);
+            T_Position := T_List.First;
+            while Transform_List_Package.Has_Element (T_Position) loop
+               T_Item := Transform_List_Package.Element (T_Position);
+               Out_Msg := T_Item.Transform_Message (Level => Level,
+                                                    Msg   => Out_Msg);
+               Transform_List_Package.Next (T_Position);
+            end loop;
+         end if;
+         F_Item.Write_Message (Level => Level,
+                               Msg   => Out_Msg);
+         Facilities_Stack_Package.Next (F_Position);
       end loop;
    end Log_Message;
 
@@ -99,35 +165,40 @@ package body Alog.Logger is
    ---------------
 
    procedure Finalize (Logger : in out Instance) is
-      use Facilities_Stack_Package;
 
       --  Forward specs.
-      procedure Free_Facility (Position : Cursor);
+      procedure Free_Facility (Position : Facilities_Stack_Package.Cursor);
 
-      procedure Free_Facility (Position : Cursor) is
+      procedure Free_Facility (Position : Facilities_Stack_Package.Cursor) is
+         use Facilities_Stack_Package;
          Facility_Handle : Alog.Facilities.Handle := Element (Position);
       begin
          --  Cleanup this facility.
          Facility_Handle.Teardown;
          Free (Facility_Handle);
       end Free_Facility;
+
+      --  Forward specs.
+      procedure Free_Transform (Position : Transforms_Stack_Package.Cursor);
+
+      procedure Free_Transform (Position : Transforms_Stack_Package.Cursor) is
+         use Transforms_Stack_Package;
+         Transform_Handle : Alog.Transforms.Handle := Element (Position);
+      begin
+         --  Cleanup this transform.
+         Transform_Handle.Teardown;
+         Free (Transform_Handle);
+      end Free_Transform;
    begin
       --  Iterate over all attached facilities.
-      Iterate (Container => Logger.F_Stack,
-               Process => Free_Facility'Access);
+      Facilities_Stack_Package.Iterate (Container => Logger.F_Stack,
+               Process   => Free_Facility'Access);
       Logger.F_Stack.Clear;
+
+      --  Iterate over all attached transforms.
+      Transforms_Stack_Package.Iterate (Container => Logger.T_Stack,
+               Process   => Free_Transform'Access);
+      Logger.T_Stack.Clear;
    end Finalize;
-
-   --------------------
-   --  Hash_Facility --
-   --------------------
-
-   function Hash_Facility (Element : Alog.Facilities.Handle)
-                           return Hash_Type is
-      use Ada.Strings.Unbounded;
-   begin
-      return Ada.Strings.Unbounded.Hash
-        (Key => To_Unbounded_String (Element.Get_Name));
-   end Hash_Facility;
 
 end Alog.Logger;

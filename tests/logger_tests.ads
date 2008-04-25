@@ -44,6 +44,15 @@ package Logger_Tests is
    --  Test Facility detaching with a not attached instance
    --  (should fail).
 
+   procedure Attach_Transform;
+   --  Test Transform attaching.
+
+   procedure Detach_Transform_Instance;
+   --  Test Transform detaching by instance.
+
+   procedure Detach_Transform_Unattached;
+   --  Test Transform detaching with un-attached instance
+
    procedure Clear_A_Logger;
    --  Test Logger cleanup.
 
@@ -52,5 +61,8 @@ package Logger_Tests is
 
    procedure Log_Multiple_FD_Facilities;
    --  Test logging to multiple fd based facilities.
+
+   procedure Log_FD_Facility_with_Transform;
+   --  Test logging to fd based facility with lowercase transform.
 
 end Logger_Tests;

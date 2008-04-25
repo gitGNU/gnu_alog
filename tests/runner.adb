@@ -28,6 +28,8 @@ with Facility_Tests.FD;
 with Facility_Tests.SMTP;
 with Facility_Tests.XMPP;
 with Facility_Tests.PGSQL;
+with Transform_Tests;
+with Transform_Tests.Casing;
 with Logger_Tests;
 
 procedure Runner is
@@ -43,6 +45,8 @@ begin
    Ahven.Framework.Add_Test (S.all, new Facility_Tests.SMTP.F_Test);
    Ahven.Framework.Add_Test (S.all, new Facility_Tests.XMPP.F_Test);
    Ahven.Framework.Add_Test (S.all, new Facility_Tests.PGSQL.F_Test);
+   Ahven.Framework.Add_Test (S.all, new Transform_Tests.T_Test);
+   Ahven.Framework.Add_Test (S.all, new Transform_Tests.Casing.T_Test);
    Ahven.Framework.Add_Test (S.all, new Logger_Tests.L_Test);
 
    Ahven.Text_Runner.Run (S);
