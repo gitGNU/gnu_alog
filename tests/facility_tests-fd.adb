@@ -111,7 +111,7 @@ package body Facility_Tests.FD is
       F : File_Descriptor.Instance;
    begin
       F.Set_Logfile (Path => "./data/Set_Valid_Logfile");
-      Assert (Condition => Is_Open (F.Get_Logfile),
+      Assert (Condition => Is_Open (F.Get_Logfile.all),
               Message   => "could not set logfile!");
       F.Close_Logfile (Remove => True);
    end Set_Valid_Logfile_Fd;
@@ -171,10 +171,10 @@ package body Facility_Tests.FD is
       F : File_Descriptor.Instance;
    begin
       F.Set_Logfile (Path => "./data/Teardown_Fd");
-      Assert (Condition => Is_Open (File => F.Get_Logfile),
+      Assert (Condition => Is_Open (File => F.Get_Logfile.all),
               Message   => "could not set logfile!");
       F.Teardown;
-      Assert (Condition => not Is_Open (File => F.Get_Logfile),
+      Assert (Condition => not Is_Open (File => F.Get_Logfile.all),
               Message   => "logfile still open!");
    end Teardown_Fd;
 

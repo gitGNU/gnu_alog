@@ -89,7 +89,7 @@ private
       end record;
    --  Holds sender information.
 
-   type Instance is limited new Alog.Facilities.Instance with
+   type Instance is new Alog.Facilities.Instance with
       record
          Sender       : Sender_Account :=
            (JID      => To_Unbounded_String ("alog@localhost"),

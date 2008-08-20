@@ -102,7 +102,7 @@ private
       end record;
    --  Holds Sender / Recipient information.
 
-   type Instance is limited new Alog.Facilities.Instance with
+   type Instance is new Alog.Facilities.Instance with
       record
          Server       : Unbounded_String;
          --  Server to connect when sending log-mails.

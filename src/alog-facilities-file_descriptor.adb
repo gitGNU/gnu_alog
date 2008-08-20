@@ -109,9 +109,9 @@ package body Alog.Facilities.File_Descriptor is
    -- Get_Logfile --
    -----------------
 
-   function Get_Logfile (Facility : in Instance) return Text_IO.File_Type is
+   function Get_Logfile (Facility : in Instance) return Text_IO.File_Access is
    begin
-      return Facility.Log_File_Ptr.all;
+      return Facility.Log_File_Ptr;
    end Get_Logfile;
 
    -------------------

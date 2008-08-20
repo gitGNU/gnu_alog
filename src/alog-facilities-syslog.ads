@@ -69,6 +69,6 @@ package Alog.Facilities.Syslog is
 
 private
 
-   type Instance is limited new Alog.Facilities.Instance with null record;
+   type Instance is new Alog.Facilities.Instance with null record;
 
 end Alog.Facilities.Syslog;

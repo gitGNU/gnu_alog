@@ -56,7 +56,7 @@ package Alog.Facilities.File_Descriptor is
    --  Set logfile to use. If not set, standard output is used
    --  for logging (e.g. stdout).
 
-   function Get_Logfile (Facility : in Instance) return Text_IO.File_Type;
+   function Get_Logfile (Facility : in Instance) return Text_IO.File_Access;
    --  Get currently used logfile.
 
    procedure Close_Logfile (Facility : in out Instance;
@@ -79,7 +79,7 @@ package Alog.Facilities.File_Descriptor is
 
 private
 
-   type Instance is limited new Alog.Facilities.Instance with
+   type Instance is new Alog.Facilities.Instance with
       record
          Log_File         : aliased Text_IO.File_Type;
          --  Logfile used for file based logging.
