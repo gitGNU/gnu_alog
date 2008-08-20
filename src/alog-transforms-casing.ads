@@ -54,7 +54,7 @@ package Alog.Transforms.Casing is
 
 private
 
-   type Instance is limited new Alog.Transforms.Instance with
+   type Instance is new Alog.Transforms.Instance with
       record
          Mode  : Operation_Mode := Lowercase;
          --  Mode of operation.
