@@ -148,7 +148,7 @@ private
       end record;
    --  Holds Table/Column name information.
 
-   type Instance is limited new Alog.Facilities.Instance with
+   type Instance is new Alog.Facilities.Instance with
       record
          Log_Connection  : APQ.PostgreSQL.Client.Connection_Type;
          --  Database connection used for logging.

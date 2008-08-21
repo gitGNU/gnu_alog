@@ -152,8 +152,9 @@ package body Alog.Facilities.Pgsql is
    -------------------
 
    function Get_Host_Port (Facility : in Instance) return Natural is
+      Port : Natural := Facility.Log_Connection.Port;
    begin
-      return Natural (Facility.Log_Connection.Port);
+      return Port;
    end Get_Host_Port;
 
    -------------------
