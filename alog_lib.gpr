@@ -33,7 +33,7 @@ project Alog_Lib is
    for Library_Version use "libalog.so." & Version;
 
    package Compiler is
-      for Default_Switches ("ada") use ("-gnatVa", "-gnat05", "-gnaty", "-gnatwa", "-g", "-gnato", "-fstack-check", "-fPIC", "-gnatf");
+      for Default_Switches ("ada") use ("-gnaty3aAbcdefhiIklnprStuxM80o", "-gnatVa", "-gnat05", "-gnatwa", "-gnatf", "-fstack-check", "-gnato", "-g", "-fPIC");
    end Compiler;
 
    package Builder is
@@ -45,3 +45,4 @@ project Alog_Lib is
    end Binder;
 
 end Alog_Lib;
+
