@@ -1,2 +1,3 @@
-src/alog-version.ads
+lib
 obj
+src/alog-version.ads
