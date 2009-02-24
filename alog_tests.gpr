@@ -21,7 +21,7 @@
 --  MA  02110-1301  USA
 --
 
-project Alog is
+project Alog_Tests is
 
    for Languages use ("Ada");
    for Object_Dir use "obj";
@@ -45,5 +45,5 @@ project Alog is
       for Default_Switches ("adacontrol") use ("-f", "./rules/alog.aru");
    end Ide;
 
-end Alog;
+end Alog_Tests;
 

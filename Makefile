@@ -21,21 +21,36 @@
 #  MA  02110-1301  USA
 #
 
-PREFIX?=$(HOME)/libraries
-INSTALL=install
+PREFIX ?= $(HOME)/libraries
+INSTALL = install
 
-VERSION=`grep " Version" src/alog.ads | cut -d\" -f2`
-ALOG=libalog-$(VERSION)
-DISTFILES=`ls | grep -v libalog`
+VERSION = 0.2
+ALOG = libalog-$(VERSION)
+DISTFILES = `ls | grep -v libalog`
 
-SOURCES=src/*
-ALI_FILES=lib/*.ali
-SO_LIBRARY=libalog.so.0.1
+SOURCEDIR = src
+ALI_FILES = lib/*.ali
+SO_LIBRARY = libalog.so.$(VERSION)
 
-all:
-	@mkdir -p lib obj
-	@gnatmake -Palog
-	@gnatmake -Palog_lib
+all: build_lib
+
+tests: build_tests
+	@obj/runner
+
+build_lib: prepare
+	@gnatmake -Palog_lib -XALOG_VERSION="$(VERSION)"
+
+build_tests: prepare
+	@gnatmake -Palog_tests
+
+prepare: $(SOURCEDIR)/alog-version.ads
+	@mkdir -p obj/lib obj/tests lib
+
+$(SOURCEDIR)/alog-version.ads:
+	@echo "package Alog.Version is"                 > $@
+	@echo "   Version_Number : constant Float  :="  >> $@
+	@echo "      $(VERSION);"                       >> $@
+	@echo "end Alog.Version;"                       >> $@
 
 clean:
 	@rm -rf obj/*
@@ -55,15 +70,14 @@ dist: distclean
 	@tar cvjf $(ALOG).tar.bz2 $(ALOG)
 	@rm -r $(ALOG)
 
-tests: all
-	@obj/runner
-
 install: install_lib
 
-install_lib:
+install_lib: build_lib
 	@mkdir -p $(PREFIX)/include/alog
 	@mkdir -p $(PREFIX)/lib/alog
-	$(INSTALL) -m 644 $(SOURCES) $(PREFIX)/include/alog
+	$(INSTALL) -m 644 $(SOURCEDIR)/* $(PREFIX)/include/alog
 	$(INSTALL) -m 444 $(ALI_FILES) $(PREFIX)/lib/alog
 	$(INSTALL) -m 444 lib/$(SO_LIBRARY) $(PREFIX)/lib/alog
-	@ln -s $(PREFIX)/lib/alog/$(SO_LIBRARY) $(PREFIX)/lib/alog/libalog.so
+	@ln -sf $(PREFIX)/lib/alog/$(SO_LIBRARY) $(PREFIX)/lib/alog/libalog.so
+
+.PHONY: dist tests
