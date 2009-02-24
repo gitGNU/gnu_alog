@@ -48,7 +48,7 @@ project Alog_Tests is
    end Binder;
 
    package Compiler is
-      for Default_Switches ("ada") use ("-gnaty3aAbcdefhiIklnprStuxM80o", "-gnatVa", "-gnat05", "-gnatwa", "-gnatf", "-fstack-check", "-gnato", "-g", "-fPIC");
+      for Default_Switches ("ada") use ("-gnaty3aAbcdefhiIklnprStuxM80o", "-gnatVa", "-gnat05", "-gnatwa", "-gnatf", "-fstack-check", "-gnato", "-g");
    end Compiler;
 
    package Ide is
