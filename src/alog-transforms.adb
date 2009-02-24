@@ -34,19 +34,10 @@ package body Alog.Transforms is
    end "=";
 
    --------------
-   -- Set_Name --
-   --------------
-
-   procedure Set_Name (Transform : in out Instance'Class; Name : in String) is
-   begin
-      Transform.Name := Ada.Strings.Unbounded.To_Unbounded_String (Name);
-   end Set_Name;
-
-   --------------
    -- Get_Name --
    --------------
 
-   function Get_Name (Transform : in Instance'Class) return String is
+   function Get_Name (Transform : Instance'Class) return String is
    begin
       return Ada.Strings.Unbounded.To_String (Transform.Name);
    end Get_Name;
@@ -61,5 +52,16 @@ package body Alog.Transforms is
    begin
       return Hash (Key => To_Unbounded_String (Element.Get_Name));
    end Hash;
+
+   --------------
+   -- Set_Name --
+   --------------
+
+   procedure Set_Name (Transform : in out Instance'Class;
+                       Name      :        String)
+   is
+   begin
+      Transform.Name := Ada.Strings.Unbounded.To_Unbounded_String (Name);
+   end Set_Name;
 
 end Alog.Transforms;

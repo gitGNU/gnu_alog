@@ -21,6 +21,8 @@
 --  MA  02110-1301  USA
 --
 
+with Alog.Transforms.Casing;
+
 package body Transform_Tests is
 
    ----------------
@@ -40,7 +42,7 @@ package body Transform_Tests is
 
    procedure Set_Name is
       T        : Alog.Transforms.Casing.Instance;
-      Expected : String := "Test transform";
+      Expected : constant String := "Test transform";
    begin
       T.Set_Name (Name => Expected);
       Assert (Condition => T.Get_Name = Expected,

@@ -21,6 +21,10 @@
 --  MA  02110-1301  USA
 --
 
+with Ada.Calendar;
+
+with GNAT.Calendar.Time_IO;
+
 package body Alog.Facilities is
 
    ------------
@@ -33,98 +37,75 @@ package body Alog.Facilities is
       return Left.Get_Name = Right.Get_Name;
    end "=";
 
-   --------------
-   -- Set_Name --
-   --------------
+   -------------------
+   -- Add_Transform --
+   -------------------
 
-   procedure Set_Name (Facility : in out Instance'Class; Name : in String) is
+   procedure Add_Transform (Facility  : in out Instance'Class;
+                            Transform :        Alog.Transforms.Handle) is
    begin
-      Facility.Name := To_Unbounded_String (Name);
-   end Set_Name;
+      Facility.Transforms.Append (Transform);
+   end Add_Transform;
 
    --------------
    -- Get_Name --
    --------------
 
-   function Get_Name (Facility : in Instance'Class) return String is
+   function Get_Name (Facility : Instance'Class) return String is
    begin
       return To_String (Facility.Name);
    end Get_Name;
-
-   -----------
-   --  Hash --
-   -----------
-
-   function Hash (Element : Alog.Facilities.Handle)
-                           return Ada.Containers.Hash_Type is
-      use Ada.Strings.Unbounded;
-   begin
-      return Ada.Strings.Unbounded.Hash
-        (Key => To_Unbounded_String (Element.Get_Name));
-   end Hash;
-
-   -------------------
-   -- Set_Threshold --
-   -------------------
-
-   procedure Set_Threshold (Facility : in out Instance'Class;
-                            Level    : in Log_Level) is
-   begin
-      Facility.Threshold := Level;
-   end Set_Threshold;
 
    -------------------
    -- Get_Threshold --
    -------------------
 
-   function Get_Threshold (Facility : in Instance'Class) return Log_Level is
+   function Get_Threshold (Facility : Instance'Class) return Log_Level is
    begin
       return Facility.Threshold;
    end Get_Threshold;
 
-   ----------------------
-   -- Create_Timestamp --
-   ----------------------
+   -------------------
+   -- Get_Timestamp --
+   -------------------
 
-   function Get_Timestamp (Facility : in Instance'Class) return String is
+   function Get_Timestamp (Facility : Instance'Class) return String is
       use GNAT.Calendar.Time_IO;
-      Timestamp : String := Image
+      Timestamp : constant String := Image
         (Date    => Ada.Calendar.Clock,
          Picture => Picture_String (Facility.Timestamp_Format));
    begin
       return Timestamp;
    end Get_Timestamp;
 
-   -------------
-   -- Get_Pid --
-   -------------
+   --------------------
+   -- Get_Transforms --
+   --------------------
 
-   function Get_Pid (Facility : in Instance'Class) return Integer is
-      use System.OS_Interface;
-
-      function pid_t_To_Integer is
-        new Ada.Unchecked_Conversion (Source => pid_t,
-                                      Target => Integer);
+   function Get_Transforms (Facility : Instance'Class)
+                            return Transform_List_Package.List is
    begin
-      return pid_t_To_Integer (System.OS_Interface.getpid);
-   end Get_Pid;
+      return Facility.Transforms;
+   end Get_Transforms;
 
-   -------------------
-   -- Add_Transform --
-   -------------------
+   -----------
+   --  Hash --
+   -----------
 
-   procedure Add_Transform (Facility  : in out Instance'Class;
-                            Transform : in     Alog.Transforms.Handle) is
+   function Hash (Element : Alog.Facilities.Handle)
+                  return Ada.Containers.Hash_Type
+   is
    begin
-      Facility.Transforms.Append (Transform);
-   end Add_Transform;
+      return Ada.Strings.Unbounded.Hash
+        (Key => To_Unbounded_String (Element.Get_Name));
+   end Hash;
 
    ----------------------
    -- Remove_Transform --
    ----------------------
 
    procedure Remove_Transform (Facility  : in out Instance'Class;
-                               Transform : in     Alog.Transforms.Handle) is
+                               Transform :        Alog.Transforms.Handle) is
       use Transform_List_Package;
       Position : Cursor;
    begin
@@ -134,24 +115,33 @@ package body Alog.Facilities is
       end if;
    end Remove_Transform;
 
+   --------------
+   -- Set_Name --
+   --------------
+
+   procedure Set_Name (Facility : in out Instance'Class; Name : String) is
+   begin
+      Facility.Name := To_Unbounded_String (Name);
+   end Set_Name;
+
+   -------------------
+   -- Set_Threshold --
+   -------------------
+
+   procedure Set_Threshold (Facility : in out Instance'Class;
+                             Level    :         Log_Level) is
+   begin
+      Facility.Threshold := Level;
+   end Set_Threshold;
+
    ---------------------
    -- Transform_Count --
    ---------------------
 
-   function Transform_Count (Facility : in Instance'Class)
+   function Transform_Count (Facility : Instance'Class)
                              return  Ada.Containers.Count_Type is
    begin
       return Facility.Transforms.Length;
    end Transform_Count;
-
-   --------------------
-   -- Get_Transforms --
-   --------------------
-
-   function Get_Transforms (Facility : in Instance'Class)
-                            return Transform_List_Package.List is
-   begin
-      return Facility.Transforms;
-   end Get_Transforms;
 
 end Alog.Facilities;

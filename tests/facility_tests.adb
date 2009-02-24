@@ -28,7 +28,6 @@ with Ahven; use Ahven;
 with Alog; use Alog;
 with Alog.Facilities; use Alog.Facilities;
 with Alog.Facilities.File_Descriptor;
-with Alog.Facilities.Syslog;
 
 package body Facility_Tests is
 
@@ -51,7 +50,7 @@ package body Facility_Tests is
 
    procedure Set_Name is
       F        : File_Descriptor.Instance;
-      Expected : String := "TEST";
+      Expected : constant String := "TEST";
    begin
       F.Set_Name (Name => Expected);
       Assert (Condition => F.Get_Name = Expected,
@@ -64,7 +63,7 @@ package body Facility_Tests is
 
    procedure Set_Threshold is
       F        : File_Descriptor.Instance;
-      Expected : Log_Level := DEBU;
+      Expected : constant Log_Level := DEBU;
    begin
       F.Set_Threshold (Level => Expected);
       Assert (Condition => F.Get_Threshold = Expected,

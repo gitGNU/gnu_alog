@@ -21,12 +21,10 @@
 --  MA  02110-1301  USA
 --
 
---  Ada
 with Ada.Finalization;
 with Ada.Unchecked_Deallocation;
 with Ada.Containers.Hashed_Sets;
-with Ada.Strings.Unbounded.Hash;
---  Alog
+
 with Alog.Facilities;
 with Alog.Transforms;
 
@@ -40,34 +38,34 @@ package Alog.Logger is
    --  Logger instance.
 
    procedure Attach_Facility (Logger   : in out Alog.Logger.Instance;
-                              Facility : in     Alog.Facilities.Handle);
+                              Facility :        Alog.Facilities.Handle);
    --  Attach a facility to logger instance.
 
    procedure Detach_Facility (Logger   : in out Instance;
-                              Facility : in Alog.Facilities.Handle);
+                              Facility :        Alog.Facilities.Handle);
    --  Detach a facility by name.
 
-   function Facility_Count (Logger : in Instance) return Natural;
+   function Facility_Count (Logger : Instance) return Natural;
    --  Return number of attached facilites.
 
    procedure Attach_Transform (Logger    : in out Instance;
-                               Transform : in     Alog.Transforms.Handle);
+                               Transform :        Alog.Transforms.Handle);
    --  Attach a transform to logger instance.
 
    procedure Detach_Transform (Logger    : in out Instance;
-                               Transform : in     Alog.Transforms.Handle);
+                               Transform :        Alog.Transforms.Handle);
    --  Detach a transform by name.
 
-   function Transform_Count (Logger : in Instance) return Natural;
+   function Transform_Count (Logger : Instance) return Natural;
    --  Return number of attached transforms.
 
    procedure Clear (L : in out Instance);
    --  Clear logger instance. Detach and teardown all attached
    --  facilities.
 
-   procedure Log_Message (Logger : in Instance;
-                          Level  : in Log_Level;
-                          Msg    : in String);
+   procedure Log_Message (Logger : Instance;
+                          Level  : Log_Level;
+                          Msg    : String);
    --  Log a message. Write_Message() procedure of all attached logger is
    --  called. Depending on the Log-Threshold set, the message is logged
    --  to different targets (depending on the facilites) automatically.

@@ -156,8 +156,7 @@ package body Alog.Facilities.SMTP is
         & Msg & EOL & EOL
       --  Footer
         & "Generated: " & Facility.Get_Timestamp
-        & "by " & Facility.Get_Name & " (PID:"
-        & Integer'Image (Facility.Get_Pid) & ")";
+        & "by " & Facility.Get_Name;
    begin
       return Message;
    end Format_Message;

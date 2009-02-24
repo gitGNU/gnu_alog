@@ -27,9 +27,6 @@ with Ahven.Framework;
 
 --  Alog
 with Alog;
-with Alog.Transforms;
-with Alog.Transforms.Casing;
-
 
 --  Tests for Alog transform components.
 package Transform_Tests is

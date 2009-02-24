@@ -21,9 +21,6 @@
 --  MA  02110-1301  USA
 --
 
-with Ada.Characters.Handling;
-with Ada.Strings.Unbounded;
-
 --  Casing transform. Used to transform
 --  casing (lower/uppercase) of messages
 package Alog.Transforms.Casing is
@@ -36,9 +33,9 @@ package Alog.Transforms.Casing is
    type Handle is access all Instance;
 
    overriding
-   function Transform_Message (Transform : in Instance;
-                               Level     : in Log_Level := INFO;
-                               Msg       : in String) return String;
+   function Transform_Message (Transform : Instance;
+                               Level     : Log_Level := INFO;
+                               Msg       : String) return String;
    --  Implementation of Transform_Message.
 
    overriding

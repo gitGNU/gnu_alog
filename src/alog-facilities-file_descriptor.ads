@@ -22,8 +22,6 @@
 --
 
 with Ada.Text_IO;
-with Ada.Strings.Unbounded;
-with Ada.IO_Exceptions;
 
 use Ada;
 
@@ -38,9 +36,9 @@ package Alog.Facilities.File_Descriptor is
    type Handle is access all Instance;
 
    overriding
-   procedure Write_Message (Facility : in Instance;
-                            Level    : in Log_Level := INFO;
-                            Msg      : in String);
+   procedure Write_Message (Facility : Instance;
+                            Level    : Log_Level := INFO;
+                            Msg      : String);
    --  Implementation of Write_Message.
 
    overriding
@@ -51,30 +49,29 @@ package Alog.Facilities.File_Descriptor is
    procedure Teardown (Facility : in out Instance);
    --  Implementation of Teardown-procedure.
 
-
    procedure Set_Logfile (Facility : in out Instance; Path : String);
    --  Set logfile to use. If not set, standard output is used
    --  for logging (e.g. stdout).
 
-   function Get_Logfile (Facility : in Instance) return Text_IO.File_Access;
+   function Get_Logfile (Facility : Instance) return Text_IO.File_Access;
    --  Get currently used logfile.
 
    procedure Close_Logfile (Facility : in out Instance;
-                            Remove   : in Boolean := False);
+                            Remove   :        Boolean := False);
    --  Close opened logfile.
 
    procedure Toggle_Write_Timestamp (Facility : in out Instance;
-                                     Set      : in Boolean);
+                                     Set      :        Boolean);
    --  Enable/disable whether a timestamp is written for log messages.
 
-   function Is_Write_Timestamp (Facility : in Instance) return Boolean;
+   function Is_Write_Timestamp (Facility : Instance) return Boolean;
    --  Returns the current value of Write_Timestamp.
 
    procedure Toggle_Write_Loglevel (Facility : in out Instance;
-                                    Set      : in Boolean);
+                                    Set      :        Boolean);
    --  Enable/disable whether the loglevel is written for log messages.
 
-   function Is_Write_Loglevel (Facility : in Instance) return Boolean;
+   function Is_Write_Loglevel (Facility : Instance) return Boolean;
    --  Returns the current value of Write_Loglevel.
 
 private

@@ -21,54 +21,57 @@
 --  MA  02110-1301  USA
 --
 
+with Ada.IO_Exceptions;
+
 package body Alog.Facilities.File_Descriptor is
 
    -------------------
-   -- Write_Message --
+   -- Close_Logfile --
    -------------------
 
-   procedure Write_Message (Facility : in Instance;
-                            Level    : Log_Level := INFO;
-                            Msg      : in String)
+   procedure Close_Logfile (Facility : in out Instance;
+                            Remove   :        Boolean := False)
    is
-      Logfile   : Text_IO.File_Type renames Facility.Log_File_Ptr.all;
-      Timestamp : String := Facility.Get_Timestamp;
+      use Ada.Text_IO;
    begin
-      if Level <= Facility.Get_Threshold then
-         if Facility.Is_Write_Timestamp then
-            Text_IO.Put (File  => Logfile,
-                         Item  => Timestamp);
+      if Facility.Log_File_Ptr /= Standard_Output
+        and Is_Open (File => Facility.Log_File) then
+         if Remove then
+            --  Close and delete.
+            Delete (File => Facility.Log_File);
+         else
+            --   Close only.
+            Close (File => Facility.Log_File);
          end if;
-         if Facility.Is_Write_Loglevel then
-            Text_IO.Put (File  => Logfile,
-                         Item  => "[" & Log_Level'Image (Level) & "]");
-         end if;
-         Text_IO.Put (File  => Logfile,
-                      Item  => " " & Msg);
-
-         Text_IO.New_Line (File => Logfile);
       end if;
-   end Write_Message;
+   end Close_Logfile;
 
-   -----------
-   -- Setup --
-   -----------
+   -----------------
+   -- Get_Logfile --
+   -----------------
 
-   procedure Setup (Facility : in out Instance) is
+   function Get_Logfile (Facility : Instance) return Text_IO.File_Access is
    begin
-      --  Nothing to do for now.
-      null;
-   end Setup;
+      return Facility.Log_File_Ptr;
+   end Get_Logfile;
 
-   --------------
-   -- Teardown --
-   --------------
+   -----------------------
+   -- Is_Write_Loglevel --
+   -----------------------
 
-   procedure Teardown (Facility : in out Instance) is
+   function Is_Write_Loglevel (Facility : Instance) return Boolean is
    begin
-      --  Close logfile if still open.
-      Facility.Close_Logfile;
-   end Teardown;
+      return Facility.Write_Loglevel;
+   end Is_Write_Loglevel;
+
+   ------------------------
+   -- Is_Write_Timestamp --
+   ------------------------
+
+   function Is_Write_Timestamp (Facility : Instance) return Boolean is
+   begin
+      return Facility.Write_Timestamp;
+   end Is_Write_Timestamp;
 
    -----------------
    -- Set_Logfile --
@@ -105,72 +108,74 @@ package body Alog.Facilities.File_Descriptor is
 
    end Set_Logfile;
 
-   -----------------
-   -- Get_Logfile --
-   -----------------
+   -----------
+   -- Setup --
+   -----------
 
-   function Get_Logfile (Facility : in Instance) return Text_IO.File_Access is
+   procedure Setup (Facility : in out Instance) is
+      pragma Unreferenced (Facility);
    begin
-      return Facility.Log_File_Ptr;
-   end Get_Logfile;
+      --  Nothing to do for now.
+      null;
+   end Setup;
 
-   -------------------
-   -- Close_Logfile --
-   -------------------
+   --------------
+   -- Teardown --
+   --------------
 
-   procedure Close_Logfile (Facility : in out Instance;
-                            Remove   : in Boolean := False) is
-      use Ada.Text_IO;
+   procedure Teardown (Facility : in out Instance) is
    begin
-      if Facility.Log_File_Ptr /= Standard_Output
-        and Is_Open (File => Facility.Log_File) then
-         if Remove then
-            --  Close and delete.
-            Delete (File => Facility.Log_File);
-         else
-            --   Close only.
-            Close (File => Facility.Log_File);
-         end if;
-      end if;
-   end Close_Logfile;
-
-   ----------------------------
-   -- Toggle_Write_Timestamp --
-   ----------------------------
-
-   procedure Toggle_Write_Timestamp (Facility : in out Instance;
-                                     Set      : in Boolean) is
-   begin
-      Facility.Write_Timestamp := Set;
-   end Toggle_Write_Timestamp;
-
-   ------------------------
-   -- Is_Write_Timestamp --
-   ------------------------
-
-   function Is_Write_Timestamp (Facility : in Instance) return Boolean is
-   begin
-      return Facility.Write_Timestamp;
-   end Is_Write_Timestamp;
-
+      --  Close logfile if still open.
+      Facility.Close_Logfile;
+   end Teardown;
 
    ---------------------------
    -- Toggle_Write_Loglevel --
    ---------------------------
 
    procedure Toggle_Write_Loglevel (Facility : in out Instance;
-                                    Set      : in Boolean) is
+                                    Set      :        Boolean)
+   is
    begin
       Facility.Write_Loglevel := Set;
    end Toggle_Write_Loglevel;
 
-   -----------------------
-   -- Is_Write_Loglevel --
-   -----------------------
+   ----------------------------
+   -- Toggle_Write_Timestamp --
+   ----------------------------
 
-   function Is_Write_Loglevel (Facility : in Instance) return Boolean is
+   procedure Toggle_Write_Timestamp (Facility : in out Instance;
+                                     Set      :        Boolean)
+   is
    begin
-      return Facility.Write_Loglevel;
-   end Is_Write_Loglevel;
+      Facility.Write_Timestamp := Set;
+   end Toggle_Write_Timestamp;
+
+   -------------------
+   -- Write_Message --
+   -------------------
+
+   procedure Write_Message (Facility : Instance;
+                            Level    : Log_Level := INFO;
+                            Msg      : String)
+   is
+      Logfile   : Text_IO.File_Type renames Facility.Log_File_Ptr.all;
+      Timestamp : constant String := Facility.Get_Timestamp;
+   begin
+      if Level <= Facility.Get_Threshold then
+         if Facility.Is_Write_Timestamp then
+            Text_IO.Put (File  => Logfile,
+                         Item  => Timestamp);
+         end if;
+         if Facility.Is_Write_Loglevel then
+            Text_IO.Put (File  => Logfile,
+                         Item  => "[" & Log_Level'Image (Level) & "]");
+         end if;
+         Text_IO.Put (File  => Logfile,
+                      Item  => " " & Msg);
+
+         Text_IO.New_Line (File => Logfile);
+      end if;
+   end Write_Message;
 
 end Alog.Facilities.File_Descriptor;

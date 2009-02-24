@@ -21,40 +21,9 @@
 --  MA  02110-1301  USA
 --
 
+with Ada.Characters.Handling;
+
 package body Alog.Transforms.Casing is
-
-   -----------------------
-   -- Transform_Message --
-   -----------------------
-
-   function Transform_Message (Transform : in Instance;
-                               Level     : in Log_Level := INFO;
-                               Msg       : in String) return String is
-   begin
-      if Transform.Mode = Lowercase then
-         return Ada.Characters.Handling.To_Lower (Msg);
-      else
-         return Ada.Characters.Handling.To_Upper (Msg);
-      end if;
-   end Transform_Message;
-
-   -----------
-   -- Setup --
-   -----------
-
-   procedure Setup (Transform : in out Instance) is
-   begin
-      null;
-   end Setup;
-
-   --------------
-   -- Teardown --
-   --------------
-
-   procedure Teardown (Transform : in out Instance) is
-   begin
-      null;
-   end Teardown;
 
    --------------
    -- Set_Mode --
@@ -64,5 +33,41 @@ package body Alog.Transforms.Casing is
    begin
       Transform.Mode := Mode;
    end Set_Mode;
+
+   -----------
+   -- Setup --
+   -----------
+
+   procedure Setup (Transform : in out Instance) is
+      pragma Unreferenced (Transform);
+   begin
+      null;
+   end Setup;
+
+   --------------
+   -- Teardown --
+   --------------
+
+   procedure Teardown (Transform : in out Instance) is
+      pragma Unreferenced (Transform);
+   begin
+      null;
+   end Teardown;
+
+   -----------------------
+   -- Transform_Message --
+   -----------------------
+
+   function Transform_Message (Transform : Instance;
+                               Level     : Log_Level := INFO;
+                               Msg       : String) return String is
+      pragma Unreferenced (Level);
+   begin
+      if Transform.Mode = Lowercase then
+         return Ada.Characters.Handling.To_Lower (Msg);
+      else
+         return Ada.Characters.Handling.To_Upper (Msg);
+      end if;
+   end Transform_Message;
 
 end Alog.Transforms.Casing;

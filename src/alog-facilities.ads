@@ -25,20 +25,12 @@
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
 with Ada.Strings.Bounded; use Ada.Strings.Bounded;
 with Ada.Strings.Unbounded.Hash;
-with Ada.Unchecked_Conversion;
 with Ada.Command_Line;
-with Ada.Calendar;
 with Ada.Containers;
 with Ada.Containers.Doubly_Linked_Lists;
 
 --  Alog
 with Alog.Transforms;
-
---  System
-with System.OS_Interface;
-
---  GNAT
-with GNAT.Calendar.Time_IO;
 
 --  Abstract package Facilities. Provides common data and
 --  methods used by all Alog facilities.
@@ -61,10 +53,11 @@ package Alog.Facilities is
                                          Alog.Transforms."=");
    --  Transforms list.
 
-   procedure Set_Name (Facility : in out Instance'Class; Name : in String);
+   procedure Set_Name (Facility : in out Instance'Class;
+                       Name     :        String);
    --  Set facility name.
 
-   function Get_Name (Facility : in Instance'Class) return String;
+   function Get_Name (Facility : Instance'Class) return String;
    --  Get facility name.
 
    function Hash (Element : Alog.Facilities.Handle)
@@ -72,21 +65,18 @@ package Alog.Facilities is
    --  Return Hash value of facility.
 
    procedure Set_Threshold (Facility : in out Instance'Class;
-                            Level    : in Log_Level);
+                            Level    :        Log_Level);
    --  Set facility log level treshold.
 
-   function Get_Threshold (Facility : in Instance'Class) return Log_Level;
+   function Get_Threshold (Facility : Instance'Class) return Log_Level;
    --  Get facility log level treshold.
 
-   function Get_Timestamp (Facility : in Instance'Class) return String;
+   function Get_Timestamp (Facility : Instance'Class) return String;
    --  Creates a timestamp and returns it as String.
 
-   function Get_Pid (Facility : in Instance'Class) return Integer;
-   --  Get PID of process logging the message.
-
-   procedure Write_Message (Facility : in Instance;
-                            Level    : in Log_Level;
-                            Msg      : in String) is abstract;
+   procedure Write_Message (Facility : Instance;
+                            Level    : Log_Level;
+                            Msg      : String) is abstract;
    --  Write message with specified log level.
 
    procedure Setup (Facility : in out Instance) is abstract;
@@ -100,19 +90,19 @@ package Alog.Facilities is
    --  the logger object gets out of scope.
 
    procedure Add_Transform (Facility  : in out Instance'Class;
-                            Transform : in     Alog.Transforms.Handle);
+                            Transform :        Alog.Transforms.Handle);
    --  Adds a Transform to the facility's transform list.
 
    procedure Remove_Transform (Facility  : in out Instance'Class;
-                               Transform : in     Alog.Transforms.Handle);
+                               Transform :        Alog.Transforms.Handle);
    --  Removes a Transform to the facility's transform list.
 
-   function Transform_Count (Facility : in Instance'Class)
+   function Transform_Count (Facility : Instance'Class)
                              return Ada.Containers.Count_Type;
    --  Returns the number of transforms in the facility's transform list.
 
-   function Get_Transforms (Facility : in Instance'Class)
-                                return Transform_List_Package.List;
+   function Get_Transforms (Facility : Instance'Class)
+                            return Transform_List_Package.List;
    --  Returns the number of transforms in the facility's transform list.
 
    package BS_Path is new Generic_Bounded_Length (Max_Path_Length);

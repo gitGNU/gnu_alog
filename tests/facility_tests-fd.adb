@@ -21,21 +21,106 @@
 --  MA  02110-1301  USA
 --
 
---  Ada
 with Ada.Text_IO;
 with Ada.Exceptions;
 with Ada.IO_Exceptions;
 
---  Ahven
 with Ahven; use Ahven;
 
---  Alog
 with Alog;  use Alog;
 with Alog.Helpers;
 with Alog.Facilities; use Alog.Facilities;
 with Alog.Facilities.File_Descriptor;
 
 package body Facility_Tests.FD is
+
+   -------------------------------
+   -- Disable_Write_Loglevel_Fd --
+   -------------------------------
+
+   procedure Disable_Write_Loglevel_Fd is
+      F : File_Descriptor.Instance;
+      Testfile : constant String := "./data/Disable_Write_Loglevel_Fd";
+      Reffile  : constant String := "./data/Disable_Write_Loglevel_Fd.ref";
+   begin
+      F.Toggle_Write_Timestamp (Set => False);
+      F.Toggle_Write_Loglevel (Set => False);
+      F.Set_Logfile (Path => Testfile);
+      F.Write_Message (Msg => "This is a message without loglevel");
+
+      F.Close_Logfile;
+
+      Assert (Condition => Helpers.Assert_Files_Equal
+              (Filename1 => Reffile,
+               Filename2 => Testfile),
+              Message   => "unable to disable");
+
+      F.Teardown;
+   end Disable_Write_Loglevel_Fd;
+
+   --------------------------------
+   -- Disable_Write_Timestamp_Fd --
+   --------------------------------
+
+   procedure Disable_Write_Timestamp_Fd is
+      F : File_Descriptor.Instance;
+      Testfile : constant String := "./data/Disable_Write_Timestamp_Fd";
+      Reffile  : constant String := "./data/Disable_Write_Timestamp_Fd.ref";
+   begin
+      F.Toggle_Write_Timestamp (Set => False);
+      F.Set_Logfile (Path => Testfile);
+      F.Write_Message (Msg => "This is a message without timestamp");
+
+      F.Close_Logfile;
+
+      Assert (Condition => Helpers.Assert_Files_Equal
+              (Filename1 => Reffile,
+               Filename2 => Testfile),
+              Message   => "unable to disable");
+
+      --  Cleanup.
+      F.Teardown;
+   end Disable_Write_Timestamp_Fd;
+
+   --------------
+   -- Finalize --
+   --------------
+
+   procedure Finalize (T : in out F_Test) is
+      use Ada.Text_IO;
+      use Ahven.Framework;
+
+      --  Files to clean after tests.
+      subtype Count is Natural range 1 .. 6;
+
+      Files : constant array (Count) of BS_Path.Bounded_String :=
+        (BS_Path.To_Bounded_String ("./data/Teardown_Fd"),
+         BS_Path.To_Bounded_String ("./data/Write_Message_Fd"),
+         BS_Path.To_Bounded_String ("./data/Disable_Write_Timestamp_Fd"),
+         BS_Path.To_Bounded_String ("./data/Disable_Write_Loglevel_Fd"),
+         BS_Path.To_Bounded_String ("./data/Trim_Loglevels_Fd"),
+         BS_Path.To_Bounded_String ("./data/Set_Threshold_Fd")
+        );
+      F     : File_Type;
+   begin
+      for c in Count loop
+         Open (File => F,
+               Mode => In_File,
+               Name => BS_Path.To_String (Files (c)));
+         Delete (File => F);
+      end loop;
+
+      Finalize (Test_Case (T));
+
+   exception
+      when Ada.IO_Exceptions.Name_Error =>
+         null;
+         --  File did not exist. Carry on.
+      when Event : others =>
+         Put_Line ("error occured while cleaning up: ");
+         Put_Line (Ada.Exceptions.Exception_Name (Event));
+         Put_Line (Ada.Exceptions.Exception_Message (Event));
+   end Finalize;
 
    ----------------
    -- Initialize --
@@ -62,63 +147,9 @@ package body Facility_Tests.FD is
         (T, Set_Threshold_Fd'Access, "set fd threshold");
    end Initialize;
 
-   --------------
-   -- Finalize --
-   --------------
-
-   procedure Finalize (T : in out F_Test) is
-      use Ada.Text_IO;
-      use Ahven.Framework;
-
-      --  Files to clean after tests.
-      subtype Count is Natural range 1 .. 6;
-
-      Files : array (Count) of BS_Path.Bounded_String :=
-        (BS_Path.To_Bounded_String ("./data/Teardown_Fd"),
-         BS_Path.To_Bounded_String ("./data/Write_Message_Fd"),
-         BS_Path.To_Bounded_String ("./data/Disable_Write_Timestamp_Fd"),
-         BS_Path.To_Bounded_String ("./data/Disable_Write_Loglevel_Fd"),
-         BS_Path.To_Bounded_String ("./data/Trim_Loglevels_Fd"),
-         BS_Path.To_Bounded_String ("./data/Set_Threshold_Fd")
-        );
-      F     : File_Type;
-   begin
-      for c in Count loop
-         Open (File => F,
-               Mode => In_File,
-               Name => BS_Path.To_String (Files (c)));
-         Delete (File => F);
-      end loop;
-
-      Finalize (Test_Case (T));
-
-   exception
-      when Error : Ada.IO_Exceptions.Name_Error =>
-         null;
-         --  File did not exist. Carry on.
-      when Event : others =>
-         Put_Line ("error occured while cleaning up: ");
-         Put_Line (Ada.Exceptions.Exception_Name (Event));
-         Put_Line (Ada.Exceptions.Exception_Message (Event));
-   end Finalize;
-
-   -----------------------
-   -- Set_Valid_Logfile --
-   -----------------------
-
-   procedure Set_Valid_Logfile_Fd is
-      use Ada.Text_IO;
-      F : File_Descriptor.Instance;
-   begin
-      F.Set_Logfile (Path => "./data/Set_Valid_Logfile");
-      Assert (Condition => Is_Open (F.Get_Logfile.all),
-              Message   => "could not set logfile!");
-      F.Close_Logfile (Remove => True);
-   end Set_Valid_Logfile_Fd;
-
-   --------------------
-   -- Set_Illegal_Fd --
-   --------------------
+   ----------------------------
+   -- Set_Invalid_Logfile_Fd --
+   ----------------------------
 
    procedure Set_Invalid_Logfile_Fd is
       use Ada.IO_Exceptions;
@@ -134,13 +165,93 @@ package body Facility_Tests.FD is
    end Set_Invalid_Logfile_Fd;
 
    ----------------------
+   -- Set_Threshold_Fd --
+   ----------------------
+
+   procedure Set_Threshold_Fd is
+      F : File_Descriptor.Instance;
+      Testfile : constant String := "./data/Set_Threshold_Fd";
+      Reffile  : constant String := "./data/Set_Threshold_Fd.ref";
+   begin
+      F.Toggle_Write_Timestamp (Set => False);
+      F.Set_Logfile (Path => Testfile);
+      F.Write_Message (Level => DEBU,
+                       Msg   => "this message should appear in log");
+      F.Set_Threshold (Level => INFO);
+      F.Write_Message (Level => DEBU,
+                       Msg   => "this message should not appear");
+      F.Write_Message (Level => INFO,
+                       Msg   => "this message should appear again");
+
+      F.Close_Logfile;
+      Assert (Condition => Helpers.Assert_Files_Equal
+              (Filename1 => Reffile, Filename2 => Testfile),
+              Message   => "threshold does not work");
+
+      F.Teardown;
+   end Set_Threshold_Fd;
+
+   --------------------------
+   -- Set_Valid_Logfile_Fd --
+   --------------------------
+
+   procedure Set_Valid_Logfile_Fd is
+      use Ada.Text_IO;
+      F : File_Descriptor.Instance;
+   begin
+      F.Set_Logfile (Path => "./data/Set_Valid_Logfile");
+      Assert (Condition => Is_Open (F.Get_Logfile.all),
+              Message   => "could not set logfile!");
+      F.Close_Logfile (Remove => True);
+   end Set_Valid_Logfile_Fd;
+
+   -----------------
+   -- Teardown_Fd --
+   -----------------
+
+   procedure Teardown_Fd is
+      use Ada.Text_IO;
+      F : File_Descriptor.Instance;
+   begin
+      F.Set_Logfile (Path => "./data/Teardown_Fd");
+      Assert (Condition => Is_Open (File => F.Get_Logfile.all),
+              Message   => "could not set logfile!");
+      F.Teardown;
+      Assert (Condition => not Is_Open (File => F.Get_Logfile.all),
+              Message   => "logfile still open!");
+   end Teardown_Fd;
+
+   -----------------------
+   -- Trim_Loglevels_Fd --
+   -----------------------
+
+   procedure Trim_Loglevels_Fd is
+      F : File_Descriptor.Instance;
+      Testfile : constant String := "./data/Trim_Loglevels_Fd";
+      Reffile  : constant String := "./data/Trim_Loglevels_Fd.ref";
+   begin
+      F.Toggle_Write_Timestamp (Set => False);
+      F.Set_Logfile (Path => Testfile);
+      for Lvl in Alog.Log_Level loop
+         F.Write_Message (Level => Lvl,
+                          Msg   => "Testmessage");
+      end loop;
+
+      F.Close_Logfile;
+      Assert (Condition => Helpers.Assert_Files_Equal
+              (Filename1 => Reffile, Filename2 => Testfile),
+              Message   => "alignment incorrect");
+      F.Teardown;
+   end Trim_Loglevels_Fd;
+
+   ----------------------
    -- Write_Message_Fd --
    ----------------------
 
    procedure Write_Message_Fd is
       F        : File_Descriptor.Instance;
-      Testfile : String := "./data/Write_Message_Fd";
-      Reffile  : String := "./data/Write_Message_Fd.ref";
+      Testfile : constant String := "./data/Write_Message_Fd";
+      Reffile  : constant String := "./data/Write_Message_Fd.ref";
    begin
       --  We have to disable timestamps, since its changing all
       --  the time :)
@@ -161,119 +272,5 @@ package body Facility_Tests.FD is
       --  Cleanup
       F.Teardown;
    end Write_Message_Fd;
-
-   -----------------
-   -- Teardown_Fd --
-   -----------------
-
-   procedure Teardown_Fd is
-      use Ada.Text_IO;
-      F : File_Descriptor.Instance;
-   begin
-      F.Set_Logfile (Path => "./data/Teardown_Fd");
-      Assert (Condition => Is_Open (File => F.Get_Logfile.all),
-              Message   => "could not set logfile!");
-      F.Teardown;
-      Assert (Condition => not Is_Open (File => F.Get_Logfile.all),
-              Message   => "logfile still open!");
-   end Teardown_Fd;
-
-   --------------------------------
-   -- Disable_Write_Timestamp_Fd --
-   --------------------------------
-
-   procedure Disable_Write_Timestamp_Fd is
-      F : File_Descriptor.Instance;
-      Testfile : String := "./data/Disable_Write_Timestamp_Fd";
-      Reffile  : String := "./data/Disable_Write_Timestamp_Fd.ref";
-   begin
-      F.Toggle_Write_Timestamp (Set => False);
-      F.Set_Logfile (Path => Testfile);
-      F.Write_Message (Msg => "This is a message without timestamp");
-
-      F.Close_Logfile;
-
-      Assert (Condition => Helpers.Assert_Files_Equal
-              (Filename1 => Reffile,
-               Filename2 => Testfile),
-              Message   => "unable to disable");
-
-      --  Cleanup.
-      F.Teardown;
-   end Disable_Write_Timestamp_Fd;
-
-   -------------------------------
-   -- Disable_Write_Loglevel_Fd --
-   -------------------------------
-
-   procedure Disable_Write_Loglevel_Fd is
-      F : File_Descriptor.Instance;
-      Testfile : String := "./data/Disable_Write_Loglevel_Fd";
-      Reffile  : String := "./data/Disable_Write_Loglevel_Fd.ref";
-   begin
-      F.Toggle_Write_Timestamp (Set => False);
-      F.Toggle_Write_Loglevel (Set => False);
-      F.Set_Logfile (Path => Testfile);
-      F.Write_Message (Msg => "This is a message without loglevel");
-
-      F.Close_Logfile;
-
-      Assert (Condition => Helpers.Assert_Files_Equal
-              (Filename1 => Reffile,
-               Filename2 => Testfile),
-              Message   => "unable to disable");
-
-      F.Teardown;
-   end Disable_Write_Loglevel_Fd;
-
-   -----------------------
-   -- Trim_Loglevels_Fd --
-   -----------------------
-
-   procedure Trim_Loglevels_Fd is
-      F : File_Descriptor.Instance;
-      Testfile : String := "./data/Trim_Loglevels_Fd";
-      Reffile  : String := "./data/Trim_Loglevels_Fd.ref";
-   begin
-      F.Toggle_Write_Timestamp (Set => False);
-      F.Set_Logfile (Path => Testfile);
-      for Lvl in Alog.Log_Level loop
-         F.Write_Message (Level => Lvl,
-                          Msg   => "Testmessage");
-      end loop;
-
-      F.Close_Logfile;
-      Assert (Condition => Helpers.Assert_Files_Equal
-              (Filename1 => Reffile, Filename2 => Testfile),
-              Message   => "alignment incorrect");
-      F.Teardown;
-   end Trim_Loglevels_Fd;
-
-   ----------------------
-   -- Set_Threshold_Fd --
-   ----------------------
-
-   procedure Set_Threshold_Fd is
-      F : File_Descriptor.Instance;
-      Testfile : String := "./data/Set_Threshold_Fd";
-      Reffile  : String := "./data/Set_Threshold_Fd.ref";
-   begin
-      F.Toggle_Write_Timestamp (Set => False);
-      F.Set_Logfile (Path => Testfile);
-      F.Write_Message (Level => DEBU,
-                       Msg   => "this message should appear in log");
-      F.Set_Threshold (Level => INFO);
-      F.Write_Message (Level => DEBU,
-                       Msg   => "this message should not appear");
-      F.Write_Message (Level => INFO,
-                       Msg   => "this message should appear again");
-
-      F.Close_Logfile;
-      Assert (Condition => Helpers.Assert_Files_Equal
-              (Filename1 => Reffile, Filename2 => Testfile),
-              Message   => "threshold does not work");
-
-      F.Teardown;
-   end Set_Threshold_Fd;
 
 end Facility_Tests.FD;

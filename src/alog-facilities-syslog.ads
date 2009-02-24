@@ -20,9 +20,6 @@
 --  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,
 --  MA  02110-1301  USA
 
-with Interfaces.C.Strings;
-with Interfaces.C;
-
 --  Syslog facility. Used to log to systems syslog.
 --  At the moment, this facility is a thin binding to syslog
 --  function calls. The implementation attempts to resemble
@@ -54,9 +51,9 @@ package Alog.Facilities.Syslog is
    --  Facility map table.
 
    overriding
-   procedure Write_Message (Facility : in Instance;
-                            Level    : in Log_Level := INFO;
-                            Msg      : in String);
+   procedure Write_Message (Facility : Instance;
+                            Level    : Log_Level := INFO;
+                            Msg      : String);
    --  Implementation of Write_Message.
 
    overriding

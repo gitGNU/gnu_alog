@@ -41,19 +41,21 @@ package Alog.Transforms is
                  Right : Handle) return Boolean;
    --  Equal function.
 
-   procedure Set_Name (Transform : in out Instance'Class; Name : in String);
+   procedure Set_Name (Transform : in out Instance'Class;
+                       Name      :        String);
    --  Set transform name.
 
-   function Get_Name (Transform : in Instance'Class) return String;
+   function Get_Name (Transform : Instance'Class) return String;
    --  Get transform name.
 
    function Hash (Element : Alog.Transforms.Handle)
                   return Ada.Containers.Hash_Type;
    --  Return Hash value of transform.
 
-   function Transform_Message (Transform : in Instance;
-                            Level    : in Log_Level;
-                            Msg      : in String) return String is abstract;
+   function Transform_Message (Transform : Instance;
+                               Level     : Log_Level;
+                               Msg       : String)
+                               return String is abstract;
    --  Transform message with specified log level.
 
    procedure Setup (Transform : in out Instance) is abstract;

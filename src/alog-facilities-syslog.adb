@@ -21,15 +21,40 @@
 --  MA  02110-1301  USA
 --
 
+with Interfaces.C.Strings;
+
 package body Alog.Facilities.Syslog is
+
+   -----------
+   -- Setup --
+   -----------
+
+   procedure Setup (Facility : in out Instance) is
+      pragma Unreferenced (Facility);
+   begin
+      --  Nothing to do for now.
+      null;
+   end Setup;
+
+   --------------
+   -- Teardown --
+   --------------
+
+   procedure Teardown (Facility : in out Instance) is
+      pragma Unreferenced (Facility);
+   begin
+      --  Nothing to do for now.
+      null;
+   end Teardown;
 
    -------------------
    -- Write_Message --
    -------------------
 
-   procedure Write_Message (Facility : in Instance;
-                            Level    : in Log_Level := INFO;
-                            Msg      : in String) is
+   procedure Write_Message (Facility : Instance;
+                            Level    : Log_Level := INFO;
+                            Msg      : String)
+   is
 
       procedure C_Syslog (Prio : Natural;
                           Msg  : Interfaces.C.Strings.chars_ptr);
@@ -45,25 +70,5 @@ package body Alog.Facilities.Syslog is
          Interfaces.C.Strings.Free (Char_Ptr);
       end if;
    end Write_Message;
-
-   -----------
-   -- Setup --
-   -----------
-
-   procedure Setup (Facility : in out Instance) is
-   begin
-      --  Nothing to do for now.
-      null;
-   end Setup;
-
-   --------------
-   -- Teardown --
-   --------------
-
-   procedure Teardown (Facility : in out Instance) is
-   begin
-      --  Nothing to do for now.
-      null;
-   end Teardown;
 
 end Alog.Facilities.Syslog;

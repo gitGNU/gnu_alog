@@ -30,17 +30,22 @@ with Transform_Tests.Casing;
 with Logger_Tests;
 
 procedure Runner_Base is
-   S : Ahven.Framework.Test_Suite_Access :=
-     Ahven.Framework.Create_Suite ("Alog base tests");
+   S : constant Ahven.Framework.Test_Suite_Access :=
+     Ahven.Framework.Create_Suite (Suite_Name => "Alog base tests");
    pragma Linker_Options ("-lahven");
 begin
    --  Facility tests
-   Ahven.Framework.Add_Test (S.all, new Facility_Tests.F_Test);
-   Ahven.Framework.Add_Test (S.all, new Facility_Tests.FD.F_Test);
-   Ahven.Framework.Add_Test (S.all, new Transform_Tests.T_Test);
-   Ahven.Framework.Add_Test (S.all, new Transform_Tests.Casing.T_Test);
-   Ahven.Framework.Add_Test (S.all, new Logger_Tests.L_Test);
+   Ahven.Framework.Add_Test (Suite => S.all,
+                             T     => new Facility_Tests.F_Test);
+   Ahven.Framework.Add_Test (Suite => S.all,
+                             T     => new Facility_Tests.FD.F_Test);
+   Ahven.Framework.Add_Test (Suite => S.all,
+                             T     => new Transform_Tests.T_Test);
+   Ahven.Framework.Add_Test (Suite => S.all,
+                             T     => new Transform_Tests.Casing.T_Test);
+   Ahven.Framework.Add_Test (Suite => S.all,
+                             T     => new Logger_Tests.L_Test);
 
-   Ahven.Text_Runner.Run (S);
-   Ahven.Framework.Release_Suite (S);
+   Ahven.Text_Runner.Run (Suite => S);
+   Ahven.Framework.Release_Suite (T => S);
 end Runner_Base;

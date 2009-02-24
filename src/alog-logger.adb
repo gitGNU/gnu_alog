@@ -28,18 +28,39 @@ package body Alog.Logger is
    ----------------------
 
    procedure Attach_Facility (Logger   : in out Alog.Logger.Instance;
-                              Facility : in     Alog.Facilities.Handle) is
+                              Facility :        Alog.Facilities.Handle)
+   is
    begin
       Logger.F_Stack.Insert (New_Item => Facility);
    end Attach_Facility;
+
+   ----------------------
+   -- Attach_Transform --
+   ----------------------
+
+   procedure Attach_Transform (Logger    : in out Instance;
+                               Transform :        Alog.Transforms.Handle)
+   is
+   begin
+      Logger.T_Stack.Insert (New_Item => Transform);
+   end Attach_Transform;
+
+   ------------
+   --  Clear --
+   ------------
+
+   procedure Clear (L : in out Instance) is
+   begin
+      L.Finalize;
+   end Clear;
 
    ----------------------
    --  Detach_Facility --
    ----------------------
 
    procedure Detach_Facility (Logger   : in out Instance;
-                              Facility : in Alog.Facilities.Handle) is
-
+                              Facility :        Alog.Facilities.Handle)
+   is
       use Facilities_Stack_Package;
 
       Position        : Cursor;
@@ -57,31 +78,13 @@ package body Alog.Logger is
          raise Facility_Not_Found;
    end Detach_Facility;
 
-   ---------------------
-   --  Facility_Count --
-   ---------------------
-
-   function Facility_Count (Logger : in Instance) return Natural is
-   begin
-      return Natural (Logger.F_Stack.Length);
-   end Facility_Count;
-
-   ----------------------
-   -- Attach_Transform --
-   ----------------------
-
-   procedure Attach_Transform (Logger   : in out Instance;
-                               Transform : in     Alog.Transforms.Handle) is
-   begin
-      Logger.T_Stack.Insert (New_Item => Transform);
-   end Attach_Transform;
-
    ----------------------
    -- Detach_Transform --
    ----------------------
 
-   procedure Detach_Transform (Logger   : in out Instance;
-                               Transform : in Alog.Transforms.Handle) is
+   procedure Detach_Transform (Logger    : in out Instance;
+                               Transform :        Alog.Transforms.Handle)
+   is
       use Transforms_Stack_Package;
 
       Position        : Cursor;
@@ -100,58 +103,13 @@ package body Alog.Logger is
    end Detach_Transform;
 
    ---------------------
-   -- Transform_Count --
+   --  Facility_Count --
    ---------------------
 
-   function Transform_Count (Logger : in Instance) return Natural is
+   function Facility_Count (Logger : Instance) return Natural is
    begin
-      return Natural (Logger.T_Stack.Length);
-   end Transform_Count;
-
-   ------------
-   --  Clear --
-   ------------
-
-   procedure Clear (L : in out Instance) is
-   begin
-      L.Finalize;
-   end Clear;
-
-   ------------------
-   --  Log_Message --
-   ------------------
-
-   procedure Log_Message (Logger : in Instance;
-                          Level  : in Log_Level;
-                          Msg    : in String) is
-
-      F_Position : Facilities_Stack_Package.Cursor := Logger.F_Stack.First;
-      T_Position : Transform_List_Package.Cursor;
-      F_Item     : Alog.Facilities.Handle;
-      T_Item     : Alog.Transforms.Handle;
-      T_List     : Alog.Facilities.Transform_List_Package.List;
-      Out_Msg    : String := Msg;
-   begin
-      --  Loop over all facilities.
-      while Facilities_Stack_Package.Has_Element (F_Position) loop
-         F_Item := Facilities_Stack_Package.Element (F_Position);
-
-         --  Apply all transformations.
-         if F_Item.Transform_Count > 0 then
-            T_List := F_Item.Get_Transforms;
-            T_Position := T_List.First;
-            while Transform_List_Package.Has_Element (T_Position) loop
-               T_Item := Transform_List_Package.Element (T_Position);
-               Out_Msg := T_Item.Transform_Message (Level => Level,
-                                                    Msg   => Out_Msg);
-               Transform_List_Package.Next (T_Position);
-            end loop;
-         end if;
-         F_Item.Write_Message (Level => Level,
-                               Msg   => Out_Msg);
-         Facilities_Stack_Package.Next (F_Position);
-      end loop;
-   end Log_Message;
+      return Natural (Logger.F_Stack.Length);
+   end Facility_Count;
 
    ---------------
    --  Finalize --
@@ -193,5 +151,50 @@ package body Alog.Logger is
                Process   => Free_Transform'Access);
       Logger.T_Stack.Clear;
    end Finalize;
+
+   ------------------
+   --  Log_Message --
+   ------------------
+
+   procedure Log_Message (Logger : Instance;
+                          Level  : Log_Level;
+                          Msg    : String)
+   is
+      F_Position : Facilities_Stack_Package.Cursor := Logger.F_Stack.First;
+      T_Position : Transform_List_Package.Cursor;
+      F_Item     : Alog.Facilities.Handle;
+      T_Item     : Alog.Transforms.Handle;
+      T_List     : Alog.Facilities.Transform_List_Package.List;
+      Out_Msg    : String := Msg;
+   begin
+      --  Loop over all facilities.
+      while Facilities_Stack_Package.Has_Element (F_Position) loop
+         F_Item := Facilities_Stack_Package.Element (F_Position);
+
+         --  Apply all transformations.
+         if F_Item.Transform_Count > 0 then
+            T_List := F_Item.Get_Transforms;
+            T_Position := T_List.First;
+            while Transform_List_Package.Has_Element (T_Position) loop
+               T_Item := Transform_List_Package.Element (T_Position);
+               Out_Msg := T_Item.Transform_Message (Level => Level,
+                                                    Msg   => Out_Msg);
+               Transform_List_Package.Next (T_Position);
+            end loop;
+         end if;
+         F_Item.Write_Message (Level => Level,
+                               Msg   => Out_Msg);
+         Facilities_Stack_Package.Next (F_Position);
+      end loop;
+   end Log_Message;
+
+   ---------------------
+   -- Transform_Count --
+   ---------------------
+
+   function Transform_Count (Logger : Instance) return Natural is
+   begin
+      return Natural (Logger.T_Stack.Length);
+   end Transform_Count;
 
 end Alog.Logger;
