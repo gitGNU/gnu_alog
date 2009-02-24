@@ -43,8 +43,4 @@ package Alog is
    --  Maximum number of facilities a single logger instance
    --  can manage.
 
-private
-   Version : constant String := "0.1";
-   --  Alog library version.
-
 end Alog;
