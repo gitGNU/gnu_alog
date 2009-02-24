@@ -23,6 +23,7 @@
 
 PREFIX ?= $(HOME)/libraries
 INSTALL = install
+BUILD_TYPE ?= "base"
 
 VERSION = 0.2
 ALOG = libalog-$(VERSION)
@@ -35,13 +36,13 @@ SO_LIBRARY = libalog.so.$(VERSION)
 all: build_lib
 
 tests: build_tests
-	@obj/runner
+	@obj/runner_$(BUILD_TYPE)
 
 build_lib: prepare
-	@gnatmake -Palog_lib -XALOG_VERSION="$(VERSION)"
+	@gnatmake -Palog_lib -XALOG_VERSION="$(VERSION)" -XALOG_BUILD="$(BUILD_TYPE)"
 
 build_tests: prepare
-	@gnatmake -Palog_tests
+	@gnatmake -Palog_tests -XALOG_BUILD="$(BUILD_TYPE)"
 
 prepare: $(SOURCEDIR)/alog-version.ads
 	@mkdir -p obj/lib obj/tests lib

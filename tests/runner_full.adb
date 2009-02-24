@@ -32,9 +32,9 @@ with Transform_Tests;
 with Transform_Tests.Casing;
 with Logger_Tests;
 
-procedure Runner is
+procedure Runner_Full is
    S : Ahven.Framework.Test_Suite_Access :=
-     Ahven.Framework.Create_Suite ("All Alog tests");
+     Ahven.Framework.Create_Suite ("Alog full tests");
    pragma Linker_Options ("-lahven");
    pragma Linker_Options ("-laws");
    pragma Linker_Options ("-lapq");
@@ -51,4 +51,4 @@ begin
 
    Ahven.Text_Runner.Run (S);
    Ahven.Framework.Release_Suite (S);
-end Runner;
+end Runner_Full;

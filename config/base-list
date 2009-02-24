@@ -1,0 +1,16 @@
+alog.ads
+alog-facilities.adb
+alog-facilities.ads
+alog-facilities-file_descriptor.adb
+alog-facilities-file_descriptor.ads
+alog-facilities-syslog.adb
+alog-facilities-syslog.ads
+alog-helpers.adb
+alog-helpers.ads
+alog-logger.adb
+alog-logger.ads
+alog-transforms.adb
+alog-transforms.ads
+alog-transforms-casing.adb
+alog-transforms-casing.ads
+alog-version.ads

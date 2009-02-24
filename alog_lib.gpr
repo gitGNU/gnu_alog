@@ -23,9 +23,21 @@
 
 project Alog_Lib is
 
+   type Build_Type is ("base", "full");
+   Build : Build_Type := external ("ALOG_BUILD", "base");
+
    Version := external ("ALOG_VERSION", "0.1");
    for Languages use ("Ada");
+
    for Source_Dirs use ("src");
+   --  Use file list to build base version of alog
+   case Build is
+      when "base" =>
+         for Source_List_File use "config/base-list";
+      when "full" =>
+         for Library_Options use ("-laws", "-lapq");
+   end case;
+
    for Object_Dir use "obj/lib";
    for Library_Name use "alog";
    for Library_Dir use "lib";
