@@ -64,10 +64,6 @@ distclean:
 	@rm -rf obj
 	@rm -rf lib
 
-control:
-	@rm -f obj/*.adt objects/*.ali
-	cd obj && adactl -f ../rules/alog.aru ../src/*.ad[bs]
-
 dist: distclean $(SOURCEDIR)/alog-version.ads
 	@echo -n "Creating release tarball '$(ALOG)' ... "
 	@mkdir -p $(DISTDIR)
