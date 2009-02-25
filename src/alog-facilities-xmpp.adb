@@ -20,15 +20,80 @@
 --  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,
 --  MA  02110-1301  USA
 
+with Ada.Exceptions;
+
+with AWS.Jabber;
+
 package body Alog.Facilities.XMPP is
+
+   -------------------
+   -- Set_Recipient --
+   -------------------
+
+   procedure Set_Recipient (Facility : in out Instance;
+                            JID      :        String)
+   is
+   begin
+      Facility.Recipient    := To_Unbounded_String (JID);
+      Facility.Is_Recipient := True;
+   end Set_Recipient;
+
+   -------------------
+   -- Set_Sender --
+   -------------------
+
+   procedure Set_Sender (Facility : in out Instance;
+                         JID      :        String;
+                         Password :        String)
+   is
+   begin
+      Facility.Sender    := (JID      => To_Unbounded_String (JID),
+                             Password => To_Unbounded_String (Password));
+      Facility.Is_Sender := True;
+   end Set_Sender;
+
+   ----------------
+   -- Set_Server --
+   ----------------
+
+   procedure Set_Server (Facility : in out Instance;
+                         Name     :        String)
+   is
+   begin
+      Facility.Server    := To_Unbounded_String (Name);
+      Facility.Is_Server := True;
+   end Set_Server;
+
+   -----------
+   -- Setup --
+   -----------
+
+   procedure Setup (Facility : in out Instance) is
+      pragma Unreferenced (Facility);
+   begin
+      --  Nothing to do for now.
+      null;
+   end Setup;
+
+   --------------
+   -- Teardown --
+   --------------
+
+   procedure Teardown (Facility : in out Instance) is
+      pragma Unreferenced (Facility);
+   begin
+      --  Nothing to do for now.
+      null;
+   end Teardown;
 
    -------------------
    -- Write_Message --
    -------------------
 
-   procedure Write_Message (Facility : in Instance;
-                            Level    : in Log_Level := INFO;
-                            Msg      : in String) is
+   procedure Write_Message (Facility : Instance;
+                            Level    : Log_Level := INFO;
+                            Msg      : String)
+   is
       use AWS.Jabber;
    begin
       --  Raise exception if no sender has been set.
@@ -47,7 +112,9 @@ package body Alog.Facilities.XMPP is
       end if;
 
       --  Check threshold first.
-      if Level > Facility.Get_Threshold then return; end if;
+      if Level > Facility.Get_Threshold then
+         return;
+      end if;
 
       declare
          Server : AWS.Jabber.Server;
@@ -85,60 +152,5 @@ package body Alog.Facilities.XMPP is
               with Ada.Exceptions.Exception_Message (Error);
       end;
    end Write_Message;
-
-   -----------
-   -- Setup --
-   -----------
-
-   procedure Setup (Facility : in out Instance) is
-   begin
-      --  Nothing to do for now.
-      null;
-   end Setup;
-
-   --------------
-   -- Teardown --
-   --------------
-
-   procedure Teardown (Facility : in out Instance) is
-   begin
-      --  Nothing to do for now.
-      null;
-   end Teardown;
-
-   -------------------
-   -- Set_Sender --
-   -------------------
-
-   procedure Set_Sender (Facility : in out Instance;
-                         JID      : in     String;
-                         Password : in     String) is
-   begin
-      Facility.Sender    := (JID      => To_Unbounded_String (JID),
-                             Password => To_Unbounded_String (Password));
-      Facility.Is_Sender := True;
-   end Set_Sender;
-
-   -------------------
-   -- Set_Recipient --
-   -------------------
-
-   procedure Set_Recipient (Facility : in out Instance;
-                            JID      : in     String) is
-   begin
-      Facility.Recipient    := To_Unbounded_String (JID);
-      Facility.Is_Recipient := True;
-   end Set_Recipient;
-
-   ----------------
-   -- Set_Server --
-   ----------------
-
-   procedure Set_Server (Facility : in out Instance;
-                         Name     : in     String) is
-   begin
-      Facility.Server    := To_Unbounded_String (Name);
-      Facility.Is_Server := True;
-   end Set_Server;
 
 end Alog.Facilities.XMPP;

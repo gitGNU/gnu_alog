@@ -21,8 +21,6 @@
 --  MA  02110-1301  USA
 --
 
-with Ada.Strings.Unbounded;
-with APQ;
 with APQ.PostgreSQL.Client;
 
 --  PGSQL facility. Used to log to
@@ -35,9 +33,9 @@ package Alog.Facilities.Pgsql is
    type Handle is access all Instance;
 
    overriding
-   procedure Write_Message (Facility : in Instance;
-                            Level    : in Log_Level := INFO;
-                            Msg      : in String);
+   procedure Write_Message (Facility : Instance;
+                            Level    : Log_Level := INFO;
+                            Msg      : String);
    --  Implementation of Write_Message.
 
    overriding
@@ -51,7 +49,7 @@ package Alog.Facilities.Pgsql is
    procedure Set_Host_Name (Facility : in out Instance; Hostname : String);
    --  Set hostname of database server.
 
-   function Get_Host_Name (Facility : in Instance) return String;
+   function Get_Host_Name (Facility : Instance) return String;
    --  Get hostname of database server.
 
    procedure Set_Host_Address (Facility : in out Instance; Address : String);
@@ -60,7 +58,7 @@ package Alog.Facilities.Pgsql is
    procedure Set_Host_Port (Facility : in out Instance; Port : Natural);
    --  Set port of database server.
 
-   function Get_Host_Port (Facility : in Instance) return Natural;
+   function Get_Host_Port (Facility : Instance) return Natural;
    --  Get port of database server.
 
    procedure Set_SQL_Trace (Facility : in out Instance;
@@ -68,43 +66,44 @@ package Alog.Facilities.Pgsql is
                             Mode     : APQ.Trace_Mode_Type);
    --  Set SQL trace parameters.
 
-   procedure Toggle_SQL_Trace (Facility : in out Instance; Set : Boolean);
+   procedure Toggle_SQL_Trace (Facility : in out Instance;
+                               Set      :        Boolean);
    --  Toggles tracing of SQL statements.
 
-   function Is_SQL_Trace (Facility : in Instance) return Boolean;
+   function Is_SQL_Trace (Facility : Instance) return Boolean;
    --  Tells whether sql tracing is enabled.
 
    procedure Set_DB_Name (Facility : in out Instance; DB_Name : String);
    --  Set name of database.
 
-   function Get_DB_Name (Facility : in Instance) return String;
+   function Get_DB_Name (Facility : Instance) return String;
    --  Get name of database.
 
    procedure Set_Table_Name (Facility : in out Instance; Table_Name : String);
    --  Set name of database table.
 
-   function Get_Table_Name (Facility : in Instance) return String;
+   function Get_Table_Name (Facility : Instance) return String;
    --  Get name of database table.
 
    procedure Set_Level_Column_Name (Facility    : in out Instance;
                                     Column_Name : String);
    --  Set name of log level column.
 
-   function Get_Level_Column_Name (Facility : in Instance) return String;
+   function Get_Level_Column_Name (Facility : Instance) return String;
    --  Get name of log level column.
 
    procedure Set_Timestamp_Column_Name (Facility    : in out Instance;
                                         Column_Name : String);
    --  Set name of log level column.
 
-   function Get_Timestamp_Column_Name (Facility : in Instance) return String;
+   function Get_Timestamp_Column_Name (Facility : Instance) return String;
    --  Get name of timestamp column.
 
    procedure Set_Message_Column_Name (Facility    : in out Instance;
                                       Column_Name : String);
    --  Set name of log message column.
 
-   function Get_Message_Column_Name (Facility : in Instance) return String;
+   function Get_Message_Column_Name (Facility : Instance) return String;
    --  Get name of log message column.
 
    procedure Set_Credentials (Facility : in out Instance;
@@ -112,7 +111,7 @@ package Alog.Facilities.Pgsql is
                               Password : String);
    --  Set credentials for the database connection.
 
-   function Get_Credentials (Facility : in Instance) return String;
+   function Get_Credentials (Facility : Instance) return String;
    --  Get credentials of database connection.
    --  Only the username is returned
 
@@ -120,17 +119,17 @@ package Alog.Facilities.Pgsql is
    --  Close open database connection.
 
    procedure Toggle_Write_Timestamp (Facility : in out Instance;
-                                     Set      : in Boolean);
+                                     Set      :        Boolean);
    --  Enable/disable whether a timestamp is written for log messages.
 
-   function Is_Write_Timestamp (Facility : in Instance) return Boolean;
+   function Is_Write_Timestamp (Facility : Instance) return Boolean;
    --  Returns the current value of Write_Timestamp.
 
    procedure Toggle_Write_Loglevel (Facility : in out Instance;
-                                    Set      : in Boolean);
+                                    Set      :        Boolean);
    --  Enable/disable whether the loglevel is written for log messages.
 
-   function Is_Write_Loglevel (Facility : in Instance) return Boolean;
+   function Is_Write_Loglevel (Facility : Instance) return Boolean;
    --  Returns the current value of Write_Loglevel.
 
 private
@@ -138,13 +137,13 @@ private
    type Log_SQL_Table is tagged
       record
          Name             : Unbounded_String :=
-                              To_Unbounded_String ("alog");
+           To_Unbounded_String ("alog");
          Level_Column     : Unbounded_String :=
-                              To_Unbounded_String ("level");
+           To_Unbounded_String ("level");
          Timestamp_Column : Unbounded_String :=
-                              To_Unbounded_String ("timestamp");
+           To_Unbounded_String ("timestamp");
          Message_Column   : Unbounded_String :=
-                              To_Unbounded_String ("message");
+           To_Unbounded_String ("message");
       end record;
    --  Holds Table/Column name information.
 
@@ -154,7 +153,7 @@ private
          --  Database connection used for logging.
 
          Trace_Filename  : Unbounded_String :=
-                             To_Unbounded_String ("./data/trace.sql");
+           To_Unbounded_String ("./data/trace.sql");
          Trace_Mode      :  APQ.Trace_Mode_Type := APQ.Trace_APQ;
          --  SQL trace parameters
 

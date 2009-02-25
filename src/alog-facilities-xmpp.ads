@@ -20,11 +20,6 @@
 --  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,
 --  MA  02110-1301  USA
 
-with AWS;
-with AWS.Jabber;
-
-with Ada.Exceptions;
-
 --  XMPP-Logging (jabber) facility.
 --  Send log-messages to a configured Jabber ID via a given jabber server.
 --  AWS must be installed for this facility to work.
@@ -36,9 +31,9 @@ package Alog.Facilities.XMPP is
    type Handle is access all Instance;
 
    overriding
-   procedure Write_Message (Facility : in Instance;
-                            Level    : in Log_Level := INFO;
-                            Msg      : in String);
+   procedure Write_Message (Facility : Instance;
+                            Level    : Log_Level := INFO;
+                            Msg      : String);
    --  Implementation of Write_Message.
 
    overriding
@@ -50,18 +45,18 @@ package Alog.Facilities.XMPP is
    --  Implementation of Teardown-procedure.
 
    procedure Set_Sender (Facility : in out Instance;
-                         JID      : in     String;
-                         Password : in     String);
+                         JID      :        String;
+                         Password :        String);
    --  Set sender for log messages. This procedure MUST be called
    --  before subsequent calls to Write_Message().
 
    procedure Set_Recipient (Facility : in out Instance;
-                            JID      : in     String);
+                            JID      :        String);
    --  Set recipient for log-messages. This procedure MUST be called
    --  before subsequent calls to Write_Message().
 
    procedure Set_Server (Facility : in out Instance;
-                         Name     : in     String);
+                         Name     :        String);
    --  Set server for log-messages. This procedure MUST be called
    --  before subsequent calls to Write_Message().
 

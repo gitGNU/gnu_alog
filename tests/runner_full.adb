@@ -33,22 +33,30 @@ with Transform_Tests.Casing;
 with Logger_Tests;
 
 procedure Runner_Full is
-   S : Ahven.Framework.Test_Suite_Access :=
-     Ahven.Framework.Create_Suite ("Alog full tests");
+   S : constant Ahven.Framework.Test_Suite_Access :=
+     Ahven.Framework.Create_Suite (Suite_Name => "Alog full tests");
    pragma Linker_Options ("-lahven");
    pragma Linker_Options ("-laws");
    pragma Linker_Options ("-lapq");
 begin
    --  Facility tests
-   Ahven.Framework.Add_Test (S.all, new Facility_Tests.F_Test);
-   Ahven.Framework.Add_Test (S.all, new Facility_Tests.FD.F_Test);
-   Ahven.Framework.Add_Test (S.all, new Facility_Tests.SMTP.F_Test);
-   Ahven.Framework.Add_Test (S.all, new Facility_Tests.XMPP.F_Test);
-   Ahven.Framework.Add_Test (S.all, new Facility_Tests.PGSQL.F_Test);
-   Ahven.Framework.Add_Test (S.all, new Transform_Tests.T_Test);
-   Ahven.Framework.Add_Test (S.all, new Transform_Tests.Casing.T_Test);
-   Ahven.Framework.Add_Test (S.all, new Logger_Tests.L_Test);
+   Ahven.Framework.Add_Test (Suite => S.all,
+                             T     => new Facility_Tests.F_Test);
+   Ahven.Framework.Add_Test (Suite => S.all,
+                             T     => new Facility_Tests.FD.F_Test);
+   Ahven.Framework.Add_Test (Suite => S.all,
+                             T     => new Facility_Tests.SMTP.F_Test);
+   Ahven.Framework.Add_Test (Suite => S.all,
+                             T     => new Facility_Tests.XMPP.F_Test);
+   Ahven.Framework.Add_Test (Suite => S.all,
+                             T     => new Facility_Tests.PGSQL.F_Test);
+   Ahven.Framework.Add_Test (Suite => S.all,
+                             T     => new Transform_Tests.T_Test);
+   Ahven.Framework.Add_Test (Suite => S.all,
+                             T     => new Transform_Tests.Casing.T_Test);
+   Ahven.Framework.Add_Test (Suite => S.all,
+                             T     => new Logger_Tests.L_Test);
 
-   Ahven.Text_Runner.Run (S);
-   Ahven.Framework.Release_Suite (S);
+   Ahven.Text_Runner.Run (Suite => S);
+   Ahven.Framework.Release_Suite (T => S);
 end Runner_Full;

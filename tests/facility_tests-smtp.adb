@@ -113,7 +113,7 @@ package body Facility_Tests.SMTP is
 
    procedure Set_Header is
       F : Alog.Facilities.SMTP.Instance;
-      H : String := "Expected Header";
+      H : constant String := "Expected Header";
    begin
       F.Set_Header (Header => H);
       Assert (Condition => F.Get_Header = H,

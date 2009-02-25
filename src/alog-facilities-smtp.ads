@@ -20,14 +20,10 @@
 --  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,
 --  MA  02110-1301  USA
 
---  Ada
 with Ada.Characters.Latin_1;
 
---  AWS
 with AWS;
-with AWS.SMTP.Client;
 
---  GNAT
 with GNAT.Sockets;
 
 --  SMTP-Logging facility. Used to send log-messages to a configurable
@@ -40,9 +36,9 @@ package Alog.Facilities.SMTP is
    type Handle is access all Instance;
 
    overriding
-   procedure Write_Message (Facility : in Instance;
-                            Level    : in Log_Level := INFO;
-                            Msg      : in String);
+   procedure Write_Message (Facility : Instance;
+                            Level    : Log_Level := INFO;
+                            Msg      : String);
    --  Implementation of Write_Message.
 
    overriding
@@ -53,25 +49,23 @@ package Alog.Facilities.SMTP is
    procedure Teardown (Facility : in out Instance);
    --  Implementation of Teardown-procedure.
 
-
    procedure Set_Recipient (Facility : in out Instance;
-                            Name     : in     String;
-                            EMail    : in     String);
+                            Name     :        String;
+                            EMail    :        String);
    --  Set recipient for log-messages. This procedure MUST be called
    --  before subsequent calls to Write_Message().
 
    procedure Set_Server (Facility : in out Instance;
-                         Name     : in     String);
+                         Name     :        String);
    --  Set server for log-messages. This procedure MUST be called
    --  before subsequent calls to Write_Message().
 
    procedure Set_Header (Facility : in out Instance;
-                         Header   : in     String);
+                         Header   :        String);
    --  Set Message-Header of log-messages.
 
-   function Get_Header (Facility : in Instance) return String;
+   function Get_Header (Facility : Instance) return String;
    --  Get actual Message-Header of log-messages.
-
 
    --  Exceptions.
 
@@ -86,9 +80,9 @@ package Alog.Facilities.SMTP is
 
 private
 
-   function Format_Message (Facility : in Instance;
-                            Level    : in Log_Level;
-                            Msg      : in String)
+   function Format_Message (Facility : Instance;
+                            Level    : Log_Level;
+                            Msg      : String)
                             return String;
    --  Compose a message from Msg, Header, Loglevel, Timestamp, PID.
 

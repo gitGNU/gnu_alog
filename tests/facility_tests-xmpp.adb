@@ -21,13 +21,8 @@
 --  MA  02110-1301  USA
 --
 
---  Ada
-with Ada.Exceptions;
-
---  Ahven
 with Ahven; use Ahven;
 
---  Alog
 with Alog;  use Alog;
 with Alog.Facilities.XMPP;
 
@@ -50,25 +45,6 @@ package body Facility_Tests.XMPP is
 --          (T, Send_XMPP_Message'Access, "send XMPP message");
    end Initialize;
 
-   --------------------
-   -- Send_No_Sender --
-   --------------------
-
-   procedure Send_No_Sender is
-      F : Alog.Facilities.XMPP.Instance;
-   begin
-      --  Try to send a log-message with no recipient
-      --  specified first, should raise No_Recipient exception.
-      F.Write_Message (Level => DEBU,
-                       Msg   => "this should not work");
-
-      Fail (Message => "exception not thrown");
-   exception
-      when Alog.Facilities.XMPP.No_Sender =>
-         --  expected exception was thrown
-         null;
-   end Send_No_Sender;
-
    -----------------------
    -- Send_No_Recipient --
    -----------------------
@@ -90,6 +66,25 @@ package body Facility_Tests.XMPP is
          --  expected exception was thrown
          null;
    end Send_No_Recipient;
+
+   --------------------
+   -- Send_No_Sender --
+   --------------------
+
+   procedure Send_No_Sender is
+      F : Alog.Facilities.XMPP.Instance;
+   begin
+      --  Try to send a log-message with no recipient
+      --  specified first, should raise No_Recipient exception.
+      F.Write_Message (Level => DEBU,
+                       Msg   => "this should not work");
+
+      Fail (Message => "exception not thrown");
+   exception
+      when Alog.Facilities.XMPP.No_Sender =>
+         --  expected exception was thrown
+         null;
+   end Send_No_Sender;
 
    --------------------
    -- Send_No_Server --

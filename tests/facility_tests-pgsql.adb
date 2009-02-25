@@ -21,21 +21,61 @@
 --  MA  02110-1301  USA
 --
 
---  Ada
-with Ada.Exceptions;
-
---  Ahven
 with Ahven; use Ahven;
 
---  Alog
 with Alog;  use Alog;
 with Alog.Facilities; use Alog.Facilities;
 with Alog.Facilities.Pgsql;
 
---  APQ
-with APQ;
-
 package body Facility_Tests.PGSQL is
+
+   ----------------------------
+   -- Disable_Write_Loglevel --
+   ----------------------------
+
+   procedure Disable_Write_Loglevel is
+      F     : Alog.Facilities.Pgsql.Instance;
+      State : constant Boolean := False;
+   begin
+      F.Toggle_Write_Loglevel (Set => State);
+      Assert (Condition => (F.Is_Write_Loglevel = State),
+              Message   => "unable to set to " & Boolean'Image (State));
+      F.Toggle_Write_Loglevel (Set => not State);
+      Assert (Condition => (F.Is_Write_Loglevel = not State),
+              Message   => "unable to set to " & Boolean'Image (not State));
+   end Disable_Write_Loglevel;
+
+   -----------------------------
+   -- Disable_Write_Timestamp --
+   -----------------------------
+
+   procedure Disable_Write_Timestamp is
+      F     : Alog.Facilities.Pgsql.Instance;
+      State : constant Boolean := False;
+   begin
+      F.Toggle_Write_Timestamp (Set => State);
+      Assert (Condition => (F.Is_Write_Timestamp = State),
+              Message   => "unable to set to " & Boolean'Image (State));
+      F.Toggle_Write_Timestamp (Set => not State);
+      Assert (Condition => (F.Is_Write_Timestamp = not State),
+              Message   => "unable to set to " & Boolean'Image (not State));
+   end Disable_Write_Timestamp;
+
+   ----------------------
+   -- Enable_SQL_Trace --
+   ----------------------
+
+   procedure Enable_SQL_Trace is
+      F     : Alog.Facilities.Pgsql.Instance;
+      State : constant Boolean := True;
+   begin
+      F.Toggle_SQL_Trace (Set => State);
+      Assert (Condition => (F.Is_SQL_Trace = State),
+              Message   => "unable to set to " & Boolean'Image (State));
+      F.Toggle_SQL_Trace (Set => not State);
+      Assert (Condition => (F.Is_SQL_Trace = not State),
+              Message   => "unable to set to " & Boolean'Image (not State));
+   end Enable_SQL_Trace;
 
    ----------------
    -- Initialize --
@@ -72,110 +112,6 @@ package body Facility_Tests.PGSQL is
         (T, Write_Message'Access, "log a message to PGSQL database");
    end Initialize;
 
-   -------------------
-   -- Set_Host_Name --
-   -------------------
-
-   procedure Set_Host_Name is
-      F : Alog.Facilities.Pgsql.Instance;
-      Hostname : constant String := "foohost";
-   begin
-      F.Set_Host_Name (Hostname);
-      Assert (Condition => (F.Get_Host_Name = Hostname),
-              Message   => "non matching hostname");
-   end Set_Host_Name;
-
-   ----------------------
-   -- Set_Host_Address --
-   ----------------------
-
-   procedure Set_Host_Address is
-      F : Alog.Facilities.Pgsql.Instance;
-      Host_Address : constant String := "127.0.0.1";
-   begin
-      F.Set_Host_Address (Host_Address);
-   end Set_Host_Address;
-
-   -------------------
-   -- Set_Host_Port --
-   -------------------
-
-   procedure Set_Host_Port is
-      F : Alog.Facilities.Pgsql.Instance;
-      Host_Port : constant Natural := 1024;
-   begin
-      F.Set_Host_Port (Host_Port);
-      Assert (Condition => (F.Get_Host_Port = Host_Port),
-              Message   => "non matching host port");
-   end Set_Host_Port;
-
-   -----------------
-   -- Set_DB_Name --
-   -----------------
-
-   procedure Set_DB_Name is
-      F : Alog.Facilities.Pgsql.Instance;
-      DB_Name : constant String := "foodb";
-   begin
-      F.Set_DB_Name (DB_Name);
-      Assert (Condition => (F.Get_DB_Name = DB_Name),
-              Message   => "non matching database name");
-   end Set_DB_Name;
-
-   --------------------
-   -- Set_Table_Name --
-   --------------------
-
-   procedure Set_Table_Name is
-      F : Alog.Facilities.Pgsql.Instance;
-      Table_Name : constant String := "footable";
-   begin
-      F.Set_Table_Name (Table_Name);
-      Assert (Condition => (F.Get_Table_Name = Table_Name),
-              Message   => "non matching table name");
-   end Set_Table_Name;
-
-   ---------------------------
-   -- Set_Level_Column_Name --
-   ---------------------------
-
-   procedure Set_Level_Column_Name is
-      F : Alog.Facilities.Pgsql.Instance;
-      Level_Column_Name : constant String := "foocolumn";
-   begin
-      F.Set_Level_Column_Name (Level_Column_Name);
-      Assert (Condition => (F.Get_Level_Column_Name = Level_Column_Name),
-              Message   => "non matching level column name");
-   end Set_Level_Column_Name;
-
-   -------------------------------
-   -- Set_Timestamp_Column_Name --
-   -------------------------------
-
-   procedure Set_Timestamp_Column_Name is
-      F : Alog.Facilities.Pgsql.Instance;
-      Timestamp_Column_Name : constant String := "barcolumn";
-   begin
-      F.Set_Timestamp_Column_Name (Timestamp_Column_Name);
-      Assert (Condition =>
-                (F.Get_Timestamp_Column_Name = Timestamp_Column_Name),
-              Message   => "non matching timestamp column name");
-   end Set_Timestamp_Column_Name;
-
-   -----------------------------
-   -- Set_Message_Column_Name --
-   -----------------------------
-
-   procedure Set_Message_Column_Name is
-      F : Alog.Facilities.Pgsql.Instance;
-      Message_Column_Name : constant String := "foobarcolumn";
-   begin
-      F.Set_Message_Column_Name (Message_Column_Name);
-      Assert (Condition =>
-                (F.Get_Message_Column_Name = Message_Column_Name),
-              Message   => "non matching message column name");
-   end Set_Message_Column_Name;
-
    ---------------------
    -- Set_Credentials --
    ---------------------
@@ -191,53 +127,109 @@ package body Facility_Tests.PGSQL is
               Message   => "non matching username");
    end Set_Credentials;
 
+   -----------------
+   -- Set_DB_Name --
+   -----------------
+
+   procedure Set_DB_Name is
+      F : Alog.Facilities.Pgsql.Instance;
+      DB_Name : constant String := "foodb";
+   begin
+      F.Set_DB_Name (DB_Name);
+      Assert (Condition => (F.Get_DB_Name = DB_Name),
+              Message   => "non matching database name");
+   end Set_DB_Name;
+
    ----------------------
-   -- Enable_SQL_Trace --
+   -- Set_Host_Address --
    ----------------------
 
-   procedure Enable_SQL_Trace is
+   procedure Set_Host_Address is
       F : Alog.Facilities.Pgsql.Instance;
-      State : Boolean := True;
+      Host_Address : constant String := "127.0.0.1";
    begin
-      F.Toggle_SQL_Trace (State);
-      Assert (Condition => (F.Is_SQL_Trace = State),
-              Message   => "unable to set to " & Boolean'Image (State));
-      F.Toggle_SQL_Trace (not State);
-      Assert (Condition => (F.Is_SQL_Trace = not State),
-              Message   => "unable to set to " & Boolean'Image (not State));
-   end Enable_SQL_Trace;
+      F.Set_Host_Address (Host_Address);
+   end Set_Host_Address;
+
+   -------------------
+   -- Set_Host_Name --
+   -------------------
+
+   procedure Set_Host_Name is
+      F : Alog.Facilities.Pgsql.Instance;
+      Hostname : constant String := "foohost";
+   begin
+      F.Set_Host_Name (Hostname);
+      Assert (Condition => (F.Get_Host_Name = Hostname),
+              Message   => "non matching hostname");
+   end Set_Host_Name;
+
+   -------------------
+   -- Set_Host_Port --
+   -------------------
+
+   procedure Set_Host_Port is
+      F : Alog.Facilities.Pgsql.Instance;
+      Host_Port : constant Natural := 1024;
+   begin
+      F.Set_Host_Port (Host_Port);
+      Assert (Condition => (F.Get_Host_Port = Host_Port),
+              Message   => "non matching host port");
+   end Set_Host_Port;
+
+   ---------------------------
+   -- Set_Level_Column_Name --
+   ---------------------------
+
+   procedure Set_Level_Column_Name is
+      F : Alog.Facilities.Pgsql.Instance;
+      Level_Column_Name : constant String := "foocolumn";
+   begin
+      F.Set_Level_Column_Name (Level_Column_Name);
+      Assert (Condition => (F.Get_Level_Column_Name = Level_Column_Name),
+              Message   => "non matching level column name");
+   end Set_Level_Column_Name;
 
    -----------------------------
-   -- Disable_Write_Timestamp --
+   -- Set_Message_Column_Name --
    -----------------------------
 
-   procedure Disable_Write_Timestamp is
+   procedure Set_Message_Column_Name is
       F : Alog.Facilities.Pgsql.Instance;
-      State : Boolean := False;
+      Message_Column_Name : constant String := "foobarcolumn";
    begin
-      F.Toggle_Write_Timestamp (State);
-      Assert (Condition => (F.Is_Write_Timestamp = State),
-              Message   => "unable to set to " & Boolean'Image (State));
-      F.Toggle_Write_Timestamp (not State);
-      Assert (Condition => (F.Is_Write_Timestamp = not State),
-              Message   => "unable to set to " & Boolean'Image (not State));
-   end Disable_Write_Timestamp;
+      F.Set_Message_Column_Name (Message_Column_Name);
+      Assert (Condition =>
+                (F.Get_Message_Column_Name = Message_Column_Name),
+              Message   => "non matching message column name");
+   end Set_Message_Column_Name;
 
-   ----------------------------
-   -- Disable_Write_Loglevel --
-   ----------------------------
+   --------------------
+   -- Set_Table_Name --
+   --------------------
 
-   procedure Disable_Write_Loglevel is
+   procedure Set_Table_Name is
       F : Alog.Facilities.Pgsql.Instance;
-      State : Boolean := False;
+      Table_Name : constant String := "footable";
    begin
-      F.Toggle_Write_Loglevel (State);
-      Assert (Condition => (F.Is_Write_Loglevel = State),
-              Message   => "unable to set to " & Boolean'Image (State));
-      F.Toggle_Write_Loglevel (not State);
-      Assert (Condition => (F.Is_Write_Loglevel = not State),
-              Message   => "unable to set to " & Boolean'Image (not State));
-   end Disable_Write_Loglevel;
+      F.Set_Table_Name (Table_Name);
+      Assert (Condition => (F.Get_Table_Name = Table_Name),
+              Message   => "non matching table name");
+   end Set_Table_Name;
+
+   -------------------------------
+   -- Set_Timestamp_Column_Name --
+   -------------------------------
+
+   procedure Set_Timestamp_Column_Name is
+      F : Alog.Facilities.Pgsql.Instance;
+      Timestamp_Column_Name : constant String := "barcolumn";
+   begin
+      F.Set_Timestamp_Column_Name (Timestamp_Column_Name);
+      Assert (Condition =>
+                (F.Get_Timestamp_Column_Name = Timestamp_Column_Name),
+              Message   => "non matching timestamp column name");
+   end Set_Timestamp_Column_Name;
 
    -------------------
    -- Write_Message --

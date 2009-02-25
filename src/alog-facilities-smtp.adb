@@ -20,15 +20,109 @@
 --  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,
 --  MA  02110-1301  USA
 
+with AWS.SMTP.Client;
+
 package body Alog.Facilities.SMTP is
+
+   --------------------
+   -- Format_Message --
+   --------------------
+
+   function Format_Message (Facility : Instance;
+                            Level    : Log_Level;
+                            Msg      : String)
+                            return String
+   is
+      Message : constant String :=
+      --  Header
+        Facility.Get_Header
+      --  Log-Level
+        & "( " & Log_Level'Image (Level) & " ) : "
+      --  Log-Message
+        & Msg & EOL & EOL
+      --  Footer
+        & "Generated: " & Facility.Get_Timestamp
+        & "by " & Facility.Get_Name;
+   begin
+      return Message;
+   end Format_Message;
+
+   ----------------
+   -- Get_Header --
+   ----------------
+
+   function Get_Header (Facility : Instance) return String is
+   begin
+      return To_String (Facility.Header);
+   end Get_Header;
+
+   ----------------
+   -- Set_Header --
+   ----------------
+
+   procedure Set_Header (Facility : in out Instance;
+                         Header   :        String)
+   is
+   begin
+      Facility.Header := To_Unbounded_String (Header);
+   end Set_Header;
+
+   -------------------
+   -- Set_Recipient --
+   -------------------
+
+   procedure Set_Recipient (Facility : in out Instance;
+                            Name     :        String;
+                            EMail    :        String)
+   is
+   begin
+      Facility.Recipient    := (Name  => To_Unbounded_String (Name),
+                                EMail => To_Unbounded_String (EMail));
+      Facility.Is_Recipient := True;
+   end Set_Recipient;
+
+   ----------------
+   -- Set_Server --
+   ----------------
+
+   procedure Set_Server (Facility : in out Instance;
+                         Name     :        String)
+   is
+   begin
+      Facility.Server    := To_Unbounded_String (Name);
+      Facility.Is_Server := True;
+   end Set_Server;
+
+   -----------
+   -- Setup --
+   -----------
+
+   procedure Setup (Facility : in out Instance) is
+      pragma Unreferenced (Facility);
+   begin
+      --  Nothing to do for now.
+      null;
+   end Setup;
+
+   --------------
+   -- Teardown --
+   --------------
+
+   procedure Teardown (Facility : in out Instance) is
+      pragma Unreferenced (Facility);
+   begin
+      --  Nothing to do for now.
+      null;
+   end Teardown;
 
    -------------------
    -- Write_Message --
    -------------------
 
-   procedure Write_Message (Facility : in Instance;
-                            Level    : in Log_Level := INFO;
-                            Msg      : in String) is
+   procedure Write_Message (Facility : Instance;
+                            Level    : Log_Level := INFO;
+                            Msg      : String)
+   is
    begin
       --  Raise No_Recipient if no recipient has been set
       --  by calling Set_Recipient().
@@ -43,7 +137,9 @@ package body Alog.Facilities.SMTP is
       end if;
 
       --  Check threshold first.
-      if Level > Facility.Get_Threshold then return; end if;
+      if Level > Facility.Get_Threshold then
+         return;
+      end if;
 
       declare
          Status      : AWS.SMTP.Status;
@@ -74,91 +170,5 @@ package body Alog.Facilities.SMTP is
          end if;
       end;
    end Write_Message;
-
-   -----------
-   -- Setup --
-   -----------
-
-   procedure Setup (Facility : in out Instance) is
-   begin
-      --  Nothing to do for now.
-      null;
-   end Setup;
-
-   --------------
-   -- Teardown --
-   --------------
-
-   procedure Teardown (Facility : in out Instance) is
-   begin
-      --  Nothing to do for now.
-      null;
-   end Teardown;
-
-   -------------------
-   -- Set_Recipient --
-   -------------------
-
-   procedure Set_Recipient (Facility : in out Instance;
-                            Name     : in     String;
-                            EMail    : in     String) is
-   begin
-      Facility.Recipient    := (Name  => To_Unbounded_String (Name),
-                                EMail => To_Unbounded_String (EMail));
-      Facility.Is_Recipient := True;
-   end Set_Recipient;
-
-   ----------------
-   -- Set_Server --
-   ----------------
-
-   procedure Set_Server (Facility : in out Instance;
-                         Name     : in     String) is
-   begin
-      Facility.Server    := To_Unbounded_String (Name);
-      Facility.Is_Server := True;
-   end Set_Server;
-
-   ----------------
-   -- Set_Header --
-   ----------------
-
-   procedure Set_Header (Facility : in out Instance;
-                         Header   : in     String) is
-   begin
-      Facility.Header := To_Unbounded_String (Header);
-   end Set_Header;
-
-   ----------------
-   -- Get_Header --
-   ----------------
-
-   function Get_Header (Facility : in Instance) return String is
-   begin
-      return To_String (Facility.Header);
-   end Get_Header;
-
-   --------------------
-   -- Format_Message --
-   --------------------
-
-   function Format_Message (Facility : in Instance;
-                            Level    : in Log_Level;
-                            Msg      : in String)
-                            return String
-   is
-      Message : String :=
-      --  Header
-        Facility.Get_Header
-      --  Log-Level
-        & "( " & Log_Level'Image (Level) & " ) : "
-      --  Log-Message
-        & Msg & EOL & EOL
-      --  Footer
-        & "Generated: " & Facility.Get_Timestamp
-        & "by " & Facility.Get_Name;
-   begin
-      return Message;
-   end Format_Message;
 
 end Alog.Facilities.SMTP;
