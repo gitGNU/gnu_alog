@@ -4,21 +4,28 @@ Alog README File
 Prerequisites
 -------------
 Alog is written in Ada so you need to have GNAT (GNU Ada Translator)
-installed to compile Alog. You further need to have Ahven and AWS
-(Ada Web Server) installed (see 'Installation').
-GNAT is available for most distributions, make sure you have gcc
-version 4.1 or later installed.
+installed to compile Alog. The library comes in two flavours: base
+and full. The base build includes facilities to log to files and
+syslog while the full version provides more advanced log facilities
+like SMTP, Jabber/XMPP or Postgres. For the full version you need to
+have AWS (Ada Web Server) and APQ (Ada95 database binding) installed
+(see 'Installation'). GNAT is available for most distributions, make
+sure you have gcc version 4.1 or later installed.
 
 Installation
 ------------
-For Alog to compile, you need the following two libraries/frameworks
-installed:
+Depending on the build type (base or full) and if you want to run the
+tests you need the following libraries/frameworks installed to compile
+Alog:
 
 * AWS (Ada Web Server)  :
   https://libre.adacore.com/aws/main.html[]
 
 * Ahven (Test-Framework):
   http://home.gna.org/ahven/[]
+
+* APQ (Ada95 database binding)
+  http://home.cogeco.ca/~ve3wwg/software.html
 
 The installation of Alog is quite easy and straight forward. Just type
 in the following commands. You must be root to install the library
@@ -28,6 +35,15 @@ system wide.
   $ tar -xzf libalog-{revision}.tar.bz2
   $ cd libalog-{revision}
   $ make
+  $ make PREFIX=/usr/local install
+
+To do a full build you need to set and export the environment variable
+ALOG_BUILD to "full" like this:
+
+[subs="normal"]
+  $ tar -xzf libalog-{revision}.tar.bz2
+  $ cd libalog-{revision}
+  $ export ALOG_BUILD="full" make
   $ make PREFIX=/usr/local install
 
 If no `PREFIX` is specified, `$(HOME)/libraries` is used.
@@ -47,16 +63,9 @@ Obtaining Alog
 The latest Alog version and online documentation can be found at
 http://www.nongnu.org/alog/[].
 
-Releasenotes
-------------
-Version 0.1::
-  The XMPP-Facility is not fully tested. You need to have AWS
-  from the subversion repository installed to make it work.
-  Older AWS-Versions are not XMPP/1.0 compliant.
-
 COPYING
 -------
 ---------------------------------------------------------------------------------
-Copyright (C) 2008 Reto Buerki, Adrian-Ken Rueegsegger. Free use of this software
+Copyright (C) 2009 Reto Buerki, Adrian-Ken Rueegsegger. Free use of this software
 is granted under the terms of the GNU Lesser General Public License (LGPL).
 ---------------------------------------------------------------------------------
