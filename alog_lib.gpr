@@ -35,7 +35,7 @@ project Alog_Lib is
       when "base" =>
          for Source_List_File use "config/base-list";
       when "full" =>
-         for Library_Options use ("-laws", "-lapq");
+         for Library_Options use ("-laws");
    end case;
 
    for Object_Dir use "obj/lib";
