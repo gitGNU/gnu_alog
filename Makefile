@@ -27,11 +27,14 @@ BUILD_TYPE ?= "base"
 
 VERSION = 0.2
 ALOG = libalog-$(VERSION)
-DISTFILES = `ls | grep -v libalog`
 
 SOURCEDIR = src
 ALI_FILES = lib/*.ali
 SO_LIBRARY = libalog.so.$(VERSION)
+
+TMPDIR = /tmp
+DISTDIR = $(TMPDIR)/$(ALOG)
+TARBALL = $(ALOG).tar.bz2
 
 all: build_lib
 
@@ -65,11 +68,13 @@ control:
 	@rm -f obj/*.adt objects/*.ali
 	cd obj && adactl -f ../rules/alog.aru ../src/*.ad[bs]
 
-dist: distclean
-	@mkdir -p $(ALOG)
-	@cp -R $(DISTFILES) $(ALOG)
-	@tar cvjf $(ALOG).tar.bz2 $(ALOG)
-	@rm -r $(ALOG)
+dist: distclean $(SOURCEDIR)/alog-version.ads
+	@echo -n "Creating release tarball '$(ALOG)' ... "
+	@mkdir -p $(DISTDIR)
+	@cp -R * $(DISTDIR)
+	@tar -C $(TMPDIR) -cjf $(TARBALL) $(ALOG)
+	@rm -rf $(DISTDIR)
+	@echo "DONE"
 
 install: install_lib
 
