@@ -4,7 +4,7 @@ Alog ChangeLog
 Version 0.2
 -----------
 .Additions and changes
-- Postgres facility implemented.
+- PostgreSQL-based facility implemented.
 - Introduce two build types: base and full.
 - Transformations infrastructure implemented.
 
