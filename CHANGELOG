@@ -1,6 +1,16 @@
 Alog ChangeLog
 ==============
 
+Version 0.2
+-----------
+.Additions and changes
+- Postgres facility implemented.
+- Introduce two build types: base and full.
+- Transformations infrastructure implemented.
+
+.Bug fixes
+- Compile-fixes for GNAT 4.3.
+
 Version 0.1
 -----------
 .Additions and changes
