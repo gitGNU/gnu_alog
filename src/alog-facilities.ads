@@ -21,20 +21,21 @@
 --  MA  02110-1301  USA
 --
 
---  Ada
-with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
-with Ada.Strings.Bounded; use Ada.Strings.Bounded;
+with Ada.Strings.Unbounded;
+with Ada.Strings.Bounded;
 with Ada.Strings.Unbounded.Hash;
 with Ada.Command_Line;
 with Ada.Containers;
 with Ada.Containers.Doubly_Linked_Lists;
 
---  Alog
 with Alog.Transforms;
 
 --  Abstract package Facilities. Provides common data and
 --  methods used by all Alog facilities.
 package Alog.Facilities is
+
+   use Ada.Strings.Bounded;
+   use Ada.Strings.Unbounded;
 
    type Instance is abstract tagged limited private;
    --  Abstract type facility instance. All facilities in the

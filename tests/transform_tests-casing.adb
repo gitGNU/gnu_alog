@@ -21,14 +21,14 @@
 --  MA  02110-1301  USA
 --
 
---  Ada
-with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
+with Ada.Strings.Unbounded;
 
---  Alog
-with Alog;  use Alog;
 with Alog.Transforms.Casing;
 
 package body Transform_Tests.Casing is
+
+   use Alog;
+   use Ada.Strings.Unbounded;
 
    ----------------
    -- Initialize --

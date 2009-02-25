@@ -21,16 +21,13 @@
 --  MA  02110-1301  USA
 --
 
---  Ada
 with Ada.Exceptions;
 with Ada.IO_Exceptions;
-with Ada.Text_IO; use Ada.Text_IO;
+with Ada.Text_IO;
 
---  Ahven
-with Ahven; use Ahven;
+with Ahven;
 
---  Alog
-with Alog; use Alog;
+with Alog;
 with Alog.Logger;
 with Alog.Helpers;
 with Alog.Facilities;
@@ -40,6 +37,9 @@ with Alog.Transforms;
 with Alog.Transforms.Casing;
 
 package body Logger_Tests is
+
+   use Ahven;
+   use Alog;
 
    ---------------------
    -- Attach_Facility --
@@ -75,9 +75,9 @@ package body Logger_Tests is
    procedure Clear_A_Logger is
       Log       : Logger.Instance;
       Facility  : constant Facilities.Handle :=
-                    new Facilities.File_Descriptor.Instance;
+        new Facilities.File_Descriptor.Instance;
       Transform : constant Transforms.Handle :=
-                    new Transforms.Casing.Instance;
+        new Transforms.Casing.Instance;
    begin
       Log.Attach_Facility (Facility => Facility);
       Assert (Condition => Log.Facility_Count = 1,
@@ -188,13 +188,13 @@ package body Logger_Tests is
          BS_Path.To_Bounded_String ("./data/Log_Multiple_FD_Facilities2"),
          BS_Path.To_Bounded_String ("./data/Log_FD_Facility_Lowercase")
         );
-      F     : File_Type;
+      F     : Ada.Text_IO.File_Type;
    begin
       for c in Count loop
-         Open (File => F,
-               Mode => In_File,
-               Name => BS_Path.To_String (Files (c)));
-         Delete (File => F);
+         Ada.Text_IO.Open (File => F,
+                           Mode => Ada.Text_IO.In_File,
+                           Name => BS_Path.To_String (Files (c)));
+         Ada.Text_IO.Delete (File => F);
       end loop;
 
       Finalize (Test_Case (T));
@@ -204,9 +204,9 @@ package body Logger_Tests is
          null;
          --  File did not exist. Carry on.
       when Event : others =>
-         Put_Line ("error occured while cleaning up: ");
-         Put_Line (Ada.Exceptions.Exception_Name (Event));
-         Put_Line (Ada.Exceptions.Exception_Message (Event));
+         Ada.Text_IO.Put_Line ("error occured while cleaning up: ");
+         Ada.Text_IO.Put_Line (Ada.Exceptions.Exception_Name (Event));
+         Ada.Text_IO.Put_Line (Ada.Exceptions.Exception_Message (Event));
    end Finalize;
 
    ----------------
