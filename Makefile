@@ -48,7 +48,7 @@ build_tests: prepare
 	@gnatmake -Palog_tests -XALOG_BUILD="$(BUILD_TYPE)"
 
 prepare: $(SOURCEDIR)/alog-version.ads
-	@mkdir -p obj/lib obj/tests lib
+	@mkdir -p doc obj/lib obj/tests lib
 
 $(SOURCEDIR)/alog-version.ads:
 	@echo "package Alog.Version is"                 > $@
@@ -57,14 +57,16 @@ $(SOURCEDIR)/alog-version.ads:
 	@echo "end Alog.Version;"                       >> $@
 
 clean:
+	@rm -f alog.specs
 	@rm -rf obj/*
 	@rm -rf lib/*
 
-distclean:
+distclean: clean
 	@rm -rf obj
 	@rm -rf lib
+	@rm -rf doc
 
-dist: distclean $(SOURCEDIR)/alog-version.ads
+dist: distclean $(SOURCEDIR)/alog-version.ads docs
 	@echo -n "Creating release tarball '$(ALOG)' ... "
 	@mkdir -p $(DISTDIR)
 	@cp -R * $(DISTDIR)
@@ -81,5 +83,10 @@ install_lib: build_lib
 	$(INSTALL) -m 444 $(ALI_FILES) $(PREFIX)/lib/alog
 	$(INSTALL) -m 444 lib/$(SO_LIBRARY) $(PREFIX)/lib/alog
 	@ln -sf $(PREFIX)/lib/alog/$(SO_LIBRARY) $(PREFIX)/lib/alog/libalog.so
+
+docs: prepare
+	@echo "Creating Alog API doc for version $(VERSION) ..."
+	@ls $(SOURCEDIR)/*.ads > alog.specs
+	@adabrowse -c config/adabrowse.cfg -q -p -t -i -I src/ -f@alog.specs -o doc/
 
 .PHONY: dist tests
