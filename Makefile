@@ -29,6 +29,7 @@ VERSION = 0.2
 ALOG = libalog-$(VERSION)
 
 SOURCEDIR = src
+APIDOCDIR = doc
 ALI_FILES = lib/*.ali
 SO_LIBRARY = libalog.so.$(VERSION)
 
@@ -48,7 +49,7 @@ build_tests: prepare
 	@gnatmake -Palog_tests -XALOG_BUILD="$(BUILD_TYPE)"
 
 prepare: $(SOURCEDIR)/alog-version.ads
-	@mkdir -p doc obj/lib obj/tests lib
+	@mkdir -p obj/lib obj/tests lib
 
 $(SOURCEDIR)/alog-version.ads:
 	@echo "package Alog.Version is"                 > $@
@@ -64,7 +65,7 @@ clean:
 distclean: clean
 	@rm -rf obj
 	@rm -rf lib
-	@rm -rf doc
+	@rm -rf $(APIDOCDIR)
 
 dist: distclean $(SOURCEDIR)/alog-version.ads docs
 	@echo -n "Creating release tarball '$(ALOG)' ... "
@@ -85,8 +86,11 @@ install_lib: build_lib
 	@ln -sf $(PREFIX)/lib/alog/$(SO_LIBRARY) $(PREFIX)/lib/alog/libalog.so
 
 docs: prepare
-	@echo "Creating Alog API doc for version $(VERSION) ..."
+	@echo -n "Creating Alog API doc for version $(VERSION)  ... "
+	@mkdir -p $(APIDOCDIR)
 	@ls $(SOURCEDIR)/*.ads > alog.specs
-	@adabrowse -c config/adabrowse.cfg -q -p -t -i -I src/ -f@alog.specs -o doc/
+	@adabrowse -c config/adabrowse.cfg -q -p -t -i -I src/ -f@alog.specs \
+		-o $(APIDOCDIR)/
+	@echo "DONE"
 
 .PHONY: dist tests
