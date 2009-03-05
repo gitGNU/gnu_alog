@@ -2,8 +2,8 @@ Alog README File
 ================
 
 Alog is a stackable logging framework for Ada. It aims to be straight forward to
-use and easily extendable. It provides different facilities and loglevel support
-and support for log-message transformations.
+use and easily extendable. It provides support for various log facilities,
+loglevels and log-message transformations.
 
 Prerequisites
 -------------
@@ -27,7 +27,7 @@ The base build of Alog has no special library dependencies. To run the testcases
   http://home.gna.org/ahven/[]
 
 To compile the full build, you further need to have the following libraries
-installed on your system to compile Alog:
+installed on your system:
 
 * AWS (Ada Web Server)  :
   https://libre.adacore.com/aws/main.html[]
@@ -48,7 +48,7 @@ library system wide.
 
 This will compile and install the base build (the default). To do a full build,
 you need to set and export the environment variable `BUILD_TYPE` to "full" like
-this:
+so:
 
 .................
   $ tar -xzf libalog-{revision}.tar.bz2
