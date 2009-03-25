@@ -51,9 +51,5 @@ project Alog_Tests is
       for Default_Switches ("ada") use ("-gnaty3aAbcdefhiIklnprStuxM80o", "-gnatVa", "-gnat05", "-gnatwa", "-gnatf", "-fstack-check", "-gnato", "-g");
    end Compiler;
 
-   package Ide is
-      for Default_Switches ("adacontrol") use ("-f", "./rules/alog.aru");
-   end Ide;
-
 end Alog_Tests;
 
