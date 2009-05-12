@@ -92,9 +92,9 @@ private
          --  If True, a timestamp is written with the log message.
          --  Default is True.
 
-         Write_Loglevel   : Boolean := True;
+         Write_Loglevel   : Boolean := False;
          --  If True, the loglevel associated with the log message is
-         --  written. Default is True.
+         --  written. Default is False.
       end record;
 
 end Alog.Facilities.File_Descriptor;

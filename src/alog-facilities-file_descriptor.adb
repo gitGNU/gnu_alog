@@ -162,14 +162,14 @@ package body Alog.Facilities.File_Descriptor is
       if Level <= Facility.Get_Threshold then
          if Facility.Is_Write_Timestamp then
             Text_IO.Put (File  => Logfile,
-                         Item  => Timestamp);
+                         Item  => Timestamp & " ");
          end if;
          if Facility.Is_Write_Loglevel then
             Text_IO.Put (File  => Logfile,
-                         Item  => "[" & Log_Level'Image (Level) & "]");
+                         Item  => "[" & Log_Level'Image (Level) & "] ");
          end if;
          Text_IO.Put (File  => Logfile,
-                      Item  => " " & Msg);
+                      Item  => Msg);
 
          Text_IO.New_Line (File => Logfile);
       end if;

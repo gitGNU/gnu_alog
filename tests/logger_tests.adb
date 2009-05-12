@@ -315,10 +315,14 @@ package body Logger_Tests is
       Facilities.File_Descriptor.Handle
         (Facility1).Toggle_Write_Timestamp (Set => False);
       Facilities.File_Descriptor.Handle
+        (Facility1).Toggle_Write_Loglevel (Set => True);
+      Facilities.File_Descriptor.Handle
         (Facility1).Set_Logfile (Testfile1);
 
       Facilities.File_Descriptor.Handle
         (Facility2).Toggle_Write_Timestamp (Set => False);
+      Facilities.File_Descriptor.Handle
+        (Facility2).Toggle_Write_Loglevel (Set => True);
       Facilities.File_Descriptor.Handle
         (Facility2).Set_Logfile (Testfile2);
 
