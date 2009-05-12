@@ -95,9 +95,6 @@ package body Alog.Facilities.File_Descriptor is
       --  which is defined externaly in the Text_IO library.
       Facility.Log_File_Ptr  := Facility.Log_File'Unrestricted_Access;
 
-      Facility.Write_Message
-        (Level => INFO,
-         Msg   => "=> Alog: new logging session initialized.");
    exception
       when Name_Error =>
          --  Create file and re-call Set_Logfile.
