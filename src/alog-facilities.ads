@@ -123,7 +123,7 @@ private
          Threshold : Log_Level := DEBU;
          --  Facility default threshold.
 
-         Timestamp_Format : String (1 .. 14) := "%d. %b. %Y %T ";
+         Timestamp_Format : String (1 .. 11) := "%b %d %Y %T";
          --  Default timestamp format to use in this facility.
 
          Transforms : Transform_List_Package.List;
