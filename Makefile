@@ -25,7 +25,7 @@ PREFIX ?= $(HOME)/libraries
 INSTALL = install
 BUILD_TYPE ?= "base"
 
-VERSION = 0.2
+VERSION = 0.3
 ALOG = libalog-$(VERSION)
 
 SOURCEDIR = src
