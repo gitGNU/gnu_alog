@@ -9,6 +9,8 @@ alog-helpers.adb
 alog-helpers.ads
 alog-logger.adb
 alog-logger.ads
+alog-logger-tasking.adb
+alog-logger-tasking.ads
 alog-transforms.adb
 alog-transforms.ads
 alog-transforms-casing.adb
