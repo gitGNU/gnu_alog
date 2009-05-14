@@ -65,4 +65,7 @@ package Logger_Tests is
    procedure Log_FD_Facility_with_Transform;
    --  Test logging to fd based facility with lowercase transform.
 
+   procedure Log_One_Tasked_FD_Facility;
+   --  Test tasked logging to one fd based facility.
+
 end Logger_Tests;

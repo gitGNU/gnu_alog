@@ -21,19 +21,14 @@
 --  MA  02110-1301  USA
 --
 
-with Ada.Exceptions;
-with Ada.IO_Exceptions;
 with Ada.Text_IO;
 
 with Ahven;
 
-with Alog;
-with Alog.Logger;
 with Alog.Helpers;
-with Alog.Facilities;
+with Alog.Logger.Tasking;
 with Alog.Facilities.File_Descriptor;
 with Alog.Facilities.Syslog;
-with Alog.Transforms;
 with Alog.Transforms.Casing;
 
 package body Logger_Tests is
@@ -180,15 +175,16 @@ package body Logger_Tests is
       use Alog.Facilities;
 
       --  Files to clean after tests.
-      subtype Count is Natural range 1 .. 4;
+      subtype Count is Natural range 1 .. 5;
 
       Files : constant array (Count) of BS_Path.Bounded_String :=
         (BS_Path.To_Bounded_String ("./data/Log_One_FD_Facility"),
          BS_Path.To_Bounded_String ("./data/Log_Multiple_FD_Facilities1"),
          BS_Path.To_Bounded_String ("./data/Log_Multiple_FD_Facilities2"),
-         BS_Path.To_Bounded_String ("./data/Log_FD_Facility_Lowercase")
+         BS_Path.To_Bounded_String ("./data/Log_FD_Facility_Lowercase"),
+         BS_Path.To_Bounded_String ("./data/Log_One_Tasked_FD_Facility")
         );
-      F     : Ada.Text_IO.File_Type;
+      F : Ada.Text_IO.File_Type;
    begin
       for c in Count loop
          Ada.Text_IO.Open (File => F,
@@ -198,15 +194,6 @@ package body Logger_Tests is
       end loop;
 
       Finalize (Test_Case (T));
-
-   exception
-      when Ada.IO_Exceptions.Name_Error =>
-         null;
-         --  File did not exist. Carry on.
-      when Event : others =>
-         Ada.Text_IO.Put_Line ("error occured while cleaning up: ");
-         Ada.Text_IO.Put_Line (Ada.Exceptions.Exception_Name (Event));
-         Ada.Text_IO.Put_Line (Ada.Exceptions.Exception_Message (Event));
    end Finalize;
 
    ----------------
@@ -246,7 +233,9 @@ package body Logger_Tests is
       Ahven.Framework.Add_Test_Routine
         (T, Log_FD_Facility_with_Transform'Access,
          "log to fd facility with lowercase transform");
-
+      Ahven.Framework.Add_Test_Routine
+        (T, Log_One_Tasked_FD_Facility'Access,
+         "log with tasked logger");
    end Initialize;
 
    ------------------------------------
@@ -382,5 +371,49 @@ package body Logger_Tests is
                Filename2 => Testfile),
               Message   => "files not equal");
    end Log_One_FD_Facility;
+
+   --------------------------------
+   -- Log_One_Tasked_FD_Facility --
+   --------------------------------
+
+   procedure Log_One_Tasked_FD_Facility is
+      Log          : Logger.Tasking.Instance;
+      F_Count      : Natural;
+      Fd_Facility1 : constant Facilities.Handle :=
+        new Facilities.File_Descriptor.Instance;
+      Fd_Facility2 : constant Facilities.Handle :=
+        new Facilities.File_Descriptor.Instance;
+
+      Testfile     : constant String := "./data/Log_One_Tasked_FD_Facility";
+      Reffile      : constant String := "./data/Log_One_FD_Facility.ref";
+   begin
+      Facilities.File_Descriptor.Handle
+        (Fd_Facility1).Toggle_Write_Timestamp (Set => False);
+      Facilities.File_Descriptor.Handle
+        (Fd_Facility1).Set_Logfile (Path => Testfile);
+      Fd_Facility1.Set_Name (Name => "Fd_Facility1");
+
+      Log.Attach_Facility (Facility => Fd_Facility1);
+      Log.Attach_Facility (Facility => Fd_Facility2);
+
+      Log.Facility_Count (Count => F_Count);
+      Assert (Condition => F_Count = 2,
+              Message   => "facility count not 2");
+
+      Log.Detach_Facility (Facility => Fd_Facility2);
+      Log.Facility_Count (Count => F_Count);
+      Assert (Condition => F_Count = 1,
+              Message   => "facility count not 1");
+
+      Log.Log_Message (Level => DEBU,
+                       Msg   => "Logger testmessage, one fd facility");
+
+      Log.Clear;
+
+      Assert (Condition => Helpers.Assert_Files_Equal
+              (Filename1 => Reffile,
+               Filename2 => Testfile),
+              Message   => "files not equal");
+   end Log_One_Tasked_FD_Facility;
 
 end Logger_Tests;
