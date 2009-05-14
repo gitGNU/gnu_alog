@@ -98,18 +98,8 @@ package body Alog.Facilities.File_Descriptor is
 
    -------------------------------------------------------------------------
 
-   procedure Setup (Facility : in out Instance) is
-      pragma Unreferenced (Facility);
-   begin
-      --  Nothing to do for now.
-      null;
-   end Setup;
-
-   -------------------------------------------------------------------------
-
    procedure Teardown (Facility : in out Instance) is
    begin
-      --  Close logfile if still open.
       Facility.Close_Logfile;
    end Teardown;
 

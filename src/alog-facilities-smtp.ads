@@ -42,11 +42,11 @@ package Alog.Facilities.SMTP is
    --  Implementation of Write_Message.
 
    overriding
-   procedure Setup (Facility : in out Instance);
+   procedure Setup (Facility : in out Instance) is null;
    --  Implementation of Setup-procedure.
 
    overriding
-   procedure Teardown (Facility : in out Instance);
+   procedure Teardown (Facility : in out Instance) is null;
    --  Implementation of Teardown-procedure.
 
    procedure Set_Recipient (Facility : in out Instance;

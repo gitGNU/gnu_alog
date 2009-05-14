@@ -34,22 +34,6 @@ package body Alog.Transforms.Casing is
 
    -------------------------------------------------------------------------
 
-   procedure Setup (Transform : in out Instance) is
-      pragma Unreferenced (Transform);
-   begin
-      null;
-   end Setup;
-
-   -------------------------------------------------------------------------
-
-   procedure Teardown (Transform : in out Instance) is
-      pragma Unreferenced (Transform);
-   begin
-      null;
-   end Teardown;
-
-   -------------------------------------------------------------------------
-
    function Transform_Message (Transform : Instance;
                                Level     : Log_Level := INFO;
                                Msg       : String) return String is

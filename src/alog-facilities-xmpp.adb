@@ -60,24 +60,6 @@ package body Alog.Facilities.XMPP is
 
    -------------------------------------------------------------------------
 
-   procedure Setup (Facility : in out Instance) is
-      pragma Unreferenced (Facility);
-   begin
-      --  Nothing to do for now.
-      null;
-   end Setup;
-
-   -------------------------------------------------------------------------
-
-   procedure Teardown (Facility : in out Instance) is
-      pragma Unreferenced (Facility);
-   begin
-      --  Nothing to do for now.
-      null;
-   end Teardown;
-
-   -------------------------------------------------------------------------
-
    procedure Write_Message (Facility : Instance;
                             Level    : Log_Level := INFO;
                             Msg      : String)
