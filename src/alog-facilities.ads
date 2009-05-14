@@ -25,21 +25,20 @@ with Ada.Strings.Unbounded;
 with Ada.Strings.Bounded;
 with Ada.Strings.Unbounded.Hash;
 with Ada.Command_Line;
-with Ada.Containers;
 with Ada.Containers.Doubly_Linked_Lists;
 
 with Alog.Transforms;
 
---  Abstract package Facilities. Provides common data and
---  methods used by all Alog facilities.
+--  Abstract package Facilities. Provides common data and methods used by all
+--  Alog facilities.
 package Alog.Facilities is
 
    use Ada.Strings.Bounded;
    use Ada.Strings.Unbounded;
 
    type Instance is abstract tagged limited private;
-   --  Abstract type facility instance. All facilities in the
-   --  Alog framework must implement this type.
+   --  Abstract type facility instance. All facilities in the Alog framework
+   --  must implement this type.
 
    subtype Class is Instance'Class;
 
@@ -81,14 +80,14 @@ package Alog.Facilities is
    --  Write message with specified log level.
 
    procedure Setup (Facility : in out Instance) is abstract;
-   --  Each facility must provide a Setup-procedure. These procedures
-   --  are called by Logger instances when attaching Facilities.
-   --  All needed operations prior to writing log messages should be done here.
+   --  Each facility must provide a Setup-procedure. These procedures are called
+   --  by Logger instances when attaching Facilities. All needed operations
+   --  prior to writing log messages should be done here.
 
    procedure Teardown (Facility : in out Instance) is abstract;
-   --  Each facility must provide a Teardown-procedure. These procedures
-   --  are called by Logger instances when detaching Facilities or when
-   --  the logger object gets out of scope.
+   --  Each facility must provide a Teardown-procedure. These procedures are
+   --  called by Logger instances when detaching Facilities or when the logger
+   --  object gets out of scope.
 
    procedure Add_Transform (Facility  : in out Instance'Class;
                             Transform :        Alog.Transforms.Handle);
@@ -108,26 +107,25 @@ package Alog.Facilities is
 
    package BS_Path is new Generic_Bounded_Length (Max_Path_Length);
    use BS_Path;
-   --  Bounded string with length Max_Path_Length. Used in methods
-   --  which involve filesystem operations.
+   --  Bounded string with length Max_Path_Length. Used in methods which
+   --  involve filesystem operations.
 
 private
 
-   type Instance is abstract tagged
-      limited record
-         Name      : Unbounded_String :=
-           To_Unbounded_String (Ada.Command_Line.Command_Name);
-         --  Facility Name. Defaults to command-name (first argument).
-         --  If multiple facilities are used, names must be set differently.
+   type Instance is abstract tagged limited record
+      Name      : Unbounded_String :=
+        To_Unbounded_String (Ada.Command_Line.Command_Name);
+      --  Facility Name. Defaults to command-name (first argument). If multiple
+      --  facilities are used, names must be set differently.
 
-         Threshold : Log_Level := DEBU;
-         --  Facility default threshold.
+      Threshold : Log_Level := DEBU;
+      --  Facility default threshold.
 
-         Timestamp_Format : String (1 .. 11) := "%b %d %Y %T";
-         --  Default timestamp format to use in this facility.
+      Timestamp_Format : String (1 .. 11) := "%b %d %Y %T";
+      --  Default timestamp format to use in this facility.
 
-         Transforms : Transform_List_Package.List;
-         --  List of transforms.
-      end record;
+      Transforms : Transform_List_Package.List;
+      --  List of transforms.
+   end record;
 
 end Alog.Facilities;

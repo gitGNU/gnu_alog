@@ -20,12 +20,10 @@
 --  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,
 --  MA  02110-1301  USA
 
---  Syslog facility. Used to log to systems syslog.
---  At the moment, this facility is a thin binding to syslog
---  function calls. The implementation attempts to resemble
---  the native libc-functions of your system, so that anyone
---  being familiar with syslog.h should be able to use this
---  module right away.
+--  Syslog facility. Used to log to systems syslog. At the moment, this facility
+--  is a thin binding to syslog function calls. The implementation attempts to
+--  resemble the native libc-functions of your system, so that anyone being
+--  familiar with syslog.h should be able to use this module right away.
 package Alog.Facilities.Syslog is
 
    type Instance is new Alog.Facilities.Instance with private;

@@ -23,11 +23,12 @@
 
 with Ahven; use Ahven;
 
-with Alog;  use Alog;
-with Alog.Facilities; use Alog.Facilities;
 with Alog.Facilities.Pgsql;
 
 package body Facility_Tests.PGSQL is
+
+   use Alog;
+   use Alog.Facilities;
 
    -------------------------------------------------------------------------
 
@@ -73,7 +74,7 @@ package body Facility_Tests.PGSQL is
 
    -------------------------------------------------------------------------
 
-   procedure Initialize (T : in out F_Test) is
+   procedure Initialize (T : in out Testcase) is
    begin
       Set_Name (T, "Tests for Alog Facility PGSQL");
       Ahven.Framework.Add_Test_Routine
@@ -221,7 +222,6 @@ package body Facility_Tests.PGSQL is
 
       F.Write_Message (Msg => "Test message");
 
-      --  Cleanup
       F.Teardown;
    exception
       when others =>

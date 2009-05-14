@@ -25,9 +25,11 @@ with Alog.Transforms.Casing;
 
 package body Transform_Tests is
 
+   use Alog;
+
    -------------------------------------------------------------------------
 
-   procedure Initialize (T : in out T_Test) is
+   procedure Initialize (T : in out Testcase) is
    begin
       Set_Name (T, "Tests for Alog Transforms");
       Ahven.Framework.Add_Test_Routine
@@ -37,7 +39,7 @@ package body Transform_Tests is
    -------------------------------------------------------------------------
 
    procedure Set_Name is
-      T        : Alog.Transforms.Casing.Instance;
+      T        : Transforms.Casing.Instance;
       Expected : constant String := "Test transform";
    begin
       T.Set_Name (Name => Expected);

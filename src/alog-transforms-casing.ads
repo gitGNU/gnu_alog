@@ -21,8 +21,7 @@
 --  MA  02110-1301  USA
 --
 
---  Casing transform. Used to transform
---  casing (lower/uppercase) of messages
+--  Casing transform. Used to transform casing (lower/uppercase) of messages
 package Alog.Transforms.Casing is
 
    type Operation_Mode is (Uppercase, Lowercase);
@@ -51,10 +50,9 @@ package Alog.Transforms.Casing is
 
 private
 
-   type Instance is new Alog.Transforms.Instance with
-      record
-         Mode  : Operation_Mode := Lowercase;
-         --  Mode of operation.
-      end record;
+   type Instance is new Alog.Transforms.Instance with record
+      Mode  : Operation_Mode := Lowercase;
+      --  Mode of operation.
+   end record;
 
 end Alog.Transforms.Casing;

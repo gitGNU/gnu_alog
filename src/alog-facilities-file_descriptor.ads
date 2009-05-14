@@ -73,26 +73,24 @@ package Alog.Facilities.File_Descriptor is
 
 private
 
-   type Instance is new Alog.Facilities.Instance with
-      record
-         Log_File         : aliased Ada.Text_IO.File_Type;
-         --  Logfile used for file based logging.
+   type Instance is new Alog.Facilities.Instance with record
+      Log_File         : aliased Ada.Text_IO.File_Type;
+      --  Logfile used for file based logging.
 
-         Log_File_Ptr     : Ada.Text_IO.File_Access :=
-           Ada.Text_IO.Standard_Output;
-         --  Reference to actual log file. Default is Standard_Output.
+      Log_File_Ptr     : Ada.Text_IO.File_Access :=
+        Ada.Text_IO.Standard_Output;
+      --  Reference to actual log file. Default is Standard_Output.
 
-         Log_File_Name    : BS_Path.Bounded_String :=
-           To_Bounded_String ("none");
-         --  File name of log file.
+      Log_File_Name    : BS_Path.Bounded_String :=
+        To_Bounded_String ("none");
+      --  File name of log file.
 
-         Write_Timestamp  : Boolean := True;
-         --  If True, a timestamp is written with the log message.
-         --  Default is True.
+      Write_Timestamp  : Boolean := True;
+      --  If True, a timestamp is written with the log message. Default is True.
 
-         Write_Loglevel   : Boolean := False;
-         --  If True, the loglevel associated with the log message is
-         --  written. Default is False.
-      end record;
+      Write_Loglevel   : Boolean := False;
+      --  If True, the loglevel associated with the log message is written.
+      --  Default is False.
+   end record;
 
 end Alog.Facilities.File_Descriptor;

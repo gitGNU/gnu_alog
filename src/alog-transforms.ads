@@ -21,17 +21,17 @@
 --  MA  02110-1301  USA
 --
 
-with Ada.Strings.Unbounded;
 with Ada.Strings.Unbounded.Hash;
 with Ada.Containers;
 
---  Abstract package Transforms. Provides methods
---  used by all Alog transforms.
+--  Abstract package Transforms. Provides methods used by all Alog transforms.
 package Alog.Transforms is
 
+   use Ada.Strings.Unbounded;
+
    type Instance is abstract tagged limited private;
-   --  Abstract type transform instance. All tranforms in the
-   --  Alog framework must implement this type.
+   --  Abstract type transform instance. All tranforms in the Alog framework
+   --  must implement this type.
 
    subtype Class is Instance'Class;
 
@@ -59,22 +59,19 @@ package Alog.Transforms is
    --  Transform message with specified log level.
 
    procedure Setup (Transform : in out Instance) is abstract;
-   --  Each transform must provide a Setup-procedure. These procedures
-   --  are called by logger instances when attaching Transforms.
-   --  All needed operations prior to transforming log messages
-   --  should be done here.
+   --  Each transform must provide a Setup-procedure. These procedures are
+   --  called by logger instances when attaching Transforms. All needed
+   --  operations prior to transforming log messages should be done here.
 
    procedure Teardown (Transform : in out Instance) is abstract;
-   --  Each transform must provide a Teardown-procedure. These procedures
-   --  are called by logger instances when detaching Transforms or when
-   --  the logger object gets out of scope.
+   --  Each transform must provide a Teardown-procedure. These procedures are
+   --  called by logger instances when detaching Transforms or when the logger
+   --  object gets out of scope.
 
 private
 
-   type Instance is abstract tagged
-   limited record
-      Name      : Ada.Strings.Unbounded.Unbounded_String :=
-        Ada.Strings.Unbounded.To_Unbounded_String ("sample-transform");
+   type Instance is abstract tagged limited record
+      Name      : Unbounded_String := To_Unbounded_String ("sample-transform");
       --  Transform Name. Names must be unique.
    end record;
 

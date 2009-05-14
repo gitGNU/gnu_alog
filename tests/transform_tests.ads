@@ -21,19 +21,17 @@
 --  MA  02110-1301  USA
 --
 
---  Ahven
 with Ahven; use Ahven;
 with Ahven.Framework;
 
---  Alog
 with Alog;
 
 --  Tests for Alog transform components.
 package Transform_Tests is
 
-   type T_Test is new Ahven.Framework.Test_Case with null record;
+   type Testcase is new Ahven.Framework.Test_Case with null record;
 
-   procedure Initialize (T : in out T_Test);
+   procedure Initialize (T : in out Testcase);
    --  Initialize Test suite.
 
    procedure Set_Name;

@@ -47,18 +47,18 @@ package Alog.Facilities.XMPP is
    procedure Set_Sender (Facility : in out Instance;
                          JID      :        String;
                          Password :        String);
-   --  Set sender for log messages. This procedure MUST be called
-   --  before subsequent calls to Write_Message().
+   --  Set sender for log messages. This procedure MUST be called before
+   --  subsequent calls to Write_Message().
 
    procedure Set_Recipient (Facility : in out Instance;
                             JID      :        String);
-   --  Set recipient for log-messages. This procedure MUST be called
-   --  before subsequent calls to Write_Message().
+   --  Set recipient for log-messages. This procedure MUST be called before
+   --  subsequent calls to Write_Message().
 
    procedure Set_Server (Facility : in out Instance;
                          Name     :        String);
-   --  Set server for log-messages. This procedure MUST be called
-   --  before subsequent calls to Write_Message().
+   --  Set server for log-messages. This procedure MUST be called before
+   --  subsequent calls to Write_Message().
 
    No_Sender                  : exception;
    --  No sender ID specified. Cannot send message.
@@ -84,34 +84,31 @@ private
       end record;
    --  Holds sender information.
 
-   type Instance is new Alog.Facilities.Instance with
-      record
-         Sender       : Sender_Account :=
-           (JID      => To_Unbounded_String ("alog@localhost"),
-            Password => To_Unbounded_String (""));
-         --  Notification sender JID/password.
+   type Instance is new Alog.Facilities.Instance with record
+      Sender       : Sender_Account :=
+        (JID      => To_Unbounded_String ("alog@localhost"),
+         Password => To_Unbounded_String (""));
+      --  Notification sender JID/password.
 
-         Is_Sender    : Boolean := False;
-         --  Indicates whether sender id is set.
+      Is_Sender    : Boolean := False;
+      --  Indicates whether sender id is set.
 
-         Server       : Unbounded_String;
-         --  Server to connect to.
+      Server       : Unbounded_String;
+      --  Server to connect to.
 
-         Is_Server    : Boolean := False;
-         --  Indicates whether a server is set.
+      Is_Server    : Boolean := False;
+      --  Indicates whether a server is set.
 
-         Recipient    : Unbounded_String;
-         --  Recipient for log-mails. Must be specified before
-         --  calling Write_Message(), else No_Recipient exception
-         --  is thrown.
+      Recipient    : Unbounded_String;
+      --  Recipient for log-mails. Must be specified before calling
+      --  Write_Message(), else No_Recipient exception is thrown.
 
-         Is_Recipient : Boolean := False;
-         --  Indicates whether a recipient is set.
+      Is_Recipient : Boolean := False;
+      --  Indicates whether a recipient is set.
 
-         Subject      : Unbounded_String :=
-           To_Unbounded_String ("Alog: Log-Message");
-         --  Subject of messages from Alog-System
-         --  (default: Alog: Log-Message).
-      end record;
+      Subject      : Unbounded_String :=
+        To_Unbounded_String ("Alog: Log-Message");
+      --  Subject of messages from Alog-System (default: Alog: Log-Message).
+   end record;
 
 end Alog.Facilities.XMPP;

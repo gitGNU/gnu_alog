@@ -21,8 +21,8 @@
 --  MA  02110-1301  USA
 --
 
---  Alog: Ada Logging Components. Provides easy to use API for
---  different logging facilities and log message transforms.
+--  Alog: Ada Logging Components. Provides easy to use API for different logging
+--  facilities and log message transforms.
 package Alog is
 
    type Log_Level is (EMER,  -- EMERGENCY

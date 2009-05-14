@@ -23,10 +23,11 @@
 
 with Ahven; use Ahven;
 
-with Alog;  use Alog;
 with Alog.Facilities.XMPP;
 
 package body Facility_Tests.XMPP is
+
+   use Alog;
 
    -------------------------------------------------------------------------
 
@@ -39,8 +40,8 @@ package body Facility_Tests.XMPP is
         (T, Send_No_Recipient'Access, "send with no recipient");
       Ahven.Framework.Add_Test_Routine
         (T, Send_No_Server'Access, "send with no server");
---        Ahven.Framework.Add_Test_Routine
---          (T, Send_XMPP_Message'Access, "send XMPP message");
+      --        Ahven.Framework.Add_Test_Routine
+      --          (T, Send_XMPP_Message'Access, "send XMPP message");
    end Initialize;
 
    -------------------------------------------------------------------------
@@ -51,15 +52,14 @@ package body Facility_Tests.XMPP is
       F.Set_Sender (JID      => "alog@localhost",
                     Password => "foobar");
 
-      --  Try to send a log-message with no recipient
-      --  specified first, should raise No_Recipient exception.
+      --  Try to send a log-message with no recipient specified first, should
+      --  raise No_Recipient exception.
       F.Write_Message (Level => DEBU,
                        Msg   => "this should not work");
 
       Fail (Message => "exception not thrown");
    exception
       when Alog.Facilities.XMPP.No_Recipient =>
-         --  expected exception was thrown
          null;
    end Send_No_Recipient;
 
@@ -68,15 +68,14 @@ package body Facility_Tests.XMPP is
    procedure Send_No_Sender is
       F : Alog.Facilities.XMPP.Instance;
    begin
-      --  Try to send a log-message with no recipient
-      --  specified first, should raise No_Recipient exception.
+      --  Try to send a log-message with no recipient specified first, should
+      --  raise No_Recipient exception.
       F.Write_Message (Level => DEBU,
                        Msg   => "this should not work");
 
       Fail (Message => "exception not thrown");
    exception
       when Alog.Facilities.XMPP.No_Sender =>
-         --  expected exception was thrown
          null;
    end Send_No_Sender;
 
@@ -89,15 +88,14 @@ package body Facility_Tests.XMPP is
                     Password => "foobar");
       F.Set_Recipient (JID   => "recipient@localhost");
 
-      --  Try to send a log-message with no server
-      --  specified first, should raise No_Server exception.
+      --  Try to send a log-message with no server specified first, should
+      --  raise No_Server exception.
       F.Write_Message (Level => DEBU,
                        Msg   => "this should not work");
 
       Fail (Message => "exception not thrown");
    exception
       when Alog.Facilities.XMPP.No_Server =>
-         --  expected exception was thrown
          null;
    end Send_No_Server;
 
@@ -111,8 +109,8 @@ package body Facility_Tests.XMPP is
       F.Set_Recipient (JID   => "recipient@localhost");
       F.Set_Server (Name     => "localhost");
 
---        F.Write_Message (Level => DEBU,
---                         Msg   => "This is a test message from Alog!");
+      F.Write_Message (Level => DEBU,
+                       Msg   => "This is a test message from Alog!");
 
       Fail (Message => "not yet implemented");
    exception

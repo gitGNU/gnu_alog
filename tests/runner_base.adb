@@ -23,9 +23,8 @@
 
 with Ahven.Text_Runner;
 with Ahven.Framework;
-with Facility_Tests;
+
 with Facility_Tests.FD;
-with Transform_Tests;
 with Transform_Tests.Casing;
 with Logger_Tests;
 
@@ -35,15 +34,15 @@ procedure Runner_Base is
    pragma Linker_Options ("-lahven");
 begin
    Ahven.Framework.Add_Test (Suite => S.all,
-                             T     => new Facility_Tests.F_Test);
+                             T     => new Facility_Tests.Testcase);
    Ahven.Framework.Add_Test (Suite => S.all,
-                             T     => new Facility_Tests.FD.F_Test);
+                             T     => new Facility_Tests.FD.Testcase);
    Ahven.Framework.Add_Test (Suite => S.all,
-                             T     => new Transform_Tests.T_Test);
+                             T     => new Transform_Tests.Testcase);
    Ahven.Framework.Add_Test (Suite => S.all,
-                             T     => new Transform_Tests.Casing.T_Test);
+                             T     => new Transform_Tests.Casing.Testcase);
    Ahven.Framework.Add_Test (Suite => S.all,
-                             T     => new Logger_Tests.L_Test);
+                             T     => new Logger_Tests.Testcase);
 
    Ahven.Text_Runner.Run (Suite => S);
    Ahven.Framework.Release_Suite (T => S);

@@ -42,7 +42,6 @@ package body Alog.Transforms is
 
    function Hash (Element : Alog.Transforms.Handle)
                            return Ada.Containers.Hash_Type is
-      use Ada.Strings.Unbounded;
    begin
       return Hash (Key => To_Unbounded_String (Element.Get_Name));
    end Hash;

@@ -25,12 +25,12 @@ with Ahven.Framework;
 
 package Facility_Tests.FD is
 
-   type F_Test is new Ahven.Framework.Test_Case with null record;
+   type Testcase is new Ahven.Framework.Test_Case with null record;
 
-   procedure Initialize (T : in out F_Test);
+   procedure Initialize (T : in out Testcase);
    --  Initialize Test suite.
 
-   procedure Finalize (T : in out F_Test);
+   procedure Finalize (T : in out Testcase);
    --  Teardown Test suite.
 
    procedure Set_Valid_Logfile_Fd;

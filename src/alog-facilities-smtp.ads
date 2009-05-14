@@ -52,13 +52,13 @@ package Alog.Facilities.SMTP is
    procedure Set_Recipient (Facility : in out Instance;
                             Name     :        String;
                             EMail    :        String);
-   --  Set recipient for log-messages. This procedure MUST be called
-   --  before subsequent calls to Write_Message().
+   --  Set recipient for log-messages. This procedure MUST be called before
+   --  subsequent calls to Write_Message().
 
    procedure Set_Server (Facility : in out Instance;
                          Name     :        String);
-   --  Set server for log-messages. This procedure MUST be called
-   --  before subsequent calls to Write_Message().
+   --  Set server for log-messages. This procedure MUST be called before
+   --  subsequent calls to Write_Message().
 
    procedure Set_Header (Facility : in out Instance;
                          Header   :        String);
@@ -89,44 +89,40 @@ private
    EOL : constant Character := Ada.Characters.Latin_1.LF;
    --  EOL used in mail-messages.
 
-   type Mail_Address is tagged
-      record
-         Name  : Unbounded_String;
-         EMail : Unbounded_String;
-      end record;
+   type Mail_Address is tagged record
+      Name  : Unbounded_String;
+      EMail : Unbounded_String;
+   end record;
    --  Holds Sender / Recipient information.
 
-   type Instance is new Alog.Facilities.Instance with
-      record
-         Server       : Unbounded_String;
-         --  Server to connect when sending log-mails.
+   type Instance is new Alog.Facilities.Instance with record
+      Server       : Unbounded_String;
+      --  Server to connect when sending log-mails.
 
-         Is_Server    : Boolean := False;
-         --  Indicates whether a server is set.
+      Is_Server    : Boolean := False;
+      --  Indicates whether a server is set.
 
-         Recipient    : Mail_Address;
-         --  Recipient for log-mails. Must be specified before
-         --  calling Write_Message(), else No_Recipient exception
-         --  is thrown.
+      Recipient    : Mail_Address;
+      --  Recipient for log-mails. Must be specified before calling
+      --  Write_Message(), else No_Recipient exception is thrown.
 
-         Is_Recipient : Boolean := False;
-         --  Indicates whether a recipient is set.
+      Is_Recipient : Boolean := False;
+      --  Indicates whether a recipient is set.
 
-         Sender       : Mail_Address :=
-           (Name  => To_Unbounded_String ("alog"),
-            EMail => To_Unbounded_String ("alog@" &
-              GNAT.Sockets.Host_Name));
-         --  Notification sender address/name.
+      Sender       : Mail_Address :=
+        (Name  => To_Unbounded_String ("alog"),
+         EMail => To_Unbounded_String ("alog@" &
+           GNAT.Sockets.Host_Name));
+      --  Notification sender address/name.
 
-         Subject      : Unbounded_String := To_Unbounded_String
-           ("Log-Message");
-         --  Subject of messages from Alog-System
-         --  (default: Alog: Log-Message).
+      Subject      : Unbounded_String := To_Unbounded_String
+        ("Log-Message");
+      --  Subject of messages from Alog-System (default: Alog: Log-Message).
 
-         Header       : Unbounded_String := To_Unbounded_String
-           ("This is a message from the alog-logsystem running on '"
-            & GNAT.Sockets.Host_Name & "' :" & EOL & EOL);
-         --  Message-Header. Can be set by calling Set_Header().
-      end record;
+      Header       : Unbounded_String := To_Unbounded_String
+        ("This is a message from the alog-logsystem running on '"
+         & GNAT.Sockets.Host_Name & "' :" & EOL & EOL);
+      --  Message-Header. Can be set by calling Set_Header().
+   end record;
 
 end Alog.Facilities.SMTP;

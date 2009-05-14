@@ -21,14 +21,13 @@
 --  MA  02110-1301  USA
 --
 
---  Ahven
 with Ahven; use Ahven;
 
---  Alog
-with Alog;  use Alog;
 with Alog.Facilities.SMTP;
 
 package body Facility_Tests.SMTP is
+
+   use Alog;
 
    -------------------------------------------------------------------------
 
@@ -39,8 +38,8 @@ package body Facility_Tests.SMTP is
         (T, Send_No_Recipient'Access, "send with no recipient");
       Ahven.Framework.Add_Test_Routine
         (T, Send_No_Server'Access, "send with no server");
---        Ahven.Framework.Add_Test_Routine
---          (T, Send_Simple_Mail'Access, "send simple mail");
+      --        Ahven.Framework.Add_Test_Routine
+      --          (T, Send_Simple_Mail'Access, "send simple mail");
       Ahven.Framework.Add_Test_Routine
         (T, Set_Header'Access, "set message header");
    end Initialize;
@@ -50,15 +49,14 @@ package body Facility_Tests.SMTP is
    procedure Send_No_Recipient is
       F : Alog.Facilities.SMTP.Instance;
    begin
-      --  Try to send a log-message with no recipient
-      --  specified first, should raise No_Recipient exception.
+      --  Try to send a log-message with no recipient specified first, should
+      --  raise No_Recipient exception.
       F.Write_Message (Level => DEBU,
                        Msg   => "this should not work");
 
       Fail (Message => "exception not thrown");
    exception
       when Alog.Facilities.SMTP.No_Recipient =>
-         --  all is well, do nothing.
          null;
    end Send_No_Recipient;
 
@@ -69,15 +67,14 @@ package body Facility_Tests.SMTP is
    begin
       F.Set_Recipient (Name  => "Send_No_Server",
                        EMail => "Testcase");
-      --  Try to send a log-message with no server
-      --  specified first, should raise No_Server exception.
+      --  Try to send a log-message with no server specified first, should
+      --  raise No_Server exception.
       F.Write_Message (Level => DEBU,
                        Msg   => "this should not work");
 
       Fail (Message => "exception not thrown");
    exception
       when Alog.Facilities.SMTP.No_Server =>
-         --  all is well, do nothing.
          null;
    end Send_No_Server;
 
@@ -86,10 +83,8 @@ package body Facility_Tests.SMTP is
    procedure Send_Simple_Mail is
       F : Alog.Facilities.SMTP.Instance;
    begin
-      --  Set recipient.
       F.Set_Recipient (Name  => "Facility-Test",
                        EMail => "test@example.ch");
-      --  Set server.
       F.Set_Server (Name => "mta.example.ch");
 
       F.Write_Message (Level => DEBU,

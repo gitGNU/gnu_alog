@@ -106,7 +106,8 @@ package body Alog.Logger is
       --  Forward specs.
       procedure Free_Facility (Position : Facilities_Stack_Package.Cursor);
 
-      procedure Free_Facility (Position : Facilities_Stack_Package.Cursor) is
+      procedure Free_Facility (Position : Facilities_Stack_Package.Cursor)
+      is
          use Facilities_Stack_Package;
          Facility_Handle : Alog.Facilities.Handle := Element (Position);
       begin
@@ -118,7 +119,8 @@ package body Alog.Logger is
       --  Forward specs.
       procedure Free_Transform (Position : Transforms_Stack_Package.Cursor);
 
-      procedure Free_Transform (Position : Transforms_Stack_Package.Cursor) is
+      procedure Free_Transform (Position : Transforms_Stack_Package.Cursor)
+      is
          use Transforms_Stack_Package;
          Transform_Handle : Alog.Transforms.Handle := Element (Position);
       begin

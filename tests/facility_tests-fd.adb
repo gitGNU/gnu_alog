@@ -22,17 +22,17 @@
 --
 
 with Ada.Text_IO;
-with Ada.Exceptions;
 with Ada.IO_Exceptions;
 
 with Ahven; use Ahven;
 
-with Alog;  use Alog;
 with Alog.Helpers;
-with Alog.Facilities; use Alog.Facilities;
 with Alog.Facilities.File_Descriptor;
 
 package body Facility_Tests.FD is
+
+   use Alog;
+   use Alog.Facilities;
 
    -------------------------------------------------------------------------
 
@@ -80,14 +80,12 @@ package body Facility_Tests.FD is
 
    -------------------------------------------------------------------------
 
-   procedure Finalize (T : in out F_Test) is
+   procedure Finalize (T : in out Testcase) is
+
       use Ada.Text_IO;
       use Ahven.Framework;
 
-      --  Files to clean after tests.
-      subtype Count is Natural range 1 .. 6;
-
-      Files : constant array (Count) of BS_Path.Bounded_String :=
+      Files : constant array (Positive range <>) of BS_Path.Bounded_String :=
         (BS_Path.To_Bounded_String ("./data/Teardown_Fd"),
          BS_Path.To_Bounded_String ("./data/Write_Message_Fd"),
          BS_Path.To_Bounded_String ("./data/Disable_Write_Timestamp_Fd"),
@@ -97,28 +95,19 @@ package body Facility_Tests.FD is
         );
       F     : File_Type;
    begin
-      for c in Count loop
+      for C in Files'Range loop
          Open (File => F,
                Mode => In_File,
-               Name => BS_Path.To_String (Files (c)));
+               Name => BS_Path.To_String (Files (C)));
          Delete (File => F);
       end loop;
 
       Finalize (Test_Case (T));
-
-   exception
-      when Ada.IO_Exceptions.Name_Error =>
-         null;
-         --  File did not exist. Carry on.
-      when Event : others =>
-         Put_Line ("error occured while cleaning up: ");
-         Put_Line (Ada.Exceptions.Exception_Name (Event));
-         Put_Line (Ada.Exceptions.Exception_Message (Event));
    end Finalize;
 
    -------------------------------------------------------------------------
 
-   procedure Initialize (T : in out F_Test) is
+   procedure Initialize (T : in out Testcase) is
    begin
       Set_Name (T, "Tests for Alog Facility FD");
       Ahven.Framework.Add_Test_Routine
@@ -245,13 +234,11 @@ package body Facility_Tests.FD is
 
       F.Close_Logfile;
 
-      --  Compare both files.
       Assert (Condition => Helpers.Assert_Files_Equal
               (Filename1 => Reffile,
                Filename2 => Testfile),
               Message   => "files not equal");
 
-      --  Cleanup
       F.Teardown;
    end Write_Message_Fd;
 

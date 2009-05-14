@@ -76,7 +76,6 @@ package body Logger_Tests is
       Assert (Condition => Log.Transform_Count = 1,
               Message   => "could not attach transform");
 
-      --  Clear it.
       Log.Clear;
       Assert (Condition => Log.Facility_Count = 0,
               Message   => "facility count is not 0");
@@ -112,8 +111,8 @@ package body Logger_Tests is
       Fail (Message => "not yet implemented");
    exception
       when Logger.Facility_Not_Found =>
-         --  Free not attached facility, this is not done
-         --  by the logger (since it was never attached).
+         --  Free not attached facility, this is not done by the logger (since
+         --  it was never attached).
          Alog.Logger.Free (Facility);
          --  Test passed.
    end Detach_Facility_Unattached;
@@ -145,35 +144,32 @@ package body Logger_Tests is
       Fail (Message => "could detach unattached transform");
    exception
       when Logger.Transform_Not_Found =>
-         --  Free not attached Transform, this is not done
-         --  by the logger (since it was never attached).
+         --  Free not attached Transform, this is not done by the logger (since
+         --  it was never attached).
          Alog.Logger.Free (Transform);
          --  Test passed.
    end Detach_Transform_Unattached;
 
    -------------------------------------------------------------------------
 
-   procedure Finalize (T : in out L_Test) is
+   procedure Finalize (T : in out Testcase) is
 
       use Ahven.Framework;
       use Alog.Facilities;
 
-      --  Files to clean after tests.
-      subtype Count is Natural range 1 .. 5;
-
-      Files : constant array (Count) of BS_Path.Bounded_String :=
+      Files : constant array (Positive range <>) of BS_Path.Bounded_String :=
         (BS_Path.To_Bounded_String ("./data/Log_One_FD_Facility"),
          BS_Path.To_Bounded_String ("./data/Log_Multiple_FD_Facilities1"),
          BS_Path.To_Bounded_String ("./data/Log_Multiple_FD_Facilities2"),
          BS_Path.To_Bounded_String ("./data/Log_FD_Facility_Lowercase"),
          BS_Path.To_Bounded_String ("./data/Log_One_Tasked_FD_Facility")
         );
-      F : Ada.Text_IO.File_Type;
+      F     : Ada.Text_IO.File_Type;
    begin
-      for c in Count loop
+      for C in Files'Range loop
          Ada.Text_IO.Open (File => F,
                            Mode => Ada.Text_IO.In_File,
-                           Name => BS_Path.To_String (Files (c)));
+                           Name => BS_Path.To_String (Files (C)));
          Ada.Text_IO.Delete (File => F);
       end loop;
 
@@ -182,7 +178,7 @@ package body Logger_Tests is
 
    -------------------------------------------------------------------------
 
-   procedure Initialize (T : in out L_Test) is
+   procedure Initialize (T : in out Testcase) is
    begin
       Set_Name (T, "Tests for Alog Logger");
       Ahven.Framework.Add_Test_Routine
@@ -250,7 +246,6 @@ package body Logger_Tests is
                        Msg   => "Logger Test Message, " &
                        "FD Facility With Lowercase Transform");
 
-      --  Cleanup
       Log.Clear;
 
       Assert (Condition => Helpers.Assert_Files_Equal
@@ -306,7 +301,6 @@ package body Logger_Tests is
       Log.Log_Message (Level => INFO,
                        Msg   => "Logger testmessage, multiple facilities");
 
-      --  Cleanup
       Log.Clear;
 
       Assert (Condition => Helpers.Assert_Files_Equal
@@ -339,7 +333,6 @@ package body Logger_Tests is
       Log.Log_Message (Level => DEBU,
                        Msg   => "Logger testmessage, one fd facility");
 
-      --  Cleanup
       Log.Clear;
 
       Assert (Condition => Helpers.Assert_Files_Equal

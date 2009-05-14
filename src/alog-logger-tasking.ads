@@ -23,9 +23,9 @@
 
 with Alog.Facilities;
 
---  Tasked Logger instance. Facilities can be attached to this logger
---  instance in order to log to different targets simultaneously. This instance
---  provides task-safe concurrent logging.
+--  Tasked Logger instance. Facilities can be attached to this logger instance
+--  in order to log to different targets simultaneously. This instance provides
+--  task-safe concurrent logging.
 package Alog.Logger.Tasking is
 
    task type Instance is

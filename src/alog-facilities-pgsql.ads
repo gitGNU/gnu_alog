@@ -23,8 +23,7 @@
 
 with APQ.PostgreSQL.Client;
 
---  PGSQL facility. Used to log to
---  a Postgresql database
+--  PGSQL facility. Used to log to a Postgresql database.
 package Alog.Facilities.Pgsql is
 
    type Instance is new Alog.Facilities.Instance with private;
@@ -112,8 +111,7 @@ package Alog.Facilities.Pgsql is
    --  Set credentials for the database connection.
 
    function Get_Credentials (Facility : Instance) return String;
-   --  Get credentials of database connection.
-   --  Only the username is returned
+   --  Get credentials of database connection. Only the username is returned.
 
    procedure Close_Connection (Facility : in out Instance);
    --  Close open database connection.
@@ -134,39 +132,32 @@ package Alog.Facilities.Pgsql is
 
 private
 
-   type Log_SQL_Table is tagged
-      record
-         Name             : Unbounded_String :=
-           To_Unbounded_String ("alog");
-         Level_Column     : Unbounded_String :=
-           To_Unbounded_String ("level");
-         Timestamp_Column : Unbounded_String :=
-           To_Unbounded_String ("timestamp");
-         Message_Column   : Unbounded_String :=
-           To_Unbounded_String ("message");
-      end record;
+   type Log_SQL_Table is tagged record
+      Name             : Unbounded_String := To_Unbounded_String ("alog");
+      Level_Column     : Unbounded_String := To_Unbounded_String ("level");
+      Timestamp_Column : Unbounded_String := To_Unbounded_String ("timestamp");
+      Message_Column   : Unbounded_String := To_Unbounded_String ("message");
+   end record;
    --  Holds Table/Column name information.
 
-   type Instance is new Alog.Facilities.Instance with
-      record
-         Log_Connection  : APQ.PostgreSQL.Client.Connection_Type;
-         --  Database connection used for logging.
+   type Instance is new Alog.Facilities.Instance with record
+      Log_Connection  : APQ.PostgreSQL.Client.Connection_Type;
+      --  Database connection used for logging.
 
-         Trace_Filename  : Unbounded_String :=
-           To_Unbounded_String ("./data/trace.sql");
-         Trace_Mode      :  APQ.Trace_Mode_Type := APQ.Trace_APQ;
-         --  SQL trace parameters
+      Trace_Filename  : Unbounded_String :=
+        To_Unbounded_String ("./data/trace.sql");
+      Trace_Mode      :  APQ.Trace_Mode_Type := APQ.Trace_APQ;
+      --  SQL trace parameters
 
-         Log_Table       : Log_SQL_Table;
-         --  Table to insert messages
+      Log_Table       : Log_SQL_Table;
+      --  Table to insert messages
 
-         Write_Timestamp : Boolean := True;
-         --  If True, a timestamp is written with the log message.
-         --  Default is True.
+      Write_Timestamp : Boolean := True;
+      --  If True, a timestamp is written with the log message. Default is True.
 
-         Write_Loglevel  : Boolean := True;
-         --  If True, the loglevel associated with the log message is
-         --  written. Default is True.
-      end record;
+      Write_Loglevel  : Boolean := True;
+      --  If True, the loglevel associated with the log message is written.
+      --  Default is True.
+   end record;
 
 end Alog.Facilities.Pgsql;

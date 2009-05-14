@@ -25,9 +25,9 @@ with Ahven.Framework;
 
 package Facility_Tests.PGSQL is
 
-   type F_Test is new Ahven.Framework.Test_Case with null record;
+   type Testcase is new Ahven.Framework.Test_Case with null record;
 
-   procedure Initialize (T : in out F_Test);
+   procedure Initialize (T : in out Testcase);
    --  Initialize Test suite.
 
    procedure Set_Host_Name;

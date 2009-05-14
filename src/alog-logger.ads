@@ -28,10 +28,9 @@ with Ada.Containers.Hashed_Sets;
 with Alog.Facilities;
 with Alog.Transforms;
 
---  Logger instance. Facilities can be attached to a logger
---  instance in order to log to different targets simultaneously.
---  A logger provides different helper functions for logging facilities
---  configuration.
+--  Logger instance. Facilities can be attached to a logger instance in order to
+--  log to different targets simultaneously. A logger provides different helper
+--  functions for logging facilities configuration.
 package Alog.Logger is
 
    type Instance is new Ada.Finalization.Controlled with private;
@@ -60,8 +59,8 @@ package Alog.Logger is
    --  Return number of attached transforms.
 
    procedure Clear (L : in out Instance);
-   --  Clear logger instance. Detach and teardown all attached
-   --  facilities and transforms.
+   --  Clear logger instance. Detach and teardown all attached facilities and
+   --  transforms.
 
    procedure Log_Message (Logger : Instance;
                           Level  : Log_Level;
@@ -99,8 +98,7 @@ private
        (Element_Type        => Alog.Facilities.Handle,
         Hash                => Alog.Facilities.Hash,
         Equivalent_Elements => "=");
-   --  Storage for attached facilities. Equal-Function is provided
-   --  by facility.
+   --  Storage for attached facilities. Equal-Function is provided by facility.
 
    subtype Facilities_Stack is Facilities_Stack_Package.Set;
    --  Manages attached facilities for logger instance.
@@ -110,18 +108,16 @@ private
        (Element_Type        => Alog.Transforms.Handle,
         Hash                => Alog.Transforms.Hash,
         Equivalent_Elements => "=");
-   --  Storage for attached transforms. Equal-Function is provided
-   --  by transform.
+   --  Storage for attached transforms. Equal-Function is provided by transform.
 
    subtype Transforms_Stack is Transforms_Stack_Package.Set;
    --  Manages attached transforms for transforms instance.
 
-   type Instance is new Ada.Finalization.Controlled with
-      record
-         F_Stack : Facilities_Stack;
-         --  Stack of attached Facilities.
-         T_Stack : Transforms_Stack;
-         --  Stack of attached Transforms.
-      end record;
+   type Instance is new Ada.Finalization.Controlled with record
+      F_Stack : Facilities_Stack;
+      --  Stack of attached Facilities.
+      T_Stack : Transforms_Stack;
+      --  Stack of attached Transforms.
+   end record;
 
 end Alog.Logger;

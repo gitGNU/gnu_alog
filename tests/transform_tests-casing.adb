@@ -32,7 +32,7 @@ package body Transform_Tests.Casing is
 
    -------------------------------------------------------------------------
 
-   procedure Initialize (T : in out T_Test) is
+   procedure Initialize (T : in out Testcase) is
    begin
       Set_Name (T, "Tests for Alog Transform Casing");
       Ahven.Framework.Add_Test_Routine
@@ -51,13 +51,11 @@ package body Transform_Tests.Casing is
       Transformed_Msg : Unbounded_String;
       Ref_Transformed_Msg : constant String := "test message";
    begin
-      --  Initialize
       T.Setup;
       Transformed_Msg := To_Unbounded_String (
                            T.Transform_Message (INFO, Message));
       Assert (Condition => Transformed_Msg = Ref_Transformed_Msg,
               Message   => "Output does not match expected value (lowercase)");
-      --  Cleanup
       T.Teardown;
    end Transform_Message_Lowercase;
 
@@ -69,14 +67,12 @@ package body Transform_Tests.Casing is
       Transformed_Msg     : Unbounded_String;
       Ref_Transformed_Msg : constant String := "TEST MESSAGE";
    begin
-      --  Initialize
       T.Setup;
       T.Set_Mode (Alog.Transforms.Casing.Uppercase);
       Transformed_Msg := To_Unbounded_String (
                            T.Transform_Message (INFO, Message));
       Assert (Condition => Transformed_Msg = Ref_Transformed_Msg,
               Message   => "Output does not match expected value (uppercase)");
-      --  Cleanup
       T.Teardown;
    end Transform_Message_Uppercase;
 

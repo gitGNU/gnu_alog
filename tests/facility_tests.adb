@@ -23,15 +23,16 @@
 
 with Ahven; use Ahven;
 
-with Alog; use Alog;
-with Alog.Facilities; use Alog.Facilities;
 with Alog.Facilities.File_Descriptor;
 
 package body Facility_Tests is
 
+   use Alog;
+   use Alog.Facilities;
+
    -------------------------------------------------------------------------
 
-   procedure Initialize (T : in out F_Test) is
+   procedure Initialize (T : in out Testcase) is
    begin
       Set_Name (T, "Tests for Alog Facilites");
       Ahven.Framework.Add_Test_Routine
