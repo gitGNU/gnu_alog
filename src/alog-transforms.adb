@@ -23,9 +23,7 @@
 
 package body Alog.Transforms is
 
-   ------------
-   -- Equals --
-   ------------
+   -------------------------------------------------------------------------
 
    function "=" (Left  : Handle;
                  Right : Handle) return Boolean is
@@ -33,18 +31,14 @@ package body Alog.Transforms is
       return Left.Get_Name = Right.Get_Name;
    end "=";
 
-   --------------
-   -- Get_Name --
-   --------------
+   -------------------------------------------------------------------------
 
    function Get_Name (Transform : Instance'Class) return String is
    begin
       return Ada.Strings.Unbounded.To_String (Transform.Name);
    end Get_Name;
 
-   ----------
-   -- Hash --
-   ----------
+   -------------------------------------------------------------------------
 
    function Hash (Element : Alog.Transforms.Handle)
                            return Ada.Containers.Hash_Type is
@@ -53,9 +47,7 @@ package body Alog.Transforms is
       return Hash (Key => To_Unbounded_String (Element.Get_Name));
    end Hash;
 
-   --------------
-   -- Set_Name --
-   --------------
+   -------------------------------------------------------------------------
 
    procedure Set_Name (Transform : in out Instance'Class;
                        Name      :        String)

@@ -28,9 +28,7 @@ with Alog.Facilities.XMPP;
 
 package body Facility_Tests.XMPP is
 
-   ----------------
-   -- Initialize --
-   ----------------
+   -------------------------------------------------------------------------
 
    procedure Initialize (T : in out F_Test) is
    begin
@@ -45,9 +43,7 @@ package body Facility_Tests.XMPP is
 --          (T, Send_XMPP_Message'Access, "send XMPP message");
    end Initialize;
 
-   -----------------------
-   -- Send_No_Recipient --
-   -----------------------
+   -------------------------------------------------------------------------
 
    procedure Send_No_Recipient is
       F : Alog.Facilities.XMPP.Instance;
@@ -67,9 +63,7 @@ package body Facility_Tests.XMPP is
          null;
    end Send_No_Recipient;
 
-   --------------------
-   -- Send_No_Sender --
-   --------------------
+   -------------------------------------------------------------------------
 
    procedure Send_No_Sender is
       F : Alog.Facilities.XMPP.Instance;
@@ -86,9 +80,7 @@ package body Facility_Tests.XMPP is
          null;
    end Send_No_Sender;
 
-   --------------------
-   -- Send_No_Server --
-   --------------------
+   -------------------------------------------------------------------------
 
    procedure Send_No_Server is
       F : Alog.Facilities.XMPP.Instance;
@@ -109,9 +101,7 @@ package body Facility_Tests.XMPP is
          null;
    end Send_No_Server;
 
-   -----------------------
-   -- Send_XMPP_Message --
-   -----------------------
+   -------------------------------------------------------------------------
 
    procedure Send_XMPP_Message is
       F : Alog.Facilities.XMPP.Instance;

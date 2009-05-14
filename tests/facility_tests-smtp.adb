@@ -30,9 +30,7 @@ with Alog.Facilities.SMTP;
 
 package body Facility_Tests.SMTP is
 
-   ----------------
-   -- Initialize --
-   ----------------
+   -------------------------------------------------------------------------
 
    procedure Initialize (T : in out F_Test) is
    begin
@@ -47,9 +45,7 @@ package body Facility_Tests.SMTP is
         (T, Set_Header'Access, "set message header");
    end Initialize;
 
-   -----------------------
-   -- Send_No_Recipient --
-   -----------------------
+   -------------------------------------------------------------------------
 
    procedure Send_No_Recipient is
       F : Alog.Facilities.SMTP.Instance;
@@ -66,9 +62,7 @@ package body Facility_Tests.SMTP is
          null;
    end Send_No_Recipient;
 
-   --------------------
-   -- Send_No_Server --
-   --------------------
+   -------------------------------------------------------------------------
 
    procedure Send_No_Server is
       F : Alog.Facilities.SMTP.Instance;
@@ -87,9 +81,7 @@ package body Facility_Tests.SMTP is
          null;
    end Send_No_Server;
 
-   ----------------------
-   -- Send_Simple_Mail --
-   ----------------------
+   -------------------------------------------------------------------------
 
    procedure Send_Simple_Mail is
       F : Alog.Facilities.SMTP.Instance;
@@ -107,9 +99,7 @@ package body Facility_Tests.SMTP is
          Fail (Message => "could not deliver msg");
    end Send_Simple_Mail;
 
-   ----------------
-   -- Set_Header --
-   ----------------
+   -------------------------------------------------------------------------
 
    procedure Set_Header is
       F : Alog.Facilities.SMTP.Instance;

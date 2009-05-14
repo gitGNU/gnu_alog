@@ -26,9 +26,7 @@ with AWS.Jabber;
 
 package body Alog.Facilities.XMPP is
 
-   -------------------
-   -- Set_Recipient --
-   -------------------
+   -------------------------------------------------------------------------
 
    procedure Set_Recipient (Facility : in out Instance;
                             JID      :        String)
@@ -38,9 +36,7 @@ package body Alog.Facilities.XMPP is
       Facility.Is_Recipient := True;
    end Set_Recipient;
 
-   -------------------
-   -- Set_Sender --
-   -------------------
+   -------------------------------------------------------------------------
 
    procedure Set_Sender (Facility : in out Instance;
                          JID      :        String;
@@ -52,9 +48,7 @@ package body Alog.Facilities.XMPP is
       Facility.Is_Sender := True;
    end Set_Sender;
 
-   ----------------
-   -- Set_Server --
-   ----------------
+   -------------------------------------------------------------------------
 
    procedure Set_Server (Facility : in out Instance;
                          Name     :        String)
@@ -64,9 +58,7 @@ package body Alog.Facilities.XMPP is
       Facility.Is_Server := True;
    end Set_Server;
 
-   -----------
-   -- Setup --
-   -----------
+   -------------------------------------------------------------------------
 
    procedure Setup (Facility : in out Instance) is
       pragma Unreferenced (Facility);
@@ -75,9 +67,7 @@ package body Alog.Facilities.XMPP is
       null;
    end Setup;
 
-   --------------
-   -- Teardown --
-   --------------
+   -------------------------------------------------------------------------
 
    procedure Teardown (Facility : in out Instance) is
       pragma Unreferenced (Facility);
@@ -86,9 +76,7 @@ package body Alog.Facilities.XMPP is
       null;
    end Teardown;
 
-   -------------------
-   -- Write_Message --
-   -------------------
+   -------------------------------------------------------------------------
 
    procedure Write_Message (Facility : Instance;
                             Level    : Log_Level := INFO;

@@ -21,19 +21,15 @@
 --  MA  02110-1301  USA
 --
 
---  Ahven
 with Ahven; use Ahven;
 
---  Alog
 with Alog; use Alog;
 with Alog.Facilities; use Alog.Facilities;
 with Alog.Facilities.File_Descriptor;
 
 package body Facility_Tests is
 
-   ----------------
-   -- Initialize --
-   ----------------
+   -------------------------------------------------------------------------
 
    procedure Initialize (T : in out F_Test) is
    begin
@@ -44,9 +40,7 @@ package body Facility_Tests is
         (T, Set_Threshold'Access, "set threshold");
    end Initialize;
 
-   --------------
-   -- Set_Name --
-   --------------
+   -------------------------------------------------------------------------
 
    procedure Set_Name is
       F        : File_Descriptor.Instance;
@@ -57,9 +51,7 @@ package body Facility_Tests is
               Message => "name not equal");
    end Set_Name;
 
-   -------------------
-   -- Set_Threshold --
-   -------------------
+   -------------------------------------------------------------------------
 
    procedure Set_Threshold is
       F        : File_Descriptor.Instance;

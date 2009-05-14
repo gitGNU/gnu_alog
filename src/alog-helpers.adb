@@ -23,9 +23,7 @@
 
 package body Alog.Helpers is
 
-   ------------------------
-   -- Assert_Files_Equal --
-   ------------------------
+   -------------------------------------------------------------------------
 
    function Assert_Files_Equal
      (Filename1 : String;

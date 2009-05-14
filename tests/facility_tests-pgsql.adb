@@ -29,9 +29,7 @@ with Alog.Facilities.Pgsql;
 
 package body Facility_Tests.PGSQL is
 
-   ----------------------------
-   -- Disable_Write_Loglevel --
-   ----------------------------
+   -------------------------------------------------------------------------
 
    procedure Disable_Write_Loglevel is
       F     : Alog.Facilities.Pgsql.Instance;
@@ -45,9 +43,7 @@ package body Facility_Tests.PGSQL is
               Message   => "unable to set to " & Boolean'Image (not State));
    end Disable_Write_Loglevel;
 
-   -----------------------------
-   -- Disable_Write_Timestamp --
-   -----------------------------
+   -------------------------------------------------------------------------
 
    procedure Disable_Write_Timestamp is
       F     : Alog.Facilities.Pgsql.Instance;
@@ -61,9 +57,7 @@ package body Facility_Tests.PGSQL is
               Message   => "unable to set to " & Boolean'Image (not State));
    end Disable_Write_Timestamp;
 
-   ----------------------
-   -- Enable_SQL_Trace --
-   ----------------------
+   -------------------------------------------------------------------------
 
    procedure Enable_SQL_Trace is
       F     : Alog.Facilities.Pgsql.Instance;
@@ -77,9 +71,7 @@ package body Facility_Tests.PGSQL is
               Message   => "unable to set to " & Boolean'Image (not State));
    end Enable_SQL_Trace;
 
-   ----------------
-   -- Initialize --
-   ----------------
+   -------------------------------------------------------------------------
 
    procedure Initialize (T : in out F_Test) is
    begin
@@ -112,9 +104,7 @@ package body Facility_Tests.PGSQL is
         (T, Write_Message'Access, "log a message to PGSQL database");
    end Initialize;
 
-   ---------------------
-   -- Set_Credentials --
-   ---------------------
+   -------------------------------------------------------------------------
 
    procedure Set_Credentials is
       F : Alog.Facilities.Pgsql.Instance;
@@ -127,9 +117,7 @@ package body Facility_Tests.PGSQL is
               Message   => "non matching username");
    end Set_Credentials;
 
-   -----------------
-   -- Set_DB_Name --
-   -----------------
+   -------------------------------------------------------------------------
 
    procedure Set_DB_Name is
       F : Alog.Facilities.Pgsql.Instance;
@@ -140,9 +128,7 @@ package body Facility_Tests.PGSQL is
               Message   => "non matching database name");
    end Set_DB_Name;
 
-   ----------------------
-   -- Set_Host_Address --
-   ----------------------
+   -------------------------------------------------------------------------
 
    procedure Set_Host_Address is
       F : Alog.Facilities.Pgsql.Instance;
@@ -151,9 +137,7 @@ package body Facility_Tests.PGSQL is
       F.Set_Host_Address (Host_Address);
    end Set_Host_Address;
 
-   -------------------
-   -- Set_Host_Name --
-   -------------------
+   -------------------------------------------------------------------------
 
    procedure Set_Host_Name is
       F : Alog.Facilities.Pgsql.Instance;
@@ -164,9 +148,7 @@ package body Facility_Tests.PGSQL is
               Message   => "non matching hostname");
    end Set_Host_Name;
 
-   -------------------
-   -- Set_Host_Port --
-   -------------------
+   -------------------------------------------------------------------------
 
    procedure Set_Host_Port is
       F : Alog.Facilities.Pgsql.Instance;
@@ -177,9 +159,7 @@ package body Facility_Tests.PGSQL is
               Message   => "non matching host port");
    end Set_Host_Port;
 
-   ---------------------------
-   -- Set_Level_Column_Name --
-   ---------------------------
+   -------------------------------------------------------------------------
 
    procedure Set_Level_Column_Name is
       F : Alog.Facilities.Pgsql.Instance;
@@ -190,9 +170,7 @@ package body Facility_Tests.PGSQL is
               Message   => "non matching level column name");
    end Set_Level_Column_Name;
 
-   -----------------------------
-   -- Set_Message_Column_Name --
-   -----------------------------
+   -------------------------------------------------------------------------
 
    procedure Set_Message_Column_Name is
       F : Alog.Facilities.Pgsql.Instance;
@@ -204,9 +182,7 @@ package body Facility_Tests.PGSQL is
               Message   => "non matching message column name");
    end Set_Message_Column_Name;
 
-   --------------------
-   -- Set_Table_Name --
-   --------------------
+   -------------------------------------------------------------------------
 
    procedure Set_Table_Name is
       F : Alog.Facilities.Pgsql.Instance;
@@ -217,9 +193,7 @@ package body Facility_Tests.PGSQL is
               Message   => "non matching table name");
    end Set_Table_Name;
 
-   -------------------------------
-   -- Set_Timestamp_Column_Name --
-   -------------------------------
+   -------------------------------------------------------------------------
 
    procedure Set_Timestamp_Column_Name is
       F : Alog.Facilities.Pgsql.Instance;
@@ -231,9 +205,7 @@ package body Facility_Tests.PGSQL is
               Message   => "non matching timestamp column name");
    end Set_Timestamp_Column_Name;
 
-   -------------------
-   -- Write_Message --
-   -------------------
+   -------------------------------------------------------------------------
 
    procedure Write_Message is
       F : Alog.Facilities.Pgsql.Instance;

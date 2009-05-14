@@ -25,9 +25,7 @@ with Alog.Transforms.Casing;
 
 package body Transform_Tests is
 
-   ----------------
-   -- Initialize --
-   ----------------
+   -------------------------------------------------------------------------
 
    procedure Initialize (T : in out T_Test) is
    begin
@@ -36,9 +34,7 @@ package body Transform_Tests is
         (T, Set_Name'Access, "set transform name");
    end Initialize;
 
-   --------------
-   -- Set_Name --
-   --------------
+   -------------------------------------------------------------------------
 
    procedure Set_Name is
       T        : Alog.Transforms.Casing.Instance;

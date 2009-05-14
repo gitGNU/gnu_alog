@@ -25,9 +25,7 @@ with Ada.IO_Exceptions;
 
 package body Alog.Facilities.File_Descriptor is
 
-   -------------------
-   -- Close_Logfile --
-   -------------------
+   -------------------------------------------------------------------------
 
    procedure Close_Logfile (Facility : in out Instance;
                             Remove   :        Boolean := False)
@@ -46,36 +44,28 @@ package body Alog.Facilities.File_Descriptor is
       end if;
    end Close_Logfile;
 
-   -----------------
-   -- Get_Logfile --
-   -----------------
+   -------------------------------------------------------------------------
 
    function Get_Logfile (Facility : Instance) return Text_IO.File_Access is
    begin
       return Facility.Log_File_Ptr;
    end Get_Logfile;
 
-   -----------------------
-   -- Is_Write_Loglevel --
-   -----------------------
+   -------------------------------------------------------------------------
 
    function Is_Write_Loglevel (Facility : Instance) return Boolean is
    begin
       return Facility.Write_Loglevel;
    end Is_Write_Loglevel;
 
-   ------------------------
-   -- Is_Write_Timestamp --
-   ------------------------
+   -------------------------------------------------------------------------
 
    function Is_Write_Timestamp (Facility : Instance) return Boolean is
    begin
       return Facility.Write_Timestamp;
    end Is_Write_Timestamp;
 
-   -----------------
-   -- Set_Logfile --
-   -----------------
+   -------------------------------------------------------------------------
 
    procedure Set_Logfile (Facility : in out Instance; Path : String) is
       use Ada.IO_Exceptions;
@@ -105,9 +95,7 @@ package body Alog.Facilities.File_Descriptor is
 
    end Set_Logfile;
 
-   -----------
-   -- Setup --
-   -----------
+   -------------------------------------------------------------------------
 
    procedure Setup (Facility : in out Instance) is
       pragma Unreferenced (Facility);
@@ -116,9 +104,7 @@ package body Alog.Facilities.File_Descriptor is
       null;
    end Setup;
 
-   --------------
-   -- Teardown --
-   --------------
+   -------------------------------------------------------------------------
 
    procedure Teardown (Facility : in out Instance) is
    begin
@@ -126,9 +112,7 @@ package body Alog.Facilities.File_Descriptor is
       Facility.Close_Logfile;
    end Teardown;
 
-   ---------------------------
-   -- Toggle_Write_Loglevel --
-   ---------------------------
+   -------------------------------------------------------------------------
 
    procedure Toggle_Write_Loglevel (Facility : in out Instance;
                                     Set      :        Boolean)
@@ -137,9 +121,7 @@ package body Alog.Facilities.File_Descriptor is
       Facility.Write_Loglevel := Set;
    end Toggle_Write_Loglevel;
 
-   ----------------------------
-   -- Toggle_Write_Timestamp --
-   ----------------------------
+   -------------------------------------------------------------------------
 
    procedure Toggle_Write_Timestamp (Facility : in out Instance;
                                      Set      :        Boolean)
@@ -148,9 +130,7 @@ package body Alog.Facilities.File_Descriptor is
       Facility.Write_Timestamp := Set;
    end Toggle_Write_Timestamp;
 
-   -------------------
-   -- Write_Message --
-   -------------------
+   -------------------------------------------------------------------------
 
    procedure Write_Message (Facility : Instance;
                             Level    : Log_Level := INFO;

@@ -34,9 +34,7 @@ with Alog.Facilities.File_Descriptor;
 
 package body Facility_Tests.FD is
 
-   -------------------------------
-   -- Disable_Write_Loglevel_Fd --
-   -------------------------------
+   -------------------------------------------------------------------------
 
    procedure Disable_Write_Loglevel_Fd is
       F : File_Descriptor.Instance;
@@ -58,9 +56,7 @@ package body Facility_Tests.FD is
       F.Teardown;
    end Disable_Write_Loglevel_Fd;
 
-   --------------------------------
-   -- Disable_Write_Timestamp_Fd --
-   --------------------------------
+   -------------------------------------------------------------------------
 
    procedure Disable_Write_Timestamp_Fd is
       F : File_Descriptor.Instance;
@@ -82,9 +78,7 @@ package body Facility_Tests.FD is
       F.Teardown;
    end Disable_Write_Timestamp_Fd;
 
-   --------------
-   -- Finalize --
-   --------------
+   -------------------------------------------------------------------------
 
    procedure Finalize (T : in out F_Test) is
       use Ada.Text_IO;
@@ -122,9 +116,7 @@ package body Facility_Tests.FD is
          Put_Line (Ada.Exceptions.Exception_Message (Event));
    end Finalize;
 
-   ----------------
-   -- Initialize --
-   ----------------
+   -------------------------------------------------------------------------
 
    procedure Initialize (T : in out F_Test) is
    begin
@@ -147,9 +139,7 @@ package body Facility_Tests.FD is
         (T, Set_Threshold_Fd'Access, "set fd threshold");
    end Initialize;
 
-   ----------------------------
-   -- Set_Invalid_Logfile_Fd --
-   ----------------------------
+   -------------------------------------------------------------------------
 
    procedure Set_Invalid_Logfile_Fd is
       use Ada.IO_Exceptions;
@@ -164,9 +154,7 @@ package body Facility_Tests.FD is
                  Message   => "expected exception occured!");
    end Set_Invalid_Logfile_Fd;
 
-   ----------------------
-   -- Set_Threshold_Fd --
-   ----------------------
+   -------------------------------------------------------------------------
 
    procedure Set_Threshold_Fd is
       F : File_Descriptor.Instance;
@@ -192,9 +180,7 @@ package body Facility_Tests.FD is
       F.Teardown;
    end Set_Threshold_Fd;
 
-   --------------------------
-   -- Set_Valid_Logfile_Fd --
-   --------------------------
+   -------------------------------------------------------------------------
 
    procedure Set_Valid_Logfile_Fd is
       use Ada.Text_IO;
@@ -206,9 +192,7 @@ package body Facility_Tests.FD is
       F.Close_Logfile (Remove => True);
    end Set_Valid_Logfile_Fd;
 
-   -----------------
-   -- Teardown_Fd --
-   -----------------
+   -------------------------------------------------------------------------
 
    procedure Teardown_Fd is
       use Ada.Text_IO;
@@ -222,9 +206,7 @@ package body Facility_Tests.FD is
               Message   => "logfile still open!");
    end Teardown_Fd;
 
-   -----------------------
-   -- Trim_Loglevels_Fd --
-   -----------------------
+   -------------------------------------------------------------------------
 
    procedure Trim_Loglevels_Fd is
       F : File_Descriptor.Instance;
@@ -246,9 +228,7 @@ package body Facility_Tests.FD is
       F.Teardown;
    end Trim_Loglevels_Fd;
 
-   ----------------------
-   -- Write_Message_Fd --
-   ----------------------
+   -------------------------------------------------------------------------
 
    procedure Write_Message_Fd is
       F        : File_Descriptor.Instance;

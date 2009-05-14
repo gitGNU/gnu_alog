@@ -25,9 +25,7 @@ with Interfaces.C.Strings;
 
 package body Alog.Facilities.Syslog is
 
-   -----------
-   -- Setup --
-   -----------
+   -------------------------------------------------------------------------
 
    procedure Setup (Facility : in out Instance) is
       pragma Unreferenced (Facility);
@@ -36,9 +34,7 @@ package body Alog.Facilities.Syslog is
       null;
    end Setup;
 
-   --------------
-   -- Teardown --
-   --------------
+   -------------------------------------------------------------------------
 
    procedure Teardown (Facility : in out Instance) is
       pragma Unreferenced (Facility);
@@ -47,9 +43,7 @@ package body Alog.Facilities.Syslog is
       null;
    end Teardown;
 
-   -------------------
-   -- Write_Message --
-   -------------------
+   -------------------------------------------------------------------------
 
    procedure Write_Message (Facility : Instance;
                             Level    : Log_Level := INFO;

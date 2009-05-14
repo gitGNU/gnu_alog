@@ -24,9 +24,7 @@ with AWS.SMTP.Client;
 
 package body Alog.Facilities.SMTP is
 
-   --------------------
-   -- Format_Message --
-   --------------------
+   -------------------------------------------------------------------------
 
    function Format_Message (Facility : Instance;
                             Level    : Log_Level;
@@ -47,18 +45,14 @@ package body Alog.Facilities.SMTP is
       return Message;
    end Format_Message;
 
-   ----------------
-   -- Get_Header --
-   ----------------
+   -------------------------------------------------------------------------
 
    function Get_Header (Facility : Instance) return String is
    begin
       return To_String (Facility.Header);
    end Get_Header;
 
-   ----------------
-   -- Set_Header --
-   ----------------
+   -------------------------------------------------------------------------
 
    procedure Set_Header (Facility : in out Instance;
                          Header   :        String)
@@ -67,9 +61,7 @@ package body Alog.Facilities.SMTP is
       Facility.Header := To_Unbounded_String (Header);
    end Set_Header;
 
-   -------------------
-   -- Set_Recipient --
-   -------------------
+   -------------------------------------------------------------------------
 
    procedure Set_Recipient (Facility : in out Instance;
                             Name     :        String;
@@ -81,9 +73,7 @@ package body Alog.Facilities.SMTP is
       Facility.Is_Recipient := True;
    end Set_Recipient;
 
-   ----------------
-   -- Set_Server --
-   ----------------
+   -------------------------------------------------------------------------
 
    procedure Set_Server (Facility : in out Instance;
                          Name     :        String)
@@ -93,9 +83,7 @@ package body Alog.Facilities.SMTP is
       Facility.Is_Server := True;
    end Set_Server;
 
-   -----------
-   -- Setup --
-   -----------
+   -------------------------------------------------------------------------
 
    procedure Setup (Facility : in out Instance) is
       pragma Unreferenced (Facility);
@@ -104,9 +92,7 @@ package body Alog.Facilities.SMTP is
       null;
    end Setup;
 
-   --------------
-   -- Teardown --
-   --------------
+   -------------------------------------------------------------------------
 
    procedure Teardown (Facility : in out Instance) is
       pragma Unreferenced (Facility);
@@ -115,9 +101,7 @@ package body Alog.Facilities.SMTP is
       null;
    end Teardown;
 
-   -------------------
-   -- Write_Message --
-   -------------------
+   -------------------------------------------------------------------------
 
    procedure Write_Message (Facility : Instance;
                             Level    : Log_Level := INFO;

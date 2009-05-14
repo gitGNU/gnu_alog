@@ -36,9 +36,7 @@ package body Logger_Tests is
    use Ahven;
    use Alog;
 
-   ---------------------
-   -- Attach_Facility --
-   ---------------------
+   -------------------------------------------------------------------------
 
    procedure Attach_Facility is
       Log      : Logger.Instance;
@@ -50,9 +48,7 @@ package body Logger_Tests is
               Message => "could not attach facility");
    end Attach_Facility;
 
-   ----------------------
-   -- Attach_Transform --
-   ----------------------
+   -------------------------------------------------------------------------
 
    procedure Attach_Transform is
       Log       : Logger.Instance;
@@ -63,9 +59,7 @@ package body Logger_Tests is
               Message => "could not attach transform");
    end Attach_Transform;
 
-   --------------------
-   -- Clear_A_Logger --
-   --------------------
+   -------------------------------------------------------------------------
 
    procedure Clear_A_Logger is
       Log       : Logger.Instance;
@@ -90,9 +84,7 @@ package body Logger_Tests is
               Message   => "transform count is not 0");
    end Clear_A_Logger;
 
-   ------------------------------
-   -- Detach_Facility_Instance --
-   ------------------------------
+   -------------------------------------------------------------------------
 
    procedure Detach_Facility_Instance is
       Log      : Logger.Instance;
@@ -108,9 +100,7 @@ package body Logger_Tests is
               Message   => "could not detach");
    end Detach_Facility_Instance;
 
-   --------------------------------
-   -- Detach_Facility_Unattached --
-   --------------------------------
+   -------------------------------------------------------------------------
 
    procedure Detach_Facility_Unattached is
       Log      : Logger.Instance;
@@ -128,9 +118,7 @@ package body Logger_Tests is
          --  Test passed.
    end Detach_Facility_Unattached;
 
-   -------------------------------
-   -- Detach_Transform_Instance --
-   -------------------------------
+   -------------------------------------------------------------------------
 
    procedure Detach_Transform_Instance is
       Log       : Logger.Instance;
@@ -145,9 +133,7 @@ package body Logger_Tests is
               Message   => "could not detach");
    end Detach_Transform_Instance;
 
-   ---------------------------------
-   -- Detach_Transform_Unattached --
-   ---------------------------------
+   -------------------------------------------------------------------------
 
    procedure Detach_Transform_Unattached is
       Log      : Logger.Instance;
@@ -165,9 +151,7 @@ package body Logger_Tests is
          --  Test passed.
    end Detach_Transform_Unattached;
 
-   --------------
-   -- Finalize --
-   --------------
+   -------------------------------------------------------------------------
 
    procedure Finalize (T : in out L_Test) is
 
@@ -196,9 +180,7 @@ package body Logger_Tests is
       Finalize (Test_Case (T));
    end Finalize;
 
-   ----------------
-   -- Initialize --
-   ----------------
+   -------------------------------------------------------------------------
 
    procedure Initialize (T : in out L_Test) is
    begin
@@ -238,9 +220,7 @@ package body Logger_Tests is
          "log with tasked logger");
    end Initialize;
 
-   ------------------------------------
-   -- Log_FD_Facility_with_Transform --
-   ------------------------------------
+   -------------------------------------------------------------------------
 
    procedure Log_FD_Facility_with_Transform is
       Log       : Logger.Instance;
@@ -279,9 +259,7 @@ package body Logger_Tests is
               Message   => "files not equal");
    end Log_FD_Facility_with_Transform;
 
-   --------------------------------
-   -- Log_Multiple_FD_Facilities --
-   --------------------------------
+   -------------------------------------------------------------------------
 
    procedure Log_Multiple_FD_Facilities is
       Log       : Logger.Instance;
@@ -342,9 +320,7 @@ package body Logger_Tests is
               Message   => "file2 not equal");
    end Log_Multiple_FD_Facilities;
 
-   -------------------------
-   -- Log_One_FD_Facility --
-   -------------------------
+   -------------------------------------------------------------------------
 
    procedure Log_One_FD_Facility is
       Log      : Logger.Instance;
@@ -372,9 +348,7 @@ package body Logger_Tests is
               Message   => "files not equal");
    end Log_One_FD_Facility;
 
-   --------------------------------
-   -- Log_One_Tasked_FD_Facility --
-   --------------------------------
+   -------------------------------------------------------------------------
 
    procedure Log_One_Tasked_FD_Facility is
       Log          : Logger.Tasking.Instance;

@@ -29,6 +29,8 @@ package body Alog.Logger.Tasking is
 
    use Ada.Strings.Unbounded;
 
+   -------------------------------------------------------------------------
+
    task body Instance is
       Logsink         : Logger.Instance;
       Current_Handle  : Facilities.Handle;
@@ -37,24 +39,39 @@ package body Alog.Logger.Tasking is
    begin
       loop
          select
+
+            ----------------------------------------------------------------
+
             accept Attach_Facility (Facility : Facilities.Handle) do
                Current_Handle := Facility;
             end Attach_Facility;
             Logsink.Attach_Facility (Facility => Current_Handle);
          or
+
+            ----------------------------------------------------------------
+
             accept Detach_Facility (Facility : Facilities.Handle) do
                Current_Handle := Facility;
             end Detach_Facility;
             Logsink.Detach_Facility (Facility => Current_Handle);
          or
+
+            ----------------------------------------------------------------
+
             accept Facility_Count (Count : out Natural) do
                Count := Logsink.Facility_Count;
             end Facility_Count;
          or
+
+            ----------------------------------------------------------------
+
             accept Clear do
                Logsink.Clear;
             end Clear;
          or
+
+            ----------------------------------------------------------------
+
             accept Log_Message
               (Level : Log_Level;
                Msg   : String)

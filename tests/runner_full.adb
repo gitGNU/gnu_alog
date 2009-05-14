@@ -39,7 +39,6 @@ procedure Runner_Full is
    pragma Linker_Options ("-laws");
    pragma Linker_Options ("-lapq");
 begin
-   --  Facility tests
    Ahven.Framework.Add_Test (Suite => S.all,
                              T     => new Facility_Tests.F_Test);
    Ahven.Framework.Add_Test (Suite => S.all,

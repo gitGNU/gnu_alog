@@ -23,45 +23,35 @@
 
 package body Alog.Facilities.Pgsql is
 
-   ----------------------
-   -- Close_Connection --
-   ----------------------
+   -------------------------------------------------------------------------
 
    procedure Close_Connection (Facility : in out Instance) is
    begin
       Facility.Log_Connection.Reset;
    end Close_Connection;
 
-   ---------------------
-   -- Get_Credentials --
-   ---------------------
+   -------------------------------------------------------------------------
 
    function Get_Credentials (Facility : Instance) return String is
    begin
       return Facility.Log_Connection.User;
    end Get_Credentials;
 
-   -----------------
-   -- Get_DB_Name --
-   -----------------
+   -------------------------------------------------------------------------
 
    function Get_DB_Name (Facility : Instance) return String is
    begin
       return Facility.Log_Connection.DB_Name;
    end Get_DB_Name;
 
-   -------------------
-   -- Get_Host_Name --
-   -------------------
+   -------------------------------------------------------------------------
 
    function Get_Host_Name (Facility : Instance) return String is
    begin
       return Facility.Log_Connection.Host_Name;
    end Get_Host_Name;
 
-   -------------------
-   -- Get_Host_Port --
-   -------------------
+   -------------------------------------------------------------------------
 
    function Get_Host_Port (Facility : Instance) return Natural is
       Port : constant Natural := Facility.Log_Connection.Port;
@@ -69,72 +59,56 @@ package body Alog.Facilities.Pgsql is
       return Port;
    end Get_Host_Port;
 
-   ---------------------------
-   -- Get_Level_Column_Name --
-   ---------------------------
+   -------------------------------------------------------------------------
 
    function Get_Level_Column_Name (Facility : Instance) return String is
    begin
       return To_String (Facility.Log_Table.Level_Column);
    end Get_Level_Column_Name;
 
-   -----------------------------
-   -- Get_Message_Column_Name --
-   -----------------------------
+   -------------------------------------------------------------------------
 
    function Get_Message_Column_Name (Facility : Instance) return String is
    begin
       return To_String (Facility.Log_Table.Message_Column);
    end Get_Message_Column_Name;
 
-   --------------------
-   -- Get_Table_Name --
-   --------------------
+   -------------------------------------------------------------------------
 
    function Get_Table_Name (Facility : Instance) return String is
    begin
       return To_String (Facility.Log_Table.Name);
    end Get_Table_Name;
 
-   -------------------------------
-   -- Get_Timestamp_Column_Name --
-   -------------------------------
+   -------------------------------------------------------------------------
 
    function Get_Timestamp_Column_Name (Facility : Instance) return String is
    begin
       return To_String (Facility.Log_Table.Timestamp_Column);
    end Get_Timestamp_Column_Name;
 
-   ------------------
-   -- Is_SQL_Trace --
-   ------------------
+   -------------------------------------------------------------------------
 
    function Is_SQL_Trace (Facility : Instance) return Boolean is
    begin
       return Facility.Log_Connection.Is_Trace;
    end Is_SQL_Trace;
 
-   -----------------------
-   -- Is_Write_Loglevel --
-   -----------------------
+   -------------------------------------------------------------------------
 
    function Is_Write_Loglevel (Facility : Instance) return Boolean is
    begin
       return Facility.Write_Loglevel;
    end Is_Write_Loglevel;
 
-   ------------------------
-   -- Is_Write_Timestamp --
-   ------------------------
+   -------------------------------------------------------------------------
 
    function Is_Write_Timestamp (Facility : Instance) return Boolean is
    begin
       return Facility.Write_Timestamp;
    end Is_Write_Timestamp;
 
-   ---------------------
-   -- Set_Credentials --
-   ---------------------
+   -------------------------------------------------------------------------
 
    procedure Set_Credentials (Facility : in out Instance;
                               Username : String;
@@ -145,18 +119,14 @@ package body Alog.Facilities.Pgsql is
                                                  User_Password => Password);
    end Set_Credentials;
 
-   -----------------
-   -- Set_DB_Name --
-   -----------------
+   -------------------------------------------------------------------------
 
    procedure Set_DB_Name (Facility : in out Instance; DB_Name : String) is
    begin
       Facility.Log_Connection.Set_DB_Name (DB_Name => DB_Name);
    end Set_DB_Name;
 
-   ----------------------
-   -- Set_Host_Address --
-   ----------------------
+   -------------------------------------------------------------------------
 
    procedure Set_Host_Address (Facility : in out Instance;
                                Address  : String)
@@ -165,27 +135,21 @@ package body Alog.Facilities.Pgsql is
       Facility.Log_Connection.Set_Host_Address (Address);
    end Set_Host_Address;
 
-   -------------------
-   -- Set_Host_Name --
-   -------------------
+   -------------------------------------------------------------------------
 
    procedure Set_Host_Name (Facility : in out Instance; Hostname : String) is
    begin
       Facility.Log_Connection.Set_Host_Name (Hostname);
    end Set_Host_Name;
 
-   -------------------
-   -- Set_Host_Port --
-   -------------------
+   -------------------------------------------------------------------------
 
    procedure Set_Host_Port (Facility : in out Instance; Port : Natural) is
    begin
       Facility.Log_Connection.Set_Port (Port);
    end Set_Host_Port;
 
-   ---------------------------
-   -- Set_Level_Column_Name --
-   ---------------------------
+   -------------------------------------------------------------------------
 
    procedure Set_Level_Column_Name (Facility          : in out Instance;
                                     Column_Name : String) is
@@ -194,9 +158,7 @@ package body Alog.Facilities.Pgsql is
         To_Unbounded_String (Column_Name);
    end Set_Level_Column_Name;
 
-   -----------------------------
-   -- Set_Message_Column_Name --
-   -----------------------------
+   -------------------------------------------------------------------------
 
    procedure Set_Message_Column_Name (Facility    : in out Instance;
                                       Column_Name : String) is
@@ -205,9 +167,7 @@ package body Alog.Facilities.Pgsql is
         To_Unbounded_String (Column_Name);
    end Set_Message_Column_Name;
 
-   -------------------
-   -- Set_SQL_Trace --
-   -------------------
+   -------------------------------------------------------------------------
 
    procedure Set_SQL_Trace (Facility : in out Instance;
                             Filename :        String;
@@ -218,9 +178,7 @@ package body Alog.Facilities.Pgsql is
       Facility.Trace_Mode := Mode;
    end Set_SQL_Trace;
 
-   --------------------
-   -- Set_Table_Name --
-   --------------------
+   -------------------------------------------------------------------------
 
    procedure Set_Table_Name (Facility   : in out Instance;
                              Table_Name :        String)
@@ -229,9 +187,7 @@ package body Alog.Facilities.Pgsql is
       Facility.Log_Table.Name := To_Unbounded_String (Table_Name);
    end Set_Table_Name;
 
-   -------------------------------
-   -- Set_Timestamp_Column_Name --
-   -------------------------------
+   -------------------------------------------------------------------------
 
    procedure Set_Timestamp_Column_Name (Facility    : in out Instance;
                                         Column_Name :        String)
@@ -241,18 +197,14 @@ package body Alog.Facilities.Pgsql is
         To_Unbounded_String (Column_Name);
    end Set_Timestamp_Column_Name;
 
-   -----------
-   -- Setup --
-   -----------
+   -------------------------------------------------------------------------
 
    procedure Setup (Facility : in out Instance) is
    begin
       Facility.Log_Connection.Set_Trace (False);
    end Setup;
 
-   --------------
-   -- Teardown --
-   --------------
+   -------------------------------------------------------------------------
 
    procedure Teardown (Facility : in out Instance) is
    begin
@@ -260,9 +212,7 @@ package body Alog.Facilities.Pgsql is
       Facility.Close_Connection;
    end Teardown;
 
-   ----------------------
-   -- Toggle_SQL_Trace --
-   ----------------------
+   -------------------------------------------------------------------------
 
    procedure Toggle_SQL_Trace (Facility : in out Instance;
                                Set      :        Boolean)
@@ -271,9 +221,7 @@ package body Alog.Facilities.Pgsql is
       Facility.Log_Connection.Set_Trace (Set);
    end Toggle_SQL_Trace;
 
-   ---------------------------
-   -- Toggle_Write_Loglevel --
-   ---------------------------
+   -------------------------------------------------------------------------
 
    procedure Toggle_Write_Loglevel (Facility : in out Instance;
                                     Set      :        Boolean)
@@ -282,9 +230,7 @@ package body Alog.Facilities.Pgsql is
       Facility.Write_Loglevel := Set;
    end Toggle_Write_Loglevel;
 
-   ----------------------------
-   -- Toggle_Write_Timestamp --
-   ----------------------------
+   -------------------------------------------------------------------------
 
    procedure Toggle_Write_Timestamp (Facility : in out Instance;
                                      Set      :        Boolean)
@@ -293,9 +239,7 @@ package body Alog.Facilities.Pgsql is
       Facility.Write_Timestamp := Set;
    end Toggle_Write_Timestamp;
 
-   -------------------
-   -- Write_Message --
-   -------------------
+   -------------------------------------------------------------------------
 
    procedure Write_Message (Facility : Instance;
                             Level    : Log_Level := INFO;

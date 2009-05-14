@@ -34,7 +34,6 @@ procedure Runner_Base is
      Ahven.Framework.Create_Suite (Suite_Name => "Alog base tests");
    pragma Linker_Options ("-lahven");
 begin
-   --  Facility tests
    Ahven.Framework.Add_Test (Suite => S.all,
                              T     => new Facility_Tests.F_Test);
    Ahven.Framework.Add_Test (Suite => S.all,

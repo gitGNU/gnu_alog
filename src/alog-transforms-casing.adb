@@ -25,18 +25,14 @@ with Ada.Characters.Handling;
 
 package body Alog.Transforms.Casing is
 
-   --------------
-   -- Set_Mode --
-   --------------
+   -------------------------------------------------------------------------
 
    procedure Set_Mode (Transform : in out Instance; Mode : Operation_Mode) is
    begin
       Transform.Mode := Mode;
    end Set_Mode;
 
-   -----------
-   -- Setup --
-   -----------
+   -------------------------------------------------------------------------
 
    procedure Setup (Transform : in out Instance) is
       pragma Unreferenced (Transform);
@@ -44,9 +40,7 @@ package body Alog.Transforms.Casing is
       null;
    end Setup;
 
-   --------------
-   -- Teardown --
-   --------------
+   -------------------------------------------------------------------------
 
    procedure Teardown (Transform : in out Instance) is
       pragma Unreferenced (Transform);
@@ -54,9 +48,7 @@ package body Alog.Transforms.Casing is
       null;
    end Teardown;
 
-   -----------------------
-   -- Transform_Message --
-   -----------------------
+   -------------------------------------------------------------------------
 
    function Transform_Message (Transform : Instance;
                                Level     : Log_Level := INFO;

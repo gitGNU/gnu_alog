@@ -30,9 +30,7 @@ package body Transform_Tests.Casing is
    use Alog;
    use Ada.Strings.Unbounded;
 
-   ----------------
-   -- Initialize --
-   ----------------
+   -------------------------------------------------------------------------
 
    procedure Initialize (T : in out T_Test) is
    begin
@@ -45,9 +43,7 @@ package body Transform_Tests.Casing is
          "transform a message to uppercase");
    end Initialize;
 
-   ---------------------------------
-   -- Transform_Message_Lowercase --
-   ---------------------------------
+   -------------------------------------------------------------------------
 
    procedure Transform_Message_Lowercase is
       T       : Alog.Transforms.Casing.Instance;
@@ -65,9 +61,7 @@ package body Transform_Tests.Casing is
       T.Teardown;
    end Transform_Message_Lowercase;
 
-   ---------------------------------
-   -- Transform_Message_Uppercase --
-   ---------------------------------
+   -------------------------------------------------------------------------
 
    procedure Transform_Message_Uppercase is
       T       : Alog.Transforms.Casing.Instance;

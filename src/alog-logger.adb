@@ -23,9 +23,7 @@
 
 package body Alog.Logger is
 
-   ----------------------
-   --  Attach_Facility --
-   ----------------------
+   -------------------------------------------------------------------------
 
    procedure Attach_Facility (Logger   : in out Alog.Logger.Instance;
                               Facility :        Alog.Facilities.Handle)
@@ -34,9 +32,7 @@ package body Alog.Logger is
       Logger.F_Stack.Insert (New_Item => Facility);
    end Attach_Facility;
 
-   ----------------------
-   -- Attach_Transform --
-   ----------------------
+   -------------------------------------------------------------------------
 
    procedure Attach_Transform (Logger    : in out Instance;
                                Transform :        Alog.Transforms.Handle)
@@ -45,18 +41,14 @@ package body Alog.Logger is
       Logger.T_Stack.Insert (New_Item => Transform);
    end Attach_Transform;
 
-   ------------
-   --  Clear --
-   ------------
+   -------------------------------------------------------------------------
 
    procedure Clear (L : in out Instance) is
    begin
       L.Finalize;
    end Clear;
 
-   ----------------------
-   --  Detach_Facility --
-   ----------------------
+   -------------------------------------------------------------------------
 
    procedure Detach_Facility (Logger   : in out Instance;
                               Facility :        Alog.Facilities.Handle)
@@ -78,9 +70,7 @@ package body Alog.Logger is
          raise Facility_Not_Found;
    end Detach_Facility;
 
-   ----------------------
-   -- Detach_Transform --
-   ----------------------
+   -------------------------------------------------------------------------
 
    procedure Detach_Transform (Logger    : in out Instance;
                                Transform :        Alog.Transforms.Handle)
@@ -102,18 +92,14 @@ package body Alog.Logger is
          raise Transform_Not_Found;
    end Detach_Transform;
 
-   ---------------------
-   --  Facility_Count --
-   ---------------------
+   -------------------------------------------------------------------------
 
    function Facility_Count (Logger : Instance) return Natural is
    begin
       return Natural (Logger.F_Stack.Length);
    end Facility_Count;
 
-   ---------------
-   --  Finalize --
-   ---------------
+   -------------------------------------------------------------------------
 
    procedure Finalize (Logger : in out Instance) is
 
@@ -152,9 +138,7 @@ package body Alog.Logger is
       Logger.T_Stack.Clear;
    end Finalize;
 
-   ------------------
-   --  Log_Message --
-   ------------------
+   -------------------------------------------------------------------------
 
    procedure Log_Message (Logger : Instance;
                           Level  : Log_Level;
@@ -188,9 +172,7 @@ package body Alog.Logger is
       end loop;
    end Log_Message;
 
-   ---------------------
-   -- Transform_Count --
-   ---------------------
+   -------------------------------------------------------------------------
 
    function Transform_Count (Logger : Instance) return Natural is
    begin
