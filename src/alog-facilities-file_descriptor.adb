@@ -46,7 +46,8 @@ package body Alog.Facilities.File_Descriptor is
 
    -------------------------------------------------------------------------
 
-   function Get_Logfile (Facility : Instance) return Text_IO.File_Access is
+   function Get_Logfile (Facility : Instance) return Ada.Text_IO.File_Access
+   is
    begin
       return Facility.Log_File_Ptr;
    end Get_Logfile;
@@ -72,10 +73,10 @@ package body Alog.Facilities.File_Descriptor is
    begin
       --  Somehow it's not possible to use Create() with Append_File,
       --  the file always gets truncated.
-      if not Text_IO.Is_Open (File => Facility.Log_File) then
-         Text_IO.Open (File => Facility.Log_File,
-                       Name => Path,
-                       Mode => Text_IO.Append_File);
+      if not Ada.Text_IO.Is_Open (File => Facility.Log_File) then
+         Ada.Text_IO.Open (File => Facility.Log_File,
+                           Name => Path,
+                           Mode => Ada.Text_IO.Append_File);
       end if;
 
       Facility.Log_File_Name := To_Bounded_String (Path);
@@ -88,9 +89,9 @@ package body Alog.Facilities.File_Descriptor is
    exception
       when Name_Error =>
          --  Create file and re-call Set_Logfile.
-         Text_IO.Create (File => Facility.Log_File,
-                         Mode => Text_IO.Append_File,
-                         Name => Path);
+         Ada.Text_IO.Create (File => Facility.Log_File,
+                             Mode => Ada.Text_IO.Append_File,
+                             Name => Path);
          Facility.Set_Logfile (Path => Path);
 
    end Set_Logfile;
@@ -136,22 +137,22 @@ package body Alog.Facilities.File_Descriptor is
                             Level    : Log_Level := INFO;
                             Msg      : String)
    is
-      Logfile   : Text_IO.File_Type renames Facility.Log_File_Ptr.all;
+      Logfile   : Ada.Text_IO.File_Type renames Facility.Log_File_Ptr.all;
       Timestamp : constant String := Facility.Get_Timestamp;
    begin
       if Level <= Facility.Get_Threshold then
          if Facility.Is_Write_Timestamp then
-            Text_IO.Put (File  => Logfile,
-                         Item  => Timestamp & " ");
+            Ada.Text_IO.Put (File => Logfile,
+                             Item => Timestamp & " ");
          end if;
          if Facility.Is_Write_Loglevel then
-            Text_IO.Put (File  => Logfile,
-                         Item  => "[" & Log_Level'Image (Level) & "] ");
+            Ada.Text_IO.Put (File => Logfile,
+                             Item => "[" & Log_Level'Image (Level) & "] ");
          end if;
-         Text_IO.Put (File  => Logfile,
-                      Item  => Msg);
+         Ada.Text_IO.Put (File => Logfile,
+                          Item => Msg);
 
-         Text_IO.New_Line (File => Logfile);
+         Ada.Text_IO.New_Line (File => Logfile);
       end if;
    end Write_Message;
 

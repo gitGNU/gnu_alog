@@ -23,11 +23,8 @@
 
 with Ada.Text_IO;
 
-use Ada;
-
---  File_Descriptor facility. Used to log to
---  a console or file. If no file is specified
---  by a Set_Logfile()-call, console logging is used.
+--  File_Descriptor facility. Used to log to a console or file. If no file is
+--  specified by a Set_Logfile()-call, console logging is used.
 package Alog.Facilities.File_Descriptor is
 
    type Instance is new Alog.Facilities.Instance with private;
@@ -53,7 +50,7 @@ package Alog.Facilities.File_Descriptor is
    --  Set logfile to use. If not set, standard output is used
    --  for logging (e.g. stdout).
 
-   function Get_Logfile (Facility : Instance) return Text_IO.File_Access;
+   function Get_Logfile (Facility : Instance) return Ada.Text_IO.File_Access;
    --  Get currently used logfile.
 
    procedure Close_Logfile (Facility : in out Instance;
@@ -78,10 +75,11 @@ private
 
    type Instance is new Alog.Facilities.Instance with
       record
-         Log_File         : aliased Text_IO.File_Type;
+         Log_File         : aliased Ada.Text_IO.File_Type;
          --  Logfile used for file based logging.
 
-         Log_File_Ptr     : Text_IO.File_Access := Text_IO.Standard_Output;
+         Log_File_Ptr     : Ada.Text_IO.File_Access :=
+           Ada.Text_IO.Standard_Output;
          --  Reference to actual log file. Default is Standard_Output.
 
          Log_File_Name    : BS_Path.Bounded_String :=
