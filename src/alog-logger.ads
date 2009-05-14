@@ -43,7 +43,7 @@ package Alog.Logger is
 
    procedure Detach_Facility (Logger   : in out Instance;
                               Facility :        Alog.Facilities.Handle);
-   --  Detach a facility by name.
+   --  Detach a facility from logger instance.
 
    function Facility_Count (Logger : Instance) return Natural;
    --  Return number of attached facilites.
@@ -54,21 +54,21 @@ package Alog.Logger is
 
    procedure Detach_Transform (Logger    : in out Instance;
                                Transform :        Alog.Transforms.Handle);
-   --  Detach a transform by name.
+   --  Detach a transform from logger instance.
 
    function Transform_Count (Logger : Instance) return Natural;
    --  Return number of attached transforms.
 
    procedure Clear (L : in out Instance);
    --  Clear logger instance. Detach and teardown all attached
-   --  facilities.
+   --  facilities and transforms.
 
    procedure Log_Message (Logger : Instance;
                           Level  : Log_Level;
                           Msg    : String);
-   --  Log a message. Write_Message() procedure of all attached logger is
-   --  called. Depending on the Log-Threshold set, the message is logged
-   --  to different targets (depending on the facilites) automatically.
+   --  Log a message. The Write_Message() procedure of all attached facilities
+   --  is called. Depending on the Log-Threshold set, the message is logged to
+   --  different targets (depending on the facilites) automatically.
 
    procedure Free is new Ada.Unchecked_Deallocation
      (Object => Alog.Facilities.Class,
