@@ -147,8 +147,15 @@ package body Alog.Logger is
    procedure Initialize (Logger : in out Instance) is
    begin
       if Logger.Init then
-         Logger.Attach_Facility
-           (Facility => new Facilities.File_Descriptor.Instance);
+         declare
+            Default_Handle : Facilities.File_Descriptor.Handle;
+         begin
+            Default_Handle := new Facilities.File_Descriptor.Instance;
+            Default_Handle.Set_Name (Name => "__Init_Facility");
+
+            Logger.Attach_Facility
+              (Facility => Facilities.Handle (Default_Handle));
+         end;
       end if;
    end Initialize;
 
