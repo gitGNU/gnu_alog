@@ -33,8 +33,12 @@ with Alog.Transforms;
 --  functions for logging facilities configuration.
 package Alog.Logger is
 
-   type Instance is new Ada.Finalization.Controlled with private;
-   --  Logger instance.
+   type Instance (Init : Boolean) is new
+     Ada.Finalization.Limited_Controlled with private;
+   --  Logger instance. The Init discriminant defines whether or not a default
+   --  'stdout' (FD facility without logfile set) is attached automatically. Set
+   --  Init to 'True' if you want to make sure minimal stdout logging is
+   --  possible as soon as a new logger is instantiated.
 
    procedure Attach_Facility (Logger   : in out Alog.Logger.Instance;
                               Facility :        Alog.Facilities.Handle);
@@ -90,6 +94,9 @@ private
    use Alog.Facilities;
    use Alog.Transforms;
 
+   procedure Initialize (Logger : in out Instance);
+   --  Initialize the logger instance.
+
    procedure Finalize (Logger : in out Instance);
    --  Finalize procedure used to cleanup.
 
@@ -113,10 +120,11 @@ private
    subtype Transforms_Stack is Transforms_Stack_Package.Set;
    --  Manages attached transforms for transforms instance.
 
-   type Instance is new Ada.Finalization.Controlled with record
-      F_Stack : Facilities_Stack;
+   type Instance (Init : Boolean) is new
+     Ada.Finalization.Limited_Controlled with record
+      F_Stack    : Facilities_Stack;
       --  Stack of attached Facilities.
-      T_Stack : Transforms_Stack;
+      T_Stack    : Transforms_Stack;
       --  Stack of attached Transforms.
    end record;
 

@@ -68,4 +68,10 @@ package Logger_Tests is
    procedure Log_One_Tasked_FD_Facility;
    --  Test tasked logging to one fd based facility.
 
+   procedure Verify_Logger_Initialization;
+   --  Test logger instance initialization behavior.
+
+   procedure Verify_Tasked_Logger_Initialization;
+   --  Test tasked logger instance initialization behavior.
+
 end Logger_Tests;

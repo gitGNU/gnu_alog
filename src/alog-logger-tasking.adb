@@ -32,7 +32,7 @@ package body Alog.Logger.Tasking is
    -------------------------------------------------------------------------
 
    task body Instance is
-      Logsink         : Logger.Instance;
+      Logsink         : Logger.Instance (Init => Init);
       Current_Handle  : Facilities.Handle;
       Current_Level   : Log_Level;
       Current_Message : Unbounded_String;

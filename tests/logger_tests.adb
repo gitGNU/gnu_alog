@@ -39,7 +39,7 @@ package body Logger_Tests is
    -------------------------------------------------------------------------
 
    procedure Attach_Facility is
-      Log      : Logger.Instance;
+      Log      : Logger.Instance (Init => False);
       Facility : constant Facilities.Handle :=
         new Facilities.File_Descriptor.Instance;
    begin
@@ -51,7 +51,7 @@ package body Logger_Tests is
    -------------------------------------------------------------------------
 
    procedure Attach_Transform is
-      Log       : Logger.Instance;
+      Log       : Logger.Instance (Init => False);
       Transform : constant Transforms.Handle := new Transforms.Casing.Instance;
    begin
       Log.Attach_Transform (Transform => Transform);
@@ -62,7 +62,7 @@ package body Logger_Tests is
    -------------------------------------------------------------------------
 
    procedure Clear_A_Logger is
-      Log       : Logger.Instance;
+      Log       : Logger.Instance (Init => False);
       Facility  : constant Facilities.Handle :=
         new Facilities.File_Descriptor.Instance;
       Transform : constant Transforms.Handle :=
@@ -86,7 +86,7 @@ package body Logger_Tests is
    -------------------------------------------------------------------------
 
    procedure Detach_Facility_Instance is
-      Log      : Logger.Instance;
+      Log      : Logger.Instance (Init => False);
       Facility : constant Facilities.Handle :=
         new Facilities.Syslog.Instance;
    begin
@@ -102,7 +102,7 @@ package body Logger_Tests is
    -------------------------------------------------------------------------
 
    procedure Detach_Facility_Unattached is
-      Log      : Logger.Instance;
+      Log      : Logger.Instance (Init => False);
       Facility : Facilities.Handle :=
         new Facilities.Syslog.Instance;
    begin
@@ -120,7 +120,7 @@ package body Logger_Tests is
    -------------------------------------------------------------------------
 
    procedure Detach_Transform_Instance is
-      Log       : Logger.Instance;
+      Log       : Logger.Instance (Init => False);
       Transform : constant Transforms.Handle := new Transforms.Casing.Instance;
    begin
       Transform.Set_Name ("Casing_Transform");
@@ -135,7 +135,7 @@ package body Logger_Tests is
    -------------------------------------------------------------------------
 
    procedure Detach_Transform_Unattached is
-      Log      : Logger.Instance;
+      Log      : Logger.Instance (Init => False);
       Transform : Transforms.Handle :=
                     new Transforms.Casing.Instance;
    begin
@@ -214,12 +214,18 @@ package body Logger_Tests is
       Ahven.Framework.Add_Test_Routine
         (T, Log_One_Tasked_FD_Facility'Access,
          "log with tasked logger");
+      Ahven.Framework.Add_Test_Routine
+        (T, Verify_Logger_Initialization'Access,
+         "logger initialization behavior");
+      Ahven.Framework.Add_Test_Routine
+        (T, Verify_Tasked_Logger_Initialization'Access,
+         "tasked logger initialization behavior");
    end Initialize;
 
    -------------------------------------------------------------------------
 
    procedure Log_FD_Facility_with_Transform is
-      Log       : Logger.Instance;
+      Log       : Logger.Instance (Init => False);
       Facility  : constant Facilities.Handle :=
                     new Facilities.File_Descriptor.Instance;
       Transform : constant Transforms.Handle :=
@@ -257,7 +263,7 @@ package body Logger_Tests is
    -------------------------------------------------------------------------
 
    procedure Log_Multiple_FD_Facilities is
-      Log       : Logger.Instance;
+      Log       : Logger.Instance (Init => False);
 
       Facility1 : constant Facilities.Handle :=
         new Facilities.File_Descriptor.Instance;
@@ -317,7 +323,7 @@ package body Logger_Tests is
    -------------------------------------------------------------------------
 
    procedure Log_One_FD_Facility is
-      Log      : Logger.Instance;
+      Log      : Logger.Instance (Init => False);
       Facility : constant Facilities.Handle :=
         new Facilities.File_Descriptor.Instance;
       Testfile : constant String := "./data/Log_One_FD_Facility";
@@ -382,5 +388,34 @@ package body Logger_Tests is
                Filename2 => Testfile),
               Message   => "files not equal");
    end Log_One_Tasked_FD_Facility;
+
+   -------------------------------------------------------------------------
+
+   procedure Verify_Logger_Initialization is
+      Logger1 : Logger.Instance (Init => False);
+      Logger2 : Logger.Instance (Init => True);
+   begin
+      Assert (Condition => Logger1.Facility_Count = 0,
+              Message   => "logger1 not empty");
+      Assert (Condition => Logger2.Facility_Count = 1,
+              Message   => "logger2 empty");
+   end Verify_Logger_Initialization;
+
+   -------------------------------------------------------------------------
+
+   procedure Verify_Tasked_Logger_Initialization is
+      Logger1 : Logger.Tasking.Instance;
+      Logger2 : Logger.Tasking.Instance (Init => True);
+      F_Count : Natural := Natural'Last;
+   begin
+
+      Logger1.Facility_Count (Count => F_Count);
+      Assert (Condition => F_Count = 0,
+              Message   => "logger1 not empty");
+
+      Logger2.Facility_Count (Count => F_Count);
+      Assert (Condition => F_Count = 1,
+              Message   => "logger2 empty");
+   end Verify_Tasked_Logger_Initialization;
 
 end Logger_Tests;

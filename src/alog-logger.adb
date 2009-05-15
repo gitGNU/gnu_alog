@@ -21,6 +21,8 @@
 --  MA  02110-1301  USA
 --
 
+with Alog.Facilities.File_Descriptor;
+
 package body Alog.Logger is
 
    -------------------------------------------------------------------------
@@ -139,6 +141,16 @@ package body Alog.Logger is
                Process   => Free_Transform'Access);
       Logger.T_Stack.Clear;
    end Finalize;
+
+   -------------------------------------------------------------------------
+
+   procedure Initialize (Logger : in out Instance) is
+   begin
+      if Logger.Init then
+         Logger.Attach_Facility
+           (Facility => new Facilities.File_Descriptor.Instance);
+      end if;
+   end Initialize;
 
    -------------------------------------------------------------------------
 

@@ -28,7 +28,7 @@ with Alog.Facilities;
 --  task-safe concurrent logging.
 package Alog.Logger.Tasking is
 
-   task type Instance is
+   task type Instance (Init : Boolean := False) is
 
       entry Attach_Facility (Facility : Facilities.Handle);
       --  Attach a facility to tasked logger instance.
@@ -51,5 +51,10 @@ package Alog.Logger.Tasking is
       --  facilities.
 
    end Instance;
+   --  Tasked logger instance. The Init discriminant defines whether or not a
+   --  default 'stdout' (FD facility without logfile set) is attached
+   --  automatically. Default is 'False'. Set Init to 'True' if you want to make
+   --  sure minimal stdout logging is possible as soon as a new logger is
+   --  instantiated.
 
 end Alog.Logger.Tasking;
