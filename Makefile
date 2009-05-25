@@ -30,12 +30,14 @@ ALOG = libalog-$(VERSION)
 
 SOURCEDIR = src
 APIDOCDIR = doc
+COVDIR = $(APIDOCDIR)/cov
 ALI_FILES = lib/*.ali
 SO_LIBRARY = libalog.so.$(VERSION)
 
 TMPDIR = /tmp
 DISTDIR = $(TMPDIR)/$(ALOG)
 TARBALL = $(ALOG).tar.bz2
+PWD = `pwd`
 
 all: build_lib
 
@@ -93,4 +95,11 @@ docs: prepare
 		-o $(APIDOCDIR)/
 	@echo "DONE"
 
-.PHONY: dist tests
+cov: prepare
+	@gnatmake -p -Palog_tests -XALOG_BUILD="$(BUILD_TYPE)" -XCOVERAGE="True"
+	@obj/cov/runner_$(BUILD_TYPE)
+	@lcov -c -d obj/cov/ -o obj/cov/alog_tmp.info
+	@lcov -e obj/cov/alog_tmp.info "$(PWD)/src/*.adb" -o obj/cov/alog.info
+	@genhtml obj/cov/alog.info -o $(COVDIR)
+
+.PHONY: cov dist tests
