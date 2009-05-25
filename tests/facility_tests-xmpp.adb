@@ -31,7 +31,7 @@ package body Facility_Tests.XMPP is
 
    -------------------------------------------------------------------------
 
-   procedure Initialize (T : in out F_Test) is
+   procedure Initialize (T : in out Testcase) is
    begin
       Set_Name (T, "Tests for Alog Facility XMPP");
       Ahven.Framework.Add_Test_Routine

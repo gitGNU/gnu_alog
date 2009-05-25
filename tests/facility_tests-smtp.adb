@@ -31,7 +31,7 @@ package body Facility_Tests.SMTP is
 
    -------------------------------------------------------------------------
 
-   procedure Initialize (T : in out F_Test) is
+   procedure Initialize (T : in out Testcase) is
    begin
       Set_Name (T, "Tests for Alog Facility SMTP");
       Ahven.Framework.Add_Test_Routine
