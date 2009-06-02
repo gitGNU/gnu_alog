@@ -23,8 +23,6 @@
 
 with Ada.Strings.Unbounded;
 
-with Alog.Logger;
-
 package body Alog.Logger.Tasking is
 
    use Ada.Strings.Unbounded;

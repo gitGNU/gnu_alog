@@ -21,7 +21,6 @@
 --  MA  02110-1301  USA
 --
 
-with Ada.Strings.Unbounded;
 with Ada.Strings.Bounded;
 with Ada.Strings.Unbounded.Hash;
 with Ada.Command_Line;
