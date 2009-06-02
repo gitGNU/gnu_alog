@@ -119,6 +119,36 @@ package body Logger_Tests is
 
    -------------------------------------------------------------------------
 
+   procedure Detach_Facility_Unattached_Tasked is
+      Log      : Logger.Tasking.Instance (Init => False);
+      Facility : Facilities.Handle :=
+        new Facilities.Syslog.Instance;
+   begin
+      begin
+         Facility.Set_Name ("Syslog_Facility");
+         Log.Detach_Facility (Facility => Facility);
+         Fail (Message => "could detach unattached facility");
+      exception
+         when Logger.Facility_Not_Found =>
+            --  Free not attached facility, this is not done by the logger
+            --  (since it was never attached).
+            Alog.Logger.Free (Facility);
+      end;
+
+      declare
+         F_Count : Natural := Natural'Last;
+      begin
+
+         --  Tasking_Error will be raised if tasked logger has terminated due to
+         --  an unhandled exception.
+
+         Log.Facility_Count (Count => F_Count);
+
+      end;
+
+   end Detach_Facility_Unattached_Tasked;
+   -------------------------------------------------------------------------
+
    procedure Detach_Transform_Instance is
       Log       : Logger.Instance (Init => False);
       Transform : constant Transforms.Handle := new Transforms.Casing.Instance;
@@ -220,6 +250,9 @@ package body Logger_Tests is
       Ahven.Framework.Add_Test_Routine
         (T, Verify_Tasked_Logger_Initialization'Access,
          "tasked logger initialization behavior");
+      Ahven.Framework.Add_Test_Routine
+        (T, Detach_Facility_Unattached_Tasked'Access,
+         "tasked detach not attached facility");
    end Initialize;
 
    -------------------------------------------------------------------------

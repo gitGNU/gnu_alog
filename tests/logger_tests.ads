@@ -44,6 +44,10 @@ package Logger_Tests is
    --  Test Facility detaching with a not attached instance
    --  (should fail).
 
+   procedure Detach_Facility_Unattached_Tasked;
+   --  Test Facility detaching of tasked logger with a not attached instance.
+   --  Verify that logger remains responsive after exception.
+
    procedure Attach_Transform;
    --  Test Transform attaching.
 

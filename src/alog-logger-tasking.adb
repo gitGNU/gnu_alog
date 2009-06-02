@@ -33,57 +33,65 @@ package body Alog.Logger.Tasking is
 
    task body Instance is
       Logsink         : Logger.Instance (Init => Init);
-      Current_Handle  : Facilities.Handle;
       Current_Level   : Log_Level;
       Current_Message : Unbounded_String;
    begin
       loop
-         select
+         begin
 
-            ----------------------------------------------------------------
+            select
 
-            accept Attach_Facility (Facility : Facilities.Handle) do
-               Current_Handle := Facility;
-            end Attach_Facility;
-            Logsink.Attach_Facility (Facility => Current_Handle);
-         or
+               ----------------------------------------------------------------
 
-            ----------------------------------------------------------------
+               accept Attach_Facility (Facility : Facilities.Handle) do
+                  Logsink.Attach_Facility (Facility => Facility);
+               end Attach_Facility;
+            or
 
-            accept Detach_Facility (Facility : Facilities.Handle) do
-               Current_Handle := Facility;
-            end Detach_Facility;
-            Logsink.Detach_Facility (Facility => Current_Handle);
-         or
+               ----------------------------------------------------------------
 
-            ----------------------------------------------------------------
+               accept Detach_Facility (Facility : Facilities.Handle) do
+                  Logsink.Detach_Facility (Facility => Facility);
+               end Detach_Facility;
+            or
 
-            accept Facility_Count (Count : out Natural) do
-               Count := Logsink.Facility_Count;
-            end Facility_Count;
-         or
+               ----------------------------------------------------------------
 
-            ----------------------------------------------------------------
+               accept Facility_Count (Count : out Natural) do
+                  Count := Logsink.Facility_Count;
+               end Facility_Count;
+            or
 
-            accept Clear do
-               Logsink.Clear;
-            end Clear;
-         or
+               ----------------------------------------------------------------
 
-            ----------------------------------------------------------------
+               accept Clear do
+                  Logsink.Clear;
+               end Clear;
+            or
 
-            accept Log_Message
-              (Level : Log_Level;
-               Msg   : String)
-            do
-               Current_Level   := Level;
-               Current_Message := To_Unbounded_String (Msg);
-            end Log_Message;
-            Logsink.Log_Message (Level => Current_Level,
-                                 Msg   => To_String (Current_Message));
-         or
-            terminate;
-         end select;
+               ----------------------------------------------------------------
+
+               accept Log_Message
+                 (Level : Log_Level;
+                  Msg   : String)
+               do
+                  Current_Level   := Level;
+                  Current_Message := To_Unbounded_String (Msg);
+               end Log_Message;
+               Logsink.Log_Message (Level => Current_Level,
+                                    Msg   => To_String (Current_Message));
+            or
+               terminate;
+            end select;
+
+            --  Exceptions raised during a rendezvous are raised here and in the
+            --  calling task. Catch and ignore it so the tasked logger does not
+            --  get terminated after an exception.
+
+         exception
+            when others =>
+               null;
+         end;
       end loop;
    end Instance;
 
