@@ -108,7 +108,7 @@ package body Logger_Tests is
    begin
       Facility.Set_Name ("Syslog_Facility");
       Log.Detach_Facility (Facility => Facility);
-      Fail (Message => "not yet implemented");
+      Fail (Message => "could detach unattached facility");
    exception
       when Logger.Facility_Not_Found =>
          --  Free not attached facility, this is not done by the logger (since
