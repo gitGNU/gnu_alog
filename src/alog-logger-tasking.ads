@@ -21,6 +21,8 @@
 --  MA  02110-1301  USA
 --
 
+with Ada.Exceptions;
+
 with Alog.Facilities;
 
 --  Tasked Logger instance. Facilities can be attached to this logger instance
@@ -44,11 +46,16 @@ package Alog.Logger.Tasking is
       --  Log a message. The Write_Message() procedure of all attached
       --  facilities is called. Depending on the Log-Threshold set, the message
       --  is logged to different targets (depending on the facilites)
-      --  automatically.
+      --  automatically. Clear the last exception occurrence if none occured.
 
       entry Clear;
       --  Clear tasked logger instance. Detach and teardown all attached
       --  facilities.
+
+      entry Get_Last_Exception
+        (Occurrence : out Ada.Exceptions.Exception_Occurrence);
+      --  Return last known Exception_Occurrence. If no exception occured return
+      --  Null_Occurrence.
 
    end Instance;
    --  Tasked logger instance. The Init discriminant defines whether or not a

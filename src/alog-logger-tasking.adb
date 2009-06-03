@@ -26,14 +26,22 @@ with Ada.Strings.Unbounded;
 package body Alog.Logger.Tasking is
 
    use Ada.Strings.Unbounded;
+   use Ada.Exceptions;
 
    -------------------------------------------------------------------------
 
    task body Instance is
-      Logsink         : Logger.Instance (Init => Init);
-      Current_Level   : Log_Level;
-      Current_Message : Unbounded_String;
+      Logsink                   : Logger.Instance (Init => Init);
+      Current_Level             : Log_Level;
+      Current_Message           : Unbounded_String;
+      Last_Exception_Occurrence : Exception_Occurrence;
    begin
+
+      --  Initialize limited Last_Exception_Occurrence to Null_Occurrence.
+
+      Save_Occurrence (Target => Last_Exception_Occurrence,
+                       Source => Null_Occurrence);
+
       loop
          begin
 
@@ -69,6 +77,16 @@ package body Alog.Logger.Tasking is
 
                ----------------------------------------------------------------
 
+               accept Get_Last_Exception
+                 (Occurrence : out Exception_Occurrence)
+               do
+                  Save_Occurrence (Target => Occurrence,
+                                   Source => Last_Exception_Occurrence);
+               end Get_Last_Exception;
+            or
+
+               ----------------------------------------------------------------
+
                accept Log_Message
                  (Level : Log_Level;
                   Msg   : String)
@@ -76,9 +94,22 @@ package body Alog.Logger.Tasking is
                   Current_Level   := Level;
                   Current_Message := To_Unbounded_String (Msg);
                end Log_Message;
-               Logsink.Log_Message (Level => Current_Level,
-                                    Msg   => To_String (Current_Message));
+
+               begin
+                  Logsink.Log_Message (Level => Current_Level,
+                                       Msg   => To_String (Current_Message));
+
+                  Save_Occurrence (Target => Last_Exception_Occurrence,
+                                   Source => Null_Occurrence);
+
+               exception
+                  when E : others =>
+                     Ada.Exceptions.Save_Occurrence
+                       (Target => Last_Exception_Occurrence,
+                        Source => E);
+               end;
             or
+
                terminate;
             end select;
 

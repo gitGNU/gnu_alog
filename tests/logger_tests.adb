@@ -22,6 +22,7 @@
 --
 
 with Ada.Text_IO;
+with Ada.Exceptions.Is_Null_Occurrence;
 
 with Ahven;
 
@@ -29,6 +30,7 @@ with Alog.Helpers;
 with Alog.Logger.Tasking;
 with Alog.Facilities.File_Descriptor;
 with Alog.Facilities.Syslog;
+with Alog.Facilities.Mock;
 with Alog.Transforms.Casing;
 
 package body Logger_Tests is
@@ -253,6 +255,9 @@ package body Logger_Tests is
       Ahven.Framework.Add_Test_Routine
         (T, Detach_Facility_Unattached_Tasked'Access,
          "tasked detach not attached facility");
+      Ahven.Framework.Add_Test_Routine
+        (T, Tasked_Logger_Exception_Handling'Access,
+         "tasked logger exception handling");
    end Initialize;
 
    -------------------------------------------------------------------------
@@ -421,6 +426,44 @@ package body Logger_Tests is
                Filename2 => Testfile),
               Message   => "files not equal");
    end Log_One_Tasked_FD_Facility;
+
+   -------------------------------------------------------------------------
+
+   procedure Tasked_Logger_Exception_Handling is
+      use Ada.Exceptions;
+
+      Log           : Logger.Tasking.Instance;
+      Mock_Facility : constant Facilities.Handle :=
+        new Facilities.Mock.Instance;
+      EO            : Exception_Occurrence;
+   begin
+      Log.Get_Last_Exception (Occurrence => EO);
+      Assert
+        (Condition => Is_Null_Occurrence (X => EO),
+         Message   => "Exception not Null_Occurence");
+
+      Log.Attach_Facility (Facility => Mock_Facility);
+      Log.Log_Message (Level => DEBU,
+                       Msg   => "Test message");
+
+      Log.Get_Last_Exception (Occurrence => EO);
+      Assert
+        (Condition => Exception_Name (X => EO) = "CONSTRAINT_ERROR",
+         Message   => "Expected Constraint_Error");
+      Assert
+        (Condition => Exception_Message (X => EO) =
+           Facilities.Mock.Exception_Message,
+         Message   => "Found wrong exception message");
+
+      Log.Detach_Facility (Facility => Mock_Facility);
+      Log.Log_Message (Level => DEBU,
+                       Msg   => "Test message 2");
+
+      Log.Get_Last_Exception (Occurrence => EO);
+      Assert
+        (Condition => Is_Null_Occurrence (X => EO),
+         Message   => "Exception not reset");
+   end Tasked_Logger_Exception_Handling;
 
    -------------------------------------------------------------------------
 

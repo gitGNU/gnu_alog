@@ -78,4 +78,7 @@ package Logger_Tests is
    procedure Verify_Tasked_Logger_Initialization;
    --  Test tasked logger instance initialization behavior.
 
+   procedure Tasked_Logger_Exception_Handling;
+   --  Test tasked logger instance exception handling.
+
 end Logger_Tests;
