@@ -149,6 +149,7 @@ package body Logger_Tests is
       end;
 
    end Detach_Facility_Unattached_Tasked;
+
    -------------------------------------------------------------------------
 
    procedure Detach_Transform_Instance is
