@@ -166,11 +166,17 @@ package body Alog.Logger is
                           Msg    : String)
    is
       F_Position : Facilities_Stack_Package.Cursor := Logger.F_Stack.First;
-      T_Position : Transform_List_Package.Cursor;
       F_Item     : Alog.Facilities.Handle;
-      T_Item     : Alog.Transforms.Handle;
-      T_List     : Alog.Facilities.Transform_List_Package.List;
       Out_Msg    : String := Msg;
+
+      procedure Do_Transform (Transform : Transforms.Handle);
+      --  Call 'Transform_Message' for each transform.
+
+      procedure Do_Transform (Transform : Transforms.Handle) is
+      begin
+         Out_Msg := Transform.Transform_Message (Level => Level,
+                                                 Msg   => Out_Msg);
+      end Do_Transform;
    begin
       --  Loop over all facilities.
       while Facilities_Stack_Package.Has_Element (F_Position) loop
@@ -178,14 +184,7 @@ package body Alog.Logger is
 
          --  Apply all transformations.
          if F_Item.Transform_Count > 0 then
-            T_List := F_Item.Get_Transforms;
-            T_Position := T_List.First;
-            while Transform_List_Package.Has_Element (T_Position) loop
-               T_Item := Transform_List_Package.Element (T_Position);
-               Out_Msg := T_Item.Transform_Message (Level => Level,
-                                                    Msg   => Out_Msg);
-               Transform_List_Package.Next (T_Position);
-            end loop;
+            F_Item.Iterate (Process => Do_Transform'Access);
          end if;
          F_Item.Write_Message (Level => Level,
                                Msg   => Out_Msg);

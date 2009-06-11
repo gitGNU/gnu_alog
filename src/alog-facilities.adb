@@ -38,9 +38,11 @@ package body Alog.Facilities is
    -------------------------------------------------------------------------
 
    procedure Add_Transform (Facility  : in out Class;
-                            Transform :        Alog.Transforms.Handle) is
+                            Transform :        Transforms.Handle) is
    begin
-      Facility.Transforms.Append (Transform);
+      Facility.Transforms.Insert
+        (Key      => To_Unbounded_String (Transform.Get_Name),
+         New_Item => Transform);
    end Add_Transform;
 
    -------------------------------------------------------------------------
@@ -70,12 +72,23 @@ package body Alog.Facilities is
 
    -------------------------------------------------------------------------
 
-   function Get_Transforms (Facility : Class)
-                            return Transform_List_Package.List
+   function Get_Transform
+     (Facility : Class;
+      Name     : String)
+      return Alog.Transforms.Handle
    is
+      use Transform_Map_Package;
+
+      Position : Cursor;
    begin
-      return Facility.Transforms;
-   end Get_Transforms;
+      Position := Facility.Transforms.Find (Key => To_Unbounded_String (Name));
+
+      if Position = No_Element then
+         raise Transform_Not_Found with "Transform '" & Name & " not found.";
+      end if;
+
+      return Element (Position => Position);
+   end Get_Transform;
 
    -------------------------------------------------------------------------
 
@@ -101,12 +114,35 @@ package body Alog.Facilities is
 
    -------------------------------------------------------------------------
 
+   procedure Iterate
+     (Facility : Class;
+      Process  : not null access procedure (Transform : Transforms.Handle))
+   is
+
+      procedure Do_Process (Position : Transform_Map_Package.Cursor);
+      --  Call 'Process' for each Transform.
+
+      procedure Do_Process (Position : Transform_Map_Package.Cursor) is
+         T_Handle : Transforms.Handle;
+      begin
+         T_Handle := Transform_Map_Package.Element (Position => Position);
+
+         Process (Transform => T_Handle);
+      end Do_Process;
+
+   begin
+      Facility.Transforms.Iterate (Process => Do_Process'Access);
+   end Iterate;
+
+   -------------------------------------------------------------------------
+
    procedure Remove_Transform (Facility  : in out Class;
-                               Transform :        Alog.Transforms.Handle) is
-      use Transform_List_Package;
+                               Transform :        Transforms.Handle) is
+      use Transform_Map_Package;
       Position : Cursor;
    begin
-      Position := Facility.Transforms.Find (Transform);
+      Position := Facility.Transforms.Find
+        (To_Unbounded_String (Transform.Get_Name));
       if Position /= No_Element then
          Facility.Transforms.Delete (Position);
       end if;

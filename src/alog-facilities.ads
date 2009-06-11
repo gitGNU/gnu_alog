@@ -24,7 +24,7 @@
 with Ada.Strings.Bounded;
 with Ada.Strings.Unbounded.Hash;
 with Ada.Command_Line;
-with Ada.Containers.Doubly_Linked_Lists;
+with Ada.Containers.Indefinite_Ordered_Maps;
 
 with Alog.Transforms;
 
@@ -46,11 +46,6 @@ package Alog.Facilities is
    function "=" (Left  : Handle;
                  Right : Handle) return Boolean;
    --  Equal function.
-
-   package Transform_List_Package is new
-     Ada.Containers.Doubly_Linked_Lists (Alog.Transforms.Handle,
-                                         Alog.Transforms."=");
-   --  Transforms list.
 
    procedure Set_Name (Facility : in out Class;
                        Name     :        String);
@@ -102,27 +97,45 @@ package Alog.Facilities is
    --  object gets out of scope.
 
    procedure Add_Transform (Facility  : in out Class;
-                            Transform :        Alog.Transforms.Handle);
+                            Transform :        Transforms.Handle);
    --  Adds a Transform to the facility's transform list.
 
    procedure Remove_Transform (Facility  : in out Class;
-                               Transform :        Alog.Transforms.Handle);
+                               Transform :        Transforms.Handle);
    --  Removes a Transform to the facility's transform list.
 
    function Transform_Count (Facility : Class)
                              return Ada.Containers.Count_Type;
    --  Returns the number of transforms in the facility's transform list.
 
-   function Get_Transforms (Facility : Class)
-                            return Transform_List_Package.List;
-   --  Returns the number of transforms in the facility's transform list.
+   function Get_Transform
+     (Facility : Class;
+      Name     : String)
+      return Alog.Transforms.Handle;
+   --  Return a transform specified by the string 'Name'.
+
+   procedure Iterate
+     (Facility : Class;
+      Process  : not null access procedure (Transform : Transforms.Handle));
+   --  Call 'Process' for all attached transforms.
 
    package BS_Path is new Generic_Bounded_Length (Max_Path_Length);
    use BS_Path;
    --  Bounded string with length Max_Path_Length. Used in methods which
    --  involve filesystem operations.
 
+   Transform_Not_Found : exception;
+   --  Will be raised if a requested transform is not found.
+
 private
+
+   use type Alog.Transforms.Handle;
+
+   package Transform_Map_Package is new
+     Ada.Containers.Indefinite_Ordered_Maps
+       (Key_Type     => Unbounded_String,
+        Element_Type => Transforms.Handle);
+   --  Transforms list.
 
    type Instance is abstract tagged limited record
       Name             : Unbounded_String :=
@@ -143,7 +156,7 @@ private
       --  If True, the loglevel associated with the log message is written.
       --  Default is False.
 
-      Transforms       : Transform_List_Package.List;
+      Transforms       : Transform_Map_Package.Map;
       --  List of transforms.
    end record;
 
