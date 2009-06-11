@@ -52,25 +52,24 @@ package Alog.Facilities is
                                          Alog.Transforms."=");
    --  Transforms list.
 
-   procedure Set_Name (Facility : in out Instance'Class;
+   procedure Set_Name (Facility : in out Class;
                        Name     :        String);
    --  Set facility name.
 
-   function Get_Name (Facility : Instance'Class) return String;
+   function Get_Name (Facility : Class) return String;
    --  Get facility name.
 
-   function Hash (Element : Alog.Facilities.Handle)
-                  return Ada.Containers.Hash_Type;
+   function Hash (Element : Handle) return Ada.Containers.Hash_Type;
    --  Return Hash value of facility.
 
-   procedure Set_Threshold (Facility : in out Instance'Class;
+   procedure Set_Threshold (Facility : in out Class;
                             Level    :        Log_Level);
    --  Set facility log level treshold.
 
-   function Get_Threshold (Facility : Instance'Class) return Log_Level;
+   function Get_Threshold (Facility : Class) return Log_Level;
    --  Get facility log level treshold.
 
-   function Get_Timestamp (Facility : Instance'Class) return String;
+   function Get_Timestamp (Facility : Class) return String;
    --  Creates a timestamp and returns it as String.
 
    procedure Write_Message (Facility : Instance;
@@ -102,19 +101,19 @@ package Alog.Facilities is
    --  called by Logger instances when detaching Facilities or when the logger
    --  object gets out of scope.
 
-   procedure Add_Transform (Facility  : in out Instance'Class;
+   procedure Add_Transform (Facility  : in out Class;
                             Transform :        Alog.Transforms.Handle);
    --  Adds a Transform to the facility's transform list.
 
-   procedure Remove_Transform (Facility  : in out Instance'Class;
+   procedure Remove_Transform (Facility  : in out Class;
                                Transform :        Alog.Transforms.Handle);
    --  Removes a Transform to the facility's transform list.
 
-   function Transform_Count (Facility : Instance'Class)
+   function Transform_Count (Facility : Class)
                              return Ada.Containers.Count_Type;
    --  Returns the number of transforms in the facility's transform list.
 
-   function Get_Transforms (Facility : Instance'Class)
+   function Get_Transforms (Facility : Class)
                             return Transform_List_Package.List;
    --  Returns the number of transforms in the facility's transform list.
 

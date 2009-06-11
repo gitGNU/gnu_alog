@@ -37,7 +37,7 @@ package body Alog.Facilities is
 
    -------------------------------------------------------------------------
 
-   procedure Add_Transform (Facility  : in out Instance'Class;
+   procedure Add_Transform (Facility  : in out Class;
                             Transform :        Alog.Transforms.Handle) is
    begin
       Facility.Transforms.Append (Transform);
@@ -45,21 +45,21 @@ package body Alog.Facilities is
 
    -------------------------------------------------------------------------
 
-   function Get_Name (Facility : Instance'Class) return String is
+   function Get_Name (Facility : Class) return String is
    begin
       return To_String (Facility.Name);
    end Get_Name;
 
    -------------------------------------------------------------------------
 
-   function Get_Threshold (Facility : Instance'Class) return Log_Level is
+   function Get_Threshold (Facility : Class) return Log_Level is
    begin
       return Facility.Threshold;
    end Get_Threshold;
 
    -------------------------------------------------------------------------
 
-   function Get_Timestamp (Facility : Instance'Class) return String is
+   function Get_Timestamp (Facility : Class) return String is
       use GNAT.Calendar.Time_IO;
       Timestamp : constant String := Image
         (Date    => Ada.Calendar.Clock,
@@ -70,17 +70,16 @@ package body Alog.Facilities is
 
    -------------------------------------------------------------------------
 
-   function Get_Transforms (Facility : Instance'Class)
-                            return Transform_List_Package.List is
+   function Get_Transforms (Facility : Class)
+                            return Transform_List_Package.List
+   is
    begin
       return Facility.Transforms;
    end Get_Transforms;
 
    -------------------------------------------------------------------------
 
-   function Hash (Element : Alog.Facilities.Handle)
-                  return Ada.Containers.Hash_Type
-   is
+   function Hash (Element : Handle) return Ada.Containers.Hash_Type is
    begin
       return Ada.Strings.Unbounded.Hash
         (Key => To_Unbounded_String (Element.Get_Name));
@@ -102,7 +101,7 @@ package body Alog.Facilities is
 
    -------------------------------------------------------------------------
 
-   procedure Remove_Transform (Facility  : in out Instance'Class;
+   procedure Remove_Transform (Facility  : in out Class;
                                Transform :        Alog.Transforms.Handle) is
       use Transform_List_Package;
       Position : Cursor;
@@ -115,15 +114,16 @@ package body Alog.Facilities is
 
    -------------------------------------------------------------------------
 
-   procedure Set_Name (Facility : in out Instance'Class; Name : String) is
+   procedure Set_Name (Facility : in out Class;
+                       Name     :        String) is
    begin
       Facility.Name := To_Unbounded_String (Name);
    end Set_Name;
 
    -------------------------------------------------------------------------
 
-   procedure Set_Threshold (Facility : in out Instance'Class;
-                            Level    :         Log_Level) is
+   procedure Set_Threshold (Facility : in out Class;
+                            Level    :        Log_Level) is
    begin
       Facility.Threshold := Level;
    end Set_Threshold;
@@ -148,7 +148,7 @@ package body Alog.Facilities is
 
    -------------------------------------------------------------------------
 
-   function Transform_Count (Facility : Instance'Class)
+   function Transform_Count (Facility : Class)
                              return  Ada.Containers.Count_Type is
    begin
       return Facility.Transforms.Length;

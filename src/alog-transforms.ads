@@ -41,15 +41,14 @@ package Alog.Transforms is
                  Right : Handle) return Boolean;
    --  Equal function.
 
-   procedure Set_Name (Transform : in out Instance'Class;
+   procedure Set_Name (Transform : in out Class;
                        Name      :        String);
    --  Set transform name.
 
-   function Get_Name (Transform : Instance'Class) return String;
+   function Get_Name (Transform : Class) return String;
    --  Get transform name.
 
-   function Hash (Element : Alog.Transforms.Handle)
-                  return Ada.Containers.Hash_Type;
+   function Hash (Element : Handle) return Ada.Containers.Hash_Type;
    --  Return Hash value of transform.
 
    function Transform_Message (Transform : Instance;
@@ -71,7 +70,7 @@ package Alog.Transforms is
 private
 
    type Instance is abstract tagged limited record
-      Name      : Unbounded_String := To_Unbounded_String ("sample-transform");
+      Name : Unbounded_String := To_Unbounded_String ("sample-transform");
       --  Transform Name. Names must be unique.
    end record;
 

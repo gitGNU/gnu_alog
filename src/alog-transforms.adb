@@ -33,22 +33,21 @@ package body Alog.Transforms is
 
    -------------------------------------------------------------------------
 
-   function Get_Name (Transform : Instance'Class) return String is
+   function Get_Name (Transform : Class) return String is
    begin
       return Ada.Strings.Unbounded.To_String (Transform.Name);
    end Get_Name;
 
    -------------------------------------------------------------------------
 
-   function Hash (Element : Alog.Transforms.Handle)
-                           return Ada.Containers.Hash_Type is
+   function Hash (Element : Handle) return Ada.Containers.Hash_Type is
    begin
       return Hash (Key => To_Unbounded_String (Element.Get_Name));
    end Hash;
 
    -------------------------------------------------------------------------
 
-   procedure Set_Name (Transform : in out Instance'Class;
+   procedure Set_Name (Transform : in out Class;
                        Name      :        String)
    is
    begin
