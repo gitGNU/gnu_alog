@@ -24,6 +24,7 @@
 with Ahven; use Ahven;
 
 with Alog.Facilities.File_Descriptor;
+with Alog.Transforms.Casing;
 
 package body Facility_Tests is
 
@@ -43,6 +44,8 @@ package body Facility_Tests is
         (T, Toggle_Loglevel'Access, "toggle loglevel");
       Ahven.Framework.Add_Test_Routine
         (T, Toggle_Timestamp'Access, "toggle timestamp");
+      Ahven.Framework.Add_Test_Routine
+        (T, Transform_Handling'Access, "transform handling");
    end Initialize;
 
    -------------------------------------------------------------------------
@@ -91,5 +94,58 @@ package body Facility_Tests is
       Assert (Condition => not F.Is_Write_Timestamp,
               Message   => "Timestamp writing not 'False'");
    end Toggle_Timestamp;
+
+   -------------------------------------------------------------------------
+
+   procedure Transform_Handling is
+      T_Name : constant String := "Test_Transform";
+      F      : File_Descriptor.Instance;
+      T      : aliased Transforms.Casing.Instance;
+   begin
+      Assert (Condition => F.Transform_Count = 0,
+              Message   => "Transform count not 0");
+
+      T.Set_Name (Name => T_Name);
+      F.Add_Transform (Transform => T'Unchecked_Access);
+
+      Assert (Condition => F.Transform_Count = 1,
+              Message   => "Unable to add transform");
+
+      declare
+         use type Transforms.Handle;
+
+         T_Handle : Transforms.Handle;
+      begin
+         T_Handle := F.Get_Transform (Name => T_Name);
+
+         Assert (Condition => T_Handle = T'Unchecked_Access,
+                 Message   => "Transform mismatch");
+      end;
+
+      F.Remove_Transform (Name => T_Name);
+      Assert (Condition => F.Transform_Count = 0,
+              Message   => "Unable to remove transform");
+
+      begin
+         F.Remove_Transform (Name => T_Name);
+         Fail (Message => "Removed nonexistent transform");
+
+      exception
+         when Facilities.Transform_Not_Found =>
+            null;
+      end;
+
+      declare
+         T_Handle : Transforms.Handle;
+         pragma Unreferenced (T_Handle);
+      begin
+         T_Handle := F.Get_Transform (Name => T_Name);
+         Fail (Message => "Got nonexistent transform");
+
+      exception
+         when Facilities.Transform_Not_Found =>
+            null;
+      end;
+   end Transform_Handling;
 
 end Facility_Tests;

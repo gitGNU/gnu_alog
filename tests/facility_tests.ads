@@ -43,4 +43,7 @@ package Facility_Tests is
    procedure Toggle_Timestamp;
    --  Test timestamp-writing related procedures.
 
+   procedure Transform_Handling;
+   --  Test attaching/detaching of transforms.
+
 end Facility_Tests;

@@ -136,16 +136,19 @@ package body Alog.Facilities is
 
    -------------------------------------------------------------------------
 
-   procedure Remove_Transform (Facility  : in out Class;
-                               Transform :        Transforms.Handle) is
+   procedure Remove_Transform (Facility : in out Class;
+                               Name     :        String)
+   is
       use Transform_Map_Package;
       Position : Cursor;
    begin
-      Position := Facility.Transforms.Find
-        (To_Unbounded_String (Transform.Get_Name));
-      if Position /= No_Element then
-         Facility.Transforms.Delete (Position);
+      Position := Facility.Transforms.Find (To_Unbounded_String (Name));
+
+      if Position = No_Element then
+         raise Transform_Not_Found with "Transform '" & Name & " not found.";
       end if;
+
+      Facility.Transforms.Delete (Position);
    end Remove_Transform;
 
    -------------------------------------------------------------------------
@@ -184,10 +187,9 @@ package body Alog.Facilities is
 
    -------------------------------------------------------------------------
 
-   function Transform_Count (Facility : Class)
-                             return  Ada.Containers.Count_Type is
+   function Transform_Count (Facility : Class) return Natural is
    begin
-      return Facility.Transforms.Length;
+      return Natural (Facility.Transforms.Length);
    end Transform_Count;
 
 end Alog.Facilities;

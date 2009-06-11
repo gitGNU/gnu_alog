@@ -100,12 +100,12 @@ package Alog.Facilities is
                             Transform :        Transforms.Handle);
    --  Adds a Transform to the facility's transform list.
 
-   procedure Remove_Transform (Facility  : in out Class;
-                               Transform :        Transforms.Handle);
-   --  Removes a Transform to the facility's transform list.
+   procedure Remove_Transform (Facility : in out Class;
+                               Name     :        String);
+   --  Removes a transform with name 'Name' from the facility's transform list.
+   --  If the transform is not found Transform_Not_Found exception is raised.
 
-   function Transform_Count (Facility : Class)
-                             return Ada.Containers.Count_Type;
+   function Transform_Count (Facility : Class) return Natural;
    --  Returns the number of transforms in the facility's transform list.
 
    function Get_Transform
