@@ -88,6 +88,20 @@ package body Alog.Facilities is
 
    -------------------------------------------------------------------------
 
+   function Is_Write_Loglevel (Facility : Class) return Boolean is
+   begin
+      return Facility.Write_Loglevel;
+   end Is_Write_Loglevel;
+
+   -------------------------------------------------------------------------
+
+   function Is_Write_Timestamp (Facility : Class) return Boolean is
+   begin
+      return Facility.Write_Timestamp;
+   end Is_Write_Timestamp;
+
+   -------------------------------------------------------------------------
+
    procedure Remove_Transform (Facility  : in out Instance'Class;
                                Transform :        Alog.Transforms.Handle) is
       use Transform_List_Package;
@@ -113,6 +127,24 @@ package body Alog.Facilities is
    begin
       Facility.Threshold := Level;
    end Set_Threshold;
+
+   -------------------------------------------------------------------------
+
+   procedure Toggle_Write_Loglevel (Facility : in out Class;
+                                    State    :        Boolean)
+   is
+   begin
+      Facility.Write_Loglevel := State;
+   end Toggle_Write_Loglevel;
+
+   -------------------------------------------------------------------------
+
+   procedure Toggle_Write_Timestamp (Facility : in out Class;
+                                     State    :        Boolean)
+   is
+   begin
+      Facility.Write_Timestamp := State;
+   end Toggle_Write_Timestamp;
 
    -------------------------------------------------------------------------
 

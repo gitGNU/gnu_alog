@@ -39,6 +39,10 @@ package body Facility_Tests is
         (T, Set_Name'Access, "set facility name");
       Ahven.Framework.Add_Test_Routine
         (T, Set_Threshold'Access, "set threshold");
+      Ahven.Framework.Add_Test_Routine
+        (T, Toggle_Loglevel'Access, "toggle loglevel");
+      Ahven.Framework.Add_Test_Routine
+        (T, Toggle_Timestamp'Access, "toggle timestamp");
    end Initialize;
 
    -------------------------------------------------------------------------
@@ -62,5 +66,30 @@ package body Facility_Tests is
       Assert (Condition => F.Get_Threshold = Expected,
               Message => "Log_Level not equal");
    end Set_Threshold;
+
+   -------------------------------------------------------------------------
+
+   procedure Toggle_Loglevel is
+      F : File_Descriptor.Instance;
+   begin
+      Assert (Condition => not F.Is_Write_Loglevel,
+              Message   => "Loglevel writing is 'True' by default");
+
+      F.Toggle_Write_Loglevel (State => True);
+      Assert (Condition => F.Is_Write_Loglevel,
+              Message   => "Loglevel writing not 'True'");
+   end Toggle_Loglevel;
+
+   -------------------------------------------------------------------------
+
+   procedure Toggle_Timestamp is
+      F : File_Descriptor.Instance;
+   begin
+      Assert (Condition => F.Is_Write_Timestamp,
+              Message   => "Timestamp writing is 'False' by default");
+      F.Toggle_Write_Timestamp (State => False);
+      Assert (Condition => not F.Is_Write_Timestamp,
+              Message   => "Timestamp writing not 'False'");
+   end Toggle_Timestamp;
 
 end Facility_Tests;

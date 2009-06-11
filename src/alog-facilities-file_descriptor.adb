@@ -54,20 +54,6 @@ package body Alog.Facilities.File_Descriptor is
 
    -------------------------------------------------------------------------
 
-   function Is_Write_Loglevel (Facility : Instance) return Boolean is
-   begin
-      return Facility.Write_Loglevel;
-   end Is_Write_Loglevel;
-
-   -------------------------------------------------------------------------
-
-   function Is_Write_Timestamp (Facility : Instance) return Boolean is
-   begin
-      return Facility.Write_Timestamp;
-   end Is_Write_Timestamp;
-
-   -------------------------------------------------------------------------
-
    procedure Set_Logfile (Facility : in out Instance; Path : String) is
       use Ada.IO_Exceptions;
    begin
@@ -102,24 +88,6 @@ package body Alog.Facilities.File_Descriptor is
    begin
       Facility.Close_Logfile;
    end Teardown;
-
-   -------------------------------------------------------------------------
-
-   procedure Toggle_Write_Loglevel (Facility : in out Instance;
-                                    Set      :        Boolean)
-   is
-   begin
-      Facility.Write_Loglevel := Set;
-   end Toggle_Write_Loglevel;
-
-   -------------------------------------------------------------------------
-
-   procedure Toggle_Write_Timestamp (Facility : in out Instance;
-                                     Set      :        Boolean)
-   is
-   begin
-      Facility.Write_Timestamp := Set;
-   end Toggle_Write_Timestamp;
 
    -------------------------------------------------------------------------
 

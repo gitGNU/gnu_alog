@@ -57,40 +57,19 @@ package Alog.Facilities.File_Descriptor is
                             Remove   :        Boolean := False);
    --  Close opened logfile.
 
-   procedure Toggle_Write_Timestamp (Facility : in out Instance;
-                                     Set      :        Boolean);
-   --  Enable/disable whether a timestamp is written for log messages.
-
-   function Is_Write_Timestamp (Facility : Instance) return Boolean;
-   --  Returns the current value of Write_Timestamp.
-
-   procedure Toggle_Write_Loglevel (Facility : in out Instance;
-                                    Set      :        Boolean);
-   --  Enable/disable whether the loglevel is written for log messages.
-
-   function Is_Write_Loglevel (Facility : Instance) return Boolean;
-   --  Returns the current value of Write_Loglevel.
-
 private
 
    type Instance is new Alog.Facilities.Instance with record
-      Log_File         : aliased Ada.Text_IO.File_Type;
+      Log_File      : aliased Ada.Text_IO.File_Type;
       --  Logfile used for file based logging.
 
-      Log_File_Ptr     : Ada.Text_IO.File_Access :=
+      Log_File_Ptr  : Ada.Text_IO.File_Access :=
         Ada.Text_IO.Standard_Output;
       --  Reference to actual log file. Default is Standard_Output.
 
-      Log_File_Name    : BS_Path.Bounded_String :=
+      Log_File_Name : BS_Path.Bounded_String :=
         To_Bounded_String ("none");
       --  File name of log file.
-
-      Write_Timestamp  : Boolean := True;
-      --  If True, a timestamp is written with the log message. Default is True.
-
-      Write_Loglevel   : Boolean := False;
-      --  If True, the loglevel associated with the log message is written.
-      --  Default is False.
    end record;
 
 end Alog.Facilities.File_Descriptor;

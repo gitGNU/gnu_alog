@@ -78,6 +78,20 @@ package Alog.Facilities is
                             Msg      : String) is abstract;
    --  Write message with specified log level.
 
+   procedure Toggle_Write_Timestamp (Facility : in out Class;
+                                     State    :        Boolean);
+   --  Enable/disable whether a timestamp is written for log messages.
+
+   function Is_Write_Timestamp (Facility : Class) return Boolean;
+   --  Returns the current value of Write_Timestamp.
+
+   procedure Toggle_Write_Loglevel (Facility : in out Class;
+                                    State    :        Boolean);
+   --  Enable/disable whether the loglevel is written for log messages.
+
+   function Is_Write_Loglevel (Facility : Class) return Boolean;
+   --  Returns the current value of Write_Loglevel.
+
    procedure Setup (Facility : in out Instance) is abstract;
    --  Each facility must provide a Setup-procedure. These procedures are called
    --  by Logger instances when attaching Facilities. All needed operations
@@ -112,18 +126,25 @@ package Alog.Facilities is
 private
 
    type Instance is abstract tagged limited record
-      Name      : Unbounded_String :=
+      Name             : Unbounded_String :=
         To_Unbounded_String (Ada.Command_Line.Command_Name);
       --  Facility Name. Defaults to command-name (first argument). If multiple
       --  facilities are used, names must be set differently.
 
-      Threshold : Log_Level := DEBU;
+      Threshold        : Log_Level := DEBU;
       --  Facility default threshold.
 
       Timestamp_Format : String (1 .. 11) := "%b %d %Y %T";
       --  Default timestamp format to use in this facility.
 
-      Transforms : Transform_List_Package.List;
+      Write_Timestamp  : Boolean := True;
+      --  If True, a timestamp is written with the log message. Default is True.
+
+      Write_Loglevel   : Boolean := False;
+      --  If True, the loglevel associated with the log message is written.
+      --  Default is False.
+
+      Transforms       : Transform_List_Package.List;
       --  List of transforms.
    end record;
 

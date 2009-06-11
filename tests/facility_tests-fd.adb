@@ -41,8 +41,8 @@ package body Facility_Tests.FD is
       Testfile : constant String := "./data/Disable_Write_Loglevel_Fd";
       Reffile  : constant String := "./data/Disable_Write_Loglevel_Fd.ref";
    begin
-      F.Toggle_Write_Timestamp (Set => False);
-      F.Toggle_Write_Loglevel (Set => False);
+      F.Toggle_Write_Timestamp (State => False);
+      F.Toggle_Write_Loglevel (State => False);
       F.Set_Logfile (Path => Testfile);
       F.Write_Message (Msg => "This is a message without loglevel");
 
@@ -63,7 +63,7 @@ package body Facility_Tests.FD is
       Testfile : constant String := "./data/Disable_Write_Timestamp_Fd";
       Reffile  : constant String := "./data/Disable_Write_Timestamp_Fd.ref";
    begin
-      F.Toggle_Write_Timestamp (Set => False);
+      F.Toggle_Write_Timestamp (State => False);
       F.Set_Logfile (Path => Testfile);
       F.Write_Message (Msg => "This is a message without timestamp");
 
@@ -150,8 +150,8 @@ package body Facility_Tests.FD is
       Testfile : constant String := "./data/Set_Threshold_Fd";
       Reffile  : constant String := "./data/Set_Threshold_Fd.ref";
    begin
-      F.Toggle_Write_Timestamp (Set => False);
-      F.Toggle_Write_Loglevel (Set => True);
+      F.Toggle_Write_Timestamp (State => False);
+      F.Toggle_Write_Loglevel (State => True);
       F.Set_Logfile (Path => Testfile);
       F.Write_Message (Level => DEBU,
                        Msg   => "this message should appear in log");
@@ -202,8 +202,8 @@ package body Facility_Tests.FD is
       Testfile : constant String := "./data/Trim_Loglevels_Fd";
       Reffile  : constant String := "./data/Trim_Loglevels_Fd.ref";
    begin
-      F.Toggle_Write_Timestamp (Set => False);
-      F.Toggle_Write_Loglevel (Set => True);
+      F.Toggle_Write_Timestamp (State => False);
+      F.Toggle_Write_Loglevel (State => True);
       F.Set_Logfile (Path => Testfile);
       for Lvl in Alog.Log_Level loop
          F.Write_Message (Level => Lvl,
@@ -226,7 +226,7 @@ package body Facility_Tests.FD is
    begin
       --  We have to disable timestamps, since its changing all
       --  the time :)
-      F.Toggle_Write_Timestamp (Set => False);
+      F.Toggle_Write_Timestamp (State => False);
 
       --  Open logfile, write test message.
       F.Set_Logfile (Path => Testfile);

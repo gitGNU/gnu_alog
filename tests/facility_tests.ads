@@ -37,4 +37,10 @@ package Facility_Tests is
    procedure Set_Threshold;
    --  Test set threshold.
 
+   procedure Toggle_Loglevel;
+   --  Test loglevel-writing related procedures.
+
+   procedure Toggle_Timestamp;
+   --  Test timestamp-writing related procedures.
+
 end Facility_Tests;

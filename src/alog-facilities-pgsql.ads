@@ -116,20 +116,6 @@ package Alog.Facilities.Pgsql is
    procedure Close_Connection (Facility : in out Instance);
    --  Close open database connection.
 
-   procedure Toggle_Write_Timestamp (Facility : in out Instance;
-                                     Set      :        Boolean);
-   --  Enable/disable whether a timestamp is written for log messages.
-
-   function Is_Write_Timestamp (Facility : Instance) return Boolean;
-   --  Returns the current value of Write_Timestamp.
-
-   procedure Toggle_Write_Loglevel (Facility : in out Instance;
-                                    Set      :        Boolean);
-   --  Enable/disable whether the loglevel is written for log messages.
-
-   function Is_Write_Loglevel (Facility : Instance) return Boolean;
-   --  Returns the current value of Write_Loglevel.
-
 private
 
    type Log_SQL_Table is tagged record
@@ -141,23 +127,16 @@ private
    --  Holds Table/Column name information.
 
    type Instance is new Alog.Facilities.Instance with record
-      Log_Connection  : APQ.PostgreSQL.Client.Connection_Type;
+      Log_Connection   : APQ.PostgreSQL.Client.Connection_Type;
       --  Database connection used for logging.
 
-      Trace_Filename  : Unbounded_String :=
+      Trace_Filename   : Unbounded_String :=
         To_Unbounded_String ("./data/trace.sql");
-      Trace_Mode      :  APQ.Trace_Mode_Type := APQ.Trace_APQ;
+      Trace_Mode       :  APQ.Trace_Mode_Type := APQ.Trace_APQ;
       --  SQL trace parameters
 
-      Log_Table       : Log_SQL_Table;
+      Log_Table        : Log_SQL_Table;
       --  Table to insert messages
-
-      Write_Timestamp : Boolean := True;
-      --  If True, a timestamp is written with the log message. Default is True.
-
-      Write_Loglevel  : Boolean := True;
-      --  If True, the loglevel associated with the log message is written.
-      --  Default is True.
    end record;
 
 end Alog.Facilities.Pgsql;

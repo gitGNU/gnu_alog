@@ -272,9 +272,9 @@ package body Logger_Tests is
       Testfile  : constant String := "./data/Log_FD_Facility_Lowercase";
       Reffile   : constant String := "./data/Log_FD_Facility_Lowercase.ref";
    begin
+      Facility.Toggle_Write_Timestamp (State => False);
+
       --  Call facility fd specific procedures.
-      Facilities.File_Descriptor.Handle
-        (Facility).Toggle_Write_Timestamp (Set => False);
       Facilities.File_Descriptor.Handle
         (Facility).Set_Logfile (Testfile);
 
@@ -314,22 +314,18 @@ package body Logger_Tests is
       Testfile2 : constant String := "./data/Log_Multiple_FD_Facilities2";
       Reffile2  : constant String := "./data/Log_Multiple_FD_Facilities2.ref";
    begin
-      --  Set unique names.
+      --  Set facility parameters.
       Facility1.Set_Name (Name => "Facility1");
+      Facility1.Toggle_Write_Timestamp (State => False);
+      Facility1.Toggle_Write_Loglevel (State => True);
+
       Facility2.Set_Name (Name => "Facility2");
+      Facility2.Toggle_Write_Timestamp (State => False);
+      Facility2.Toggle_Write_Loglevel (State => True);
 
       --  Call facility fd specific procedures.
       Facilities.File_Descriptor.Handle
-        (Facility1).Toggle_Write_Timestamp (Set => False);
-      Facilities.File_Descriptor.Handle
-        (Facility1).Toggle_Write_Loglevel (Set => True);
-      Facilities.File_Descriptor.Handle
         (Facility1).Set_Logfile (Testfile1);
-
-      Facilities.File_Descriptor.Handle
-        (Facility2).Toggle_Write_Timestamp (Set => False);
-      Facilities.File_Descriptor.Handle
-        (Facility2).Toggle_Write_Loglevel (Set => True);
       Facilities.File_Descriptor.Handle
         (Facility2).Set_Logfile (Testfile2);
 
@@ -368,9 +364,9 @@ package body Logger_Tests is
       Testfile : constant String := "./data/Log_One_FD_Facility";
       Reffile  : constant String := "./data/Log_One_FD_Facility.ref";
    begin
+      Facility.Toggle_Write_Timestamp (State => False);
+
       --  Call facility fd specific procedures.
-      Facilities.File_Descriptor.Handle
-        (Facility).Toggle_Write_Timestamp (Set => False);
       Facilities.File_Descriptor.Handle
         (Facility).Set_Logfile (Testfile);
 
@@ -399,11 +395,11 @@ package body Logger_Tests is
       Testfile     : constant String := "./data/Log_One_Tasked_FD_Facility";
       Reffile      : constant String := "./data/Log_One_FD_Facility.ref";
    begin
-      Facilities.File_Descriptor.Handle
-        (Fd_Facility1).Toggle_Write_Timestamp (Set => False);
+      Fd_Facility1.Set_Name (Name => "Fd_Facility1");
+      Fd_Facility1.Toggle_Write_Timestamp (State => False);
+
       Facilities.File_Descriptor.Handle
         (Fd_Facility1).Set_Logfile (Path => Testfile);
-      Fd_Facility1.Set_Name (Name => "Fd_Facility1");
 
       Log.Attach_Facility (Facility => Fd_Facility1);
       Log.Attach_Facility (Facility => Fd_Facility2);

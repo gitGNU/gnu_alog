@@ -96,20 +96,6 @@ package body Alog.Facilities.Pgsql is
 
    -------------------------------------------------------------------------
 
-   function Is_Write_Loglevel (Facility : Instance) return Boolean is
-   begin
-      return Facility.Write_Loglevel;
-   end Is_Write_Loglevel;
-
-   -------------------------------------------------------------------------
-
-   function Is_Write_Timestamp (Facility : Instance) return Boolean is
-   begin
-      return Facility.Write_Timestamp;
-   end Is_Write_Timestamp;
-
-   -------------------------------------------------------------------------
-
    procedure Set_Credentials (Facility : in out Instance;
                               Username : String;
                               Password : String)
@@ -220,24 +206,6 @@ package body Alog.Facilities.Pgsql is
    begin
       Facility.Log_Connection.Set_Trace (Set);
    end Toggle_SQL_Trace;
-
-   -------------------------------------------------------------------------
-
-   procedure Toggle_Write_Loglevel (Facility : in out Instance;
-                                    Set      :        Boolean)
-   is
-   begin
-      Facility.Write_Loglevel := Set;
-   end Toggle_Write_Loglevel;
-
-   -------------------------------------------------------------------------
-
-   procedure Toggle_Write_Timestamp (Facility : in out Instance;
-                                     Set      :        Boolean)
-   is
-   begin
-      Facility.Write_Timestamp := Set;
-   end Toggle_Write_Timestamp;
 
    -------------------------------------------------------------------------
 
