@@ -45,9 +45,35 @@ package body Logger_Tests is
       Facility : constant Facilities.Handle :=
         new Facilities.File_Descriptor.Instance;
    begin
+      Assert (Condition => Log.Facility_Count = 0,
+              Message   => "facility count not 0");
+
+      declare
+         F_Handle : Facilities.Handle;
+         pragma Unreferenced (F_Handle);
+      begin
+         F_Handle := Log.Get_Facility (Name => Facility.Get_Name);
+         Fail (Message => "Got facility");
+
+      exception
+         when Logger.Facility_Not_Found =>
+            null;
+      end;
+
       Log.Attach_Facility (Facility => Facility);
       Assert (Condition => Log.Facility_Count = 1,
               Message => "could not attach facility");
+
+      declare
+         use type Facilities.Handle;
+
+         F_Handle : Facilities.Handle;
+      begin
+         F_Handle := Log.Get_Facility (Name => Facility.Get_Name);
+
+         Assert (Condition => F_Handle = Facility,
+                 Message   => "facility mismatch");
+      end;
 
       begin
          Log.Attach_Facility (Facility => Facility);

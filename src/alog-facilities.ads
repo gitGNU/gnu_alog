@@ -108,7 +108,7 @@ package Alog.Facilities is
    function Get_Transform
      (Facility : Class;
       Name     : String)
-      return Alog.Transforms.Handle;
+      return Transforms.Handle;
    --  Return a transform specified by the string 'Name'.
 
    procedure Iterate

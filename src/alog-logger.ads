@@ -53,6 +53,12 @@ package Alog.Logger is
    function Facility_Count (Logger : Instance) return Natural;
    --  Return number of attached facilites.
 
+   function Get_Facility
+     (Logger : Instance;
+      Name   : String)
+      return Facilities.Handle;
+   --  Return a facility specified by the string 'Name'.
+
    procedure Attach_Transform (Logger    : in out Instance;
                                Transform :        Transforms.Handle);
    --  Attach a transform to logger instance.
