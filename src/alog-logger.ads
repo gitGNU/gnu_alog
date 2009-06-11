@@ -71,6 +71,12 @@ package Alog.Logger is
    function Transform_Count (Logger : Instance) return Natural;
    --  Return number of attached transforms.
 
+   function Get_Transform
+     (Logger : Instance;
+      Name   : String)
+      return Transforms.Handle;
+   --  Return a transform specified by the string 'Name'.
+
    procedure Clear (L : in out Instance);
    --  Clear logger instance. Detach and teardown all attached facilities and
    --  transforms.

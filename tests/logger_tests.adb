@@ -90,9 +90,35 @@ package body Logger_Tests is
       Log       : Logger.Instance (Init => False);
       Transform : constant Transforms.Handle := new Transforms.Casing.Instance;
    begin
+      Assert (Condition => Log.Transform_Count = 0,
+              Message   => "transform count not 0");
+
+      declare
+         T_Handle : Transforms.Handle;
+         pragma Unreferenced (T_Handle);
+      begin
+         T_Handle := Log.Get_Transform (Name => Transform.Get_Name);
+         Fail (Message => "Got transform");
+
+      exception
+         when Logger.Transform_Not_Found =>
+            null;
+      end;
+
       Log.Attach_Transform (Transform => Transform);
       Assert (Condition => Log.Transform_Count = 1,
               Message => "could not attach transform");
+
+      declare
+         use type Transforms.Handle;
+
+         T_Handle : Transforms.Handle;
+      begin
+         T_Handle := Log.Get_Transform (Name => Transform.Get_Name);
+
+         Assert (Condition => T_Handle = Transform,
+                 Message   => "transform mismatch");
+      end;
 
       begin
          Log.Attach_Transform (Transform => Transform);

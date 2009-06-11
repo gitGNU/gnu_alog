@@ -202,6 +202,26 @@ package body Alog.Logger is
 
    -------------------------------------------------------------------------
 
+   function Get_Transform
+     (Logger : Instance;
+      Name   : String)
+      return Transforms.Handle
+   is
+      use Transforms_Stack_Package;
+
+      Position : Cursor;
+   begin
+      Position := Logger.T_Stack.Find (Key => To_Unbounded_String (Name));
+
+      if Position = No_Element then
+         raise Transform_Not_Found with "Transform '" & Name & "' not found.";
+      end if;
+
+      return Element (Position => Position);
+   end Get_Transform;
+
+   -------------------------------------------------------------------------
+
    procedure Initialize (Logger : in out Instance) is
    begin
       if Logger.Init then
