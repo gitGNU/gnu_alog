@@ -27,6 +27,8 @@ with GNAT.Calendar.Time_IO;
 
 package body Alog.Facilities is
 
+   use Transform_Map_Package;
+
    -------------------------------------------------------------------------
 
    function "=" (Left  : Handle;
@@ -38,10 +40,21 @@ package body Alog.Facilities is
    -------------------------------------------------------------------------
 
    procedure Add_Transform (Facility  : in out Class;
-                            Transform :        Transforms.Handle) is
+                            Transform :        Transforms.Handle)
+   is
+      T_Name   : constant Unbounded_String :=
+        To_Unbounded_String (Transform.Get_Name);
+      Position : Cursor;
    begin
+      Position := Facility.Transforms.Find (Key => T_Name);
+      if Position /= No_Element then
+         raise Transform_Already_Present with "Transform '"
+           & To_String (T_Name)
+           & "' is already present.";
+      end if;
+
       Facility.Transforms.Insert
-        (Key      => To_Unbounded_String (Transform.Get_Name),
+        (Key      => T_Name,
          New_Item => Transform);
    end Add_Transform;
 
@@ -77,8 +90,6 @@ package body Alog.Facilities is
       Name     : String)
       return Alog.Transforms.Handle
    is
-      use Transform_Map_Package;
-
       Position : Cursor;
    begin
       Position := Facility.Transforms.Find (Key => To_Unbounded_String (Name));
@@ -139,7 +150,6 @@ package body Alog.Facilities is
    procedure Remove_Transform (Facility : in out Class;
                                Name     :        String)
    is
-      use Transform_Map_Package;
       Position : Cursor;
    begin
       Position := Facility.Transforms.Find (To_Unbounded_String (Name));

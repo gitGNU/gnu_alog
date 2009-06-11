@@ -124,8 +124,10 @@ package Alog.Facilities is
    --  Bounded string with length Max_Path_Length. Used in methods which
    --  involve filesystem operations.
 
-   Transform_Not_Found : exception;
+   Transform_Not_Found       : exception;
    --  Will be raised if a requested transform is not found.
+   Transform_Already_Present : exception;
+   --  Will be raised if a transform is already present.
 
 private
 

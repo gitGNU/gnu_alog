@@ -111,6 +111,15 @@ package body Facility_Tests is
       Assert (Condition => F.Transform_Count = 1,
               Message   => "Unable to add transform");
 
+      begin
+         F.Add_Transform (Transform => T'Unchecked_Access);
+         Fail (Message => "Added existing transform");
+
+      exception
+         when Transform_Already_Present =>
+            null;
+      end;
+
       declare
          use type Transforms.Handle;
 
