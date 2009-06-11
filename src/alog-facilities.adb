@@ -88,14 +88,14 @@ package body Alog.Facilities is
    function Get_Transform
      (Facility : Class;
       Name     : String)
-      return Alog.Transforms.Handle
+      return Transforms.Handle
    is
       Position : Cursor;
    begin
       Position := Facility.Transforms.Find (Key => To_Unbounded_String (Name));
 
       if Position = No_Element then
-         raise Transform_Not_Found with "Transform '" & Name & " not found.";
+         raise Transform_Not_Found with "Transform '" & Name & "' not found.";
       end if;
 
       return Element (Position => Position);
@@ -147,7 +147,7 @@ package body Alog.Facilities is
       Position := Facility.Transforms.Find (To_Unbounded_String (Name));
 
       if Position = No_Element then
-         raise Transform_Not_Found with "Transform '" & Name & " not found.";
+         raise Transform_Not_Found with "Transform '" & Name & "' not found.";
       end if;
 
       Facility.Transforms.Delete (Position);
