@@ -48,6 +48,14 @@ package body Logger_Tests is
       Log.Attach_Facility (Facility => Facility);
       Assert (Condition => Log.Facility_Count = 1,
               Message => "could not attach facility");
+
+      begin
+         Log.Attach_Facility (Facility => Facility);
+         Fail (Message => "attached duplicate facility");
+      exception
+         when Logger.Facility_Already_Present =>
+            null;
+      end;
    end Attach_Facility;
 
    -------------------------------------------------------------------------

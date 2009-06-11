@@ -30,9 +30,22 @@ package body Alog.Logger is
    procedure Attach_Facility (Logger   : in out Alog.Logger.Instance;
                               Facility :        Alog.Facilities.Handle)
    is
+      use Facilities_Stack_Package;
+
+      F_Name : constant Unbounded_String :=
+        To_Unbounded_String (Facility.Get_Name);
+      Position : Cursor;
    begin
+      Position := Logger.F_Stack.Find (Key => F_Name);
+
+      if Position /= No_Element then
+         raise Facility_Already_Present with "Facility '"
+           & To_String (F_Name)
+           & "' is already present.";
+      end if;
+
       Logger.F_Stack.Insert
-        (Key      =>  To_Unbounded_String (Facility.Get_Name),
+        (Key      =>  F_Name,
          New_Item => Facility);
    end Attach_Facility;
 

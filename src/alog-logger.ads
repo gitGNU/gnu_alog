@@ -87,6 +87,8 @@ package Alog.Logger is
 
    Facility_Not_Found : exception;
    --  Will be raised if a requested facility is not found.
+   Facility_Already_Present : exception;
+   --  Will be raised if a facility is already present.
    Transform_Not_Found : exception;
    --  Will be raised if a requested transform is not found.
 
