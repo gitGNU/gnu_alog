@@ -144,39 +144,33 @@ package body Alog.Logger is
    procedure Finalize (Logger : in out Instance) is
 
       --  Forward specs.
-      procedure Free_Facility (Position : Facilities_Stack_Package.Cursor);
+      procedure Free_Facility (F_Handle : in out Facilities.Handle);
 
-      procedure Free_Facility (Position : Facilities_Stack_Package.Cursor)
+      procedure Free_Facility (F_Handle : in out Facilities.Handle)
       is
-         use Facilities_Stack_Package;
-         Facility_Handle : Facilities.Handle := Element (Position);
       begin
          --  Cleanup this facility.
-         Facility_Handle.Teardown;
-         Free (Facility_Handle);
+         F_Handle.Teardown;
+         Free (F_Handle);
       end Free_Facility;
 
       --  Forward specs.
-      procedure Free_Transform (Position : Transforms_Stack_Package.Cursor);
+      procedure Free_Transform (Transform : in out Transforms.Handle);
 
-      procedure Free_Transform (Position : Transforms_Stack_Package.Cursor)
+      procedure Free_Transform (Transform : in out Transforms.Handle)
       is
-         use Transforms_Stack_Package;
-         Transform_Handle : Transforms.Handle := Element (Position);
       begin
          --  Cleanup this transform.
-         Transform_Handle.Teardown;
-         Free (Transform_Handle);
+         Transform.Teardown;
+         Free (Transform);
       end Free_Transform;
    begin
       --  Iterate over all attached facilities.
-      Facilities_Stack_Package.Iterate (Container => Logger.F_Stack,
-               Process   => Free_Facility'Access);
+      Logger.Iterate (Process => Free_Facility'Access);
       Logger.F_Stack.Clear;
 
       --  Iterate over all attached transforms.
-      Transforms_Stack_Package.Iterate (Container => Logger.T_Stack,
-               Process   => Free_Transform'Access);
+      Logger.Iterate (Process => Free_Transform'Access);
       Logger.T_Stack.Clear;
    end Finalize;
 
@@ -239,35 +233,82 @@ package body Alog.Logger is
 
    -------------------------------------------------------------------------
 
+   procedure Iterate
+     (Logger  : Instance;
+      Process : not null access
+        procedure (Facility_Handle : in out Facilities.Handle))
+   is
+
+      procedure Do_Process (Position : Facilities_Stack_Package.Cursor);
+      --  Call 'Process' for each facility.
+
+      procedure Do_Process (Position : Facilities_Stack_Package.Cursor) is
+         F_Handle : Facilities.Handle;
+      begin
+         F_Handle := Facilities_Stack_Package.Element (Position => Position);
+
+         Process (Facility_Handle => F_Handle);
+      end Do_Process;
+
+   begin
+      Logger.F_Stack.Iterate (Process => Do_Process'Access);
+   end Iterate;
+
+   -------------------------------------------------------------------------
+
+   procedure Iterate
+     (Logger  : Instance;
+      Process : not null access procedure
+        (Transform_Handle : in out Transforms.Handle))
+   is
+
+      procedure Do_Process (Position : Transforms_Stack_Package.Cursor);
+      --  Call 'Process' for each Transform.
+
+      procedure Do_Process (Position : Transforms_Stack_Package.Cursor) is
+         T_Handle : Transforms.Handle;
+      begin
+         T_Handle := Transforms_Stack_Package.Element (Position => Position);
+
+         Process (Transform_Handle => T_Handle);
+      end Do_Process;
+
+   begin
+      Logger.T_Stack.Iterate (Process => Do_Process'Access);
+   end Iterate;
+
+   -------------------------------------------------------------------------
+
    procedure Log_Message (Logger : Instance;
                           Level  : Log_Level;
                           Msg    : String)
    is
-      F_Position : Facilities_Stack_Package.Cursor := Logger.F_Stack.First;
-      F_Item     : Facilities.Handle;
       Out_Msg    : String := Msg;
+
+      procedure Do_Log (Facility_Handle : in out Facilities.Handle);
+      --  Apply all transformations and call Write_Message for each facility.
 
       procedure Do_Transform (Transform : Transforms.Handle);
       --  Call 'Transform_Message' for each transform.
+
+      procedure Do_Log (Facility_Handle : in out Facilities.Handle)
+      is
+      begin
+         if Facility_Handle.Transform_Count > 0 then
+            Facility_Handle.Iterate (Process => Do_Transform'Access);
+         end if;
+         Facility_Handle.Write_Message (Level => Level,
+                                        Msg   => Out_Msg);
+      end Do_Log;
 
       procedure Do_Transform (Transform : Transforms.Handle) is
       begin
          Out_Msg := Transform.Transform_Message (Level => Level,
                                                  Msg   => Out_Msg);
       end Do_Transform;
-   begin
-      --  Loop over all facilities.
-      while Facilities_Stack_Package.Has_Element (F_Position) loop
-         F_Item := Facilities_Stack_Package.Element (F_Position);
 
-         --  Apply all transformations.
-         if F_Item.Transform_Count > 0 then
-            F_Item.Iterate (Process => Do_Transform'Access);
-         end if;
-         F_Item.Write_Message (Level => Level,
-                               Msg   => Out_Msg);
-         Facilities_Stack_Package.Next (F_Position);
-      end loop;
+   begin
+      Logger.Iterate (Process => Do_Log'Access);
    end Log_Message;
 
    -------------------------------------------------------------------------

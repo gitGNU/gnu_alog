@@ -59,6 +59,12 @@ package Alog.Logger is
       return Facilities.Handle;
    --  Return a facility specified by the string 'Name'.
 
+   procedure Iterate
+     (Logger  : Instance;
+      Process : not null access
+        procedure (Facility_Handle : in out Facilities.Handle));
+   --  Call 'Process' for all attached facilities.
+
    procedure Attach_Transform (Logger    : in out Instance;
                                Transform :        Transforms.Handle);
    --  Attach a transform to logger instance.
@@ -76,6 +82,12 @@ package Alog.Logger is
       Name   : String)
       return Transforms.Handle;
    --  Return a transform specified by the string 'Name'.
+
+   procedure Iterate
+     (Logger  : Instance;
+      Process : not null access
+        procedure (Transform_Handle : in out Transforms.Handle));
+   --  Call 'Process' for all attached transforms.
 
    procedure Clear (L : in out Instance);
    --  Clear logger instance. Detach and teardown all attached facilities and
