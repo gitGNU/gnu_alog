@@ -24,6 +24,8 @@
 with Ada.Finalization;
 with Ada.Unchecked_Deallocation;
 with Ada.Containers.Hashed_Sets;
+with Ada.Containers.Indefinite_Ordered_Maps;
+with Ada.Strings.Unbounded;
 
 with Alog.Facilities;
 with Alog.Transforms;
@@ -90,7 +92,7 @@ package Alog.Logger is
 
 private
 
-   use Ada.Containers;
+   use Ada.Strings.Unbounded;
    use Alog.Facilities;
    use Alog.Transforms;
 
@@ -101,13 +103,12 @@ private
    --  Finalize procedure used to cleanup.
 
    package Facilities_Stack_Package is
-     new Ada.Containers.Hashed_Sets
-       (Element_Type        => Alog.Facilities.Handle,
-        Hash                => Alog.Facilities.Hash,
-        Equivalent_Elements => "=");
-   --  Storage for attached facilities. Equal-Function is provided by facility.
+     new Ada.Containers.Indefinite_Ordered_Maps
+       (Key_Type     => Ada.Strings.Unbounded.Unbounded_String,
+        Element_Type => Alog.Facilities.Handle);
+   --  Storage for attached facilities.
 
-   subtype Facilities_Stack is Facilities_Stack_Package.Set;
+   subtype Facilities_Stack is Facilities_Stack_Package.Map;
    --  Manages attached facilities for logger instance.
 
    package Transforms_Stack_Package is

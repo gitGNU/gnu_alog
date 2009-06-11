@@ -21,11 +21,8 @@
 --  MA  02110-1301  USA
 --
 
-with Ada.Strings.Unbounded;
-
 package body Alog.Logger.Tasking is
 
-   use Ada.Strings.Unbounded;
    use Ada.Exceptions;
 
    -------------------------------------------------------------------------

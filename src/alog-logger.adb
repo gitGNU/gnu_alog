@@ -31,7 +31,9 @@ package body Alog.Logger is
                               Facility :        Alog.Facilities.Handle)
    is
    begin
-      Logger.F_Stack.Insert (New_Item => Facility);
+      Logger.F_Stack.Insert
+        (Key      =>  To_Unbounded_String (Facility.Get_Name),
+         New_Item => Facility);
    end Attach_Facility;
 
    -------------------------------------------------------------------------
@@ -58,18 +60,24 @@ package body Alog.Logger is
       use Facilities_Stack_Package;
 
       Position        : Cursor;
-      Facility_Handle : Alog.Facilities.Handle;
+      Facility_Handle : Facilities.Handle;
+      F_Name          : constant Unbounded_String :=
+        To_Unbounded_String (Facility.Get_Name);
    begin
-      --  Find element first. If not found, exception is raised.
-      Position := Logger.F_Stack.Find (Item => Facility);
+      Position := Logger.F_Stack.Find (Key => F_Name);
+
+      if Position = No_Element then
+         raise Facility_Not_Found with "Facility '"
+           & To_String (F_Name)
+           & "' not found.";
+      end if;
+
       Facility_Handle := Element (Position);
 
-      Logger.F_Stack.Delete (Item => Facility);
+      Logger.F_Stack.Delete (Key => F_Name);
+
       --  Free memory.
       Free (Facility_Handle);
-   exception
-      when Constraint_Error =>
-         raise Facility_Not_Found;
    end Detach_Facility;
 
    -------------------------------------------------------------------------

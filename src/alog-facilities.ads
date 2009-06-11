@@ -22,7 +22,7 @@
 --
 
 with Ada.Strings.Bounded;
-with Ada.Strings.Unbounded.Hash;
+with Ada.Strings.Unbounded;
 with Ada.Command_Line;
 with Ada.Containers.Indefinite_Ordered_Maps;
 
@@ -53,9 +53,6 @@ package Alog.Facilities is
 
    function Get_Name (Facility : Class) return String;
    --  Get facility name.
-
-   function Hash (Element : Handle) return Ada.Containers.Hash_Type;
-   --  Return Hash value of facility.
 
    procedure Set_Threshold (Facility : in out Class;
                             Level    :        Log_Level);

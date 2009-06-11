@@ -103,14 +103,6 @@ package body Alog.Facilities is
 
    -------------------------------------------------------------------------
 
-   function Hash (Element : Handle) return Ada.Containers.Hash_Type is
-   begin
-      return Ada.Strings.Unbounded.Hash
-        (Key => To_Unbounded_String (Element.Get_Name));
-   end Hash;
-
-   -------------------------------------------------------------------------
-
    function Is_Write_Loglevel (Facility : Class) return Boolean is
    begin
       return Facility.Write_Loglevel;
