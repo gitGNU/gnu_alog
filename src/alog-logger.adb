@@ -82,22 +82,20 @@ package body Alog.Logger is
 
    -------------------------------------------------------------------------
 
-   procedure Detach_Facility (Logger   : in out Instance;
-                              Facility :        Facilities.Handle)
+   procedure Detach_Facility (Logger : in out Instance;
+                              Name   :        String)
    is
       use Facilities_Stack_Package;
 
       Position        : Cursor;
       Facility_Handle : Facilities.Handle;
-      F_Name          : constant Unbounded_String :=
-        To_Unbounded_String (Facility.Get_Name);
+      F_Name          : constant Unbounded_String := To_Unbounded_String (Name);
    begin
       Position := Logger.F_Stack.Find (Key => F_Name);
 
       if Position = No_Element then
          raise Facility_Not_Found with "Facility '"
-           & To_String (F_Name)
-           & "' not found.";
+           & Name & "' not found.";
       end if;
 
       Facility_Handle := Element (Position);
@@ -110,22 +108,20 @@ package body Alog.Logger is
 
    -------------------------------------------------------------------------
 
-   procedure Detach_Transform (Logger    : in out Instance;
-                               Transform :        Transforms.Handle)
+   procedure Detach_Transform (Logger : in out Instance;
+                               Name   :        String)
    is
       use Transforms_Stack_Package;
 
       Position : Cursor;
       T_Handle : Transforms.Handle;
-      T_Name   : constant Unbounded_String :=
-        To_Unbounded_String (Transform.Get_Name);
+      T_Name   : constant Unbounded_String := To_Unbounded_String (Name);
    begin
       Position := Logger.T_Stack.Find (Key => T_Name);
 
       if Position = No_Element then
          raise Transform_Not_Found with "Transform '"
-           & To_String (T_Name)
-           & "' not found.";
+           & Name & "' not found.";
       end if;
 
       T_Handle := Element (Position);

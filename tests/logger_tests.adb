@@ -113,7 +113,7 @@ package body Logger_Tests is
       Log.Attach_Facility (Facility => Facility);
       Assert (Condition => Log.Facility_Count = 1,
               Message   => "could not attach");
-      Log.Detach_Facility (Facility => Facility);
+      Log.Detach_Facility (Name => Facility.Get_Name);
       Assert (Condition => Log.Facility_Count = 0,
               Message   => "could not detach");
    end Detach_Facility_Instance;
@@ -126,7 +126,7 @@ package body Logger_Tests is
         new Facilities.Syslog.Instance;
    begin
       Facility.Set_Name ("Syslog_Facility");
-      Log.Detach_Facility (Facility => Facility);
+      Log.Detach_Facility (Name => Facility.Get_Name);
       Fail (Message => "could detach unattached facility");
    exception
       when Logger.Facility_Not_Found =>
@@ -145,7 +145,7 @@ package body Logger_Tests is
    begin
       begin
          Facility.Set_Name ("Syslog_Facility");
-         Log.Detach_Facility (Facility => Facility);
+         Log.Detach_Facility (Name => Facility.Get_Name);
          Fail (Message => "could detach unattached facility");
       exception
          when Logger.Facility_Not_Found =>
@@ -177,7 +177,7 @@ package body Logger_Tests is
       Log.Attach_Transform (Transform => Transform);
       Assert (Condition => Log.Transform_Count = 1,
               Message   => "could not attach");
-      Log.Detach_Transform (Transform => Transform);
+      Log.Detach_Transform (Name => Transform.Get_Name);
       Assert (Condition => Log.Transform_Count = 0,
               Message   => "could not detach");
    end Detach_Transform_Instance;
@@ -190,7 +190,7 @@ package body Logger_Tests is
                     new Transforms.Casing.Instance;
    begin
       Transform.Set_Name ("Casing_Transform");
-      Log.Detach_Transform (Transform => Transform);
+      Log.Detach_Transform (Name => Transform.Get_Name);
       Fail (Message => "could detach unattached transform");
    exception
       when Logger.Transform_Not_Found =>
@@ -425,7 +425,7 @@ package body Logger_Tests is
       Assert (Condition => F_Count = 2,
               Message   => "facility count not 2");
 
-      Log.Detach_Facility (Facility => Fd_Facility2);
+      Log.Detach_Facility (Name => Fd_Facility2.Get_Name);
       Log.Facility_Count (Count => F_Count);
       Assert (Condition => F_Count = 1,
               Message   => "facility count not 1");
@@ -469,7 +469,7 @@ package body Logger_Tests is
            Facilities.Mock.Exception_Message,
          Message   => "Found wrong exception message");
 
-      Log.Detach_Facility (Facility => Mock_Facility);
+      Log.Detach_Facility (Name => Mock_Facility.Get_Name);
       Log.Log_Message (Level => DEBU,
                        Msg   => "Test message 2");
 

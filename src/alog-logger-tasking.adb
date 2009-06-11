@@ -53,8 +53,8 @@ package body Alog.Logger.Tasking is
 
                ----------------------------------------------------------------
 
-               accept Detach_Facility (Facility : Facilities.Handle) do
-                  Logsink.Detach_Facility (Facility => Facility);
+               accept Detach_Facility (Name : String) do
+                  Logsink.Detach_Facility (Name => Name);
                end Detach_Facility;
             or
 

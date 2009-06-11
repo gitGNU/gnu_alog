@@ -45,9 +45,10 @@ package Alog.Logger is
                               Facility :        Facilities.Handle);
    --  Attach a facility to logger instance.
 
-   procedure Detach_Facility (Logger   : in out Instance;
-                              Facility :        Facilities.Handle);
-   --  Detach a facility from logger instance.
+   procedure Detach_Facility (Logger : in out Instance;
+                              Name   :        String);
+   --  Detach a facility with name 'Name' from logger instance. If the facility
+   --  is not found a Facility_Not_Found exception is raised.
 
    function Facility_Count (Logger : Instance) return Natural;
    --  Return number of attached facilites.
@@ -56,9 +57,10 @@ package Alog.Logger is
                                Transform :        Transforms.Handle);
    --  Attach a transform to logger instance.
 
-   procedure Detach_Transform (Logger    : in out Instance;
-                               Transform :        Transforms.Handle);
-   --  Detach a transform from logger instance.
+   procedure Detach_Transform (Logger : in out Instance;
+                               Name   :        String);
+   --  Detach a transform with name 'Name' from logger instance. If the
+   --  transform is not found a Transform_Not_Found exception is raised.
 
    function Transform_Count (Logger : Instance) return Natural;
    --  Return number of attached transforms.
