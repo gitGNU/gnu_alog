@@ -23,7 +23,6 @@
 
 with Ada.Finalization;
 with Ada.Unchecked_Deallocation;
-with Ada.Containers.Hashed_Sets;
 with Ada.Containers.Indefinite_Ordered_Maps;
 with Ada.Strings.Unbounded;
 
@@ -43,22 +42,22 @@ package Alog.Logger is
    --  possible as soon as a new logger is instantiated.
 
    procedure Attach_Facility (Logger   : in out Alog.Logger.Instance;
-                              Facility :        Alog.Facilities.Handle);
+                              Facility :        Facilities.Handle);
    --  Attach a facility to logger instance.
 
    procedure Detach_Facility (Logger   : in out Instance;
-                              Facility :        Alog.Facilities.Handle);
+                              Facility :        Facilities.Handle);
    --  Detach a facility from logger instance.
 
    function Facility_Count (Logger : Instance) return Natural;
    --  Return number of attached facilites.
 
    procedure Attach_Transform (Logger    : in out Instance;
-                               Transform :        Alog.Transforms.Handle);
+                               Transform :        Transforms.Handle);
    --  Attach a transform to logger instance.
 
    procedure Detach_Transform (Logger    : in out Instance;
-                               Transform :        Alog.Transforms.Handle);
+                               Transform :        Transforms.Handle);
    --  Detach a transform from logger instance.
 
    function Transform_Count (Logger : Instance) return Natural;
@@ -76,21 +75,23 @@ package Alog.Logger is
    --  different targets (depending on the facilites) automatically.
 
    procedure Free is new Ada.Unchecked_Deallocation
-     (Object => Alog.Facilities.Class,
-      Name   => Alog.Facilities.Handle);
+     (Object => Facilities.Class,
+      Name   => Facilities.Handle);
    --  Free memory allocated by a facility.
 
    procedure Free is new Ada.Unchecked_Deallocation
-     (Object => Alog.Transforms.Class,
-      Name   => Alog.Transforms.Handle);
+     (Object => Transforms.Class,
+      Name   => Transforms.Handle);
    --  Free memory allocated by a transform.
 
-   Facility_Not_Found : exception;
+   Facility_Not_Found        : exception;
    --  Will be raised if a requested facility is not found.
-   Facility_Already_Present : exception;
+   Facility_Already_Present  : exception;
    --  Will be raised if a facility is already present.
-   Transform_Not_Found : exception;
+   Transform_Not_Found       : exception;
    --  Will be raised if a requested transform is not found.
+   Transform_Already_Present : exception;
+   --  Will be raised if a facility is already present.
 
 private
 
@@ -113,14 +114,13 @@ private
    subtype Facilities_Stack is Facilities_Stack_Package.Map;
    --  Manages attached facilities for logger instance.
 
-   package Transforms_Stack_Package is
-     new Ada.Containers.Hashed_Sets
-       (Element_Type        => Alog.Transforms.Handle,
-        Hash                => Alog.Transforms.Hash,
-        Equivalent_Elements => "=");
-   --  Storage for attached transforms. Equal-Function is provided by transform.
+   package Transforms_Stack_Package is new
+     Ada.Containers.Indefinite_Ordered_Maps
+       (Key_Type     => Unbounded_String,
+        Element_Type => Transforms.Handle);
+   --  Storage for attached transforms.
 
-   subtype Transforms_Stack is Transforms_Stack_Package.Set;
+   subtype Transforms_Stack is Transforms_Stack_Package.Map;
    --  Manages attached transforms for transforms instance.
 
    type Instance (Init : Boolean) is new

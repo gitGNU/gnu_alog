@@ -54,8 +54,23 @@ package body Alog.Logger is
    procedure Attach_Transform (Logger    : in out Instance;
                                Transform :        Alog.Transforms.Handle)
    is
+      use Transforms_Stack_Package;
+
+      T_Name : constant Unbounded_String :=
+        To_Unbounded_String (Transform.Get_Name);
+      Position : Cursor;
    begin
-      Logger.T_Stack.Insert (New_Item => Transform);
+      Position := Logger.T_Stack.Find (Key => T_Name);
+
+      if Position /= No_Element then
+         raise Transform_Already_Present with "Transform '"
+           & To_String (T_Name)
+           & "' is already present.";
+      end if;
+
+      Logger.T_Stack.Insert
+        (Key      =>  T_Name,
+         New_Item => Transform);
    end Attach_Transform;
 
    -------------------------------------------------------------------------
@@ -68,7 +83,7 @@ package body Alog.Logger is
    -------------------------------------------------------------------------
 
    procedure Detach_Facility (Logger   : in out Instance;
-                              Facility :        Alog.Facilities.Handle)
+                              Facility :        Facilities.Handle)
    is
       use Facilities_Stack_Package;
 
@@ -96,23 +111,29 @@ package body Alog.Logger is
    -------------------------------------------------------------------------
 
    procedure Detach_Transform (Logger    : in out Instance;
-                               Transform :        Alog.Transforms.Handle)
+                               Transform :        Transforms.Handle)
    is
       use Transforms_Stack_Package;
 
-      Position        : Cursor;
-      Transform_Handle : Alog.Transforms.Handle;
+      Position : Cursor;
+      T_Handle : Transforms.Handle;
+      T_Name   : constant Unbounded_String :=
+        To_Unbounded_String (Transform.Get_Name);
    begin
-      --  Find element first. If not found, exception is raised.
-      Position := Logger.T_Stack.Find (Item => Transform);
-      Transform_Handle := Element (Position);
+      Position := Logger.T_Stack.Find (Key => T_Name);
 
-      Logger.T_Stack.Delete (Item => Transform);
+      if Position = No_Element then
+         raise Transform_Not_Found with "Transform '"
+           & To_String (T_Name)
+           & "' not found.";
+      end if;
+
+      T_Handle := Element (Position);
+
+      Logger.T_Stack.Delete (Key => T_Name);
+
       --  Free memory.
-      Free (Transform_Handle);
-   exception
-      when Constraint_Error =>
-         raise Transform_Not_Found;
+      Free (T_Handle);
    end Detach_Transform;
 
    -------------------------------------------------------------------------
@@ -132,7 +153,7 @@ package body Alog.Logger is
       procedure Free_Facility (Position : Facilities_Stack_Package.Cursor)
       is
          use Facilities_Stack_Package;
-         Facility_Handle : Alog.Facilities.Handle := Element (Position);
+         Facility_Handle : Facilities.Handle := Element (Position);
       begin
          --  Cleanup this facility.
          Facility_Handle.Teardown;
@@ -145,7 +166,7 @@ package body Alog.Logger is
       procedure Free_Transform (Position : Transforms_Stack_Package.Cursor)
       is
          use Transforms_Stack_Package;
-         Transform_Handle : Alog.Transforms.Handle := Element (Position);
+         Transform_Handle : Transforms.Handle := Element (Position);
       begin
          --  Cleanup this transform.
          Transform_Handle.Teardown;
@@ -187,7 +208,7 @@ package body Alog.Logger is
                           Msg    : String)
    is
       F_Position : Facilities_Stack_Package.Cursor := Logger.F_Stack.First;
-      F_Item     : Alog.Facilities.Handle;
+      F_Item     : Facilities.Handle;
       Out_Msg    : String := Msg;
 
       procedure Do_Transform (Transform : Transforms.Handle);

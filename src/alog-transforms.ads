@@ -21,8 +21,7 @@
 --  MA  02110-1301  USA
 --
 
-with Ada.Strings.Unbounded.Hash;
-with Ada.Containers;
+with Ada.Strings.Unbounded;
 
 --  Abstract package Transforms. Provides methods used by all Alog transforms.
 package Alog.Transforms is
@@ -47,9 +46,6 @@ package Alog.Transforms is
 
    function Get_Name (Transform : Class) return String;
    --  Get transform name.
-
-   function Hash (Element : Handle) return Ada.Containers.Hash_Type;
-   --  Return Hash value of transform.
 
    function Transform_Message (Transform : Instance;
                                Level     : Log_Level;

@@ -40,13 +40,6 @@ package body Alog.Transforms is
 
    -------------------------------------------------------------------------
 
-   function Hash (Element : Handle) return Ada.Containers.Hash_Type is
-   begin
-      return Hash (Key => To_Unbounded_String (Element.Get_Name));
-   end Hash;
-
-   -------------------------------------------------------------------------
-
    procedure Set_Name (Transform : in out Class;
                        Name      :        String)
    is

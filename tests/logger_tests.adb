@@ -67,6 +67,15 @@ package body Logger_Tests is
       Log.Attach_Transform (Transform => Transform);
       Assert (Condition => Log.Transform_Count = 1,
               Message => "could not attach transform");
+
+      begin
+         Log.Attach_Transform (Transform => Transform);
+
+         Fail (Message => "attached duplicate transform");
+      exception
+         when Logger.Transform_Already_Present =>
+            null;
+      end;
    end Attach_Transform;
 
    -------------------------------------------------------------------------
