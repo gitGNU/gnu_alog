@@ -480,6 +480,30 @@ package body Logger_Tests is
       Assert (Condition => F_Count = 1,
               Message   => "facility count not 1");
 
+      declare
+         use type Facilities.Handle;
+
+         F_Handle : Facilities.Handle;
+      begin
+         Log.Get_Facility (Name     => Fd_Facility1.Get_Name,
+                           Facility => F_Handle);
+
+         Assert (Condition => F_Handle = Fd_Facility1,
+                 Message   => "Fd_Facility1 mismatch");
+      end;
+
+      declare
+         F_Handle : Facilities.Handle;
+      begin
+         Log.Get_Facility (Name     => "nonexistent",
+                           Facility => F_Handle);
+         Fail (Message => "Got nonexistent facility");
+
+      exception
+         when Logger.Facility_Not_Found =>
+            null;
+      end;
+
       Log.Log_Message (Level => DEBU,
                        Msg   => "Logger testmessage, one fd facility");
 

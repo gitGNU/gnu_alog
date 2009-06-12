@@ -74,6 +74,15 @@ package body Alog.Logger.Tasking is
 
                ----------------------------------------------------------------
 
+               accept Get_Facility (Name     : String;
+                                    Facility : out Facilities.Handle)
+               do
+                  Facility := Logsink.Get_Facility (Name => Name);
+               end Get_Facility;
+            or
+
+               ----------------------------------------------------------------
+
                accept Get_Last_Exception
                  (Occurrence : out Exception_Occurrence)
                do

@@ -41,6 +41,10 @@ package Alog.Logger.Tasking is
       entry Facility_Count (Count : out Natural);
       --  Return number of attached facilites.
 
+      entry Get_Facility (Name     :     String;
+                          Facility : out Facilities.Handle);
+      --  Return a facility specified by the string 'Name'.
+
       entry Log_Message (Level : Log_Level;
                          Msg   : String);
       --  Log a message. The Write_Message() procedure of all attached
