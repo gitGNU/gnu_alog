@@ -50,7 +50,9 @@ package Alog.Logger.Tasking is
       --  Log a message. The Write_Message() procedure of all attached
       --  facilities is called. Depending on the Log-Threshold set, the message
       --  is logged to different targets (depending on the facilites)
-      --  automatically. Clear the last exception occurrence if none occured.
+      --  automatically. Clear the last exception occurrence for the caller if
+      --  none occurred or replace existing occurrence with new raised
+      --  exception.
 
       entry Clear;
       --  Clear tasked logger instance. Detach and teardown all attached

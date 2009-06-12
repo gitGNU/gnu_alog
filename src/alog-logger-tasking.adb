@@ -21,23 +21,52 @@
 --  MA  02110-1301  USA
 --
 
+with Ada.Task_Identification;
+with Ada.Containers.Ordered_Maps;
+with Ada.Unchecked_Deallocation;
+
 package body Alog.Logger.Tasking is
 
    use Ada.Exceptions;
 
+   function "<" (Left, Right : Ada.Task_Identification.Task_Id) return Boolean;
+   --  Smaller-than function for Task_Id. Needed to use Task_Id as Key_Type for
+   --  Ordered_Map.
+
+   package Map_Of_Exception_Occurrences is
+     new Ada.Containers.Ordered_Maps
+       (Key_Type     => Ada.Task_Identification.Task_Id,
+        Element_Type => Ada.Exceptions.Exception_Occurrence_Access);
+
+   package MOEO renames Map_Of_Exception_Occurrences;
+   --  Per-task Exception_Occurrence storage. This map works like a message box
+   --  for exception occurrences which are stored on a per-caller (Task_Id)
+   --  basis. Exception_Occurrences can be inquired by callers via the
+   --  Get_Last_Occurrence entry.
+
+   procedure Free is new Ada.Unchecked_Deallocation
+     (Object => Ada.Exceptions.Exception_Occurrence,
+      Name   => Ada.Exceptions.Exception_Occurrence_Access);
+   --  Free memory allocated by an Exception_Occurrence.
+
+   -------------------------------------------------------------------------
+
+   function "<" (Left, Right : Ada.Task_Identification.Task_Id) return Boolean
+   is
+      use Ada.Task_Identification;
+   begin
+      return Image (T => Left) < Image (T => Right);
+   end "<";
+
    -------------------------------------------------------------------------
 
    task body Instance is
-      Logsink                   : Logger.Instance (Init => Init);
-      Current_Level             : Log_Level;
-      Current_Message           : Unbounded_String;
-      Last_Exception_Occurrence : Exception_Occurrence;
+      Logsink               : Logger.Instance (Init => Init);
+      Current_Level         : Log_Level;
+      Current_Message       : Unbounded_String;
+      Current_Caller        : Ada.Task_Identification.Task_Id;
+      Exception_Occurrences : MOEO.Map;
    begin
-
-      --  Initialize limited Last_Exception_Occurrence to Null_Occurrence.
-
-      Save_Occurrence (Target => Last_Exception_Occurrence,
-                       Source => Null_Occurrence);
 
       loop
          begin
@@ -86,8 +115,23 @@ package body Alog.Logger.Tasking is
                accept Get_Last_Exception
                  (Occurrence : out Exception_Occurrence)
                do
-                  Save_Occurrence (Target => Occurrence,
-                                   Source => Last_Exception_Occurrence);
+                  declare
+                     use MOEO;
+
+                     Position : Cursor;
+                  begin
+                     Position := Exception_Occurrences.Find
+                       (Key => Get_Last_Exception'Caller);
+
+                     if Position = No_Element then
+                        Save_Occurrence (Target => Occurrence,
+                                         Source => Null_Occurrence);
+                     else
+                        Save_Occurrence
+                          (Target => Occurrence,
+                           Source => MOEO.Element (Position => Position).all);
+                     end if;
+                  end;
                end Get_Last_Exception;
             or
 
@@ -99,20 +143,35 @@ package body Alog.Logger.Tasking is
                do
                   Current_Level   := Level;
                   Current_Message := To_Unbounded_String (Msg);
+                  Current_Caller  := Instance.Log_Message'Caller;
                end Log_Message;
 
+               declare
+                  use MOEO;
+
+                  Position : Cursor;
                begin
+                  Position := Exception_Occurrences.Find
+                    (Key => Current_Caller);
+
+                  if Position /= No_Element then
+                     declare
+                        Handle : Ada.Exceptions.Exception_Occurrence_Access;
+                     begin
+                        Handle := MOEO.Element (Position => Position);
+                        Free (Handle);
+                        Exception_Occurrences.Delete (Position => Position);
+                     end;
+                  end if;
+
                   Logsink.Log_Message (Level => Current_Level,
                                        Msg   => To_String (Current_Message));
 
-                  Save_Occurrence (Target => Last_Exception_Occurrence,
-                                   Source => Null_Occurrence);
-
                exception
                   when E : others =>
-                     Ada.Exceptions.Save_Occurrence
-                       (Target => Last_Exception_Occurrence,
-                        Source => E);
+                     Exception_Occurrences.Insert
+                       (Key      => Current_Caller,
+                        New_Item => Save_Occurrence (Source => E));
                end;
             or
 
