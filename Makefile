@@ -25,7 +25,9 @@ PREFIX ?= $(HOME)/libraries
 INSTALL = install
 BUILD_TYPE ?= "base"
 
-VERSION = 0.3
+MAJOR = 0
+MINOR = 3
+VERSION = $(MAJOR).$(MINOR)
 ALOG = libalog-$(VERSION)
 
 SOURCEDIR = src
@@ -85,7 +87,9 @@ install_lib: build_lib
 	$(INSTALL) -m 644 $(SOURCEDIR)/* $(PREFIX)/include/alog
 	$(INSTALL) -m 444 $(ALI_FILES) $(PREFIX)/lib/alog
 	$(INSTALL) -m 444 lib/$(SO_LIBRARY) $(PREFIX)/lib/alog
-	@ln -sf $(PREFIX)/lib/alog/$(SO_LIBRARY) $(PREFIX)/lib/alog/libalog.so
+	@cd $(PREFIX)/lib/alog && \
+	ln -sf $(SO_LIBRARY) libalog.so && \
+	ln -sf $(SO_LIBRARY) libalog.so.$(MAJOR)
 
 docs: prepare
 	@echo -n "Creating Alog API doc for version $(VERSION)  ... "
