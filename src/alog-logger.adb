@@ -286,28 +286,27 @@ package body Alog.Logger is
       Out_Msg    : String := Msg;
 
       procedure Do_Log (Facility_Handle : in out Facilities.Handle);
-      --  Apply all transformations and call Write_Message for each facility.
-
-      procedure Do_Transform (Transform : Transforms.Handle);
-      --  Call 'Transform_Message' for each transform.
+      --  Log message for each facility.
 
       procedure Do_Log (Facility_Handle : in out Facilities.Handle)
       is
       begin
-         if Facility_Handle.Transform_Count > 0 then
-            Facility_Handle.Iterate (Process => Do_Transform'Access);
-         end if;
-         Facility_Handle.Write_Message (Level => Level,
-                                        Msg   => Out_Msg);
+         Facility_Handle.Log_Message (Level => Level,
+                                      Msg   => Out_Msg);
       end Do_Log;
 
-      procedure Do_Transform (Transform : Transforms.Handle) is
+      procedure Do_Transform (Transform_Handle : in out Transforms.Handle);
+      --  Call 'Transform_Message' for each transform.
+
+      procedure Do_Transform (Transform_Handle : in out Transforms.Handle) is
       begin
-         Out_Msg := Transform.Transform_Message (Level => Level,
-                                                 Msg   => Out_Msg);
+         Out_Msg := Transform_Handle.Transform_Message
+           (Level => Level,
+            Msg   => Out_Msg);
       end Do_Transform;
 
    begin
+      Logger.Iterate (Process => Do_Transform'Access);
       Logger.Iterate (Process => Do_Log'Access);
    end Log_Message;
 

@@ -354,8 +354,6 @@ package body Logger_Tests is
       Log.Attach_Facility (Facility => Facility);
       Log.Attach_Transform (Transform => Transform);
 
-      Facility.Add_Transform (Transform);
-
       Log.Log_Message (Level => DEBU,
                        Msg   => "Logger Test Message, " &
                        "FD Facility With Lowercase Transform");
