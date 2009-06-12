@@ -41,6 +41,9 @@ package Alog.Logger is
    --  Init to 'True' if you want to make sure minimal stdout logging is
    --  possible as soon as a new logger is instantiated.
 
+   type Handle is access all Instance;
+   --  Handle to logger type.
+
    procedure Attach_Facility (Logger   : in out Alog.Logger.Instance;
                               Facility :        Facilities.Handle);
    --  Attach a facility to logger instance.
