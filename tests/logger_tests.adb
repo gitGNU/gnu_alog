@@ -156,6 +156,31 @@ package body Logger_Tests is
 
    -------------------------------------------------------------------------
 
+   procedure Default_Facility_Handling is
+      Logger1 : Logger.Instance (Init => False);
+      Logger2 : Logger.Instance (Init => True);
+   begin
+      Logger1.Attach_Default_Facility;
+      Assert (Condition => Logger1.Facility_Count = 1,
+              Message   => "Unable to attach facility");
+      Logger1.Attach_Default_Facility;
+      Assert (Condition => Logger1.Facility_Count = 1,
+              Message   => "Attached facility twice");
+
+      Logger1.Detach_Default_Facility;
+      Assert (Condition => Logger1.Facility_Count = 0,
+              Message   => "Unable to detach facility");
+
+      Logger2.Attach_Default_Facility;
+      Assert (Condition => Logger2.Facility_Count = 1,
+              Message   => "Attached facility to initialzed logger");
+      Logger2.Detach_Default_Facility;
+      Assert (Condition => Logger2.Facility_Count = 0,
+              Message   => "Unable to detach facility from initialized logger");
+   end Default_Facility_Handling;
+
+   -------------------------------------------------------------------------
+
    procedure Detach_Facility_Instance is
       Log      : Logger.Instance (Init => False);
       Facility : constant Facilities.Handle :=
@@ -328,6 +353,9 @@ package body Logger_Tests is
       Ahven.Framework.Add_Test_Routine
         (T, Tasked_Logger_Exception_Handling'Access,
          "tasked logger exception handling");
+      Ahven.Framework.Add_Test_Routine
+        (T, Default_Facility_Handling'Access,
+         "default facility handling");
    end Initialize;
 
    -------------------------------------------------------------------------

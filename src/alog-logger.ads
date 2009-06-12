@@ -48,10 +48,18 @@ package Alog.Logger is
                               Facility :        Facilities.Handle);
    --  Attach a facility to logger instance.
 
+   procedure Attach_Default_Facility (Logger : in out Alog.Logger.Instance);
+   --  Attach default facility with name Default_Facility_Name to logger
+   --  instance. If the default facility is already attached do nothing.
+
    procedure Detach_Facility (Logger : in out Instance;
                               Name   :        String);
    --  Detach a facility with name 'Name' from logger instance. If the facility
    --  is not found a Facility_Not_Found exception is raised.
+
+   procedure Detach_Default_Facility (Logger : in out Instance);
+   --  Detach default facility with name Default_Facility_Name from logger
+   --  instance. If the default facility is not attached do nothing.
 
    function Facility_Count (Logger : Instance) return Natural;
    --  Return number of attached facilites.
@@ -121,6 +129,8 @@ package Alog.Logger is
    --  Will be raised if a requested transform is not found.
    Transform_Already_Present : exception;
    --  Will be raised if a facility is already present.
+
+   Default_Facility_Name : constant String := "__Default_Facility";
 
 private
 

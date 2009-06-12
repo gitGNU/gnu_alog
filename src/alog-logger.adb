@@ -27,6 +27,30 @@ package body Alog.Logger is
 
    -------------------------------------------------------------------------
 
+   procedure Attach_Default_Facility (Logger : in out Alog.Logger.Instance)
+   is
+      use Facilities_Stack_Package;
+
+      Position : Cursor;
+   begin
+      Position := Logger.F_Stack.Find
+        (Key => To_Unbounded_String (Default_Facility_Name));
+
+      if Position = No_Element then
+         declare
+            Default_Handle : Facilities.File_Descriptor.Handle;
+         begin
+            Default_Handle := new Facilities.File_Descriptor.Instance;
+            Default_Handle.Set_Name (Name => Default_Facility_Name);
+
+            Logger.Attach_Facility
+              (Facility => Facilities.Handle (Default_Handle));
+         end;
+      end if;
+   end Attach_Default_Facility;
+
+   -------------------------------------------------------------------------
+
    procedure Attach_Facility (Logger   : in out Alog.Logger.Instance;
                               Facility :        Alog.Facilities.Handle)
    is
@@ -79,6 +103,22 @@ package body Alog.Logger is
    begin
       L.Finalize;
    end Clear;
+
+   -------------------------------------------------------------------------
+
+   procedure Detach_Default_Facility (Logger : in out Alog.Logger.Instance)
+   is
+      use Facilities_Stack_Package;
+
+      Position : Cursor;
+   begin
+      Position := Logger.F_Stack.Find
+        (Key => To_Unbounded_String (Default_Facility_Name));
+
+      if Position /= No_Element then
+         Logger.Detach_Facility (Name => Default_Facility_Name);
+      end if;
+   end Detach_Default_Facility;
 
    -------------------------------------------------------------------------
 
@@ -219,15 +259,7 @@ package body Alog.Logger is
    procedure Initialize (Logger : in out Instance) is
    begin
       if Logger.Init then
-         declare
-            Default_Handle : Facilities.File_Descriptor.Handle;
-         begin
-            Default_Handle := new Facilities.File_Descriptor.Instance;
-            Default_Handle.Set_Name (Name => "__Init_Facility");
-
-            Logger.Attach_Facility
-              (Facility => Facilities.Handle (Default_Handle));
-         end;
+         Logger.Attach_Default_Facility;
       end if;
    end Initialize;
 

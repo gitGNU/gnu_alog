@@ -81,4 +81,7 @@ package Logger_Tests is
    procedure Tasked_Logger_Exception_Handling;
    --  Test tasked logger instance exception handling.
 
+   procedure Default_Facility_Handling;
+   --  Test attaching/detaching of default facility.
+
 end Logger_Tests;
