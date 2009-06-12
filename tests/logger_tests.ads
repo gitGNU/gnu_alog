@@ -84,4 +84,7 @@ package Logger_Tests is
    procedure Default_Facility_Handling;
    --  Test attaching/detaching of default facility.
 
+   procedure Tasked_Default_Facility_Handling;
+   --  Test tasked logger attaching/detaching of default facility.
+
 end Logger_Tests;

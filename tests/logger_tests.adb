@@ -356,6 +356,9 @@ package body Logger_Tests is
       Ahven.Framework.Add_Test_Routine
         (T, Default_Facility_Handling'Access,
          "default facility handling");
+      Ahven.Framework.Add_Test_Routine
+        (T, Tasked_Default_Facility_Handling'Access,
+         "tasked default facility handling");
    end Initialize;
 
    -------------------------------------------------------------------------
@@ -542,6 +545,38 @@ package body Logger_Tests is
                Filename2 => Testfile),
               Message   => "files not equal");
    end Log_One_Tasked_FD_Facility;
+   -------------------------------------------------------------------------
+
+   procedure Tasked_Default_Facility_Handling is
+      Logger1 : Logger.Tasking.Instance (Init => False);
+      Logger2 : Logger.Tasking.Instance (Init => True);
+      F_Count : Natural := Natural'Last;
+   begin
+      Logger1.Attach_Default_Facility;
+      Logger1.Facility_Count (Count => F_Count);
+      Assert (Condition => F_Count = 1,
+              Message   => "Unable to attach facility");
+
+      Logger1.Attach_Default_Facility;
+      Logger1.Facility_Count (Count => F_Count);
+      Assert (Condition => F_Count = 1,
+              Message   => "Attached facility twice");
+
+      Logger1.Detach_Default_Facility;
+      Logger1.Facility_Count (Count => F_Count);
+      Assert (Condition => F_Count = 0,
+              Message   => "Unable to detach facility");
+
+      Logger2.Attach_Default_Facility;
+      Logger2.Facility_Count (Count => F_Count);
+      Assert (Condition => F_Count = 1,
+              Message   => "Attached facility to initialzed logger");
+
+      Logger2.Detach_Default_Facility;
+      Logger2.Facility_Count (Count => F_Count);
+      Assert (Condition => F_Count = 0,
+              Message   => "Unable to detach facility from initialized logger");
+   end Tasked_Default_Facility_Handling;
 
    -------------------------------------------------------------------------
 

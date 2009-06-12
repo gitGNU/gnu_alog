@@ -82,9 +82,23 @@ package body Alog.Logger.Tasking is
 
                ----------------------------------------------------------------
 
+               accept Attach_Default_Facility do
+                  Logsink.Attach_Default_Facility;
+               end Attach_Default_Facility;
+            or
+
+               ----------------------------------------------------------------
+
                accept Detach_Facility (Name : String) do
                   Logsink.Detach_Facility (Name => Name);
                end Detach_Facility;
+            or
+
+               ----------------------------------------------------------------
+
+               accept Detach_Default_Facility do
+                  Logsink.Detach_Default_Facility;
+               end Detach_Default_Facility;
             or
 
                ----------------------------------------------------------------

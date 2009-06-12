@@ -35,8 +35,14 @@ package Alog.Logger.Tasking is
       entry Attach_Facility (Facility : Facilities.Handle);
       --  Attach a facility to tasked logger instance.
 
+      entry Attach_Default_Facility;
+      --  Attach default facility to tasked logger instance.
+
       entry Detach_Facility (Name : String);
       --  Detach a facility from tasked logger instance.
+
+      entry Detach_Default_Facility;
+      --  Detach default facility from tasked logger instance.
 
       entry Facility_Count (Count : out Natural);
       --  Return number of attached facilites.
