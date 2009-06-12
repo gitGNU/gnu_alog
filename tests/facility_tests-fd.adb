@@ -28,6 +28,7 @@ with Ahven; use Ahven;
 
 with Alog.Helpers;
 with Alog.Facilities.File_Descriptor;
+with Alog.Transforms.Casing;
 
 package body Facility_Tests.FD is
 
@@ -91,7 +92,8 @@ package body Facility_Tests.FD is
          BS_Path.To_Bounded_String ("./data/Disable_Write_Timestamp_Fd"),
          BS_Path.To_Bounded_String ("./data/Disable_Write_Loglevel_Fd"),
          BS_Path.To_Bounded_String ("./data/Trim_Loglevels_Fd"),
-         BS_Path.To_Bounded_String ("./data/Set_Threshold_Fd")
+         BS_Path.To_Bounded_String ("./data/Set_Threshold_Fd"),
+         BS_Path.To_Bounded_String ("./data/Write_Transformed_Message_Fd")
         );
       F     : File_Type;
    begin
@@ -126,6 +128,8 @@ package body Facility_Tests.FD is
         (T, Trim_Loglevels_Fd'Access, "fd loglevel align");
       Ahven.Framework.Add_Test_Routine
         (T, Set_Threshold_Fd'Access, "set fd threshold");
+      Ahven.Framework.Add_Test_Routine
+        (T, Write_Transformed_Message_Fd'Access, "log a transformed message");
    end Initialize;
 
    -------------------------------------------------------------------------
@@ -241,5 +245,31 @@ package body Facility_Tests.FD is
 
       F.Teardown;
    end Write_Message_Fd;
+
+   -------------------------------------------------------------------------
+
+   procedure Write_Transformed_Message_Fd is
+      F        : File_Descriptor.Instance;
+      Testfile : constant String := "./data/Write_Transformed_Message_Fd";
+      Reffile  : constant String := "./data/Write_Transformed_Message_Fd.ref";
+      T        : aliased Alog.Transforms.Casing.Instance;
+   begin
+      --  We have to disable timestamps, since its changing all
+      --  the time :)
+      F.Toggle_Write_Timestamp (State => False);
+      F.Add_Transform (Transform => T'Unchecked_Access);
+
+      F.Set_Logfile (Path => Testfile);
+      F.Log_Message (Msg => "THIS IS A test log-message");
+
+      F.Close_Logfile;
+
+      Assert (Condition => Helpers.Assert_Files_Equal
+              (Filename1 => Reffile,
+               Filename2 => Testfile),
+              Message   => "files not equal");
+
+      F.Teardown;
+   end Write_Transformed_Message_Fd;
 
 end Facility_Tests.FD;

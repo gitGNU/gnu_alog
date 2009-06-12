@@ -64,10 +64,19 @@ package Alog.Facilities is
    function Get_Timestamp (Facility : Class) return String;
    --  Creates a timestamp and returns it as String.
 
+   procedure Log_Message (Facility : Class;
+                          Level    : Log_Level := INFO;
+                          Msg      : String);
+   --  Log a message 'Msg' with loglevel 'Level'. All attached transforms are
+   --  applied to the message before actually logging the message. This
+   --  procedure is intended for facility users.
+
    procedure Write_Message (Facility : Instance;
-                            Level    : Log_Level;
+                            Level    : Log_Level := INFO;
                             Msg      : String) is abstract;
-   --  Write message with specified log level.
+   --  Write message with specified log level. This procedure must be
+   --  implemented by all facilities and is called by Log_Message after all
+   --  transforms have been applied.
 
    procedure Toggle_Write_Timestamp (Facility : in out Class;
                                      State    :        Boolean);

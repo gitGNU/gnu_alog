@@ -57,4 +57,7 @@ package Facility_Tests.FD is
    procedure Set_Threshold_Fd;
    --  Test Threshold-functionality with fd facility.
 
+   procedure Write_Transformed_Message_Fd;
+   --  Test message writing with transform.
+
 end Facility_Tests.FD;

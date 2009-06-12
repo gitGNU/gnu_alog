@@ -139,6 +139,31 @@ package body Alog.Facilities is
 
    -------------------------------------------------------------------------
 
+   procedure Log_Message (Facility : Class;
+                          Level    : Log_Level := INFO;
+                          Msg      : String)
+   is
+      Out_Msg : String := Msg;
+
+      procedure Do_Transform (Transform : Transforms.Handle);
+      --  Call 'Transform_Message' for each transform.
+
+      procedure Do_Transform (Transform : Transforms.Handle) is
+      begin
+         Out_Msg := Transform.Transform_Message (Level => Level,
+                                                 Msg   => Out_Msg);
+      end Do_Transform;
+
+   begin
+      if Facility.Transform_Count > 0 then
+         Facility.Iterate (Process => Do_Transform'Access);
+      end if;
+      Facility.Write_Message (Level => Level,
+                              Msg   => Out_Msg);
+   end Log_Message;
+
+   -------------------------------------------------------------------------
+
    procedure Remove_Transform (Facility : in out Class;
                                Name     :        String)
    is
