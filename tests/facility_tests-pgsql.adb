@@ -36,10 +36,10 @@ package body Facility_Tests.PGSQL is
       F     : Alog.Facilities.Pgsql.Instance;
       State : constant Boolean := False;
    begin
-      F.Toggle_Write_Loglevel (Set => State);
+      F.Toggle_Write_Loglevel (State => State);
       Assert (Condition => (F.Is_Write_Loglevel = State),
               Message   => "unable to set to " & Boolean'Image (State));
-      F.Toggle_Write_Loglevel (Set => not State);
+      F.Toggle_Write_Loglevel (State => not State);
       Assert (Condition => (F.Is_Write_Loglevel = not State),
               Message   => "unable to set to " & Boolean'Image (not State));
    end Disable_Write_Loglevel;
@@ -50,10 +50,10 @@ package body Facility_Tests.PGSQL is
       F     : Alog.Facilities.Pgsql.Instance;
       State : constant Boolean := False;
    begin
-      F.Toggle_Write_Timestamp (Set => State);
+      F.Toggle_Write_Timestamp (State => State);
       Assert (Condition => (F.Is_Write_Timestamp = State),
               Message   => "unable to set to " & Boolean'Image (State));
-      F.Toggle_Write_Timestamp (Set => not State);
+      F.Toggle_Write_Timestamp (State => not State);
       Assert (Condition => (F.Is_Write_Timestamp = not State),
               Message   => "unable to set to " & Boolean'Image (not State));
    end Disable_Write_Timestamp;
@@ -211,7 +211,7 @@ package body Facility_Tests.PGSQL is
    procedure Write_Message is
       F : Alog.Facilities.Pgsql.Instance;
    begin
-      F.Toggle_Write_Timestamp (Set => True);
+      F.Toggle_Write_Timestamp (State => True);
 
       F.Set_DB_Name (DB_Name => "alog");
       F.Set_Credentials (Username => "alog",
