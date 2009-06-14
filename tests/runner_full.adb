@@ -34,9 +34,6 @@ with Logger_Tests;
 procedure Runner_Full is
    S : constant Ahven.Framework.Test_Suite_Access :=
      Ahven.Framework.Create_Suite (Suite_Name => "Alog full tests");
-   pragma Linker_Options ("-lahven");
-   pragma Linker_Options ("-laws");
-   pragma Linker_Options ("-lapq");
 begin
    Ahven.Framework.Add_Test (Suite => S.all,
                              T     => new Facility_Tests.Testcase);

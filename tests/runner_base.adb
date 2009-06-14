@@ -31,7 +31,6 @@ with Logger_Tests;
 procedure Runner_Base is
    S : constant Ahven.Framework.Test_Suite_Access :=
      Ahven.Framework.Create_Suite (Suite_Name => "Alog base tests");
-   pragma Linker_Options ("-lahven");
 begin
    Ahven.Framework.Add_Test (Suite => S.all,
                              T     => new Facility_Tests.Testcase);

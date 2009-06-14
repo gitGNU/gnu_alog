@@ -23,7 +23,7 @@
 
 PREFIX ?= $(HOME)/libraries
 INSTALL = install
-BUILD_TYPE ?= "base"
+TARGET ?= "base"
 
 MAJOR = 0
 MINOR = 3
@@ -44,13 +44,13 @@ PWD = `pwd`
 all: build_lib
 
 tests: build_tests
-	@obj/runner_$(BUILD_TYPE)
+	@obj/runner_$(TARGET)
 
 build_lib: prepare
-	@gnatmake -Palog_lib -XALOG_VERSION="$(VERSION)" -XALOG_BUILD="$(BUILD_TYPE)"
+	@gnatmake -Palog_$(TARGET) -XALOG_VERSION="$(VERSION)" -XALOG_BUILD="release"
 
 build_tests: prepare
-	@gnatmake -Palog_tests -XALOG_BUILD="$(BUILD_TYPE)"
+	@gnatmake -Palog_$(TARGET) -XALOG_BUILD="tests"
 
 prepare: $(SOURCEDIR)/alog-version.ads
 	@mkdir -p obj/lib obj/tests lib
@@ -100,8 +100,8 @@ docs: prepare
 	@echo "DONE"
 
 cov: prepare
-	@gnatmake -p -Palog_tests -XALOG_BUILD="$(BUILD_TYPE)" -XCOVERAGE="True"
-	@obj/cov/runner_$(BUILD_TYPE)
+	@gnatmake -p -Palog_$(TARGET) -XALOG_BUILD="coverage"
+	@obj/cov/runner_$(TARGET)
 	@lcov -c -d obj/cov/ -o obj/cov/alog_tmp.info
 	@lcov -e obj/cov/alog_tmp.info "$(PWD)/src/*.adb" -o obj/cov/alog.info
 	@genhtml obj/cov/alog.info -o $(COVDIR)
