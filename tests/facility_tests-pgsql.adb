@@ -101,8 +101,8 @@ package body Facility_Tests.PGSQL is
         (T, Disable_Write_Timestamp'Access, "toggle timestamp");
       Ahven.Framework.Add_Test_Routine
         (T, Disable_Write_Loglevel'Access, "toggle loglevel");
-      Ahven.Framework.Add_Test_Routine
-        (T, Write_Message'Access, "log a message to PGSQL database");
+--        Ahven.Framework.Add_Test_Routine
+--          (T, Write_Message'Access, "log a message to PGSQL database");
    end Initialize;
 
    -------------------------------------------------------------------------
