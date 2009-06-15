@@ -122,7 +122,7 @@ package body Facility_Tests.PGSQL is
 
    procedure Set_DB_Name is
       F : Alog.Facilities.Pgsql.Instance;
-      DB_Name : constant String := "foodb";
+      DB_Name : constant String := "FOODB";
    begin
       F.Set_DB_Name (DB_Name);
       Assert (Condition => (F.Get_DB_Name = DB_Name),
