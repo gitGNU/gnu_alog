@@ -45,9 +45,6 @@ project Alog_Full is
    Linker_Switches   := ("-Wl,--as-needed",
                          "-g");
 
-   Linker_Opts       := ();
-
-
    case Build is
       when "release" =>
          for Source_Dirs use ("src");
@@ -64,8 +61,6 @@ project Alog_Full is
          for Source_Dirs use ("src", "tests");
 	 for Object_Dir use "obj";
          for Main use ("runner_full.adb");
-         Linker_Opts := Linker_Opts
-           & ("-lahven", "-laws", "-lapq-postgresql");
 
       when "coverage" =>
          for Source_Dirs use ("src", "tests");
@@ -75,8 +70,6 @@ project Alog_Full is
            & ("-ftest-coverage", "-fprofile-arcs");
          Linker_Switches   := Linker_Switches
            & ("-fprofile-generate");
-         Linker_Opts := Linker_Opts
-           & ("-lahven", "-laws", "-lapq-postgresql");
    end case;
 
    package Compiler is
@@ -89,7 +82,6 @@ project Alog_Full is
 
    package Linker is
       for Default_Switches ("ada") use Linker_Switches;
-      for Linker_Options use Linker_Opts;
    end Linker;
 
    package Binder is
