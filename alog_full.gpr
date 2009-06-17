@@ -51,7 +51,7 @@ project Alog_Full is
          for Object_Dir use "obj/full/lib";
          for Library_Name use "alog";
          for Library_Dir use "lib/full";
-         for Library_Kind use "dynamic";
+         for Library_Kind use external ("LIBRARY_KIND", "dynamic");
          for Library_Version use "libalog.so." & Version;
          for Library_Options use ("-laws", "-lapq-postgresql");
          Compiler_Switches := Compiler_Switches

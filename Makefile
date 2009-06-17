@@ -30,6 +30,8 @@ MINOR = 3
 VERSION = $(MAJOR).$(MINOR)
 ALOG = libalog-$(VERSION)
 SO_LIBRARY = libalog.so.$(VERSION)
+A_LIBRARY = libalog.a
+LIBRARY_KIND = dynamic
 
 SOURCEDIR = src
 OBJECTDIR = obj/$(TARGET)
@@ -49,7 +51,7 @@ tests: build_tests
 	@$(OBJECTDIR)/runner_$(TARGET)
 
 build_lib: prepare
-	@gnatmake -Palog_$(TARGET) -XALOG_VERSION="$(VERSION)" -XALOG_BUILD="release"
+	@gnatmake -Palog_$(TARGET) -XALOG_VERSION="$(VERSION)" -XALOG_BUILD="release" -XLIBRARY_KIND="$(LIBRARY_KIND)"
 
 build_tests: prepare
 	@gnatmake -Palog_$(TARGET) -XALOG_BUILD="tests"
@@ -92,6 +94,7 @@ install_lib: build_lib
 	@mkdir -p $(PREFIX)/lib/alog
 	$(INSTALL) -m 644 $(SOURCEDIR)/* $(PREFIX)/include/alog
 	$(INSTALL) -m 444 $(ALI_FILES) $(PREFIX)/lib/alog
+	$(INSTALL) -m 444 $(LIBDIR)/$(A_LIBRARY) $(PREFIX)/lib/alog
 	$(INSTALL) -m 444 $(LIBDIR)/$(SO_LIBRARY) $(PREFIX)/lib/alog
 	@cd $(PREFIX)/lib/alog && \
 	ln -sf $(SO_LIBRARY) libalog.so && \
