@@ -29,12 +29,14 @@ MAJOR = 0
 MINOR = 3
 VERSION = $(MAJOR).$(MINOR)
 ALOG = libalog-$(VERSION)
+SO_LIBRARY = libalog.so.$(VERSION)
 
 SOURCEDIR = src
+OBJECTDIR = obj/$(TARGET)
+LIBDIR = lib/$(TARGET)
 APIDOCDIR = doc
-COVDIR = $(APIDOCDIR)/cov
-ALI_FILES = lib/*.ali
-SO_LIBRARY = libalog.so.$(VERSION)
+COVDIR = cov/$(TARGET)
+ALI_FILES = lib/$(TARGET)/*.ali
 
 TMPDIR = /tmp
 DISTDIR = $(TMPDIR)/$(ALOG)
@@ -44,7 +46,7 @@ PWD = `pwd`
 all: build_lib
 
 tests: build_tests
-	@obj/runner_$(TARGET)
+	@$(OBJECTDIR)/runner_$(TARGET)
 
 build_lib: prepare
 	@gnatmake -Palog_$(TARGET) -XALOG_VERSION="$(VERSION)" -XALOG_BUILD="release"
@@ -53,7 +55,7 @@ build_tests: prepare
 	@gnatmake -Palog_$(TARGET) -XALOG_BUILD="tests"
 
 prepare: $(SOURCEDIR)/alog-version.ads
-	@mkdir -p obj/lib obj/tests lib
+	@mkdir -p $(OBJECTDIR)/lib $(LIBDIR) $(COVDIR)
 
 $(SOURCEDIR)/alog-version.ads:
 	@echo "package Alog.Version is"                 > $@
@@ -63,13 +65,17 @@ $(SOURCEDIR)/alog-version.ads:
 
 clean:
 	@rm -f alog.specs
-	@rm -rf obj/*
-	@rm -rf lib/*
+	@rm -rf $(OBJECTDIR)/lib/*
+	@rm -rf $(OBJECTDIR)/*
+	@rm -rf $(LIBDIR)/*
+	@rm -rf $(COVDIR)/*
 
 distclean: clean
 	@rm -rf obj
 	@rm -rf lib
+	@rm -rf cov
 	@rm -rf $(APIDOCDIR)
+	@rm -f $(SOURCEDIR)/alog-version.ads
 
 dist: distclean $(SOURCEDIR)/alog-version.ads docs
 	@echo -n "Creating release tarball '$(ALOG)' ... "
@@ -86,7 +92,7 @@ install_lib: build_lib
 	@mkdir -p $(PREFIX)/lib/alog
 	$(INSTALL) -m 644 $(SOURCEDIR)/* $(PREFIX)/include/alog
 	$(INSTALL) -m 444 $(ALI_FILES) $(PREFIX)/lib/alog
-	$(INSTALL) -m 444 lib/$(SO_LIBRARY) $(PREFIX)/lib/alog
+	$(INSTALL) -m 444 $(LIBDIR)/$(SO_LIBRARY) $(PREFIX)/lib/alog
 	@cd $(PREFIX)/lib/alog && \
 	ln -sf $(SO_LIBRARY) libalog.so && \
 	ln -sf $(SO_LIBRARY) libalog.so.$(MAJOR)
@@ -101,9 +107,9 @@ docs: prepare
 
 cov: prepare
 	@gnatmake -p -Palog_$(TARGET) -XALOG_BUILD="coverage"
-	@obj/cov/runner_$(TARGET)
-	@lcov -c -d obj/cov/ -o obj/cov/alog_tmp.info
-	@lcov -e obj/cov/alog_tmp.info "$(PWD)/src/*.adb" -o obj/cov/alog.info
-	@genhtml obj/cov/alog.info -o $(COVDIR)
+	@$(OBJECTDIR)/cov/runner_$(TARGET)
+	@lcov -c -d $(OBJECTDIR)/cov/ -o $(OBJECTDIR)/cov/alog_tmp.info
+	@lcov -e $(OBJECTDIR)/cov/alog_tmp.info "$(PWD)/src/*.adb" -o $(OBJECTDIR)/cov/alog.info
+	@genhtml $(OBJECTDIR)/cov/alog.info -o $(COVDIR)
 
 .PHONY: cov dist tests

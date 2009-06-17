@@ -47,9 +47,9 @@ project Alog_Base is
       when "release" =>
          for Source_Dirs use ("src");
          for Source_List_File use "config/base-list";
-         for Object_Dir use "obj/lib";
+         for Object_Dir use "obj/base/lib";
          for Library_Name use "alog";
-         for Library_Dir use "lib";
+         for Library_Dir use "lib/base";
          for Library_Kind use "dynamic";
          for Library_Version use "libalog.so." & Version;
          Compiler_Switches := Compiler_Switches
@@ -57,12 +57,12 @@ project Alog_Base is
 
       when "tests" =>
          for Source_Dirs use ("src", "tests");
-         for Object_Dir use "obj";
+         for Object_Dir use "obj/base";
          for Main use ("runner_base.adb");
 
       when "coverage" =>
          for Source_Dirs use ("src", "tests");
-         for Object_Dir use "obj/cov";
+         for Object_Dir use "obj/base/cov";
          for Main use ("runner_base.adb");
          Compiler_Switches := Compiler_Switches
            & ("-ftest-coverage", "-fprofile-arcs");
