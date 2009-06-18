@@ -89,14 +89,18 @@ dist: distclean $(SOURCEDIR)/alog-version.ads docs
 	@rm -rf $(DISTDIR)
 	@echo "DONE"
 
-install: install_lib
+install: install_lib install_$(LIBRARY_KIND)
 
 install_lib: build_lib
 	@mkdir -p $(PREFIX)/include/alog
 	@mkdir -p $(PREFIX)/lib/alog
 	$(INSTALL) -m 644 $(SOURCEDIR)/* $(PREFIX)/include/alog
 	$(INSTALL) -m 444 $(ALI_FILES) $(PREFIX)/lib/alog
+
+install_static:
 	$(INSTALL) -m 444 $(LIBDIR)/$(A_LIBRARY) $(PREFIX)/lib/alog
+
+install_dynamic:
 	$(INSTALL) -m 444 $(LIBDIR)/$(SO_LIBRARY) $(PREFIX)/lib/alog
 	@cd $(PREFIX)/lib/alog && \
 	ln -sf $(SO_LIBRARY) libalog.so && \
