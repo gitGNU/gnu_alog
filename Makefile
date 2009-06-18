@@ -45,16 +45,18 @@ DISTDIR = $(TMPDIR)/$(ALOG)
 TARBALL = $(ALOG).tar.bz2
 PWD = `pwd`
 
+NUM_CPUS := $(shell getconf _NPROCESSORS_ONLN)
+
 all: build_lib
 
 tests: build_tests
 	@$(OBJECTDIR)/runner_$(TARGET)
 
 build_lib: prepare
-	@gnatmake -Palog_$(TARGET) -XALOG_VERSION="$(VERSION)" -XALOG_BUILD="release" -XLIBRARY_KIND="$(LIBRARY_KIND)"
+	@gnatmake -Palog_$(TARGET) -j$(NUM_CPUS) -XALOG_VERSION="$(VERSION)" -XALOG_BUILD="release" -XLIBRARY_KIND="$(LIBRARY_KIND)"
 
 build_tests: prepare
-	@gnatmake -Palog_$(TARGET) -XALOG_BUILD="tests"
+	@gnatmake -Palog_$(TARGET) -j$(NUM_CPUS) -XALOG_BUILD="tests"
 
 prepare: $(SOURCEDIR)/alog-version.ads
 	@mkdir -p $(OBJECTDIR)/lib $(LIBDIR) $(COVDIR)
@@ -109,7 +111,7 @@ docs: prepare
 	@echo "DONE"
 
 cov: prepare
-	@gnatmake -p -Palog_$(TARGET) -XALOG_BUILD="coverage"
+	@gnatmake -p -Palog_$(TARGET) -j$(NUM_CPUS) -XALOG_BUILD="coverage"
 	@$(OBJECTDIR)/cov/runner_$(TARGET)
 	@lcov -c -d $(OBJECTDIR)/cov/ -o $(OBJECTDIR)/cov/alog_tmp.info
 	@lcov -e $(OBJECTDIR)/cov/alog_tmp.info "$(PWD)/src/*.adb" -o $(OBJECTDIR)/cov/alog.info
