@@ -21,7 +21,12 @@
 --  MA  02110-1301  USA
 --
 
-project Alog_Base is
+with "ahven";
+
+project Alog_Base_Tests is
+
+   type Build_Type is ("tests", "coverage");
+   Build : Build_Type := external ("ALOG_BUILD", "tests");
 
    Version := external ("ALOG_VERSION", "0.1");
    for Languages use ("Ada");
@@ -36,13 +41,23 @@ project Alog_Base is
                          "-g",
                          "-fPIC");
 
-   for Source_Dirs use ("src");
-   for Source_List_File use "config/base-list";
-   for Object_Dir use "obj/base/lib";
-   for Library_Name use "alog";
-   for Library_Dir use "lib/base";
-   for Library_Kind use external ("LIBRARY_KIND", "dynamic");
-   for Library_Version use "libalog.so." & Version;
+   Linker_Switches   := ("-Wl,--as-needed",
+                         "-g");
+
+   for Source_Dirs use ("src", "tests");
+   for Main use ("runner_base.adb");
+
+   case Build is
+      when "tests" =>
+         for Object_Dir use "obj/base";
+
+      when "coverage" =>
+         for Object_Dir use "obj/base/cov";
+         Compiler_Switches := Compiler_Switches
+           & ("-ftest-coverage", "-fprofile-arcs");
+         Linker_Switches   := Linker_Switches
+           & ("-fprofile-generate");
+   end case;
 
    package Compiler is
       for Default_Switches ("ada") use Compiler_Switches;
@@ -53,12 +68,12 @@ project Alog_Base is
    end Builder;
 
    package Linker is
-      for Default_Switches ("ada") use ("-g");
+      for Default_Switches ("ada") use Linker_Switches;
    end Linker;
 
    package Binder is
       for Default_Switches ("ada") use ("-E");
    end Binder;
 
-end Alog_Base;
+end Alog_Base_Tests;
 
