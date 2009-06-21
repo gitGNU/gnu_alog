@@ -115,6 +115,7 @@ docs: prepare
 	@echo "DONE"
 
 cov: prepare
+	@rm -f $(OBJECTDIR)/cov/*.gcda
 	@gnatmake -p -Palog_$(TARGET)_tests -j$(NUM_CPUS) -XALOG_BUILD="coverage"
 	@$(OBJECTDIR)/cov/runner_$(TARGET)
 	@lcov -c -d $(OBJECTDIR)/cov/ -o $(OBJECTDIR)/cov/alog_tmp.info
