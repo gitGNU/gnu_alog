@@ -312,6 +312,9 @@ package body Logger_Tests is
         (T, Attach_Facility'Access,
          "attach a facility");
       Ahven.Framework.Add_Test_Routine
+        (T, Update_Facility'Access,
+         "update a facility");
+      Ahven.Framework.Add_Test_Routine
         (T, Detach_Facility_Instance'Access,
          "detach facility:instance");
       Ahven.Framework.Add_Test_Routine
@@ -615,6 +618,54 @@ package body Logger_Tests is
         (Condition => Is_Null_Occurrence (X => EO),
          Message   => "Exception not reset");
    end Tasked_Logger_Exception_Handling;
+
+   -------------------------------------------------------------------------
+
+   procedure Update_Facility is
+
+      procedure Do_Nothing
+        (Facility_Handle : in out Facilities.Handle) is null;
+      --  Just do nothing.
+
+      Log : Logger.Instance (Init => False);
+   begin
+      begin
+         Log.Update (Name    => "Nonexistent",
+                     Process => Do_Nothing'Access);
+         Fail (Message => "Expected Facility_Not_Found");
+
+      exception
+         when Logger.Facility_Not_Found =>
+            null;
+      end;
+
+      declare
+         Facility      : constant Facilities.Handle :=
+           new Facilities.File_Descriptor.Instance;
+         Facility_Name : constant String            :=
+           "Test_Facility";
+
+         procedure Update_Facility
+           (Facility_Handle : in out Facilities.Handle)
+         is
+         begin
+            Facility_Handle.Toggle_Write_Timestamp (State => True);
+         end Update_Facility;
+
+      begin
+         Facility.Set_Name (Name => Facility_Name);
+         Facility.Toggle_Write_Timestamp (State => False);
+         Assert (Condition => not Facility.Is_Write_Timestamp,
+                 Message   => "Could not disable Timestamp");
+
+         Log.Attach_Facility (Facility => Facility);
+         Log.Update (Name    => Facility_Name,
+                     Process => Update_Facility'Access);
+         Assert (Condition => Facility.Is_Write_Timestamp,
+                 Message   => "Update failed");
+      end;
+
+   end Update_Facility;
 
    -------------------------------------------------------------------------
 

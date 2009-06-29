@@ -64,6 +64,14 @@ package Alog.Logger is
    function Facility_Count (Logger : Instance) return Natural;
    --  Return number of attached facilites.
 
+   procedure Update
+     (Logger  : Instance;
+      Name    : String;
+      Process : not null access
+        procedure (Facility_Handle : in out Facilities.Handle));
+   --  Update a specific Facility identified by 'Name'. Call the 'Process'
+   --  procedure to perform the update operation.
+
    function Get_Facility
      (Logger : Instance;
       Name   : String)

@@ -37,6 +37,9 @@ package Logger_Tests is
    procedure Attach_Facility;
    --  Test Facility attaching.
 
+   procedure Update_Facility;
+   --  Test Facility update operation.
+
    procedure Detach_Facility_Instance;
    --  Test Facility detaching by instance.
 

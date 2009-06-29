@@ -293,7 +293,6 @@ package body Alog.Logger is
       Process : not null access procedure
         (Transform_Handle : in out Transforms.Handle))
    is
-
       procedure Do_Process (Position : Transforms_Stack_Package.Cursor);
       --  Call 'Process' for each Transform.
 
@@ -348,5 +347,34 @@ package body Alog.Logger is
    begin
       return Natural (Logger.T_Stack.Length);
    end Transform_Count;
+
+   -------------------------------------------------------------------------
+
+   procedure Update
+     (Logger  : Instance;
+      Name    : String;
+      Process : not null access
+        procedure (Facility_Handle : in out Facilities.Handle))
+   is
+      use Facilities_Stack_Package;
+
+      Position       : Cursor;
+      Unbounded_Name : constant Unbounded_String :=
+        To_Unbounded_String (Name);
+   begin
+      Position := Logger.F_Stack.Find
+        (Key => Unbounded_Name);
+
+      if Position = No_Element then
+         raise Facility_Not_Found with "Facility '" & Name & "' not found";
+      end if;
+
+      declare
+         Handle : Facilities.Handle :=
+           Logger.F_Stack.Element (Key => Unbounded_Name);
+      begin
+         Process (Facility_Handle => Handle);
+      end;
+   end Update;
 
 end Alog.Logger;
