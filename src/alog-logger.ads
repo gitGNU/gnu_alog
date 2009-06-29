@@ -44,16 +44,18 @@ package Alog.Logger is
    type Handle is access all Instance;
    --  Handle to logger type.
 
-   procedure Attach_Facility (Logger   : in out Instance;
-                              Facility :        Facilities.Handle);
+   procedure Attach_Facility
+     (Logger   : in out Instance;
+      Facility :        Facilities.Handle);
    --  Attach a facility to logger instance.
 
    procedure Attach_Default_Facility (Logger : in out Instance);
    --  Attach default facility with name Default_Facility_Name to logger
    --  instance. If the default facility is already attached do nothing.
 
-   procedure Detach_Facility (Logger : in out Instance;
-                              Name   :        String);
+   procedure Detach_Facility
+     (Logger : in out Instance;
+      Name   :        String);
    --  Detach a facility with name 'Name' from logger instance. If the facility
    --  is not found a Facility_Not_Found exception is raised.
 
@@ -84,12 +86,14 @@ package Alog.Logger is
         procedure (Facility_Handle : in out Facilities.Handle));
    --  Call 'Process' for all attached facilities.
 
-   procedure Attach_Transform (Logger    : in out Instance;
-                               Transform :        Transforms.Handle);
+   procedure Attach_Transform
+     (Logger    : in out Instance;
+      Transform :        Transforms.Handle);
    --  Attach a transform to logger instance.
 
-   procedure Detach_Transform (Logger : in out Instance;
-                               Name   :        String);
+   procedure Detach_Transform
+     (Logger : in out Instance;
+      Name   :        String);
    --  Detach a transform with name 'Name' from logger instance. If the
    --  transform is not found a Transform_Not_Found exception is raised.
 
@@ -112,9 +116,10 @@ package Alog.Logger is
    --  Clear logger instance. Detach and teardown all attached facilities and
    --  transforms.
 
-   procedure Log_Message (Logger : Instance;
-                          Level  : Log_Level;
-                          Msg    : String);
+   procedure Log_Message
+     (Logger : Instance;
+      Level  : Log_Level;
+      Msg    : String);
    --  Log a message. The Write_Message() procedure of all attached facilities
    --  is called. Depending on the Log-Threshold set, the message is logged to
    --  different targets (depending on the facilites) automatically.
