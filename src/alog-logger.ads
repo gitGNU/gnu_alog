@@ -44,11 +44,11 @@ package Alog.Logger is
    type Handle is access all Instance;
    --  Handle to logger type.
 
-   procedure Attach_Facility (Logger   : in out Alog.Logger.Instance;
+   procedure Attach_Facility (Logger   : in out Instance;
                               Facility :        Facilities.Handle);
    --  Attach a facility to logger instance.
 
-   procedure Attach_Default_Facility (Logger : in out Alog.Logger.Instance);
+   procedure Attach_Default_Facility (Logger : in out Instance);
    --  Attach default facility with name Default_Facility_Name to logger
    --  instance. If the default facility is already attached do nothing.
 
@@ -155,7 +155,7 @@ private
    package Facilities_Stack_Package is
      new Ada.Containers.Indefinite_Ordered_Maps
        (Key_Type     => Ada.Strings.Unbounded.Unbounded_String,
-        Element_Type => Alog.Facilities.Handle);
+        Element_Type => Facilities.Handle);
    --  Storage for attached facilities.
 
    subtype Facilities_Stack is Facilities_Stack_Package.Map;

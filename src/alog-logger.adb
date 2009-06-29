@@ -27,7 +27,7 @@ package body Alog.Logger is
 
    -------------------------------------------------------------------------
 
-   procedure Attach_Default_Facility (Logger : in out Alog.Logger.Instance)
+   procedure Attach_Default_Facility (Logger : in out Instance)
    is
       use Facilities_Stack_Package;
 
@@ -51,8 +51,8 @@ package body Alog.Logger is
 
    -------------------------------------------------------------------------
 
-   procedure Attach_Facility (Logger   : in out Alog.Logger.Instance;
-                              Facility :        Alog.Facilities.Handle)
+   procedure Attach_Facility (Logger   : in out Instance;
+                              Facility :        Facilities.Handle)
    is
       use Facilities_Stack_Package;
 
@@ -76,7 +76,7 @@ package body Alog.Logger is
    -------------------------------------------------------------------------
 
    procedure Attach_Transform (Logger    : in out Instance;
-                               Transform :        Alog.Transforms.Handle)
+                               Transform :        Transforms.Handle)
    is
       use Transforms_Stack_Package;
 
@@ -106,7 +106,7 @@ package body Alog.Logger is
 
    -------------------------------------------------------------------------
 
-   procedure Detach_Default_Facility (Logger : in out Alog.Logger.Instance)
+   procedure Detach_Default_Facility (Logger : in out Instance)
    is
       use Facilities_Stack_Package;
 
