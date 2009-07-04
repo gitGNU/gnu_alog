@@ -220,6 +220,9 @@ package body Logger_Tests is
       Assert (Condition => Logger1.Facility_Count = 1,
               Message   => "Attached facility twice");
 
+      Logger1.Log_Message (Level => DEBU,
+                           Msg => "Testing default logger");
+
       Logger1.Detach_Default_Facility;
       Assert (Condition => Logger1.Facility_Count = 0,
               Message   => "Unable to detach facility");
