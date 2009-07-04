@@ -382,4 +382,33 @@ package body Alog.Logger is
       end;
    end Update;
 
+   -------------------------------------------------------------------------
+
+   procedure Update
+     (Logger  : Instance;
+      Name    : String;
+      Process : not null access
+        procedure (Transform_Handle : in out Transforms.Handle))
+   is
+      use Transforms_Stack_Package;
+
+      Position       : Cursor;
+      Unbounded_Name : constant Unbounded_String :=
+        To_Unbounded_String (Name);
+   begin
+      Position := Logger.T_Stack.Find
+        (Key => Unbounded_Name);
+
+      if Position = No_Element then
+         raise Transform_Not_Found with "Transform '" & Name & "' not found";
+      end if;
+
+      declare
+         Handle : Transforms.Handle :=
+           Logger.T_Stack.Element (Key => Unbounded_Name);
+      begin
+         Process (Transform_Handle => Handle);
+      end;
+   end Update;
+
 end Alog.Logger;

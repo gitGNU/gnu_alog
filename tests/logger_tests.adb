@@ -324,6 +324,9 @@ package body Logger_Tests is
         (T, Attach_Transform'Access,
          "attach a transform");
       Ahven.Framework.Add_Test_Routine
+        (T, Update_Transform'Access,
+         "update a transform");
+      Ahven.Framework.Add_Test_Routine
         (T, Detach_Transform_Instance'Access,
          "detach transform:instance");
       Ahven.Framework.Add_Test_Routine
@@ -666,6 +669,56 @@ package body Logger_Tests is
       end;
 
    end Update_Facility;
+
+   -------------------------------------------------------------------------
+
+   procedure Update_Transform is
+
+      procedure Do_Nothing
+        (Transform_Handle : in out Transforms.Handle) is null;
+      --  Just do nothing.
+
+      Log : Logger.Instance (Init => False);
+   begin
+      begin
+         Log.Update (Name    => "Nonexistent",
+                     Process => Do_Nothing'Access);
+         Fail (Message => "Expected Transform_Not_Found");
+
+      exception
+         when Logger.Transform_Not_Found =>
+            null;
+      end;
+
+      declare
+         Transform      : constant Transforms.Handle :=
+           new Transforms.Casing.Instance;
+         Transform_Name : constant String            :=
+           "Test_Transform";
+         Suffix         : constant String            :=
+           "_Updated";
+
+         procedure Update_Transform
+           (Transform_Handle : in out Transforms.Handle)
+         is
+         begin
+            Transform_Handle.Set_Name (Name => Transform_Name & Suffix);
+         end Update_Transform;
+
+      begin
+         Transform.Set_Name (Name => Transform_Name);
+         Assert (Condition => Transform.Get_Name = Transform_Name,
+                 Message   => "Transform name mismatch");
+
+         Log.Attach_Transform (Transform => Transform);
+         Log.Update (Name    => Transform_Name,
+                     Process => Update_Transform'Access);
+
+         Assert (Condition => Transform.Get_Name = Transform_Name & Suffix,
+                 Message   => "Transform update failed");
+      end;
+
+   end Update_Transform;
 
    -------------------------------------------------------------------------
 

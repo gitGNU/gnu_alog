@@ -100,6 +100,14 @@ package Alog.Logger is
    function Transform_Count (Logger : Instance) return Natural;
    --  Return number of attached transforms.
 
+   procedure Update
+     (Logger  : Instance;
+      Name    : String;
+      Process : not null access
+        procedure (Transform_Handle : in out Transforms.Handle));
+   --  Update a specific Transform identified by 'Name'. Call the 'Process'
+   --  procedure to perform the update operation.
+
    function Get_Transform
      (Logger : Instance;
       Name   : String)

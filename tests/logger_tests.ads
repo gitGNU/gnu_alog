@@ -54,6 +54,9 @@ package Logger_Tests is
    procedure Attach_Transform;
    --  Test Transform attaching.
 
+   procedure Update_Transform;
+   --  Test Transform update operation.
+
    procedure Detach_Transform_Instance;
    --  Test Transform detaching by instance.
 
