@@ -124,11 +124,63 @@ package body Logger_Tests is
          Log.Attach_Transform (Transform => Transform);
 
          Fail (Message => "attached duplicate transform");
+
       exception
          when Logger.Transform_Already_Present =>
             null;
       end;
    end Attach_Transform;
+
+   -------------------------------------------------------------------------
+
+   procedure Attach_Transform_Tasked is
+      Log       : Logger.Tasking.Instance (Init => False);
+      Transform : constant Transforms.Handle := new Transforms.Casing.Instance;
+      Count     : Natural := Natural'Last;
+   begin
+      Log.Transform_Count (Count => Count);
+
+      Assert (Condition => Count = 0,
+              Message   => "transform count not 0");
+
+      declare
+         T_Handle : Transforms.Handle;
+      begin
+         Log.Get_Transform (Name      => Transform.Get_Name,
+                            Transform => T_Handle);
+         Fail (Message => "Got transform");
+
+      exception
+         when Logger.Transform_Not_Found =>
+            null;
+      end;
+
+      Log.Attach_Transform (Transform => Transform);
+      Log.Transform_Count (Count => Count);
+      Assert (Condition => Count = 1,
+              Message => "could not attach transform");
+
+      declare
+         use type Transforms.Handle;
+
+         T_Handle : Transforms.Handle;
+      begin
+         Log.Get_Transform (Name      => Transform.Get_Name,
+                            Transform => T_Handle);
+
+         Assert (Condition => T_Handle = Transform,
+                 Message   => "transform mismatch");
+      end;
+
+      begin
+         Log.Attach_Transform (Transform => Transform);
+         Fail (Message => "attached duplicate transform");
+
+      exception
+         when Logger.Transform_Already_Present =>
+            null;
+      end;
+   end Attach_Transform_Tasked;
 
    -------------------------------------------------------------------------
 
@@ -261,6 +313,25 @@ package body Logger_Tests is
 
    -------------------------------------------------------------------------
 
+   procedure Detach_Transform_Tasked is
+      Log       : Logger.Tasking.Instance (Init => False);
+      Transform : constant Transforms.Handle := new Transforms.Casing.Instance;
+      Count     : Natural := 0;
+   begin
+      Transform.Set_Name ("Casing_Transform");
+      Log.Attach_Transform (Transform => Transform);
+      Log.Transform_Count (Count => Count);
+      Assert (Condition => Count = 1,
+              Message   => "Unable to attach transform");
+
+      Log.Detach_Transform (Name => Transform.Get_Name);
+      Log.Transform_Count (Count => Count);
+      Assert (Condition => Count = 0,
+              Message   => "Unable to detach transform");
+   end Detach_Transform_Tasked;
+
+   -------------------------------------------------------------------------
+
    procedure Detach_Transform_Unattached is
       Log      : Logger.Instance (Init => False);
       Transform : Transforms.Handle :=
@@ -269,6 +340,7 @@ package body Logger_Tests is
       Transform.Set_Name ("Casing_Transform");
       Log.Detach_Transform (Name => Transform.Get_Name);
       Fail (Message => "could detach unattached transform");
+
    exception
       when Logger.Transform_Not_Found =>
          --  Free not attached Transform, this is not done by the logger (since
@@ -276,6 +348,38 @@ package body Logger_Tests is
          Alog.Logger.Free (Transform);
          --  Test passed.
    end Detach_Transform_Unattached;
+
+   -------------------------------------------------------------------------
+
+   procedure Detach_Transform_Unattached_Tasked is
+      Log       : Logger.Tasking.Instance (Init => False);
+      Transform : Transforms.Handle :=
+        new Transforms.Casing.Instance;
+   begin
+      begin
+         Transform.Set_Name ("Casing_Transform");
+         Log.Detach_Transform (Name => Transform.Get_Name);
+         Fail (Message => "could detach unattached transform");
+
+      exception
+         when Logger.Transform_Not_Found =>
+            --  Free not attached Transform, this is not done by the logger
+            --  (since it was never attached).
+            Alog.Logger.Free (Transform);
+      end;
+
+      declare
+         T_Count : Natural := Natural'Last;
+      begin
+
+         --  Tasking_Error will be raised if tasked logger has terminated due to
+         --  an unhandled exception.
+
+         Log.Transform_Count (Count => T_Count);
+
+      end;
+
+   end Detach_Transform_Unattached_Tasked;
 
    -------------------------------------------------------------------------
 
@@ -354,8 +458,17 @@ package body Logger_Tests is
         (T, Verify_Tasked_Logger_Initialization'Access,
          "tasked logger initialization behavior");
       Ahven.Framework.Add_Test_Routine
+        (T, Attach_Transform_Tasked'Access,
+         "tasked attach a transform");
+      Ahven.Framework.Add_Test_Routine
         (T, Detach_Facility_Unattached_Tasked'Access,
          "tasked detach not attached facility");
+      Ahven.Framework.Add_Test_Routine
+        (T, Detach_Transform_Tasked'Access,
+         "tasked detach transform");
+      Ahven.Framework.Add_Test_Routine
+        (T, Detach_Transform_Unattached_Tasked'Access,
+         "tasked detach not attached transform");
       Ahven.Framework.Add_Test_Routine
         (T, Tasked_Logger_Exception_Handling'Access,
          "tasked logger exception handling");

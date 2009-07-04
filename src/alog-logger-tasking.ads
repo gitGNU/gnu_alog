@@ -51,6 +51,19 @@ package Alog.Logger.Tasking is
                           Facility : out Facilities.Handle);
       --  Return a facility specified by the string 'Name'.
 
+      entry Attach_Transform (Transform : Transforms.Handle);
+      --  Attach a transform to tasked logger instance.
+
+      entry Detach_Transform (Name : String);
+      --  Detach a transform from tasked logger instance.
+
+      entry Transform_Count (Count : out Natural);
+      --  Return number of attached transforms.
+
+      entry Get_Transform (Name     :     String;
+                           Transform : out Transforms.Handle);
+      --  Return a transform specified by the string 'Name'.
+
       entry Log_Message (Level : Log_Level;
                          Msg   : String);
       --  Log a message. The Write_Message() procedure of all attached
@@ -62,7 +75,7 @@ package Alog.Logger.Tasking is
 
       entry Clear;
       --  Clear tasked logger instance. Detach and teardown all attached
-      --  facilities.
+      --  facilities and transforms.
 
       entry Get_Last_Exception
         (Occurrence : out Ada.Exceptions.Exception_Occurrence);

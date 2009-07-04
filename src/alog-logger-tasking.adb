@@ -110,6 +110,35 @@ package body Alog.Logger.Tasking is
 
                ----------------------------------------------------------------
 
+               accept Attach_Transform (Transform : Transforms.Handle) do
+                  Logsink.Attach_Transform (Transform => Transform);
+               end Attach_Transform;
+            or
+
+               ----------------------------------------------------------------
+
+               accept Detach_Transform (Name : String) do
+                  Logsink.Detach_Transform (Name => Name);
+               end Detach_Transform;
+
+            or
+               ----------------------------------------------------------------
+
+               accept Transform_Count (Count : out Natural) do
+                  Count := Logsink.Transform_Count;
+               end Transform_Count;
+
+            or
+               ----------------------------------------------------------------
+
+               accept Get_Transform (Name     :     String;
+                                     Transform : out Transforms.Handle) do
+                  Transform := Logsink.Get_Transform (Name => Name);
+               end Get_Transform;
+            or
+
+               ----------------------------------------------------------------
+
                accept Clear do
                   Logsink.Clear;
                end Clear;
