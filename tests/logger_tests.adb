@@ -264,7 +264,7 @@ package body Logger_Tests is
    procedure Detach_Transform_Unattached is
       Log      : Logger.Instance (Init => False);
       Transform : Transforms.Handle :=
-                    new Transforms.Casing.Instance;
+        new Transforms.Casing.Instance;
    begin
       Transform.Set_Name ("Casing_Transform");
       Log.Detach_Transform (Name => Transform.Get_Name);
@@ -372,9 +372,9 @@ package body Logger_Tests is
    procedure Log_FD_Facility_with_Transform is
       Log       : Logger.Instance (Init => False);
       Facility  : constant Facilities.Handle :=
-                    new Facilities.File_Descriptor.Instance;
+        new Facilities.File_Descriptor.Instance;
       Transform : constant Transforms.Handle :=
-                    new Transforms.Casing.Instance;
+        new Transforms.Casing.Instance;
       Testfile  : constant String := "./data/Log_FD_Facility_Lowercase";
       Reffile   : constant String := "./data/Log_FD_Facility_Lowercase.ref";
    begin
