@@ -78,6 +78,7 @@ package body Logger_Tests is
       begin
          Log.Attach_Facility (Facility => Facility);
          Fail (Message => "attached duplicate facility");
+
       exception
          when Logger.Facility_Already_Present =>
             null;
@@ -257,6 +258,7 @@ package body Logger_Tests is
       Facility.Set_Name ("Syslog_Facility");
       Log.Detach_Facility (Name => Facility.Get_Name);
       Fail (Message => "could detach unattached facility");
+
    exception
       when Logger.Facility_Not_Found =>
          --  Free not attached facility, this is not done by the logger (since
@@ -276,6 +278,7 @@ package body Logger_Tests is
          Facility.Set_Name ("Syslog_Facility");
          Log.Detach_Facility (Name => Facility.Get_Name);
          Fail (Message => "could detach unattached facility");
+
       exception
          when Logger.Facility_Not_Found =>
             --  Free not attached facility, this is not done by the logger
@@ -432,7 +435,7 @@ package body Logger_Tests is
          "update a transform");
       Ahven.Framework.Add_Test_Routine
         (T, Detach_Transform_Instance'Access,
-         "detach transform:instance");
+         "detach transform");
       Ahven.Framework.Add_Test_Routine
         (T, Detach_Transform_Unattached'Access,
          "detach not attached transform");

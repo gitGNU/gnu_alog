@@ -41,10 +41,10 @@ package Logger_Tests is
    --  Test Facility update operation.
 
    procedure Detach_Facility_Instance;
-   --  Test Facility detaching by instance.
+   --  Test Facility detaching by name.
 
    procedure Detach_Facility_Unattached;
-   --  Test Facility detaching with a not attached instance
+   --  Test Facility detaching with a un-attached instance
    --  (should fail).
 
    procedure Detach_Facility_Unattached_Tasked;
@@ -61,7 +61,7 @@ package Logger_Tests is
    --  Test Transform update operation.
 
    procedure Detach_Transform_Instance;
-   --  Test Transform detaching by instance.
+   --  Test Transform detaching by name.
 
    procedure Detach_Transform_Tasked;
    --  Test Transform detaching of tasked logger.
