@@ -60,7 +60,7 @@ package Alog.Logger.Tasking is
       entry Transform_Count (Count : out Natural);
       --  Return number of attached transforms.
 
-      entry Get_Transform (Name     :     String;
+      entry Get_Transform (Name      :     String;
                            Transform : out Transforms.Handle);
       --  Return a transform specified by the string 'Name'.
 

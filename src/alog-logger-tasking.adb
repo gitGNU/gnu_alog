@@ -131,7 +131,7 @@ package body Alog.Logger.Tasking is
             or
                ----------------------------------------------------------------
 
-               accept Get_Transform (Name     :     String;
+               accept Get_Transform (Name      :     String;
                                      Transform : out Transforms.Handle) do
                   Transform := Logsink.Get_Transform (Name => Name);
                end Get_Transform;
