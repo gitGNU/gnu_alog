@@ -21,6 +21,9 @@
 --  MA  02110-1301  USA
 --
 
+with Ada.Exceptions;
+with Ada.Task_Identification;
+
 with Alog.Containers;
 with Alog.Log_Request;
 
@@ -67,5 +70,46 @@ package Alog.Protected_Containers is
    end Log_Request_List;
    --  Protected variant of the log request list. This list holds log request
    --  objects and is safe for concurrent access. It operates in FIFO-Mode.
+
+   -----------------------------
+   -- Protected_Exception_Map --
+   -----------------------------
+
+   protected type Protected_Exception_Map is
+
+      procedure Insert
+        (Key  : Ada.Task_Identification.Task_Id;
+         Item : Ada.Exceptions.Exception_Occurrence_Access);
+      --  Insert the given Exception_Occurrence 'Element' with key 'Key' into
+      --  the map.
+
+      entry Get
+        (Key     :     Ada.Task_Identification.Task_Id;
+         Element : out Ada.Exceptions.Exception_Occurrence);
+      --  Get the Exception_Occurrence with key 'Key' from the map.
+
+      procedure Delete (Key : Ada.Task_Identification.Task_Id);
+      --  Delete the Exception_Occurrence with key 'Key' from the map. Memory
+      --  of the exception occurrence is freed. The user must make sure to not
+      --  access deleted elements.
+
+      function Contains (Key : Ada.Task_Identification.Task_Id) return Boolean;
+      --  Returns True if an element with key 'Key' is in the map.
+
+      procedure Clear;
+      --  Remove all Exception_Occurrences in the map. Memory of the exception
+      --  occurrences is freed.
+
+   private
+
+      Data                 : Containers.Exception_Map;
+      Exceptions_Available : Boolean := False;
+
+   end Protected_Exception_Map;
+   --  Protected variant of the exception map. To make memory management more
+   --  robust only copies of Excpetion_Occurrences and not handles are returned
+   --  by the map. The memory of an occurrence pointed to by a previously
+   --  inserted handle is freed upon calling Delete, Clear or during
+   --  finalization of the protected type
 
 end Alog.Protected_Containers;

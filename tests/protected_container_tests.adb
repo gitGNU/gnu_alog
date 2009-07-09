@@ -21,6 +21,7 @@
 --  MA  02110-1301  USA
 --
 
+with Ada.Exceptions;
 with Ada.Task_Identification;
 
 with Ahven; use Ahven;
@@ -34,6 +35,91 @@ package body Protected_Container_Tests is
 
    -------------------------------------------------------------------------
 
+   procedure Exception_Map_Clear is
+      Map       : Protected_Containers.Protected_Exception_Map;
+      Ex_Handle : constant Ada.Exceptions.Exception_Occurrence_Access :=
+        new Ada.Exceptions.Exception_Occurrence;
+      Task_ID   : constant Ada.Task_Identification.Task_Id            :=
+        Ada.Task_Identification.Current_Task;
+   begin
+
+      --  Verify that clear on empty map does not throw an exception
+
+      Map.Clear;
+
+      Map.Insert (Key  => Task_ID,
+                  Item => Ex_Handle);
+      Assert (Condition => Map.Contains (Key => Task_ID),
+              Message   => "unable to insert");
+
+      Map.Clear;
+      Assert (Condition => not Map.Contains (Key => Task_ID),
+              Message   => "unable to clear");
+   end Exception_Map_Clear;
+
+   -------------------------------------------------------------------------
+
+   procedure Exception_Map_Delete is
+      Map       : Protected_Containers.Protected_Exception_Map;
+      Ex_Handle : constant Ada.Exceptions.Exception_Occurrence_Access :=
+        new Ada.Exceptions.Exception_Occurrence;
+      Task_ID   : constant Ada.Task_Identification.Task_Id            :=
+        Ada.Task_Identification.Current_Task;
+   begin
+      begin
+         Map.Delete (Key => Task_ID);
+         Fail (Message => "expected constraint error");
+
+      exception
+         when Constraint_Error =>
+            null;
+      end;
+
+      Map.Insert (Key  => Task_ID,
+                  Item => Ex_Handle);
+
+      Assert (Condition => Map.Contains
+              (Key => Ada.Task_Identification.Current_Task),
+              Message   => "unable to insert");
+
+      Map.Delete (Key => Task_ID);
+
+      Assert (Condition => not Map.Contains (Key => Task_ID),
+              Message   => "unable to delete");
+   end Exception_Map_Delete;
+
+   -------------------------------------------------------------------------
+
+   procedure Exception_Map_Insert_Get is
+      Map     : Protected_Containers.Protected_Exception_Map;
+      Ex      : aliased Ada.Exceptions.Exception_Occurrence;
+      Task_ID : constant Ada.Task_Identification.Task_Id :=
+        Ada.Task_Identification.Current_Task;
+   begin
+      Map.Insert (Key  => Task_ID,
+                  Item => Ex'Unchecked_Access);
+
+      Assert (Condition => Map.Contains
+              (Key => Ada.Task_Identification.Current_Task),
+              Message   => "unable to insert");
+
+      declare
+         use type Ada.Exceptions.Exception_Id;
+
+         Handle : Ada.Exceptions.Exception_Occurrence;
+      begin
+         Map.Get (Key     => Task_ID,
+                  Element => Handle);
+
+         Assert (Condition => Ada.Exceptions.Exception_Identity
+                 (X => Handle) = Ada.Exceptions.Exception_Identity (Ex),
+                 Message   => "Exception mismatch!");
+      end;
+
+   end Exception_Map_Insert_Get;
+
+   -------------------------------------------------------------------------
+
    procedure Initialize (T : in out Testcase) is
    begin
       Set_Name (T, "Tests for Alog protected containers");
@@ -44,6 +130,11 @@ package body Protected_Container_Tests is
       Ahven.Framework.Add_Test_Routine
         (T, Log_Request_List_Done'Access, "Log_Request_List done");
       Ahven.Framework.Add_Test_Routine
+        (T, Exception_Map_Insert_Get'Access, "Exception_Map insert/get");
+      Ahven.Framework.Add_Test_Routine
+        (T, Exception_Map_Delete'Access, "Exception_Map delete");
+      Ahven.Framework.Add_Test_Routine
+        (T, Exception_Map_Clear'Access, "Exception_Map clear");
    end Initialize;
 
    -------------------------------------------------------------------------
