@@ -21,6 +21,9 @@
 --  MA  02110-1301  USA
 --
 
+with Ada.Exceptions;
+with Ada.Task_Identification;
+with Ada.Containers.Ordered_Maps;
 with Ada.Containers.Doubly_Linked_Lists;
 
 with Alog.Log_Request;
@@ -43,5 +46,29 @@ package Alog.Containers is
    type Log_Request_List is new LOLR.List with null record;
    --  Log requests list. This doubly-linked list holds log request
    --  objects.
+
+   -------------------
+   -- Exception_Map --
+   -------------------
+
+   use type Ada.Exceptions.Exception_Occurrence_Access;
+
+   function "<" (Left, Right : Ada.Task_Identification.Task_Id) return Boolean;
+   --  Smaller-than function for Task_Id. Needed to use Task_Id as Key_Type for
+   --  Ordered_Map.
+
+   package Map_Of_Exception_Occurrences is
+     new Ada.Containers.Ordered_Maps
+       (Key_Type     => Ada.Task_Identification.Task_Id,
+        Element_Type => Ada.Exceptions.Exception_Occurrence_Access);
+
+   package MOEO renames Map_Of_Exception_Occurrences;
+
+   type Exception_Map is new MOEO.Map with null record;
+   --  Per-task Exception_Occurrence storage. This map works like a message box
+   --  for exception occurrences handles which are stored on a per-caller
+   --  (Task_Id) basis. Care must be taken with regards to memory management
+   --  since the handles point to Exception_Occurrences on the heap. The memory
+   --  of an occurrence pointed to by an access must be freed by the user.
 
 end Alog.Containers;
