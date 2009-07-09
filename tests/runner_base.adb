@@ -24,6 +24,7 @@
 with Ahven.Text_Runner;
 with Ahven.Framework;
 
+with Log_Request_Tests;
 with Facility_Tests.FD;
 with Transform_Tests.Casing;
 with Logger_Tests;
@@ -32,6 +33,8 @@ procedure Runner_Base is
    S : constant Ahven.Framework.Test_Suite_Access :=
      Ahven.Framework.Create_Suite (Suite_Name => "Alog base tests");
 begin
+   Ahven.Framework.Add_Test (Suite => S.all,
+                             T     => new Log_Request_Tests.Testcase);
    Ahven.Framework.Add_Test (Suite => S.all,
                              T     => new Facility_Tests.Testcase);
    Ahven.Framework.Add_Test (Suite => S.all,
