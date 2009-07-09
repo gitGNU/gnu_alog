@@ -25,6 +25,7 @@ with Ahven.Text_Runner;
 with Ahven.Framework;
 
 with Log_Request_Tests;
+with Protected_Container_Tests;
 with Facility_Tests.FD;
 with Transform_Tests.Casing;
 with Logger_Tests;
@@ -35,6 +36,8 @@ procedure Runner_Base is
 begin
    Ahven.Framework.Add_Test (Suite => S.all,
                              T     => new Log_Request_Tests.Testcase);
+   Ahven.Framework.Add_Test (Suite => S.all,
+                             T     => new Protected_Container_Tests.Testcase);
    Ahven.Framework.Add_Test (Suite => S.all,
                              T     => new Facility_Tests.Testcase);
    Ahven.Framework.Add_Test (Suite => S.all,
