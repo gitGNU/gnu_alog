@@ -24,6 +24,7 @@
 with Ahven.Text_Runner;
 with Ahven.Framework;
 
+with Helper_Tests;
 with Log_Request_Tests;
 with Protected_Container_Tests;
 with Facility_Tests.FD;
@@ -39,6 +40,8 @@ procedure Runner_Full is
    S : constant Ahven.Framework.Test_Suite_Access :=
      Ahven.Framework.Create_Suite (Suite_Name => "Alog full tests");
 begin
+   Ahven.Framework.Add_Test (Suite => S.all,
+                             T     => new Helper_Tests.Testcase);
    Ahven.Framework.Add_Test (Suite => S.all,
                              T     => new Log_Request_Tests.Testcase);
    Ahven.Framework.Add_Test (Suite => S.all,
