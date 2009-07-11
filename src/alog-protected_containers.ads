@@ -25,6 +25,7 @@ with Ada.Exceptions;
 with Ada.Task_Identification;
 
 with Alog.Containers;
+with Alog.Controlled_Containers;
 with Alog.Log_Request;
 
 --  Alog Protected Containers. This package holds protected variants of
@@ -102,7 +103,7 @@ package Alog.Protected_Containers is
 
    private
 
-      Data                 : Containers.Exception_Map;
+      Data                 : Controlled_Containers.Exception_Map;
       Exceptions_Available : Boolean := False;
 
    end Protected_Exception_Map;

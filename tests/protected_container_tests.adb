@@ -91,28 +91,29 @@ package body Protected_Container_Tests is
    -------------------------------------------------------------------------
 
    procedure Exception_Map_Insert_Get is
-      Map     : Protected_Containers.Protected_Exception_Map;
-      Ex      : aliased Ada.Exceptions.Exception_Occurrence;
-      Task_ID : constant Ada.Task_Identification.Task_Id :=
+      use Ada.Exceptions;
+
+      Map       : Protected_Containers.Protected_Exception_Map;
+      Ex_Handle : constant Exception_Occurrence_Access :=
+        new Exception_Occurrence;
+      Task_ID   : constant Ada.Task_Identification.Task_Id :=
         Ada.Task_Identification.Current_Task;
    begin
       Map.Insert (Key  => Task_ID,
-                  Item => Ex'Unchecked_Access);
+                  Item => Ex_Handle);
 
       Assert (Condition => Map.Contains
               (Key => Ada.Task_Identification.Current_Task),
               Message   => "unable to insert");
 
       declare
-         use type Ada.Exceptions.Exception_Id;
-
-         Handle : Ada.Exceptions.Exception_Occurrence;
+         Ex : Exception_Occurrence;
       begin
          Map.Get (Key     => Task_ID,
-                  Element => Handle);
+                  Element => Ex);
 
-         Assert (Condition => Ada.Exceptions.Exception_Identity
-                 (X => Handle) = Ada.Exceptions.Exception_Identity (Ex),
+         Assert (Condition => Exception_Identity (X => Ex) =
+                   Exception_Identity (Ex_Handle.all),
                  Message   => "Exception mismatch!");
       end;
 

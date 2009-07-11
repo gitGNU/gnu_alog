@@ -21,14 +21,7 @@
 --  MA  02110-1301  USA
 --
 
-with Ada.Unchecked_Deallocation;
-
 package body Alog.Protected_Containers is
-
-   procedure Free is new Ada.Unchecked_Deallocation
-     (Object => Ada.Exceptions.Exception_Occurrence,
-      Name   => Ada.Exceptions.Exception_Occurrence_Access);
-   --  Free memory allocated by an Exception_Occurrence.
 
    -------------------------------------------------------------------------
 
@@ -107,19 +100,7 @@ package body Alog.Protected_Containers is
 
       procedure Clear is
 
-         procedure Do_Free (Position : Containers.MOEO.Cursor);
-         --  Free the memory of the element.
-
-         procedure Do_Free (Position : Containers.MOEO.Cursor) is
-            Handle : Ada.Exceptions.Exception_Occurrence_Access :=
-              Containers.MOEO.Element (Position => Position);
-         begin
-
-            Free (X => Handle);
-         end Do_Free;
-
       begin
-         Data.Iterate (Process => Do_Free'Access);
          Data.Clear;
          Exceptions_Available := False;
       end Clear;
@@ -137,12 +118,8 @@ package body Alog.Protected_Containers is
       ----------------------------------------------------------------------
 
       procedure Delete (Key : Ada.Task_Identification.Task_Id) is
-         Handle : Ada.Exceptions.Exception_Occurrence_Access;
       begin
-         Handle := Data.Element (Key);
-         Free (X => Handle);
          Data.Delete (Key => Key);
-
          Exceptions_Available := not Data.Is_Empty;
       end Delete;
 
@@ -154,9 +131,8 @@ package body Alog.Protected_Containers is
         when Exceptions_Available
       is
       begin
-         Ada.Exceptions.Save_Occurrence
-           (Target => Element,
-            Source => Data.Element (Key => Key).all);
+         Data.Get (Key     => Key,
+                   Element => Element);
          Exceptions_Available := not Data.Is_Empty;
       end Get;
 
@@ -167,8 +143,8 @@ package body Alog.Protected_Containers is
          Item : Ada.Exceptions.Exception_Occurrence_Access)
       is
       begin
-         Data.Insert (Key      => Key,
-                      New_Item => Item);
+         Data.Insert (Key  => Key,
+                      Item => Item);
          Exceptions_Available := True;
       end Insert;
 

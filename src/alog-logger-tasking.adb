@@ -22,38 +22,12 @@
 --
 
 with Ada.Task_Identification;
-with Ada.Unchecked_Deallocation;
 
-with Alog.Containers;
+with Alog.Controlled_Containers;
 
 package body Alog.Logger.Tasking is
 
    use Ada.Exceptions;
-
-   procedure Free is new Ada.Unchecked_Deallocation
-     (Object => Ada.Exceptions.Exception_Occurrence,
-      Name   => Ada.Exceptions.Exception_Occurrence_Access);
-   --  Free memory allocated by an Exception_Occurrence.
-
-   type Cleanup_Type (Map : access Containers.Exception_Map)
-     is new Ada.Finalization.Limited_Controlled with null record;
-   --  This dummy type does cleanup upon task termination.
-
-   overriding
-   procedure Finalize (Cleanup : in out Cleanup_Type) is
-      procedure Free_Exception (Position : Containers.MOEO.Cursor);
-      --  Free memory of an exception occurrence in the exceptions map.
-
-      procedure Free_Exception (Position : Containers.MOEO.Cursor) is
-         Handle : Exception_Occurrence_Access :=
-           Containers.MOEO.Element (Position);
-      begin
-         Free (X => Handle);
-      end Free_Exception;
-   begin
-      Cleanup.Map.Iterate (Process => Free_Exception'Access);
-      Cleanup.Map.Clear;
-   end Finalize;
 
    -------------------------------------------------------------------------
 
@@ -62,10 +36,7 @@ package body Alog.Logger.Tasking is
       Current_Level   : Log_Level;
       Current_Message : Unbounded_String;
       Current_Caller  : Ada.Task_Identification.Task_Id;
-      Exceptions      : aliased Containers.Exception_Map;
-      Cleanup         : Cleanup_Type (Map => Exceptions'Access);
-
-      pragma Unreferenced (Cleanup);
+      Exceptions      : Controlled_Containers.Exception_Map;
    begin
 
       loop
@@ -161,13 +132,8 @@ package body Alog.Logger.Tasking is
                   Current_Caller := Instance.Get_Last_Exception'Caller;
 
                   if Exceptions.Contains (Key => Current_Caller) then
-                     declare
-                        Handle : constant Exception_Occurrence_Access :=
-                          Exceptions.Element (Key => Current_Caller);
-                     begin
-                        Save_Occurrence (Target => Occurrence,
-                                         Source => Handle.all);
-                     end;
+                     Exceptions.Get (Key     => Current_Caller,
+                                     Element => Occurrence);
                   else
                      Save_Occurrence (Target => Occurrence,
                                       Source => Null_Occurrence);
@@ -187,13 +153,7 @@ package body Alog.Logger.Tasking is
                end Log_Message;
 
                if Exceptions.Contains (Key => Current_Caller) then
-                  declare
-                     Handle : Exception_Occurrence_Access :=
-                       Exceptions.Element (Key => Current_Caller);
-                  begin
-                     Free (X => Handle);
-                     Exceptions.Delete (Key => Current_Caller);
-                  end;
+                  Exceptions.Delete (Key => Current_Caller);
                end if;
 
                begin
@@ -204,8 +164,8 @@ package body Alog.Logger.Tasking is
                exception
                   when E : others =>
                      Exceptions.Insert
-                       (Key      => Current_Caller,
-                        New_Item => Save_Occurrence (Source => E));
+                       (Key  => Current_Caller,
+                        Item => Save_Occurrence (Source => E));
 
                end;
 
