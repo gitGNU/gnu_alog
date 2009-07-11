@@ -95,22 +95,20 @@ package body Alog.Facilities.File_Descriptor is
                             Level    : Log_Level := INFO;
                             Msg      : String)
    is
-      Logfile   : Ada.Text_IO.File_Type renames Facility.Log_File_Ptr.all;
-      Timestamp : constant String := Facility.Get_Timestamp;
+      Logfile : Ada.Text_IO.File_Type renames Facility.Log_File_Ptr.all;
+      Prefix  : Unbounded_String;
    begin
       if Level <= Facility.Get_Threshold then
          if Facility.Is_Write_Timestamp then
-            Ada.Text_IO.Put (File => Logfile,
-                             Item => Timestamp & " ");
+            Append (Source   => Prefix,
+                    New_Item => Facility.Get_Timestamp & " ");
          end if;
          if Facility.Is_Write_Loglevel then
-            Ada.Text_IO.Put (File => Logfile,
-                             Item => "[" & Log_Level'Image (Level) & "] ");
+            Append (Source   => Prefix,
+                    New_Item => "[" & Log_Level'Image (Level) & "] ");
          end if;
-         Ada.Text_IO.Put (File => Logfile,
-                          Item => Msg);
-
-         Ada.Text_IO.New_Line (File => Logfile);
+         Ada.Text_IO.Put_Line (File => Logfile,
+                               Item => To_String (Prefix) & Msg);
       end if;
    end Write_Message;
 
