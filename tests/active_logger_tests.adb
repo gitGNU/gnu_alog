@@ -27,13 +27,14 @@ with Ada.Exceptions.Is_Null_Occurrence;
 with Ahven;
 
 with Alog.Helpers;
-with Alog.Logger.Tasking;
 with Alog.Facilities.File_Descriptor;
 with Alog.Facilities.Syslog;
 with Alog.Facilities.Mock;
 with Alog.Transforms.Casing;
+with Alog.Logger;
+with Alog.Active_Logger;
 
-package body Logger_Tests is
+package body Active_Logger_Tests is
 
    use Ahven;
    use Alog;
@@ -41,39 +42,16 @@ package body Logger_Tests is
    -------------------------------------------------------------------------
 
    procedure Attach_Facility is
-      Log      : Logger.Instance (Init => False);
+      Log      : Active_Logger.Instance (Init => False);
       Facility : constant Facilities.Handle :=
         new Facilities.File_Descriptor.Instance;
    begin
       Assert (Condition => Log.Facility_Count = 0,
               Message   => "facility count not 0");
 
-      declare
-         F_Handle : Facilities.Handle;
-         pragma Unreferenced (F_Handle);
-      begin
-         F_Handle := Log.Get_Facility (Name => Facility.Get_Name);
-         Fail (Message => "Got facility");
-
-      exception
-         when Logger.Facility_Not_Found =>
-            null;
-      end;
-
       Log.Attach_Facility (Facility => Facility);
       Assert (Condition => Log.Facility_Count = 1,
               Message => "could not attach facility");
-
-      declare
-         use type Facilities.Handle;
-
-         F_Handle : Facilities.Handle;
-      begin
-         F_Handle := Log.Get_Facility (Name => Facility.Get_Name);
-
-         Assert (Condition => F_Handle = Facility,
-                 Message   => "facility mismatch");
-      end;
 
       begin
          Log.Attach_Facility (Facility => Facility);
@@ -83,44 +61,28 @@ package body Logger_Tests is
          when Logger.Facility_Already_Present =>
             null;
       end;
+
+      Log.Shutdown;
+
+   exception
+      when others =>
+         Log.Shutdown;
+         raise;
    end Attach_Facility;
 
    -------------------------------------------------------------------------
 
    procedure Attach_Transform is
-      Log       : Logger.Instance (Init => False);
+      Log       : Active_Logger.Instance (Init => False);
       Transform : constant Transforms.Handle := new Transforms.Casing.Instance;
    begin
       Assert (Condition => Log.Transform_Count = 0,
               Message   => "transform count not 0");
 
-      declare
-         T_Handle : Transforms.Handle;
-         pragma Unreferenced (T_Handle);
-      begin
-         T_Handle := Log.Get_Transform (Name => Transform.Get_Name);
-         Fail (Message => "Got transform");
-
-      exception
-         when Logger.Transform_Not_Found =>
-            null;
-      end;
-
       Log.Attach_Transform (Transform => Transform);
       Assert (Condition => Log.Transform_Count = 1,
               Message => "could not attach transform");
 
-      declare
-         use type Transforms.Handle;
-
-         T_Handle : Transforms.Handle;
-      begin
-         T_Handle := Log.Get_Transform (Name => Transform.Get_Name);
-
-         Assert (Condition => T_Handle = Transform,
-                 Message   => "transform mismatch");
-      end;
-
       begin
          Log.Attach_Transform (Transform => Transform);
 
@@ -130,63 +92,19 @@ package body Logger_Tests is
          when Logger.Transform_Already_Present =>
             null;
       end;
+
+      Log.Shutdown;
+
+   exception
+      when others =>
+         Log.Shutdown;
+         raise;
    end Attach_Transform;
 
    -------------------------------------------------------------------------
 
-   procedure Attach_Transform_Tasked is
-      Log       : Logger.Tasking.Instance (Init => False);
-      Transform : constant Transforms.Handle := new Transforms.Casing.Instance;
-      Count     : Natural := Natural'Last;
-   begin
-      Log.Transform_Count (Count => Count);
-
-      Assert (Condition => Count = 0,
-              Message   => "transform count not 0");
-
-      declare
-         T_Handle : Transforms.Handle;
-      begin
-         Log.Get_Transform (Name      => Transform.Get_Name,
-                            Transform => T_Handle);
-         Fail (Message => "Got transform");
-
-      exception
-         when Logger.Transform_Not_Found =>
-            null;
-      end;
-
-      Log.Attach_Transform (Transform => Transform);
-      Log.Transform_Count (Count => Count);
-      Assert (Condition => Count = 1,
-              Message => "could not attach transform");
-
-      declare
-         use type Transforms.Handle;
-
-         T_Handle : Transforms.Handle;
-      begin
-         Log.Get_Transform (Name      => Transform.Get_Name,
-                            Transform => T_Handle);
-
-         Assert (Condition => T_Handle = Transform,
-                 Message   => "transform mismatch");
-      end;
-
-      begin
-         Log.Attach_Transform (Transform => Transform);
-         Fail (Message => "attached duplicate transform");
-
-      exception
-         when Logger.Transform_Already_Present =>
-            null;
-      end;
-   end Attach_Transform_Tasked;
-
-   -------------------------------------------------------------------------
-
    procedure Clear_A_Logger is
-      Log       : Logger.Instance (Init => False);
+      Log       : Active_Logger.Instance (Init => False);
       Facility  : constant Facilities.Handle :=
         new Facilities.File_Descriptor.Instance;
       Transform : constant Transforms.Handle :=
@@ -205,13 +123,20 @@ package body Logger_Tests is
               Message   => "facility count is not 0");
       Assert (Condition => Log.Transform_Count = 0,
               Message   => "transform count is not 0");
+
+      Log.Shutdown;
+
+   exception
+      when others =>
+         Log.Shutdown;
+         raise;
    end Clear_A_Logger;
 
    -------------------------------------------------------------------------
 
    procedure Default_Facility_Handling is
-      Logger1 : Logger.Instance (Init => False);
-      Logger2 : Logger.Instance (Init => True);
+      Logger1 : Active_Logger.Instance (Init => False);
+      Logger2 : Active_Logger.Instance (Init => True);
    begin
       Logger1.Attach_Default_Facility;
       Assert (Condition => Logger1.Facility_Count = 1,
@@ -233,12 +158,21 @@ package body Logger_Tests is
       Logger2.Detach_Default_Facility;
       Assert (Condition => Logger2.Facility_Count = 0,
               Message   => "Unable to detach facility from initialized logger");
+
+      Logger1.Shutdown;
+      Logger2.Shutdown;
+
+   exception
+      when others =>
+         Logger1.Shutdown;
+         Logger2.Shutdown;
+         raise;
    end Default_Facility_Handling;
 
    -------------------------------------------------------------------------
 
    procedure Detach_Facility_Instance is
-      Log      : Logger.Instance (Init => False);
+      Log      : Active_Logger.Instance (Init => False);
       Facility : constant Facilities.Handle :=
         new Facilities.Syslog.Instance;
    begin
@@ -249,16 +183,22 @@ package body Logger_Tests is
       Log.Detach_Facility (Name => Facility.Get_Name);
       Assert (Condition => Log.Facility_Count = 0,
               Message   => "could not detach");
+
+      Log.Shutdown;
+
+   exception
+      when others =>
+         Log.Shutdown;
+         raise;
    end Detach_Facility_Instance;
 
    -------------------------------------------------------------------------
 
    procedure Detach_Facility_Unattached is
-      Log      : Logger.Instance (Init => False);
+      Log      : Active_Logger.Instance (Init => False);
       Facility : Facilities.Handle :=
-        new Facilities.Syslog.Instance;
+        new Facilities.File_Descriptor.Instance;
    begin
-      Facility.Set_Name ("Syslog_Facility");
       Log.Detach_Facility (Name => Facility.Get_Name);
       Fail (Message => "could detach unattached facility");
 
@@ -267,45 +207,17 @@ package body Logger_Tests is
          --  Free not attached facility, this is not done by the logger (since
          --  it was never attached).
          Alog.Logger.Free (Facility);
+         Log.Shutdown;
          --  Test passed.
+      when others =>
+         Log.Shutdown;
+         raise;
    end Detach_Facility_Unattached;
 
    -------------------------------------------------------------------------
 
-   procedure Detach_Facility_Unattached_Tasked is
-      Log      : Logger.Tasking.Instance (Init => False);
-      Facility : Facilities.Handle :=
-        new Facilities.Syslog.Instance;
-   begin
-      begin
-         Facility.Set_Name ("Syslog_Facility");
-         Log.Detach_Facility (Name => Facility.Get_Name);
-         Fail (Message => "could detach unattached facility");
-
-      exception
-         when Logger.Facility_Not_Found =>
-            --  Free not attached facility, this is not done by the logger
-            --  (since it was never attached).
-            Alog.Logger.Free (Facility);
-      end;
-
-      declare
-         F_Count : Natural := Natural'Last;
-      begin
-
-         --  Tasking_Error will be raised if tasked logger has terminated due to
-         --  an unhandled exception.
-
-         Log.Facility_Count (Count => F_Count);
-
-      end;
-
-   end Detach_Facility_Unattached_Tasked;
-
-   -------------------------------------------------------------------------
-
    procedure Detach_Transform_Instance is
-      Log       : Logger.Instance (Init => False);
+      Log       : Active_Logger.Instance (Init => False);
       Transform : constant Transforms.Handle := new Transforms.Casing.Instance;
    begin
       Transform.Set_Name ("Casing_Transform");
@@ -315,31 +227,19 @@ package body Logger_Tests is
       Log.Detach_Transform (Name => Transform.Get_Name);
       Assert (Condition => Log.Transform_Count = 0,
               Message   => "could not detach");
+
+      Log.Shutdown;
+
+   exception
+      when others =>
+         Log.Shutdown;
+         raise;
    end Detach_Transform_Instance;
 
    -------------------------------------------------------------------------
 
-   procedure Detach_Transform_Tasked is
-      Log       : Logger.Tasking.Instance (Init => False);
-      Transform : constant Transforms.Handle := new Transforms.Casing.Instance;
-      Count     : Natural := 0;
-   begin
-      Transform.Set_Name ("Casing_Transform");
-      Log.Attach_Transform (Transform => Transform);
-      Log.Transform_Count (Count => Count);
-      Assert (Condition => Count = 1,
-              Message   => "Unable to attach transform");
-
-      Log.Detach_Transform (Name => Transform.Get_Name);
-      Log.Transform_Count (Count => Count);
-      Assert (Condition => Count = 0,
-              Message   => "Unable to detach transform");
-   end Detach_Transform_Tasked;
-
-   -------------------------------------------------------------------------
-
    procedure Detach_Transform_Unattached is
-      Log      : Logger.Instance (Init => False);
+      Log      : Active_Logger.Instance (Init => False);
       Transform : Transforms.Handle :=
         new Transforms.Casing.Instance;
    begin
@@ -352,40 +252,12 @@ package body Logger_Tests is
          --  Free not attached Transform, this is not done by the logger (since
          --  it was never attached).
          Alog.Logger.Free (Transform);
+         Log.Shutdown;
          --  Test passed.
+      when others =>
+         Log.Shutdown;
+         raise;
    end Detach_Transform_Unattached;
-
-   -------------------------------------------------------------------------
-
-   procedure Detach_Transform_Unattached_Tasked is
-      Log       : Logger.Tasking.Instance (Init => False);
-      Transform : Transforms.Handle :=
-        new Transforms.Casing.Instance;
-   begin
-      begin
-         Transform.Set_Name ("Casing_Transform");
-         Log.Detach_Transform (Name => Transform.Get_Name);
-         Fail (Message => "could detach unattached transform");
-
-      exception
-         when Logger.Transform_Not_Found =>
-            --  Free not attached Transform, this is not done by the logger
-            --  (since it was never attached).
-            Alog.Logger.Free (Transform);
-      end;
-
-      declare
-         T_Count : Natural := Natural'Last;
-      begin
-
-         --  Tasking_Error will be raised if tasked logger has terminated due to
-         --  an unhandled exception.
-
-         Log.Transform_Count (Count => T_Count);
-
-      end;
-
-   end Detach_Transform_Unattached_Tasked;
 
    -------------------------------------------------------------------------
 
@@ -395,11 +267,10 @@ package body Logger_Tests is
       use Alog.Facilities;
 
       Files : constant array (Positive range <>) of BS_Path.Bounded_String :=
-        (BS_Path.To_Bounded_String ("./data/Log_One_FD_Facility"),
-         BS_Path.To_Bounded_String ("./data/Log_Multiple_FD_Facilities1"),
-         BS_Path.To_Bounded_String ("./data/Log_Multiple_FD_Facilities2"),
-         BS_Path.To_Bounded_String ("./data/Log_FD_Facility_Lowercase"),
-         BS_Path.To_Bounded_String ("./data/Log_One_Tasked_FD_Facility")
+        (BS_Path.To_Bounded_String ("./data/Active_Tasked_FD_Facility"),
+         BS_Path.To_Bounded_String ("./data/Active_Multi_FD_Facilities1"),
+         BS_Path.To_Bounded_String ("./data/Active_Multi_FD_Facilities2"),
+         BS_Path.To_Bounded_String ("./data/Active_FD_Facility_Lowercase")
         );
       F     : Ada.Text_IO.File_Type;
    begin
@@ -417,7 +288,7 @@ package body Logger_Tests is
 
    procedure Initialize (T : in out Testcase) is
    begin
-      Set_Name (T, "Tests for Alog Logger");
+      Set_Name (T, "Tests for Alog active Logger");
       Ahven.Framework.Add_Test_Routine
         (T, Attach_Facility'Access,
          "attach a facility");
@@ -446,55 +317,40 @@ package body Logger_Tests is
         (T, Clear_A_Logger'Access,
          "clear logger");
       Ahven.Framework.Add_Test_Routine
-        (T, Log_One_FD_Facility'Access,
-         "log to one fd facility");
-      Ahven.Framework.Add_Test_Routine
         (T, Log_Multiple_FD_Facilities'Access,
          "log to multiple fd facilities");
       Ahven.Framework.Add_Test_Routine
         (T, Log_FD_Facility_with_Transform'Access,
          "log to fd facility with lowercase transform");
       Ahven.Framework.Add_Test_Routine
-        (T, Log_One_Tasked_FD_Facility'Access,
-         "log with tasked logger");
-      Ahven.Framework.Add_Test_Routine
         (T, Verify_Logger_Initialization'Access,
          "logger initialization behavior");
       Ahven.Framework.Add_Test_Routine
-        (T, Verify_Tasked_Logger_Initialization'Access,
-         "tasked logger initialization behavior");
-      Ahven.Framework.Add_Test_Routine
-        (T, Attach_Transform_Tasked'Access,
-         "tasked attach a transform");
-      Ahven.Framework.Add_Test_Routine
-        (T, Detach_Facility_Unattached_Tasked'Access,
-         "tasked detach not attached facility");
-      Ahven.Framework.Add_Test_Routine
-        (T, Detach_Transform_Tasked'Access,
-         "tasked detach transform");
-      Ahven.Framework.Add_Test_Routine
-        (T, Detach_Transform_Unattached_Tasked'Access,
-         "tasked detach not attached transform");
-      Ahven.Framework.Add_Test_Routine
-        (T, Tasked_Logger_Exception_Handling'Access,
-         "tasked logger exception handling");
+        (T, Verify_Logger_Exception_Handling'Access,
+         "active logger exception handling");
       Ahven.Framework.Add_Test_Routine
         (T, Default_Facility_Handling'Access,
          "default facility handling");
       Ahven.Framework.Add_Test_Routine
-        (T, Tasked_Default_Facility_Handling'Access,
-         "tasked default facility handling");
+        (T, Tasked_One_FD_Facility'Access,
+         "log with active logger");
+      Ahven.Framework.Add_Test_Routine
+        (T, Verify_Iterate_Facilities'Access,
+         "verify iterate facilities");
+      Ahven.Framework.Add_Test_Routine
+        (T, Verify_Iterate_Transforms'Access,
+         "verify iterate transforms");
    end Initialize;
 
    -------------------------------------------------------------------------
 
    procedure Log_FD_Facility_with_Transform is
-      Log       : Logger.Instance (Init => False);
+      Log       : Active_Logger.Instance (Init => False);
       Facility  : constant Facilities.Handle :=
         new Facilities.File_Descriptor.Instance;
       Transform : constant Transforms.Handle :=
         new Transforms.Casing.Instance;
-      Testfile  : constant String := "./data/Log_FD_Facility_Lowercase";
+      Testfile  : constant String := "./data/Active_FD_Facility_Lowercase";
       Reffile   : constant String := "./data/Log_FD_Facility_Lowercase.ref";
    begin
       Facility.Toggle_Write_Timestamp (State => False);
@@ -513,28 +369,32 @@ package body Logger_Tests is
       Log.Log_Message (Level => DEBU,
                        Msg   => "Logger Test Message, " &
                        "FD Facility With Lowercase Transform");
-
-      Log.Clear;
+      Log.Shutdown;
 
       Assert (Condition => Helpers.Assert_Files_Equal
               (Filename1 => Reffile,
                Filename2 => Testfile),
               Message   => "files not equal");
+
+   exception
+      when others =>
+         Log.Shutdown;
+         raise;
    end Log_FD_Facility_with_Transform;
 
    -------------------------------------------------------------------------
 
    procedure Log_Multiple_FD_Facilities is
-      Log       : Logger.Instance (Init => False);
+      Log       : Active_Logger.Instance (Init => False);
 
       Facility1 : constant Facilities.Handle :=
         new Facilities.File_Descriptor.Instance;
-      Testfile1 : constant String := "./data/Log_Multiple_FD_Facilities1";
+      Testfile1 : constant String := "./data/Active_Multi_FD_Facilities1";
       Reffile1  : constant String := "./data/Log_Multiple_FD_Facilities1.ref";
 
       Facility2 : constant Facilities.Handle :=
         new Facilities.File_Descriptor.Instance;
-      Testfile2 : constant String := "./data/Log_Multiple_FD_Facilities2";
+      Testfile2 : constant String := "./data/Active_Multi_FD_Facilities2";
       Reffile2  : constant String := "./data/Log_Multiple_FD_Facilities2.ref";
    begin
       --  Set facility parameters.
@@ -565,7 +425,7 @@ package body Logger_Tests is
       Log.Log_Message (Level => INFO,
                        Msg   => "Logger testmessage, multiple facilities");
 
-      Log.Clear;
+      Log.Shutdown;
 
       Assert (Condition => Helpers.Assert_Files_Equal
               (Filename1 => Reffile1,
@@ -576,47 +436,38 @@ package body Logger_Tests is
               (Filename1 => Reffile2,
                Filename2 => Testfile2),
               Message   => "file2 not equal");
+
+   exception
+      when others =>
+         Log.Shutdown;
+         raise;
    end Log_Multiple_FD_Facilities;
 
    -------------------------------------------------------------------------
 
-   procedure Log_One_FD_Facility is
-      Log      : Logger.Instance (Init => False);
-      Facility : constant Facilities.Handle :=
+   procedure Tasked_One_FD_Facility is
+      Log            : aliased Active_Logger.Instance (Init => False);
+      Fd_Facility1   : constant Facilities.Handle :=
         new Facilities.File_Descriptor.Instance;
-      Testfile : constant String := "./data/Log_One_FD_Facility";
-      Reffile  : constant String := "./data/Log_One_FD_Facility.ref";
-   begin
-      Facility.Toggle_Write_Timestamp (State => False);
-
-      --  Call facility fd specific procedures.
-      Facilities.File_Descriptor.Handle
-        (Facility).Set_Logfile (Testfile);
-
-      Log.Attach_Facility (Facility => Facility);
-      Log.Log_Message (Level => DEBU,
-                       Msg   => "Logger testmessage, one fd facility");
-
-      Log.Clear;
-
-      Assert (Condition => Helpers.Assert_Files_Equal
-              (Filename1 => Reffile,
-               Filename2 => Testfile),
-              Message   => "files not equal");
-   end Log_One_FD_Facility;
-
-   -------------------------------------------------------------------------
-
-   procedure Log_One_Tasked_FD_Facility is
-      Log          : Logger.Tasking.Instance;
-      F_Count      : Natural;
-      Fd_Facility1 : constant Facilities.Handle :=
-        new Facilities.File_Descriptor.Instance;
-      Fd_Facility2 : constant Facilities.Handle :=
+      Fd_Facility2   : constant Facilities.Handle :=
         new Facilities.File_Descriptor.Instance;
 
-      Testfile     : constant String := "./data/Log_One_Tasked_FD_Facility";
-      Reffile      : constant String := "./data/Log_One_FD_Facility.ref";
+      Testfile       : constant String  :=
+        "./data/Active_Tasked_FD_Facility";
+      Reffile        : constant String  :=
+        "./data/Tasked_FD_Facility.ref";
+      Test_Message   : constant String  := "logger tasked test message";
+      Nr_Of_Messages : constant Natural := 10;
+
+      task type Test_Log_Task (Logger : not null access Active_Logger.Instance);
+
+      task body Test_Log_Task is
+      begin
+         for I in 1 .. Nr_Of_Messages loop
+            Logger.Log_Message (Level  => DEBU,
+                                Msg    => Test_Message);
+         end loop;
+      end Test_Log_Task;
    begin
       Fd_Facility1.Set_Name (Name => "Fd_Facility1");
       Fd_Facility1.Toggle_Write_Timestamp (State => False);
@@ -627,120 +478,29 @@ package body Logger_Tests is
       Log.Attach_Facility (Facility => Fd_Facility1);
       Log.Attach_Facility (Facility => Fd_Facility2);
 
-      Log.Facility_Count (Count => F_Count);
-      Assert (Condition => F_Count = 2,
+      Assert (Condition => Log.Facility_Count = 2,
               Message   => "facility count not 2");
 
       Log.Detach_Facility (Name => Fd_Facility2.Get_Name);
-      Log.Facility_Count (Count => F_Count);
-      Assert (Condition => F_Count = 1,
+      Assert (Condition => Log.Facility_Count = 1,
               Message   => "facility count not 1");
 
       declare
-         use type Facilities.Handle;
-
-         F_Handle : Facilities.Handle;
+         Logger1 : Test_Log_Task (Log'Access);
       begin
-         Log.Get_Facility (Name     => Fd_Facility1.Get_Name,
-                           Facility => F_Handle);
-
-         Assert (Condition => F_Handle = Fd_Facility1,
-                 Message   => "Fd_Facility1 mismatch");
+         for I in 1 .. Nr_Of_Messages loop
+            Log.Log_Message (Level  => DEBU,
+                             Msg    => Test_Message);
+         end loop;
       end;
 
-      declare
-         F_Handle : Facilities.Handle;
-      begin
-         Log.Get_Facility (Name     => "nonexistent",
-                           Facility => F_Handle);
-         Fail (Message => "Got nonexistent facility");
-
-      exception
-         when Logger.Facility_Not_Found =>
-            null;
-      end;
-
-      Log.Log_Message (Level => DEBU,
-                       Msg   => "Logger testmessage, one fd facility");
-
-      Log.Clear;
+      Log.Shutdown;
 
       Assert (Condition => Helpers.Assert_Files_Equal
               (Filename1 => Reffile,
                Filename2 => Testfile),
               Message   => "files not equal");
-   end Log_One_Tasked_FD_Facility;
-
-   -------------------------------------------------------------------------
-
-   procedure Tasked_Default_Facility_Handling is
-      Logger1 : Logger.Tasking.Instance (Init => False);
-      Logger2 : Logger.Tasking.Instance (Init => True);
-      F_Count : Natural := Natural'Last;
-   begin
-      Logger1.Attach_Default_Facility;
-      Logger1.Facility_Count (Count => F_Count);
-      Assert (Condition => F_Count = 1,
-              Message   => "Unable to attach facility");
-
-      Logger1.Attach_Default_Facility;
-      Logger1.Facility_Count (Count => F_Count);
-      Assert (Condition => F_Count = 1,
-              Message   => "Attached facility twice");
-
-      Logger1.Detach_Default_Facility;
-      Logger1.Facility_Count (Count => F_Count);
-      Assert (Condition => F_Count = 0,
-              Message   => "Unable to detach facility");
-
-      Logger2.Attach_Default_Facility;
-      Logger2.Facility_Count (Count => F_Count);
-      Assert (Condition => F_Count = 1,
-              Message   => "Attached facility to initialzed logger");
-
-      Logger2.Detach_Default_Facility;
-      Logger2.Facility_Count (Count => F_Count);
-      Assert (Condition => F_Count = 0,
-              Message   => "Unable to detach facility from initialized logger");
-   end Tasked_Default_Facility_Handling;
-
-   -------------------------------------------------------------------------
-
-   procedure Tasked_Logger_Exception_Handling is
-      use Ada.Exceptions;
-
-      Log           : Logger.Tasking.Instance;
-      Mock_Facility : constant Facilities.Handle :=
-        new Facilities.Mock.Instance;
-      EO            : Exception_Occurrence;
-   begin
-      Log.Get_Last_Exception (Occurrence => EO);
-      Assert
-        (Condition => Is_Null_Occurrence (X => EO),
-         Message   => "Exception not Null_Occurence");
-
-      Log.Attach_Facility (Facility => Mock_Facility);
-      Log.Log_Message (Level => DEBU,
-                       Msg   => "Test message");
-
-      Log.Get_Last_Exception (Occurrence => EO);
-      Assert
-        (Condition => Exception_Name (X => EO) = "CONSTRAINT_ERROR",
-         Message   => "Expected Constraint_Error");
-      Assert
-        (Condition => Exception_Message (X => EO) =
-           Facilities.Mock.Exception_Message,
-         Message   => "Found wrong exception message");
-
-      Log.Detach_Facility (Name => Mock_Facility.Get_Name);
-      Log.Log_Message (Level => DEBU,
-                       Msg   => "Test message 2");
-
-      Log.Get_Last_Exception (Occurrence => EO);
-      Assert
-        (Condition => Is_Null_Occurrence (X => EO),
-         Message   => "Exception not reset");
-   end Tasked_Logger_Exception_Handling;
+   end Tasked_One_FD_Facility;
 
    -------------------------------------------------------------------------
 
@@ -750,7 +510,7 @@ package body Logger_Tests is
         (Facility_Handle : in out Facilities.Handle) is null;
       --  Just do nothing.
 
-      Log : Logger.Instance (Init => False);
+      Log : Active_Logger.Instance (Init => False);
    begin
       begin
          Log.Update (Name    => "Nonexistent",
@@ -788,6 +548,12 @@ package body Logger_Tests is
                  Message   => "Update failed");
       end;
 
+      Log.Shutdown;
+
+   exception
+      when others =>
+         Log.Shutdown;
+         raise;
    end Update_Facility;
 
    -------------------------------------------------------------------------
@@ -798,7 +564,7 @@ package body Logger_Tests is
         (Transform_Handle : in out Transforms.Handle) is null;
       --  Just do nothing.
 
-      Log : Logger.Instance (Init => False);
+      Log : Active_Logger.Instance (Init => False);
    begin
       begin
          Log.Update (Name    => "Nonexistent",
@@ -838,35 +604,163 @@ package body Logger_Tests is
                  Message   => "Transform update failed");
       end;
 
+      Log.Shutdown;
+
+   exception
+      when others =>
+         Log.Shutdown;
+         raise;
    end Update_Transform;
 
    -------------------------------------------------------------------------
 
+   procedure Verify_Iterate_Facilities is
+      Log       : Active_Logger.Instance (Init => False);
+      Counter   : Natural := 0;
+
+      Facility1 : constant Facilities.Handle :=
+        new Facilities.File_Descriptor.Instance;
+      Facility2 : constant Facilities.Handle :=
+        new Facilities.File_Descriptor.Instance;
+
+      procedure Inc_Counter (F_Handle : in out Facilities.Handle);
+      --  Increment counter.
+
+      procedure Inc_Counter (F_Handle : in out Facilities.Handle)
+      is
+         pragma Unreferenced (F_Handle);
+      begin
+         Counter := Counter + 1;
+      end Inc_Counter;
+   begin
+      Facility1.Set_Name (Name => "Facility1");
+      Facility1.Set_Name (Name => "Facility2");
+
+      Log.Attach_Facility (Facility => Facility1);
+      Log.Attach_Facility (Facility => Facility2);
+
+      Log.Iterate (Process => Inc_Counter'Access);
+
+      Assert (Condition => Counter = 2,
+              Message   => "counter not 2");
+
+      Log.Shutdown;
+
+   exception
+      when others =>
+         Log.Shutdown;
+         raise;
+   end Verify_Iterate_Facilities;
+
+   -------------------------------------------------------------------------
+
+   procedure Verify_Iterate_Transforms is
+      Log        : Active_Logger.Instance (Init => False);
+      Counter    : Natural := 0;
+
+      Transform1 : constant Transforms.Handle :=
+        new Transforms.Casing.Instance;
+      Transform2 : constant Transforms.Handle :=
+        new Transforms.Casing.Instance;
+
+      procedure Inc_Counter
+        (Transform_Handle : in out Transforms.Handle);
+      --  Increment counter.
+
+      procedure Inc_Counter
+        (Transform_Handle : in out Transforms.Handle)
+      is
+         pragma Unreferenced (Transform_Handle);
+      begin
+         Counter := Counter + 1;
+      end Inc_Counter;
+   begin
+      Transform1.Set_Name (Name => "Transform1");
+      Transform2.Set_Name (Name => "Transform2");
+
+      Log.Attach_Transform (Transform => Transform1);
+      Log.Attach_Transform (Transform => Transform2);
+
+      Log.Iterate (Process => Inc_Counter'Access);
+
+      Assert (Condition => Counter = 2,
+              Message   => "counter not 2");
+
+      Log.Shutdown;
+
+   exception
+      when others =>
+         Log.Shutdown;
+         raise;
+   end Verify_Iterate_Transforms;
+
+   -------------------------------------------------------------------------
+
+   procedure Verify_Logger_Exception_Handling is
+      use Ada.Exceptions;
+
+      Log           : Active_Logger.Instance (Init => False);
+      Mock_Facility : constant Facilities.Handle :=
+        new Facilities.Mock.Instance;
+      EO            : Exception_Occurrence;
+   begin
+      Log.Get_Last_Exception (Occurrence => EO);
+      Assert
+        (Condition => Is_Null_Occurrence (X => EO),
+         Message   => "Exception not Null_Occurence");
+
+      Log.Attach_Facility (Facility => Mock_Facility);
+      Log.Log_Message (Level => DEBU,
+                       Msg   => "Test message");
+      Log.All_Done;
+
+      Log.Get_Last_Exception (Occurrence => EO);
+      Assert
+        (Condition => Exception_Name (X => EO) = "CONSTRAINT_ERROR",
+         Message   => "Expected Constraint_Error");
+
+      Assert
+        (Condition => Exception_Message (X => EO) =
+           Facilities.Mock.Exception_Message,
+         Message   => "Found wrong exception message");
+
+      Log.Detach_Facility (Name => Mock_Facility.Get_Name);
+      Log.Log_Message (Level => DEBU,
+                       Msg   => "Test message 2");
+      Log.All_Done;
+
+      Log.Get_Last_Exception (Occurrence => EO);
+      Assert
+        (Condition => Is_Null_Occurrence (X => EO),
+         Message   => "Exception not reset");
+
+      Log.Shutdown;
+
+   exception
+      when others =>
+         Log.Shutdown;
+         raise;
+   end Verify_Logger_Exception_Handling;
+
+   -------------------------------------------------------------------------
+
    procedure Verify_Logger_Initialization is
-      Logger1 : Logger.Instance (Init => False);
-      Logger2 : Logger.Instance (Init => True);
+      Logger1 : Active_Logger.Instance (Init => False);
+      Logger2 : Active_Logger.Instance (Init => True);
    begin
       Assert (Condition => Logger1.Facility_Count = 0,
               Message   => "logger1 not empty");
       Assert (Condition => Logger2.Facility_Count = 1,
               Message   => "logger2 empty");
+
+      Logger1.Shutdown;
+      Logger2.Shutdown;
+
+   exception
+      when others =>
+         Logger1.Shutdown;
+         Logger2.Shutdown;
+         raise;
    end Verify_Logger_Initialization;
 
-   -------------------------------------------------------------------------
-
-   procedure Verify_Tasked_Logger_Initialization is
-      Logger1 : Logger.Tasking.Instance;
-      Logger2 : Logger.Tasking.Instance (Init => True);
-      F_Count : Natural := Natural'Last;
-   begin
-
-      Logger1.Facility_Count (Count => F_Count);
-      Assert (Condition => F_Count = 0,
-              Message   => "logger1 not empty");
-
-      Logger2.Facility_Count (Count => F_Count);
-      Assert (Condition => F_Count = 1,
-              Message   => "logger2 empty");
-   end Verify_Tasked_Logger_Initialization;
-
-end Logger_Tests;
+end Active_Logger_Tests;
