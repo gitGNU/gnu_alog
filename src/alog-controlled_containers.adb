@@ -34,12 +34,12 @@ package body Alog.Controlled_Containers is
 
    procedure Clear (Map : in out Exception_Map) is
 
-      procedure Do_Free (Position : Containers.MOEO.Cursor);
+      procedure Do_Free (Position : Containers.MOEOP.Cursor);
       --  Free the memory of the element.
 
-      procedure Do_Free (Position : Containers.MOEO.Cursor) is
+      procedure Do_Free (Position : Containers.MOEOP.Cursor) is
          Handle : Ada.Exceptions.Exception_Occurrence_Access :=
-           Containers.MOEO.Element (Position => Position);
+           Containers.MOEOP.Element (Position => Position);
       begin
          Free (X => Handle);
       end Do_Free;

@@ -40,13 +40,13 @@ package Alog.Containers is
 
    use type Alog.Log_Request.Instance;
 
-   package List_Of_Log_Requests is
+   package List_Of_Log_Requests_Package is
      new Ada.Containers.Doubly_Linked_Lists
        (Element_Type => Log_Request.Instance);
 
-   package LOLR renames List_Of_Log_Requests;
+   package LOLRP renames List_Of_Log_Requests_Package;
 
-   type Log_Request_List is new LOLR.List with null record;
+   type Log_Request_List is new LOLRP.List with null record;
    --  Log requests list. This doubly-linked list holds log request
    --  objects.
 
@@ -60,14 +60,14 @@ package Alog.Containers is
    --  Smaller-than function for Task_Id. Needed to use Task_Id as Key_Type for
    --  Ordered_Map.
 
-   package Map_Of_Exception_Occurrences is
+   package Map_Of_Exception_Occurrences_Package is
      new Ada.Containers.Ordered_Maps
        (Key_Type     => Ada.Task_Identification.Task_Id,
         Element_Type => Ada.Exceptions.Exception_Occurrence_Access);
 
-   package MOEO renames Map_Of_Exception_Occurrences;
+   package MOEOP renames Map_Of_Exception_Occurrences_Package;
 
-   type Exception_Map is new MOEO.Map with null record;
+   type Exception_Map is new MOEOP.Map with null record;
    --  Per-task Exception_Occurrence storage. This map works like a message box
    --  for exception occurrences handles which are stored on a per-caller
    --  (Task_Id) basis. Care must be taken with regards to memory management
