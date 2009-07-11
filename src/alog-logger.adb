@@ -80,7 +80,7 @@ package body Alog.Logger is
      (Logger    : in out Instance;
       Transform :        Transforms.Handle)
    is
-      use Transforms_Stack_Package;
+      use Containers.MOTP;
 
       T_Name : constant Unbounded_String :=
         To_Unbounded_String (Transform.Get_Name);
@@ -155,7 +155,7 @@ package body Alog.Logger is
      (Logger : in out Instance;
       Name   :        String)
    is
-      use Transforms_Stack_Package;
+      use Containers.MOTP;
 
       Position : Cursor;
       T_Handle : Transforms.Handle;
@@ -245,7 +245,7 @@ package body Alog.Logger is
       Name   : String)
       return Transforms.Handle
    is
-      use Transforms_Stack_Package;
+      use Containers.MOTP;
 
       Position : Cursor;
    begin
@@ -297,13 +297,13 @@ package body Alog.Logger is
       Process : not null access procedure
         (Transform_Handle : in out Transforms.Handle))
    is
-      procedure Do_Process (Position : Transforms_Stack_Package.Cursor);
+      procedure Do_Process (Position : Containers.MOTP.Cursor);
       --  Call 'Process' for each Transform.
 
-      procedure Do_Process (Position : Transforms_Stack_Package.Cursor) is
+      procedure Do_Process (Position : Containers.MOTP.Cursor) is
          T_Handle : Transforms.Handle;
       begin
-         T_Handle := Transforms_Stack_Package.Element (Position => Position);
+         T_Handle := Containers.MOTP.Element (Position => Position);
 
          Process (Transform_Handle => T_Handle);
       end Do_Process;
@@ -390,7 +390,7 @@ package body Alog.Logger is
       Process : not null access
         procedure (Transform_Handle : in out Transforms.Handle))
    is
-      use Transforms_Stack_Package;
+      use Containers.MOTP;
 
       Position       : Cursor;
       Unbounded_Name : constant Unbounded_String :=

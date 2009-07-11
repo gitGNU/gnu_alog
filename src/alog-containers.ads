@@ -21,12 +21,15 @@
 --  MA  02110-1301  USA
 --
 
+with Ada.Strings.Unbounded;
 with Ada.Exceptions;
 with Ada.Task_Identification;
 with Ada.Containers.Ordered_Maps;
 with Ada.Containers.Doubly_Linked_Lists;
+with Ada.Containers.Indefinite_Ordered_Maps;
 
 with Alog.Log_Request;
+with Alog.Transforms;
 
 --  Alog Containers. This package holds various container types used in Alog.
 package Alog.Containers is
@@ -70,5 +73,22 @@ package Alog.Containers is
    --  (Task_Id) basis. Care must be taken with regards to memory management
    --  since the handles point to Exception_Occurrences on the heap. The memory
    --  of an occurrence pointed to by an access must be freed by the user.
+
+   -------------------
+   -- Transform_Map --
+   -------------------
+
+   package Map_Of_Transforms_Package is new
+     Ada.Containers.Indefinite_Ordered_Maps
+       (Key_Type     => Ada.Strings.Unbounded.Unbounded_String,
+        Element_Type => Transforms.Handle,
+        "<"          => Ada.Strings.Unbounded."<",
+        "="          => Alog.Transforms."=");
+
+   package MOTP renames Map_Of_Transforms_Package;
+
+   type Transform_Map is new MOTP.Map with null record;
+   --  Map of transforms. This map stores transform handles with and associated
+   --  key.
 
 end Alog.Containers;

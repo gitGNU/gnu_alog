@@ -27,8 +27,6 @@ with GNAT.Calendar.Time_IO;
 
 package body Alog.Facilities is
 
-   use Transform_Map_Package;
-
    -------------------------------------------------------------------------
 
    function "=" (Left  : Handle;
@@ -42,6 +40,8 @@ package body Alog.Facilities is
    procedure Add_Transform (Facility  : in out Class;
                             Transform :        Transforms.Handle)
    is
+      use Containers.MOTP;
+
       T_Name   : constant Unbounded_String :=
         To_Unbounded_String (Transform.Get_Name);
       Position : Cursor;
@@ -90,6 +90,8 @@ package body Alog.Facilities is
       Name     : String)
       return Transforms.Handle
    is
+      use Containers.MOTP;
+
       Position : Cursor;
    begin
       Position := Facility.Transforms.Find (Key => To_Unbounded_String (Name));
@@ -122,13 +124,13 @@ package body Alog.Facilities is
       Process  : not null access procedure (Transform : Transforms.Handle))
    is
 
-      procedure Do_Process (Position : Transform_Map_Package.Cursor);
+      procedure Do_Process (Position : Containers.MOTP.Cursor);
       --  Call 'Process' for each Transform.
 
-      procedure Do_Process (Position : Transform_Map_Package.Cursor) is
+      procedure Do_Process (Position : Containers.MOTP.Cursor) is
          T_Handle : Transforms.Handle;
       begin
-         T_Handle := Transform_Map_Package.Element (Position => Position);
+         T_Handle := Containers.MOTP.Element (Position => Position);
 
          Process (Transform => T_Handle);
       end Do_Process;
@@ -167,6 +169,8 @@ package body Alog.Facilities is
    procedure Remove_Transform (Facility : in out Class;
                                Name     :        String)
    is
+      use Containers.MOTP;
+
       Position : Cursor;
    begin
       Position := Facility.Transforms.Find (To_Unbounded_String (Name));

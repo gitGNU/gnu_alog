@@ -28,6 +28,7 @@ with Ada.Strings.Unbounded;
 
 with Alog.Facilities;
 with Alog.Transforms;
+with Alog.Containers;
 
 --  Logger instance. Facilities can be attached to a logger instance in order to
 --  log to different targets simultaneously. A logger provides different helper
@@ -174,20 +175,11 @@ private
    subtype Facilities_Stack is Facilities_Stack_Package.Map;
    --  Manages attached facilities for logger instance.
 
-   package Transforms_Stack_Package is new
-     Ada.Containers.Indefinite_Ordered_Maps
-       (Key_Type     => Unbounded_String,
-        Element_Type => Transforms.Handle);
-   --  Storage for attached transforms.
-
-   subtype Transforms_Stack is Transforms_Stack_Package.Map;
-   --  Manages attached transforms for transforms instance.
-
    type Instance (Init : Boolean) is new
      Ada.Finalization.Limited_Controlled with record
       F_Stack    : Facilities_Stack;
       --  Stack of attached Facilities.
-      T_Stack    : Transforms_Stack;
+      T_Stack    : Containers.Transform_Map;
       --  Stack of attached Transforms.
    end record;
 
