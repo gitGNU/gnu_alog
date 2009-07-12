@@ -75,12 +75,6 @@ package Alog.Logger is
    --  Update a specific Facility identified by 'Name'. Call the 'Process'
    --  procedure to perform the update operation.
 
-   function Get_Facility
-     (Logger : Instance;
-      Name   : String)
-      return Facilities.Handle;
-   --  Return a facility specified by the string 'Name'.
-
    procedure Iterate
      (Logger  : Instance;
       Process : not null access
@@ -108,12 +102,6 @@ package Alog.Logger is
         procedure (Transform_Handle : in out Transforms.Handle));
    --  Update a specific Transform identified by 'Name'. Call the 'Process'
    --  procedure to perform the update operation.
-
-   function Get_Transform
-     (Logger : Instance;
-      Name   : String)
-      return Transforms.Handle;
-   --  Return a transform specified by the string 'Name'.
 
    procedure Iterate
      (Logger  : Instance;

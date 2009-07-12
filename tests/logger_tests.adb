@@ -44,16 +44,24 @@ package body Logger_Tests is
       Log      : Logger.Instance (Init => False);
       Facility : constant Facilities.Handle :=
         new Facilities.File_Descriptor.Instance;
+
+      procedure Check_Facility (Facility_Handle : in out Facilities.Handle);
+      --  Verify that facility with given name is present in the logger.
+
+      procedure Check_Facility (Facility_Handle : in out Facilities.Handle) is
+         use type Facilities.Handle;
+      begin
+         Assert (Condition => Facility_Handle = Facility,
+                 Message   => "facility mismatch");
+      end Check_Facility;
+
    begin
       Assert (Condition => Log.Facility_Count = 0,
               Message   => "facility count not 0");
 
-      declare
-         F_Handle : Facilities.Handle;
-         pragma Unreferenced (F_Handle);
       begin
-         F_Handle := Log.Get_Facility (Name => Facility.Get_Name);
-         Fail (Message => "Got facility");
+         Log.Update (Name    => Facility.Get_Name,
+                     Process => Check_Facility'Access);
 
       exception
          when Logger.Facility_Not_Found =>
@@ -64,16 +72,8 @@ package body Logger_Tests is
       Assert (Condition => Log.Facility_Count = 1,
               Message => "could not attach facility");
 
-      declare
-         use type Facilities.Handle;
-
-         F_Handle : Facilities.Handle;
-      begin
-         F_Handle := Log.Get_Facility (Name => Facility.Get_Name);
-
-         Assert (Condition => F_Handle = Facility,
-                 Message   => "facility mismatch");
-      end;
+      Log.Update (Name    => Facility.Get_Name,
+                  Process => Check_Facility'Access);
 
       begin
          Log.Attach_Facility (Facility => Facility);
@@ -90,16 +90,25 @@ package body Logger_Tests is
    procedure Attach_Transform is
       Log       : Logger.Instance (Init => False);
       Transform : constant Transforms.Handle := new Transforms.Casing.Instance;
+
+      procedure Check_Transform (Transform_Handle : in out Transforms.Handle);
+      --  Verify that transformy with given name is present in the logger.
+
+      procedure Check_Transform (Transform_Handle : in out Transforms.Handle)
+      is
+         use type Transforms.Handle;
+      begin
+         Assert (Condition => Transform_Handle = Transform,
+                 Message   => "transform mismatch");
+      end Check_Transform;
+
    begin
       Assert (Condition => Log.Transform_Count = 0,
               Message   => "transform count not 0");
 
-      declare
-         T_Handle : Transforms.Handle;
-         pragma Unreferenced (T_Handle);
       begin
-         T_Handle := Log.Get_Transform (Name => Transform.Get_Name);
-         Fail (Message => "Got transform");
+         Log.Update (Name    => Transform.Get_Name,
+                     Process => Check_Transform'Access);
 
       exception
          when Logger.Transform_Not_Found =>
@@ -110,16 +119,8 @@ package body Logger_Tests is
       Assert (Condition => Log.Transform_Count = 1,
               Message => "could not attach transform");
 
-      declare
-         use type Transforms.Handle;
-
-         T_Handle : Transforms.Handle;
-      begin
-         T_Handle := Log.Get_Transform (Name => Transform.Get_Name);
-
-         Assert (Condition => T_Handle = Transform,
-                 Message   => "transform mismatch");
-      end;
+      Log.Update (Name    => Transform.Get_Name,
+                  Process => Check_Transform'Access);
 
       begin
          Log.Attach_Transform (Transform => Transform);
@@ -144,34 +145,10 @@ package body Logger_Tests is
       Assert (Condition => Count = 0,
               Message   => "transform count not 0");
 
-      declare
-         T_Handle : Transforms.Handle;
-      begin
-         Log.Get_Transform (Name      => Transform.Get_Name,
-                            Transform => T_Handle);
-         Fail (Message => "Got transform");
-
-      exception
-         when Logger.Transform_Not_Found =>
-            null;
-      end;
-
       Log.Attach_Transform (Transform => Transform);
       Log.Transform_Count (Count => Count);
       Assert (Condition => Count = 1,
               Message => "could not attach transform");
-
-      declare
-         use type Transforms.Handle;
-
-         T_Handle : Transforms.Handle;
-      begin
-         Log.Get_Transform (Name      => Transform.Get_Name,
-                            Transform => T_Handle);
-
-         Assert (Condition => T_Handle = Transform,
-                 Message   => "transform mismatch");
-      end;
 
       begin
          Log.Attach_Transform (Transform => Transform);
@@ -635,30 +612,6 @@ package body Logger_Tests is
       Log.Facility_Count (Count => F_Count);
       Assert (Condition => F_Count = 1,
               Message   => "facility count not 1");
-
-      declare
-         use type Facilities.Handle;
-
-         F_Handle : Facilities.Handle;
-      begin
-         Log.Get_Facility (Name     => Fd_Facility1.Get_Name,
-                           Facility => F_Handle);
-
-         Assert (Condition => F_Handle = Fd_Facility1,
-                 Message   => "Fd_Facility1 mismatch");
-      end;
-
-      declare
-         F_Handle : Facilities.Handle;
-      begin
-         Log.Get_Facility (Name     => "nonexistent",
-                           Facility => F_Handle);
-         Fail (Message => "Got nonexistent facility");
-
-      exception
-         when Logger.Facility_Not_Found =>
-            null;
-      end;
 
       Log.Log_Message (Level => DEBU,
                        Msg   => "Logger testmessage, one fd facility");

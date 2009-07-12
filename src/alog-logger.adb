@@ -220,46 +220,6 @@ package body Alog.Logger is
 
    -------------------------------------------------------------------------
 
-   function Get_Facility
-     (Logger : Instance;
-      Name   : String)
-      return Facilities.Handle
-   is
-      use Facilities_Stack_Package;
-
-      Position : Cursor;
-   begin
-      Position := Logger.F_Stack.Find (Key => To_Unbounded_String (Name));
-
-      if Position = No_Element then
-         raise Facility_Not_Found with "Facility '" & Name & "' not found.";
-      end if;
-
-      return Element (Position => Position);
-   end Get_Facility;
-
-   -------------------------------------------------------------------------
-
-   function Get_Transform
-     (Logger : Instance;
-      Name   : String)
-      return Transforms.Handle
-   is
-      use Containers.MOTP;
-
-      Position : Cursor;
-   begin
-      Position := Logger.T_Stack.Find (Key => To_Unbounded_String (Name));
-
-      if Position = No_Element then
-         raise Transform_Not_Found with "Transform '" & Name & "' not found.";
-      end if;
-
-      return Element (Position => Position);
-   end Get_Transform;
-
-   -------------------------------------------------------------------------
-
    procedure Initialize (Logger : in out Instance) is
    begin
       if Logger.Init then

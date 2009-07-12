@@ -45,13 +45,36 @@ package body Active_Logger_Tests is
       Log      : Active_Logger.Instance (Init => False);
       Facility : constant Facilities.Handle :=
         new Facilities.File_Descriptor.Instance;
+
+      procedure Check_Facility (Facility_Handle : in out Facilities.Handle);
+      --  Verify that facility with given name is present in the logger.
+
+      procedure Check_Facility (Facility_Handle : in out Facilities.Handle) is
+         use type Facilities.Handle;
+      begin
+         Assert (Condition => Facility_Handle = Facility,
+                 Message   => "facility mismatch");
+      end Check_Facility;
+
    begin
       Assert (Condition => Log.Facility_Count = 0,
               Message   => "facility count not 0");
 
+      begin
+         Log.Update (Name    => Facility.Get_Name,
+                     Process => Check_Facility'Access);
+
+      exception
+         when Logger.Facility_Not_Found =>
+            null;
+      end;
+
       Log.Attach_Facility (Facility => Facility);
       Assert (Condition => Log.Facility_Count = 1,
               Message => "could not attach facility");
+
+      Log.Update (Name    => Facility.Get_Name,
+                  Process => Check_Facility'Access);
 
       begin
          Log.Attach_Facility (Facility => Facility);
@@ -75,13 +98,37 @@ package body Active_Logger_Tests is
    procedure Attach_Transform is
       Log       : Active_Logger.Instance (Init => False);
       Transform : constant Transforms.Handle := new Transforms.Casing.Instance;
+
+      procedure Check_Transform (Transform_Handle : in out Transforms.Handle);
+      --  Verify that transformy with given name is present in the logger.
+
+      procedure Check_Transform (Transform_Handle : in out Transforms.Handle)
+      is
+         use type Transforms.Handle;
+      begin
+         Assert (Condition => Transform_Handle = Transform,
+                 Message   => "transform mismatch");
+      end Check_Transform;
+
    begin
       Assert (Condition => Log.Transform_Count = 0,
               Message   => "transform count not 0");
 
+      begin
+         Log.Update (Name    => Transform.Get_Name,
+                     Process => Check_Transform'Access);
+
+      exception
+         when Logger.Transform_Not_Found =>
+            null;
+      end;
+
       Log.Attach_Transform (Transform => Transform);
       Assert (Condition => Log.Transform_Count = 1,
               Message => "could not attach transform");
+
+      Log.Update (Name    => Transform.Get_Name,
+                  Process => Check_Transform'Access);
 
       begin
          Log.Attach_Transform (Transform => Transform);

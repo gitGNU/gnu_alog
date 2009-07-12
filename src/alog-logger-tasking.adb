@@ -100,28 +100,12 @@ package body Alog.Logger.Tasking is
                end Transform_Count;
 
             or
-               ----------------------------------------------------------------
-
-               accept Get_Transform (Name      :     String;
-                                     Transform : out Transforms.Handle) do
-                  Transform := Logsink.Get_Transform (Name => Name);
-               end Get_Transform;
-            or
 
                ----------------------------------------------------------------
 
                accept Clear do
                   Logsink.Clear;
                end Clear;
-            or
-
-               ----------------------------------------------------------------
-
-               accept Get_Facility (Name     : String;
-                                    Facility : out Facilities.Handle)
-               do
-                  Facility := Logsink.Get_Facility (Name => Name);
-               end Get_Facility;
             or
 
                ----------------------------------------------------------------
