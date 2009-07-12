@@ -102,11 +102,6 @@ package body Alog.Facilities.SMTP is
          raise No_Server;
       end if;
 
-      --  Check threshold first.
-      if Level > Facility.Get_Threshold then
-         return;
-      end if;
-
       declare
          Status      : AWS.SMTP.Status;
          SMTP_Server : AWS.SMTP.Receiver;

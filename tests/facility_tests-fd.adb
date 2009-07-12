@@ -157,13 +157,13 @@ package body Facility_Tests.FD is
       F.Toggle_Write_Timestamp (State => False);
       F.Toggle_Write_Loglevel (State => True);
       F.Set_Logfile (Path => Testfile);
-      F.Write_Message (Level => DEBU,
-                       Msg   => "this message should appear in log");
+      F.Log_Message (Level => DEBU,
+                     Msg   => "this message should appear in log");
       F.Set_Threshold (Level => INFO);
-      F.Write_Message (Level => DEBU,
-                       Msg   => "this message should not appear");
-      F.Write_Message (Level => INFO,
-                       Msg   => "this message should appear again");
+      F.Log_Message (Level => DEBU,
+                     Msg   => "this message should not appear");
+      F.Log_Message (Level => INFO,
+                     Msg   => "this message should appear again");
 
       F.Close_Logfile;
       Assert (Condition => Helpers.Assert_Files_Equal
@@ -210,8 +210,8 @@ package body Facility_Tests.FD is
       F.Toggle_Write_Loglevel (State => True);
       F.Set_Logfile (Path => Testfile);
       for Lvl in Alog.Log_Level loop
-         F.Write_Message (Level => Lvl,
-                          Msg   => "Testmessage");
+         F.Log_Message (Level => Lvl,
+                        Msg   => "Testmessage");
       end loop;
 
       F.Close_Logfile;

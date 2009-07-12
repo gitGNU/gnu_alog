@@ -218,59 +218,48 @@ package body Alog.Facilities.Pgsql is
       C : Connection_Type;
       Q : Query_Type;
    begin
-      if Level <= Facility.Get_Threshold then
+      --  Clone connection since Facility is an "in" parameter
+      C.Connect (Same_As => Facility.Log_Connection);
 
-         --  Clone connection since Facility is an "in" parameter
-         C.Connect (Same_As => Facility.Log_Connection);
-
-         --  Open SQL trace if enabled
-         if Facility.Is_SQL_Trace then
-            C.Open_DB_Trace (Filename => To_String (Facility.Trace_Filename),
-                             Mode     => Facility.Trace_Mode);
-         end if;
-
-         Q.Prepare (SQL => "INSERT INTO ");
-
-         Q.Append (SQL   => Facility.Get_Table_Name,
-                   After => " (");
-
-         if Facility.Is_Write_Loglevel then
-            Q.Append (SQL   => Facility.Get_Level_Column_Name,
-                      After => ", ");
-         end if;
-
-         if Facility.Is_Write_Timestamp then
-            Q.Append (SQL   => Facility.Get_Timestamp_Column_Name,
-                      After => ", ");
-         end if;
-
-         Q.Append (SQL   => Facility.Get_Message_Column_Name,
-                   After => ") ");
-         Q.Append (SQL   => "VALUES (");
-
-         if Facility.Is_Write_Loglevel then
-            Q.Append (SQL   => "'" & Log_Level'Image (Level) & "'",
-                      After => ", ");
-         end if;
-
-         if Facility.Is_Write_Timestamp then
-            Q.Append (SQL   => "now()",
-                      After => ", ");
-         end if;
-
-         Q.Append (SQL   => "'" & Msg &"'",
-                   After => ");");
-
-         Execute (Query      => Q,
-                  Connection => C);
-
-         --  Close SQL trace if enabled
-         if Facility.Is_SQL_Trace then
-            C.Close_DB_Trace;
-         end if;
-
-         C.Disconnect;
+      --  Open SQL trace if enabled
+      if Facility.Is_SQL_Trace then
+         C.Open_DB_Trace (Filename => To_String (Facility.Trace_Filename),
+                          Mode     => Facility.Trace_Mode);
       end if;
+
+      Q.Prepare (SQL => "INSERT INTO ");
+
+      Q.Append (SQL   => Facility.Get_Table_Name,
+                After => " (");
+
+      Q.Append (SQL   => Facility.Get_Level_Column_Name,
+                After => ", ");
+
+      Q.Append (SQL   => Facility.Get_Timestamp_Column_Name,
+                After => ", ");
+
+      Q.Append (SQL   => Facility.Get_Message_Column_Name,
+                After => ") ");
+      Q.Append (SQL   => "VALUES (");
+
+      Q.Append (SQL   => "'" & Log_Level'Image (Level) & "'",
+                After => ", ");
+
+      Q.Append (SQL   => "now()",
+                After => ", ");
+
+      Q.Append (SQL   => "'" & Msg &"'",
+                After => ");");
+
+      Execute (Query      => Q,
+               Connection => C);
+
+      --  Close SQL trace if enabled
+      if Facility.Is_SQL_Trace then
+         C.Close_DB_Trace;
+      end if;
+
+      C.Disconnect;
    end Write_Message;
 
 end Alog.Facilities.Pgsql;

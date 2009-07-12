@@ -145,23 +145,40 @@ package body Alog.Facilities is
                           Level    : Log_Level := INFO;
                           Msg      : String)
    is
-      Out_Msg : String := Msg;
+      Message : Unbounded_String;
 
       procedure Do_Transform (Transform : Transforms.Handle);
       --  Call 'Transform_Message' for each transform.
 
       procedure Do_Transform (Transform : Transforms.Handle) is
       begin
-         Out_Msg := Transform.Transform_Message (Level => Level,
-                                                 Msg   => Out_Msg);
+         Message := To_Unbounded_String
+           (Transform.Transform_Message
+              (Level => Level,
+               Msg   => To_String (Message)));
       end Do_Transform;
 
    begin
-      if Facility.Transform_Count > 0 then
-         Facility.Iterate (Process => Do_Transform'Access);
+      if Level <= Facility.Get_Threshold then
+         if Facility.Is_Write_Timestamp then
+            Append (Source   => Message,
+                    New_Item => Facility.Get_Timestamp & " ");
+         end if;
+         if Facility.Is_Write_Loglevel then
+            Append (Source   => Message,
+                    New_Item => "[" & Log_Level'Image (Level) & "] ");
+         end if;
+
+         Append (Source   => Message,
+                 New_Item => Msg);
+
+         if Facility.Transform_Count > 0 then
+            Facility.Iterate (Process => Do_Transform'Access);
+         end if;
+
+         Facility.Write_Message (Level => Level,
+                                 Msg   => To_String (Message));
       end if;
-      Facility.Write_Message (Level => Level,
-                              Msg   => Out_Msg);
    end Log_Message;
 
    -------------------------------------------------------------------------
