@@ -85,26 +85,6 @@ package body Alog.Facilities is
 
    -------------------------------------------------------------------------
 
-   function Get_Transform
-     (Facility : Class;
-      Name     : String)
-      return Transforms.Handle
-   is
-      use Containers.MOTP;
-
-      Position : Cursor;
-   begin
-      Position := Facility.Transforms.Find (Key => To_Unbounded_String (Name));
-
-      if Position = No_Element then
-         raise Transform_Not_Found with "Transform '" & Name & "' not found.";
-      end if;
-
-      return Element (Position => Position);
-   end Get_Transform;
-
-   -------------------------------------------------------------------------
-
    function Is_Write_Loglevel (Facility : Class) return Boolean is
    begin
       return Facility.Write_Loglevel;
@@ -239,5 +219,34 @@ package body Alog.Facilities is
    begin
       return Natural (Facility.Transforms.Length);
    end Transform_Count;
+
+   -------------------------------------------------------------------------
+
+   procedure Update
+     (Facility : Class;
+      Name     : String;
+      Process  : not null access
+        procedure (Transform_Handle : in out Transforms.Handle))
+   is
+      use Containers.MOTP;
+
+      Position       : Cursor;
+      Unbounded_Name : constant Unbounded_String :=
+        To_Unbounded_String (Name);
+   begin
+      Position := Facility.Transforms.Find
+        (Key => Unbounded_Name);
+
+      if Position = No_Element then
+         raise Transform_Not_Found with "Transform '" & Name & "' not found";
+      end if;
+
+      declare
+         Handle : Transforms.Handle :=
+           Facility.Transforms.Element (Key => Unbounded_Name);
+      begin
+         Process (Transform_Handle => Handle);
+      end;
+   end Update;
 
 end Alog.Facilities;

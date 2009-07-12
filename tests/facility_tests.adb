@@ -98,21 +98,34 @@ package body Facility_Tests is
    -------------------------------------------------------------------------
 
    procedure Transform_Handling is
-      T_Name : constant String := "Test_Transform";
-      F      : File_Descriptor.Instance;
-      T      : aliased Transforms.Casing.Instance;
+      T_Name    : constant String            := "Test_Transform";
+      F         : File_Descriptor.Instance;
+      Transform : constant Transforms.Handle :=
+        new Transforms.Casing.Instance;
+
+      procedure Check_Transform (Transform_Handle : in out Transforms.Handle);
+      --  Verify that transformy with given name is present in the logger.
+
+      procedure Check_Transform (Transform_Handle : in out Transforms.Handle)
+      is
+         use type Transforms.Handle;
+      begin
+         Assert (Condition => Transform_Handle = Transform,
+                 Message   => "transform mismatch");
+      end Check_Transform;
+
    begin
       Assert (Condition => F.Transform_Count = 0,
               Message   => "Transform count not 0");
 
-      T.Set_Name (Name => T_Name);
-      F.Add_Transform (Transform => T'Unchecked_Access);
+      Transform.Set_Name (Name => T_Name);
+      F.Add_Transform (Transform => Transform);
 
       Assert (Condition => F.Transform_Count = 1,
               Message   => "Unable to add transform");
 
       begin
-         F.Add_Transform (Transform => T'Unchecked_Access);
+         F.Add_Transform (Transform => Transform);
          Fail (Message => "Added existing transform");
 
       exception
@@ -120,16 +133,8 @@ package body Facility_Tests is
             null;
       end;
 
-      declare
-         use type Transforms.Handle;
-
-         T_Handle : Transforms.Handle;
-      begin
-         T_Handle := F.Get_Transform (Name => T_Name);
-
-         Assert (Condition => T_Handle = T'Unchecked_Access,
-                 Message   => "Transform mismatch");
-      end;
+      F.Update (Name    => T_Name,
+                Process => Check_Transform'Access);
 
       F.Remove_Transform (Name => T_Name);
       Assert (Condition => F.Transform_Count = 0,
@@ -144,12 +149,9 @@ package body Facility_Tests is
             null;
       end;
 
-      declare
-         T_Handle : Transforms.Handle;
-         pragma Unreferenced (T_Handle);
       begin
-         T_Handle := F.Get_Transform (Name => T_Name);
-         Fail (Message => "Got nonexistent transform");
+         F.Update (Name    => T_Name,
+                   Process => Check_Transform'Access);
 
       exception
          when Facilities.Transform_Not_Found =>

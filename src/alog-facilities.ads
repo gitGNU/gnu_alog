@@ -114,11 +114,13 @@ package Alog.Facilities is
    function Transform_Count (Facility : Class) return Natural;
    --  Returns the number of transforms in the facility's transform list.
 
-   function Get_Transform
+   procedure Update
      (Facility : Class;
-      Name     : String)
-      return Transforms.Handle;
-   --  Return a transform specified by the string 'Name'.
+      Name     : String;
+      Process  : not null access
+        procedure (Transform_Handle : in out Transforms.Handle));
+   --  Update a specific Transform identified by 'Name'. Call the 'Process'
+   --  procedure to perform the update operation.
 
    procedure Iterate
      (Facility : Class;
