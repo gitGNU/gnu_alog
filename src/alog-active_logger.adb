@@ -107,6 +107,13 @@ package body Alog.Active_Logger is
 
    -------------------------------------------------------------------------
 
+   procedure Finalize (Helper : in out Shutdown_Helper) is
+   begin
+      Helper.Logger.Shutdown;
+   end Finalize;
+
+   -------------------------------------------------------------------------
+
    procedure Get_Last_Exception
      (Logger     : in out Instance;
       Occurrence :    out Ada.Exceptions.Exception_Occurrence)
