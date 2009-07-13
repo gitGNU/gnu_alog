@@ -89,10 +89,10 @@ package body Protected_Logger_Tests is
       Log       : Protected_Logger.Instance (Init => False);
       Transform : constant Transforms.Handle := new Transforms.Casing.Instance;
 
-      procedure Check_Transform (Transform_Handle : in out Transforms.Handle);
+      procedure Check_Transform (Transform_Handle : Transforms.Handle);
       --  Verify that transformy with given name is present in the logger.
 
-      procedure Check_Transform (Transform_Handle : in out Transforms.Handle)
+      procedure Check_Transform (Transform_Handle : Transforms.Handle)
       is
          use type Transforms.Handle;
       begin
@@ -536,7 +536,7 @@ package body Protected_Logger_Tests is
    procedure Update_Transform is
 
       procedure Do_Nothing
-        (Transform_Handle : in out Transforms.Handle) is null;
+        (Transform_Handle : Transforms.Handle) is null;
       --  Just do nothing.
 
       Log : Protected_Logger.Instance (Init => False);
@@ -560,7 +560,7 @@ package body Protected_Logger_Tests is
            "_Updated";
 
          procedure Update_Transform
-           (Transform_Handle : in out Transforms.Handle)
+           (Transform_Handle : Transforms.Handle)
          is
          begin
             Transform_Handle.Set_Name (Name => Transform_Name & Suffix);
@@ -626,11 +626,11 @@ package body Protected_Logger_Tests is
         new Transforms.Casing.Instance;
 
       procedure Inc_Counter
-        (Transform_Handle : in out Transforms.Handle);
+        (Transform_Handle : Transforms.Handle);
       --  Increment counter.
 
       procedure Inc_Counter
-        (Transform_Handle : in out Transforms.Handle)
+        (Transform_Handle : Transforms.Handle)
       is
          pragma Unreferenced (Transform_Handle);
       begin

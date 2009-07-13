@@ -80,15 +80,10 @@ package body Alog.Logger is
      (Logger    : in out Instance;
       Transform :        Transforms.Handle)
    is
-      use Containers.MOTP;
-
       T_Name : constant Unbounded_String :=
         To_Unbounded_String (Transform.Get_Name);
-      Position : Cursor;
    begin
-      Position := Logger.T_Stack.Find (Key => T_Name);
-
-      if Position /= No_Element then
+      if Logger.T_Stack.Contains (Key => T_Name) then
          raise Transform_Already_Present with "Transform '"
            & To_String (T_Name)
            & "' is already present.";
@@ -103,6 +98,7 @@ package body Alog.Logger is
 
    procedure Clear (L : in out Instance) is
    begin
+      L.T_Stack.Clear;
       L.Finalize;
    end Clear;
 
@@ -155,25 +151,14 @@ package body Alog.Logger is
      (Logger : in out Instance;
       Name   :        String)
    is
-      use Containers.MOTP;
-
-      Position : Cursor;
-      T_Handle : Transforms.Handle;
       T_Name   : constant Unbounded_String := To_Unbounded_String (Name);
    begin
-      Position := Logger.T_Stack.Find (Key => T_Name);
-
-      if Position = No_Element then
+      if not Logger.T_Stack.Contains (Key => T_Name) then
          raise Transform_Not_Found with "Transform '"
            & Name & "' not found.";
       end if;
 
-      T_Handle := Element (Position);
-
       Logger.T_Stack.Delete (Key => T_Name);
-
-      --  Free memory.
-      Free (T_Handle);
    end Detach_Transform;
 
    -------------------------------------------------------------------------
@@ -197,25 +182,10 @@ package body Alog.Logger is
          F_Handle.Teardown;
          Free (F_Handle);
       end Free_Facility;
-
-      --  Forward specs.
-      procedure Free_Transform (Transform : in out Transforms.Handle);
-
-      procedure Free_Transform (Transform : in out Transforms.Handle)
-      is
-      begin
-         --  Cleanup this transform.
-         Transform.Teardown;
-         Free (Transform);
-      end Free_Transform;
    begin
       --  Iterate over all attached facilities.
       Logger.Iterate (Process => Free_Facility'Access);
       Logger.F_Stack.Clear;
-
-      --  Iterate over all attached transforms.
-      Logger.Iterate (Process => Free_Transform'Access);
-      Logger.T_Stack.Clear;
    end Finalize;
 
    -------------------------------------------------------------------------
@@ -255,21 +225,10 @@ package body Alog.Logger is
    procedure Iterate
      (Logger  : Instance;
       Process : not null access procedure
-        (Transform_Handle : in out Transforms.Handle))
+        (Transform_Handle : Transforms.Handle))
    is
-      procedure Do_Process (Position : Containers.MOTP.Cursor);
-      --  Call 'Process' for each Transform.
-
-      procedure Do_Process (Position : Containers.MOTP.Cursor) is
-         T_Handle : Transforms.Handle;
-      begin
-         T_Handle := Containers.MOTP.Element (Position => Position);
-
-         Process (Transform_Handle => T_Handle);
-      end Do_Process;
-
    begin
-      Logger.T_Stack.Iterate (Process => Do_Process'Access);
+      Logger.T_Stack.Iterate (Process => Process);
    end Iterate;
 
    -------------------------------------------------------------------------
@@ -291,10 +250,10 @@ package body Alog.Logger is
                                       Msg   => Out_Msg);
       end Do_Log;
 
-      procedure Do_Transform (Transform_Handle : in out Transforms.Handle);
+      procedure Do_Transform (Transform_Handle : Transforms.Handle);
       --  Call 'Transform_Message' for each transform.
 
-      procedure Do_Transform (Transform_Handle : in out Transforms.Handle) is
+      procedure Do_Transform (Transform_Handle : Transforms.Handle) is
       begin
          Out_Msg := Transform_Handle.Transform_Message
            (Level => Level,
@@ -348,24 +307,17 @@ package body Alog.Logger is
      (Logger  : Instance;
       Name    : String;
       Process : not null access
-        procedure (Transform_Handle : in out Transforms.Handle))
+        procedure (Transform_Handle : Transforms.Handle))
    is
-      use Containers.MOTP;
-
-      Position       : Cursor;
-      Unbounded_Name : constant Unbounded_String :=
-        To_Unbounded_String (Name);
+      T_Name : constant Unbounded_String := To_Unbounded_String (Name);
    begin
-      Position := Logger.T_Stack.Find
-        (Key => Unbounded_Name);
-
-      if Position = No_Element then
+      if not Logger.T_Stack.Contains (Key => T_Name) then
          raise Transform_Not_Found with "Transform '" & Name & "' not found";
       end if;
 
       declare
-         Handle : Transforms.Handle :=
-           Logger.T_Stack.Element (Key => Unbounded_Name);
+         Handle : constant Transforms.Handle :=
+           Logger.T_Stack.Element (Key => T_Name);
       begin
          Process (Transform_Handle => Handle);
       end;

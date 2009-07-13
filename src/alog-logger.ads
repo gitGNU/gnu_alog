@@ -28,7 +28,7 @@ with Ada.Strings.Unbounded;
 
 with Alog.Facilities;
 with Alog.Transforms;
-with Alog.Containers;
+with Alog.Containers.Controlled_Map;
 
 --  Logger instance. Facilities can be attached to a logger instance in order to
 --  log to different targets simultaneously. A logger provides different helper
@@ -99,14 +99,14 @@ package Alog.Logger is
      (Logger  : Instance;
       Name    : String;
       Process : not null access
-        procedure (Transform_Handle : in out Transforms.Handle));
+        procedure (Transform_Handle : Transforms.Handle));
    --  Update a specific Transform identified by 'Name'. Call the 'Process'
    --  procedure to perform the update operation.
 
    procedure Iterate
      (Logger  : Instance;
       Process : not null access
-        procedure (Transform_Handle : in out Transforms.Handle));
+        procedure (Transform_Handle : Transforms.Handle));
    --  Call 'Process' for all attached transforms.
 
    procedure Clear (L : in out Instance);
@@ -163,12 +163,20 @@ private
    subtype Facilities_Stack is Facilities_Stack_Package.Map;
    --  Manages attached facilities for logger instance.
 
+   package Map_Of_Transforms_Package is new Alog.Containers.Controlled_Map
+     (Key_Type       => Unbounded_String,
+      Element_Type   => Transforms.Class,
+      Element_Handle => Transforms.Handle);
+
+   package MOTP renames Map_Of_Transforms_Package;
+
    type Instance (Init : Boolean) is new
      Ada.Finalization.Limited_Controlled with record
       F_Stack : Facilities_Stack;
       --  Stack of attached Facilities.
-      T_Stack : Containers.Transform_Map;
-      --  Stack of attached Transforms.
+
+      T_Stack : MOTP.Map;
+      --  Attached transforms.
    end record;
 
 end Alog.Logger;

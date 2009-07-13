@@ -97,14 +97,14 @@ package Alog.Active_Logger is
      (Logger  : in out Instance;
       Name    :        String;
       Process : not null access
-        procedure (Transform_Handle : in out Transforms.Handle));
+        procedure (Transform_Handle : Transforms.Handle));
    --  Update a specific Transform identified by 'Name'. Call the 'Process'
    --  procedure to perform the update operation.
 
    procedure Iterate
      (Logger  : in out Instance;
       Process : not null access procedure
-        (Transform_Handle : in out Transforms.Handle));
+        (Transform_Handle : Transforms.Handle));
    --  Call 'Process' for all attached transforms.
 
    procedure Clear (Logger : in out Instance);

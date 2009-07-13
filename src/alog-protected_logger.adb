@@ -97,7 +97,7 @@ package body Alog.Protected_Logger is
 
       procedure Iterate
         (Process : not null access
-           procedure (Transform_Handle : in out Transforms.Handle))
+           procedure (Transform_Handle : Transforms.Handle))
       is
       begin
          Logsink.Iterate (Process);
@@ -136,7 +136,7 @@ package body Alog.Protected_Logger is
       procedure Update
         (Name    : String;
          Process : not null access
-           procedure (Transform_Handle : in out Transforms.Handle))
+           procedure (Transform_Handle : Transforms.Handle))
       is
       begin
          Logsink.Update (Name, Process);
