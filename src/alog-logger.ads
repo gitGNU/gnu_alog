@@ -165,9 +165,9 @@ private
 
    type Instance (Init : Boolean) is new
      Ada.Finalization.Limited_Controlled with record
-      F_Stack    : Facilities_Stack;
+      F_Stack : Facilities_Stack;
       --  Stack of attached Facilities.
-      T_Stack    : Containers.Transform_Map;
+      T_Stack : Containers.Transform_Map;
       --  Stack of attached Transforms.
    end record;
 
