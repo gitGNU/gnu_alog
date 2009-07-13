@@ -40,14 +40,10 @@ package body Alog.Facilities is
    procedure Add_Transform (Facility  : in out Class;
                             Transform :        Transforms.Handle)
    is
-      use Containers.MOTP;
-
-      T_Name   : constant Unbounded_String :=
+      T_Name : constant Unbounded_String :=
         To_Unbounded_String (Transform.Get_Name);
-      Position : Cursor;
    begin
-      Position := Facility.Transforms.Find (Key => T_Name);
-      if Position /= No_Element then
+      if Facility.Transforms.Contains (Key => T_Name) then
          raise Transform_Already_Present with "Transform '"
            & To_String (T_Name)
            & "' is already present.";
@@ -103,20 +99,8 @@ package body Alog.Facilities is
      (Facility : Class;
       Process  : not null access procedure (Transform : Transforms.Handle))
    is
-
-      procedure Do_Process (Position : Containers.MOTP.Cursor);
-      --  Call 'Process' for each Transform.
-
-      procedure Do_Process (Position : Containers.MOTP.Cursor) is
-         T_Handle : Transforms.Handle;
-      begin
-         T_Handle := Containers.MOTP.Element (Position => Position);
-
-         Process (Transform => T_Handle);
-      end Do_Process;
-
    begin
-      Facility.Transforms.Iterate (Process => Do_Process'Access);
+      Facility.Transforms.Iterate (Process => Process);
    end Iterate;
 
    -------------------------------------------------------------------------
@@ -166,17 +150,13 @@ package body Alog.Facilities is
    procedure Remove_Transform (Facility : in out Class;
                                Name     :        String)
    is
-      use Containers.MOTP;
-
-      Position : Cursor;
+      T_Name : constant Unbounded_String := To_Unbounded_String (Name);
    begin
-      Position := Facility.Transforms.Find (To_Unbounded_String (Name));
-
-      if Position = No_Element then
+      if not Facility.Transforms.Contains (Key => T_Name) then
          raise Transform_Not_Found with "Transform '" & Name & "' not found.";
       end if;
 
-      Facility.Transforms.Delete (Position);
+      Facility.Transforms.Delete (Key => T_Name);
    end Remove_Transform;
 
    -------------------------------------------------------------------------
@@ -228,16 +208,10 @@ package body Alog.Facilities is
       Process  : not null access
         procedure (Transform_Handle : in out Transforms.Handle))
    is
-      use Containers.MOTP;
-
-      Position       : Cursor;
       Unbounded_Name : constant Unbounded_String :=
         To_Unbounded_String (Name);
    begin
-      Position := Facility.Transforms.Find
-        (Key => Unbounded_Name);
-
-      if Position = No_Element then
+      if not Facility.Transforms.Contains (Key => Unbounded_Name) then
          raise Transform_Not_Found with "Transform '" & Name & "' not found";
       end if;
 

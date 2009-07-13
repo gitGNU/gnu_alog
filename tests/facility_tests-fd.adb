@@ -252,12 +252,13 @@ package body Facility_Tests.FD is
       F        : File_Descriptor.Instance;
       Testfile : constant String := "./data/Write_Transformed_Message_Fd";
       Reffile  : constant String := "./data/Write_Transformed_Message_Fd.ref";
-      T        : aliased Alog.Transforms.Casing.Instance;
+      T        : constant Alog.Transforms.Handle :=
+        new Alog.Transforms.Casing.Instance;
    begin
       --  We have to disable timestamps, since its changing all
       --  the time :)
       F.Toggle_Write_Timestamp (State => False);
-      F.Add_Transform (Transform => T'Unchecked_Access);
+      F.Add_Transform (Transform => T);
 
       F.Set_Logfile (Path => Testfile);
       F.Log_Message (Msg => "THIS IS A test log-message");

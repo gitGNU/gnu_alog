@@ -26,7 +26,7 @@ with Ada.Strings.Unbounded;
 with Ada.Command_Line;
 
 with Alog.Transforms;
-with Alog.Containers;
+with Alog.Containers.Controlled_Map;
 
 --  Abstract package Facilities. Provides common data and methods used by all
 --  Alog facilities.
@@ -139,6 +139,13 @@ package Alog.Facilities is
 
 private
 
+   package Map_Of_Transforms_Package is new Alog.Containers.Controlled_Map
+     (Key_Type       => Unbounded_String,
+      Element_Type   => Transforms.Class,
+      Element_Handle => Transforms.Handle);
+
+   package MOTP renames Map_Of_Transforms_Package;
+
    type Instance is abstract tagged limited record
       Name             : Unbounded_String :=
         To_Unbounded_String (Ada.Command_Line.Command_Name);
@@ -158,8 +165,8 @@ private
       --  If True, the loglevel associated with the log message is written.
       --  Default is False.
 
-      Transforms       : Containers.Transform_Map;
-      --  List of transforms.
+      Transforms       : MOTP.Map;
+      --  Map of transforms.
    end record;
 
 end Alog.Facilities;

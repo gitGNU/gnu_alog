@@ -34,7 +34,7 @@ package Alog.Transforms is
 
    subtype Class is Instance'Class;
 
-   type Handle is access all Class;
+   type Handle is access Class;
 
    function "=" (Left  : Handle;
                  Right : Handle) return Boolean;
