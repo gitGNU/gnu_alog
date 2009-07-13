@@ -25,6 +25,15 @@ package body Alog.Protected_Containers is
 
    -------------------------------------------------------------------------
 
+   function "<" (Left, Right : Ada.Task_Identification.Task_Id) return Boolean
+   is
+      use Ada.Task_Identification;
+   begin
+      return Image (T => Left) < Image (T => Right);
+   end "<";
+
+   -------------------------------------------------------------------------
+
    protected body Log_Request_List is
 
       ----------------------------------------------------------------------
@@ -131,8 +140,10 @@ package body Alog.Protected_Containers is
         when Exceptions_Available
       is
       begin
-         Data.Get (Key     => Key,
-                   Element => Element);
+         Ada.Exceptions.Save_Occurrence
+           (Target => Element,
+            Source => Data.Element (Key => Key).all);
+
          Exceptions_Available := not Data.Is_Empty;
       end Get;
 
@@ -143,8 +154,8 @@ package body Alog.Protected_Containers is
          Item : Ada.Exceptions.Exception_Occurrence_Access)
       is
       begin
-         Data.Insert (Key  => Key,
-                      Item => Item);
+         Data.Insert (Key      => Key,
+                      New_Item => Item);
          Exceptions_Available := True;
       end Insert;
 

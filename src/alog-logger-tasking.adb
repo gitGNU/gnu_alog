@@ -23,7 +23,7 @@
 
 with Ada.Task_Identification;
 
-with Alog.Controlled_Containers;
+with Alog.Protected_Containers;
 
 package body Alog.Logger.Tasking is
 
@@ -36,7 +36,7 @@ package body Alog.Logger.Tasking is
       Current_Level   : Log_Level;
       Current_Message : Unbounded_String;
       Current_Caller  : Ada.Task_Identification.Task_Id;
-      Exceptions      : Controlled_Containers.Exception_Map;
+      Exceptions      : Protected_Containers.Protected_Exception_Map;
    begin
 
       loop

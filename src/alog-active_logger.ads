@@ -28,6 +28,7 @@ with Alog.Facilities;
 with Alog.Transforms;
 with Alog.Protected_Logger;
 with Alog.Protected_Containers;
+
 --  Active Logger instance. This logger is an active object and implements
 --  concurrent, asynchronous logging. It provides the same functionality as the
 --  'simple' logger.

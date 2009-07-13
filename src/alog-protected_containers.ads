@@ -24,9 +24,8 @@
 with Ada.Exceptions;
 with Ada.Task_Identification;
 
-with Alog.Containers;
-with Alog.Controlled_Containers;
 with Alog.Log_Request;
+with Alog.Containers.Controlled_Map;
 
 --  Alog Protected Containers. This package holds protected variants of
 --  different Alog containers which are safe for concurrent access.
@@ -76,6 +75,8 @@ package Alog.Protected_Containers is
    -- Protected_Exception_Map --
    -----------------------------
 
+   type Exception_Storage is limited private;
+
    protected type Protected_Exception_Map is
 
       procedure Insert
@@ -103,7 +104,7 @@ package Alog.Protected_Containers is
 
    private
 
-      Data                 : Controlled_Containers.Exception_Map;
+      Data                 : Exception_Storage;
       Exceptions_Available : Boolean := False;
 
    end Protected_Exception_Map;
@@ -112,5 +113,19 @@ package Alog.Protected_Containers is
    --  by the map. The memory of an occurrence pointed to by a previously
    --  inserted handle is freed upon calling Delete, Clear or during
    --  finalization of the protected type
+
+private
+
+   function "<" (Left, Right : Ada.Task_Identification.Task_Id) return Boolean;
+   --  Smaller-than function for Task_Id. Needed to use Task_Id as Key_Type.
+
+   package Map_Of_Exceptions_Package is new Alog.Containers.Controlled_Map
+     (Key_Type       => Ada.Task_Identification.Task_Id,
+      Element_Type   => Ada.Exceptions.Exception_Occurrence,
+      Element_Handle => Ada.Exceptions.Exception_Occurrence_Access);
+
+   package MOEP renames Map_Of_Exceptions_Package;
+
+   type Exception_Storage is limited new MOEP.Map with null record;
 
 end Alog.Protected_Containers;
