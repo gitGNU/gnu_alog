@@ -45,10 +45,10 @@ package body Logger_Tests is
       Facility : constant Facilities.Handle :=
         new Facilities.File_Descriptor.Instance;
 
-      procedure Check_Facility (Facility_Handle : in out Facilities.Handle);
+      procedure Check_Facility (Facility_Handle : Facilities.Handle);
       --  Verify that facility with given name is present in the logger.
 
-      procedure Check_Facility (Facility_Handle : in out Facilities.Handle) is
+      procedure Check_Facility (Facility_Handle : Facilities.Handle) is
          use type Facilities.Handle;
       begin
          Assert (Condition => Facility_Handle = Facility,
@@ -699,8 +699,7 @@ package body Logger_Tests is
 
    procedure Update_Facility is
 
-      procedure Do_Nothing
-        (Facility_Handle : in out Facilities.Handle) is null;
+      procedure Do_Nothing (Facility_Handle : Facilities.Handle) is null;
       --  Just do nothing.
 
       Log : Logger.Instance (Init => False);
@@ -722,7 +721,7 @@ package body Logger_Tests is
            "Test_Facility";
 
          procedure Update_Facility
-           (Facility_Handle : in out Facilities.Handle)
+           (Facility_Handle : Facilities.Handle)
          is
          begin
             Facility_Handle.Toggle_Write_Timestamp (State => True);
@@ -747,8 +746,7 @@ package body Logger_Tests is
 
    procedure Update_Transform is
 
-      procedure Do_Nothing
-        (Transform_Handle : Transforms.Handle) is null;
+      procedure Do_Nothing (Transform_Handle : Transforms.Handle) is null;
       --  Just do nothing.
 
       Log : Logger.Instance (Init => False);

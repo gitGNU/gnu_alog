@@ -29,14 +29,9 @@ package body Alog.Logger is
 
    procedure Attach_Default_Facility (Logger : in out Instance)
    is
-      use Facilities_Stack_Package;
-
-      Position : Cursor;
    begin
-      Position := Logger.F_Stack.Find
-        (Key => To_Unbounded_String (Default_Facility_Name));
-
-      if Position = No_Element then
+      if not Logger.F_Stack.Contains
+        (Key => To_Unbounded_String (Default_Facility_Name)) then
          declare
             Default_Handle : Facilities.File_Descriptor.Handle;
          begin
@@ -55,22 +50,17 @@ package body Alog.Logger is
      (Logger   : in out Instance;
       Facility :        Facilities.Handle)
    is
-      use Facilities_Stack_Package;
-
       F_Name : constant Unbounded_String :=
         To_Unbounded_String (Facility.Get_Name);
-      Position : Cursor;
    begin
-      Position := Logger.F_Stack.Find (Key => F_Name);
-
-      if Position /= No_Element then
+      if Logger.F_Stack.Contains (Key => F_Name) then
          raise Facility_Already_Present with "Facility '"
            & To_String (F_Name)
            & "' is already present.";
       end if;
 
       Logger.F_Stack.Insert
-        (Key      =>  F_Name,
+        (Key      => F_Name,
          New_Item => Facility);
    end Attach_Facility;
 
@@ -97,23 +87,38 @@ package body Alog.Logger is
    -------------------------------------------------------------------------
 
    procedure Clear (L : in out Instance) is
+
+      procedure Teardown_Facility (Handle : Facilities.Handle);
+      --  Teardown a facility.
+
+      procedure Teardown_Facility (Handle : Facilities.Handle) is
+      begin
+         Handle.Teardown;
+      end Teardown_Facility;
+
+      procedure Teardown_Transform (Handle : Transforms.Handle);
+      --  Teardown a transform.
+
+      procedure Teardown_Transform (Handle : Transforms.Handle) is
+      begin
+         Handle.Teardown;
+      end Teardown_Transform;
+
    begin
+      L.F_Stack.Iterate (Process => Teardown_Facility'Access);
+      L.F_Stack.Clear;
+
+      L.T_Stack.Iterate (Process => Teardown_Transform'Access);
       L.T_Stack.Clear;
-      L.Finalize;
    end Clear;
 
    -------------------------------------------------------------------------
 
    procedure Detach_Default_Facility (Logger : in out Instance)
    is
-      use Facilities_Stack_Package;
-
-      Position : Cursor;
    begin
-      Position := Logger.F_Stack.Find
-        (Key => To_Unbounded_String (Default_Facility_Name));
-
-      if Position /= No_Element then
+      if Logger.F_Stack.Contains
+        (Key => To_Unbounded_String (Default_Facility_Name)) then
          Logger.Detach_Facility (Name => Default_Facility_Name);
       end if;
    end Detach_Default_Facility;
@@ -124,25 +129,14 @@ package body Alog.Logger is
      (Logger : in out Instance;
       Name   :        String)
    is
-      use Facilities_Stack_Package;
-
-      Position        : Cursor;
-      Facility_Handle : Facilities.Handle;
-      F_Name          : constant Unbounded_String := To_Unbounded_String (Name);
+      F_Name : constant Unbounded_String := To_Unbounded_String (Name);
    begin
-      Position := Logger.F_Stack.Find (Key => F_Name);
-
-      if Position = No_Element then
+      if not Logger.F_Stack.Contains (Key => F_Name) then
          raise Facility_Not_Found with "Facility '"
            & Name & "' not found.";
       end if;
 
-      Facility_Handle := Element (Position);
-
       Logger.F_Stack.Delete (Key => F_Name);
-
-      --  Free memory.
-      Free (Facility_Handle);
    end Detach_Facility;
 
    -------------------------------------------------------------------------
@@ -171,21 +165,8 @@ package body Alog.Logger is
    -------------------------------------------------------------------------
 
    procedure Finalize (Logger : in out Instance) is
-
-      --  Forward specs.
-      procedure Free_Facility (F_Handle : in out Facilities.Handle);
-
-      procedure Free_Facility (F_Handle : in out Facilities.Handle)
-      is
-      begin
-         --  Cleanup this facility.
-         F_Handle.Teardown;
-         Free (F_Handle);
-      end Free_Facility;
    begin
-      --  Iterate over all attached facilities.
-      Logger.Iterate (Process => Free_Facility'Access);
-      Logger.F_Stack.Clear;
+      Logger.Clear;
    end Finalize;
 
    -------------------------------------------------------------------------
@@ -202,22 +183,10 @@ package body Alog.Logger is
    procedure Iterate
      (Logger  : Instance;
       Process : not null access
-        procedure (Facility_Handle : in out Facilities.Handle))
+        procedure (Facility_Handle : Facilities.Handle))
    is
-
-      procedure Do_Process (Position : Facilities_Stack_Package.Cursor);
-      --  Call 'Process' for each facility.
-
-      procedure Do_Process (Position : Facilities_Stack_Package.Cursor) is
-         F_Handle : Facilities.Handle;
-      begin
-         F_Handle := Facilities_Stack_Package.Element (Position => Position);
-
-         Process (Facility_Handle => F_Handle);
-      end Do_Process;
-
    begin
-      Logger.F_Stack.Iterate (Process => Do_Process'Access);
+      Logger.F_Stack.Iterate (Process => Process);
    end Iterate;
 
    -------------------------------------------------------------------------
@@ -240,10 +209,10 @@ package body Alog.Logger is
    is
       Out_Msg    : String := Msg;
 
-      procedure Do_Log (Facility_Handle : in out Facilities.Handle);
+      procedure Do_Log (Facility_Handle : Facilities.Handle);
       --  Log message for each facility.
 
-      procedure Do_Log (Facility_Handle : in out Facilities.Handle)
+      procedure Do_Log (Facility_Handle : Facilities.Handle)
       is
       begin
          Facility_Handle.Log_Message (Level => Level,
@@ -278,24 +247,17 @@ package body Alog.Logger is
      (Logger  : Instance;
       Name    : String;
       Process : not null access
-        procedure (Facility_Handle : in out Facilities.Handle))
+        procedure (Facility_Handle : Facilities.Handle))
    is
-      use Facilities_Stack_Package;
-
-      Position       : Cursor;
-      Unbounded_Name : constant Unbounded_String :=
-        To_Unbounded_String (Name);
+      F_Name : constant Unbounded_String := To_Unbounded_String (Name);
    begin
-      Position := Logger.F_Stack.Find
-        (Key => Unbounded_Name);
-
-      if Position = No_Element then
+      if not Logger.F_Stack.Contains (Key => F_Name) then
          raise Facility_Not_Found with "Facility '" & Name & "' not found";
       end if;
 
       declare
-         Handle : Facilities.Handle :=
-           Logger.F_Stack.Element (Key => Unbounded_Name);
+         Handle : constant Facilities.Handle :=
+           Logger.F_Stack.Element (Key => F_Name);
       begin
          Process (Facility_Handle => Handle);
       end;

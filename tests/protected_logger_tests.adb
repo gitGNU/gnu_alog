@@ -43,10 +43,10 @@ package body Protected_Logger_Tests is
       Facility : constant Facilities.Handle :=
         new Facilities.File_Descriptor.Instance;
 
-      procedure Check_Facility (Facility_Handle : in out Facilities.Handle);
+      procedure Check_Facility (Facility_Handle : Facilities.Handle);
       --  Verify that facility with given name is present in the logger.
 
-      procedure Check_Facility (Facility_Handle : in out Facilities.Handle) is
+      procedure Check_Facility (Facility_Handle : Facilities.Handle) is
          use type Facilities.Handle;
       begin
          Assert (Condition => Facility_Handle = Facility,
@@ -488,7 +488,7 @@ package body Protected_Logger_Tests is
    procedure Update_Facility is
 
       procedure Do_Nothing
-        (Facility_Handle : in out Facilities.Handle) is null;
+        (Facility_Handle : Facilities.Handle) is null;
       --  Just do nothing.
 
       Log : Protected_Logger.Instance (Init => False);
@@ -510,7 +510,7 @@ package body Protected_Logger_Tests is
            "Test_Facility";
 
          procedure Update_Facility
-           (Facility_Handle : in out Facilities.Handle)
+           (Facility_Handle : Facilities.Handle)
          is
          begin
             Facility_Handle.Toggle_Write_Timestamp (State => True);
@@ -592,10 +592,10 @@ package body Protected_Logger_Tests is
       Facility2 : constant Facilities.Handle :=
         new Facilities.File_Descriptor.Instance;
 
-      procedure Inc_Counter (F_Handle : in out Facilities.Handle);
+      procedure Inc_Counter (F_Handle : Facilities.Handle);
       --  Increment counter.
 
-      procedure Inc_Counter (F_Handle : in out Facilities.Handle)
+      procedure Inc_Counter (F_Handle : Facilities.Handle)
       is
          pragma Unreferenced (F_Handle);
       begin

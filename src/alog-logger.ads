@@ -23,7 +23,6 @@
 
 with Ada.Finalization;
 with Ada.Unchecked_Deallocation;
-with Ada.Containers.Indefinite_Ordered_Maps;
 with Ada.Strings.Unbounded;
 
 with Alog.Facilities;
@@ -71,14 +70,14 @@ package Alog.Logger is
      (Logger  : Instance;
       Name    : String;
       Process : not null access
-        procedure (Facility_Handle : in out Facilities.Handle));
+        procedure (Facility_Handle : Facilities.Handle));
    --  Update a specific Facility identified by 'Name'. Call the 'Process'
    --  procedure to perform the update operation.
 
    procedure Iterate
      (Logger  : Instance;
       Process : not null access
-        procedure (Facility_Handle : in out Facilities.Handle));
+        procedure (Facility_Handle : Facilities.Handle));
    --  Call 'Process' for all attached facilities.
 
    procedure Attach_Transform
@@ -154,15 +153,6 @@ private
    procedure Finalize (Logger : in out Instance);
    --  Finalize procedure used to cleanup.
 
-   package Facilities_Stack_Package is
-     new Ada.Containers.Indefinite_Ordered_Maps
-       (Key_Type     => Ada.Strings.Unbounded.Unbounded_String,
-        Element_Type => Facilities.Handle);
-   --  Storage for attached facilities.
-
-   subtype Facilities_Stack is Facilities_Stack_Package.Map;
-   --  Manages attached facilities for logger instance.
-
    package Map_Of_Transforms_Package is new Alog.Containers.Controlled_Map
      (Key_Type       => Unbounded_String,
       Element_Type   => Transforms.Class,
@@ -170,10 +160,17 @@ private
 
    package MOTP renames Map_Of_Transforms_Package;
 
+   package Map_Of_Facilities_Package is new Alog.Containers.Controlled_Map
+     (Key_Type       => Unbounded_String,
+      Element_Type   => Facilities.Class,
+      Element_Handle => Facilities.Handle);
+
+   package MOFP renames Map_Of_Facilities_Package;
+
    type Instance (Init : Boolean) is new
      Ada.Finalization.Limited_Controlled with record
-      F_Stack : Facilities_Stack;
-      --  Stack of attached Facilities.
+      F_Stack : MOFP.Map;
+      --  Attached facilities.
 
       T_Stack : MOTP.Map;
       --  Attached transforms.
