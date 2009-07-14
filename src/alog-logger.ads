@@ -27,7 +27,7 @@ with Ada.Strings.Unbounded;
 
 with Alog.Facilities;
 with Alog.Transforms;
-with Alog.Containers.Controlled_Map;
+with Alog.Controlled_Map;
 
 --  Logger instance. Facilities can be attached to a logger instance in order to
 --  log to different targets simultaneously. A logger provides different helper
@@ -153,14 +153,14 @@ private
    procedure Finalize (Logger : in out Instance);
    --  Finalize procedure used to cleanup.
 
-   package Map_Of_Transforms_Package is new Alog.Containers.Controlled_Map
+   package Map_Of_Transforms_Package is new Alog.Controlled_Map
      (Key_Type       => Unbounded_String,
       Element_Type   => Transforms.Class,
       Element_Handle => Transforms.Handle);
 
    package MOTP renames Map_Of_Transforms_Package;
 
-   package Map_Of_Facilities_Package is new Alog.Containers.Controlled_Map
+   package Map_Of_Facilities_Package is new Alog.Controlled_Map
      (Key_Type       => Unbounded_String,
       Element_Type   => Facilities.Class,
       Element_Handle => Facilities.Handle);

@@ -26,7 +26,7 @@ with Ada.Task_Identification;
 with Ada.Containers.Doubly_Linked_Lists;
 
 with Alog.Log_Request;
-with Alog.Containers.Controlled_Map;
+with Alog.Controlled_Map;
 
 --  Alog Protected Containers. This package provides protected containers which
 --  are safe for concurrent access.
@@ -132,7 +132,7 @@ private
    function "<" (Left, Right : Ada.Task_Identification.Task_Id) return Boolean;
    --  Smaller-than function for Task_Id. Needed to use Task_Id as Key_Type.
 
-   package Map_Of_Exceptions_Package is new Alog.Containers.Controlled_Map
+   package Map_Of_Exceptions_Package is new Alog.Controlled_Map
      (Key_Type       => Ada.Task_Identification.Task_Id,
       Element_Type   => Ada.Exceptions.Exception_Occurrence,
       Element_Handle => Ada.Exceptions.Exception_Occurrence_Access);

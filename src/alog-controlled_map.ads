@@ -31,7 +31,7 @@ generic
 
    with function "<" (Left, Right : Key_Type) return Boolean is <>;
 
-package Alog.Containers.Controlled_Map is
+package Alog.Controlled_Map is
 
    type Map is new Ada.Finalization.Limited_Controlled with private;
    --  Controlled variant of a map. The memory of an element pointed to by a
@@ -96,4 +96,4 @@ private
       Data : MOEP.Map;
    end record;
 
-end Alog.Containers.Controlled_Map;
+end Alog.Controlled_Map;

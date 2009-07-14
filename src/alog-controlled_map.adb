@@ -23,7 +23,7 @@
 
 with Ada.Unchecked_Deallocation;
 
-package body Alog.Containers.Controlled_Map is
+package body Alog.Controlled_Map is
 
    procedure Free is new Ada.Unchecked_Deallocation
      (Object => Element_Type,
@@ -136,4 +136,4 @@ package body Alog.Containers.Controlled_Map is
       return Natural (Container.Data.Length);
    end Length;
 
-end Alog.Containers.Controlled_Map;
+end Alog.Controlled_Map;

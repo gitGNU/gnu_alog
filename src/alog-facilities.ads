@@ -26,7 +26,7 @@ with Ada.Strings.Unbounded;
 with Ada.Command_Line;
 
 with Alog.Transforms;
-with Alog.Containers.Controlled_Map;
+with Alog.Controlled_Map;
 
 --  Abstract package Facilities. Provides common data and methods used by all
 --  Alog facilities.
@@ -139,7 +139,7 @@ package Alog.Facilities is
 
 private
 
-   package Map_Of_Transforms_Package is new Alog.Containers.Controlled_Map
+   package Map_Of_Transforms_Package is new Alog.Controlled_Map
      (Key_Type       => Unbounded_String,
       Element_Type   => Transforms.Class,
       Element_Handle => Transforms.Handle);
