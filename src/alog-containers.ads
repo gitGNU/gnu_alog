@@ -21,27 +21,6 @@
 --  MA  02110-1301  USA
 --
 
-with Ada.Containers.Doubly_Linked_Lists;
-
-with Alog.Log_Request;
-
---  Alog Containers. This package holds various container types used in Alog.
 package Alog.Containers is
-
-   ----------------------
-   -- Log_Request_List --
-   ----------------------
-
-   use type Alog.Log_Request.Instance;
-
-   package List_Of_Log_Requests_Package is
-     new Ada.Containers.Doubly_Linked_Lists
-       (Element_Type => Log_Request.Instance);
-
-   package LOLRP renames List_Of_Log_Requests_Package;
-
-   type Log_Request_List is new LOLRP.List with null record;
-   --  Log requests list. This doubly-linked list holds log request
-   --  objects.
 
 end Alog.Containers;

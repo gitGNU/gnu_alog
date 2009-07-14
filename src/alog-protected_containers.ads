@@ -23,17 +23,20 @@
 
 with Ada.Exceptions;
 with Ada.Task_Identification;
+with Ada.Containers.Doubly_Linked_Lists;
 
 with Alog.Log_Request;
 with Alog.Containers.Controlled_Map;
 
---  Alog Protected Containers. This package holds protected variants of
---  different Alog containers which are safe for concurrent access.
+--  Alog Protected Containers. This package provides protected containers which
+--  are safe for concurrent access.
 package Alog.Protected_Containers is
 
    ----------------------
    -- Log_Request_List --
    ----------------------
+
+   type Log_Request_Storage is private;
 
    protected type Log_Request_List is
 
@@ -63,12 +66,12 @@ package Alog.Protected_Containers is
 
    private
 
-      Requests           : Containers.Log_Request_List;
+      Requests           : Log_Request_Storage;
       Requests_Available : Boolean := False;
       Pending_Counter    : Natural := 0;
 
    end Log_Request_List;
-   --  Protected variant of the log request list. This list holds log request
+   --  Protected variant of a log request list. This list holds log request
    --  objects and is safe for concurrent access. It operates in FIFO-Mode.
 
    -----------------------------
@@ -108,13 +111,23 @@ package Alog.Protected_Containers is
       Exceptions_Available : Boolean := False;
 
    end Protected_Exception_Map;
-   --  Protected variant of the exception map. To make memory management more
-   --  robust only copies of Excpetion_Occurrences and not handles are returned
-   --  by the map. The memory of an occurrence pointed to by a previously
-   --  inserted handle is freed upon calling Delete, Clear or during
-   --  finalization of the protected type
+   --  Protected map of exceptions. To make memory management more robust only
+   --  copies of Excpetion_Occurrences and not handles are returned by the map.
+   --  The memory of an occurrence pointed to by a previously inserted handle is
+   --  freed upon calling Delete, Clear or during finalization of the protected
+   --  type
 
 private
+
+   use type Alog.Log_Request.Instance;
+
+   package List_Of_Log_Requests_Package is
+     new Ada.Containers.Doubly_Linked_Lists
+       (Element_Type => Log_Request.Instance);
+
+   package LOLRP renames List_Of_Log_Requests_Package;
+
+   type Log_Request_Storage is new LOLRP.List with null record;
 
    function "<" (Left, Right : Ada.Task_Identification.Task_Id) return Boolean;
    --  Smaller-than function for Task_Id. Needed to use Task_Id as Key_Type.
