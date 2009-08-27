@@ -1,4 +1,6 @@
 alog.ads
+alog-controlled_map.adb
+alog-controlled_map.ads
 alog-facilities.adb
 alog-facilities.ads
 alog-facilities-file_descriptor.adb
@@ -11,6 +13,10 @@ alog-logger.adb
 alog-logger.ads
 alog-logger-tasking.adb
 alog-logger-tasking.ads
+alog-log_request.adb
+alog-log_request.ads
+alog-protected_containers.adb
+alog-protected_containers.ads
 alog-transforms.adb
 alog-transforms.ads
 alog-transforms-casing.adb
