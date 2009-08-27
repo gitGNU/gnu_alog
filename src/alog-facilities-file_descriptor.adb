@@ -97,10 +97,14 @@ package body Alog.Facilities.File_Descriptor is
    is
       pragma Unreferenced (Level);
 
-      Logfile : Ada.Text_IO.File_Type renames Facility.Log_File_Ptr.all;
+      use type Ada.Text_IO.File_Access;
    begin
-      Ada.Text_IO.Put_Line (File => Logfile,
-                            Item => Msg);
+      if Facility.Log_File_Ptr = Ada.Text_IO.Standard_Output then
+         Ada.Text_IO.Put_Line (Item => Msg);
+      else
+         Ada.Text_IO.Put_Line (File => Facility.Log_File_Ptr.all,
+                               Item => Msg);
+      end if;
    end Write_Message;
 
 end Alog.Facilities.File_Descriptor;
