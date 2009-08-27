@@ -81,7 +81,7 @@ package Alog.Logger.Tasking is
    --  sure minimal stdout logging is possible as soon as a new logger is
    --  instantiated.
 
-      type Handle is access all Instance;
+   type Handle is access all Instance;
    --  Handle to tasked logger type.
 
 end Alog.Logger.Tasking;
