@@ -23,8 +23,8 @@
 
 with Ahven.Framework;
 
---  Tests for Alog logger component.
-package Logger_Tests is
+--  Tests for Alog tasked logger component.
+package Tasked_Logger_Tests is
 
    type Testcase is new Ahven.Framework.Test_Case with null record;
 
@@ -34,47 +34,30 @@ package Logger_Tests is
    procedure Finalize (T : in out Testcase);
    --  Teardown Test suite.
 
-   procedure Attach_Facility;
-   --  Test Facility attaching.
-
-   procedure Update_Facility;
-   --  Test Facility update operation.
-
-   procedure Detach_Facility_Instance;
-   --  Test Facility detaching by name.
-
    procedure Detach_Facility_Unattached;
-   --  Test Facility detaching with a un-attached instance
-   --  (should fail).
+   --  Test Facility detaching of tasked logger with a un-attached instance.
+   --  Verify that logger remains responsive after exception.
 
    procedure Attach_Transform;
-   --  Test Transform attaching.
+   --  Test Transform attaching to tasked logger.
 
-   procedure Update_Transform;
-   --  Test Transform update operation.
-
-   procedure Detach_Transform_Instance;
-   --  Test Transform detaching by name.
+   procedure Detach_Transform;
+   --  Test Transform detaching of tasked logger.
 
    procedure Detach_Transform_Unattached;
-   --  Test Transform detaching with un-attached instance
-
-   procedure Clear_A_Logger;
-   --  Test Logger cleanup.
+   --  Test Transform detaching of tasked logger with un-attached instance.
+   --  Verify  that logger remains responsive after exception.
 
    procedure Log_One_FD_Facility;
-   --  Test logging to one fd based facility.
-
-   procedure Log_Multiple_FD_Facilities;
-   --  Test logging to multiple fd based facilities.
-
-   procedure Log_FD_Facility_with_Transform;
-   --  Test logging to fd based facility with lowercase transform.
+   --  Test tasked logging to one fd based facility.
 
    procedure Verify_Logger_Initialization;
-   --  Test logger instance initialization behavior.
+   --  Test tasked logger instance initialization behavior.
+
+   procedure Logger_Exception_Handling;
+   --  Test tasked logger instance exception handling.
 
    procedure Default_Facility_Handling;
-   --  Test attaching/detaching of default facility.
+   --  Test tasked logger attaching/detaching of default facility.
 
-end Logger_Tests;
+end Tasked_Logger_Tests;

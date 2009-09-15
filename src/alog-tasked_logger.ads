@@ -24,11 +24,12 @@
 with Ada.Exceptions;
 
 with Alog.Facilities;
+with Alog.Transforms;
 
 --  Tasked Logger instance. Facilities can be attached to this logger instance
 --  in order to log to different targets simultaneously. This instance provides
 --  task-safe concurrent logging.
-package Alog.Logger.Tasking is
+package Alog.Tasked_Logger is
 
    task type Instance (Init : Boolean := False) is
 
@@ -84,4 +85,4 @@ package Alog.Logger.Tasking is
    type Handle is access all Instance;
    --  Handle to tasked logger type.
 
-end Alog.Logger.Tasking;
+end Alog.Tasked_Logger;

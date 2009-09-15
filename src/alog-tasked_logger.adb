@@ -22,17 +22,20 @@
 --
 
 with Ada.Task_Identification;
+with Ada.Strings.Unbounded;
 
+with Alog.Logger;
 with Alog.Protected_Containers;
 
-package body Alog.Logger.Tasking is
+package body Alog.Tasked_Logger is
 
    use Ada.Exceptions;
+   use Ada.Strings.Unbounded;
 
    -------------------------------------------------------------------------
 
    task body Instance is
-      Logsink         : Logger.Instance (Init => Init);
+      Logsink         : Alog.Logger.Instance (Init => Init);
       Current_Level   : Log_Level;
       Current_Message : Unbounded_String;
       Current_Caller  : Ada.Task_Identification.Task_Id;
@@ -170,4 +173,4 @@ package body Alog.Logger.Tasking is
 
    end Instance;
 
-end Alog.Logger.Tasking;
+end Alog.Tasked_Logger;
