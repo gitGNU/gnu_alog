@@ -21,7 +21,7 @@
 --  MA  02110-1301  USA
 --
 
-with Ada.Text_IO;
+with Ada.Directories;
 with Ada.Exceptions.Is_Null_Occurrence;
 
 with Ahven;
@@ -378,13 +378,16 @@ package body Logger_Tests is
          BS_Path.To_Bounded_String ("./data/Log_FD_Facility_Lowercase"),
          BS_Path.To_Bounded_String ("./data/Log_One_Tasked_FD_Facility")
         );
-      F     : Ada.Text_IO.File_Type;
    begin
       for C in Files'Range loop
-         Ada.Text_IO.Open (File => F,
-                           Mode => Ada.Text_IO.In_File,
-                           Name => BS_Path.To_String (Files (C)));
-         Ada.Text_IO.Delete (File => F);
+         declare
+            Filename : constant String := BS_Path.To_String (Files (C));
+         begin
+
+            if Ada.Directories.Exists (Name => Filename) then
+               Ada.Directories.Delete_File (Name => Filename);
+            end if;
+         end;
       end loop;
 
       Finalize (Test_Case (T));
