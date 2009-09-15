@@ -33,11 +33,17 @@ with Alog.Facilities.File_Descriptor;
 with Alog.Facilities.Syslog;
 with Alog.Facilities.Mock;
 with Alog.Transforms.Casing;
+with Ada.Text_IO;
 
 package body Tasked_Logger_Tests is
 
    use Ahven;
    use Alog;
+
+   procedure Do_Nothing (Facility_Handle : Facilities.Handle) is null;
+   --  Just do nothing.
+
+   procedure Enable_Facility_Timestamp (Facility_Handle : Facilities.Handle);
 
    -------------------------------------------------------------------------
 
@@ -184,6 +190,15 @@ package body Tasked_Logger_Tests is
 
    -------------------------------------------------------------------------
 
+   procedure Enable_Facility_Timestamp
+     (Facility_Handle : Facilities.Handle)
+   is
+   begin
+      Facility_Handle.Toggle_Write_Timestamp (State => True);
+   end Enable_Facility_Timestamp;
+
+   -------------------------------------------------------------------------
+
    procedure Finalize (T : in out Testcase) is
 
       use Ahven.Framework;
@@ -203,6 +218,9 @@ package body Tasked_Logger_Tests is
    procedure Initialize (T : in out Testcase) is
    begin
       Set_Name (T, "Tests for Alog tasked Logger");
+      Ahven.Framework.Add_Test_Routine
+        (T, Update_Facility'Access,
+         "update a facility");
       Ahven.Framework.Add_Test_Routine
         (T, Detach_Facility_Unattached'Access,
          "detach not attached facility");
@@ -317,6 +335,52 @@ package body Tasked_Logger_Tests is
         (Condition => Is_Null_Occurrence (X => EO),
          Message   => "Exception not reset");
    end Logger_Exception_Handling;
+
+   -------------------------------------------------------------------------
+
+   procedure Update_Facility is
+      use Ada.Exceptions;
+
+      Log : Tasked_Logger.Instance (Init => False);
+      EO  : Ada.Exceptions.Exception_Occurrence;
+   begin
+      Log.Update (Name    => "Nonexistent",
+                  Process => Do_Nothing'Access);
+
+      Log.Get_Last_Exception (Occurrence => EO);
+      Assert (Condition => Exception_Name (X => EO) =
+                "ALOG.LOGGER.FACILITY_NOT_FOUND",
+              Message   => "Expected Facility_Not_Found");
+
+      declare
+         Facility      : constant Facilities.Handle :=
+           new Facilities.File_Descriptor.Instance;
+         Facility_Name : constant String            :=
+           "Test_Facility";
+      begin
+         Facility.Set_Name (Name => Facility_Name);
+         Facility.Toggle_Write_Timestamp (State => False);
+         Assert (Condition => not Facility.Is_Write_Timestamp,
+                 Message   => "Could not disable Timestamp");
+
+         Log.Attach_Facility (Facility => Facility);
+         Log.Update (Name    => Facility_Name,
+                     Process => Enable_Facility_Timestamp'Access);
+
+         --  Since Update is not synchronous and we are accessing the facility
+         --  directly we must wait for the update to actually take place.
+
+         delay 0.1;
+
+         Assert (Condition => Facility.Is_Write_Timestamp,
+                 Message   => "Update failed");
+
+      exception
+         when E : others =>
+            Ada.Text_IO.Put_Line
+              (Ada.Exceptions.Exception_Information (X => E));
+      end;
+   end Update_Facility;
 
    -------------------------------------------------------------------------
 

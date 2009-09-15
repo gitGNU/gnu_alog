@@ -31,6 +31,10 @@ with Alog.Transforms;
 --  task-safe concurrent logging.
 package Alog.Tasked_Logger is
 
+   type Facility_Update_Handle is
+   not null access procedure (Facility_Handle : Facilities.Handle);
+   --  Handle to facility update procedure.
+
    task type Instance (Init : Boolean := False) is
 
       entry Attach_Facility (Facility : Facilities.Handle);
@@ -47,6 +51,14 @@ package Alog.Tasked_Logger is
 
       entry Facility_Count (Count : out Natural);
       --  Return number of attached facilites.
+
+      entry Update
+        (Name    : String;
+         Process : Facility_Update_Handle);
+      --  Update a specific facility identified by 'Name'. Call the 'Process'
+      --  procedure to perform the update operation. Clear the last exception
+      --  occurrence for the caller if none occurred or replace existing
+      --  occurrence with new raised exception.
 
       entry Attach_Transform (Transform : Transforms.Handle);
       --  Attach a transform to tasked logger instance.

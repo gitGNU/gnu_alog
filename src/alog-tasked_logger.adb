@@ -32,14 +32,21 @@ package body Alog.Tasked_Logger is
    use Ada.Exceptions;
    use Ada.Strings.Unbounded;
 
+   procedure F_Dummy (Facility_Handle : Facilities.Handle) is null;
+   --  This procedure is needed to initialize the 'Current_Facility_Proc'
+   --  handle of type Facility_Update_Handle since that type is defined as
+   --  'not null'.
+
    -------------------------------------------------------------------------
 
    task body Instance is
-      Logsink         : Alog.Logger.Instance (Init => Init);
-      Current_Level   : Log_Level;
-      Current_Message : Unbounded_String;
-      Current_Caller  : Ada.Task_Identification.Task_Id;
-      Exceptions      : Protected_Containers.Protected_Exception_Map;
+      Logsink               : Alog.Logger.Instance (Init => Init);
+      Current_Level         : Log_Level;
+      Current_Message       : Unbounded_String;
+      Current_Caller        : Ada.Task_Identification.Task_Id;
+      Current_Facility_Name : Unbounded_String;
+      Current_Facility_Proc : Facility_Update_Handle := F_Dummy'Access;
+      Exceptions            : Protected_Containers.Protected_Exception_Map;
    begin
 
       loop
@@ -82,6 +89,32 @@ package body Alog.Tasked_Logger is
                end Facility_Count;
             or
 
+               ----------------------------------------------------------------
+
+               accept Update
+                 (Name    : String;
+                  Process : Facility_Update_Handle)
+               do
+                  Current_Facility_Name := To_Unbounded_String (Name);
+                  Current_Facility_Proc := Process;
+                  Current_Caller        := Instance.Update'Caller;
+               end Update;
+
+               if Exceptions.Contains (Key => Current_Caller) then
+                  Exceptions.Delete (Key => Current_Caller);
+               end if;
+
+               begin
+                  Logsink.Update (Name    => To_String (Current_Facility_Name),
+                                  Process => Current_Facility_Proc);
+
+               exception
+                  when E : others =>
+                     Exceptions.Insert
+                       (Key  => Current_Caller,
+                        Item => Save_Occurrence (Source => E));
+               end;
+            or
                ----------------------------------------------------------------
 
                accept Attach_Transform (Transform : Transforms.Handle) do

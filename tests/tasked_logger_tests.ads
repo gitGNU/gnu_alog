@@ -34,6 +34,9 @@ package Tasked_Logger_Tests is
    procedure Finalize (T : in out Testcase);
    --  Teardown Test suite.
 
+   procedure Update_Facility;
+   --  Test Facility update operation.
+
    procedure Detach_Facility_Unattached;
    --  Test Facility detaching of tasked logger with a un-attached instance.
    --  Verify that logger remains responsive after exception.
