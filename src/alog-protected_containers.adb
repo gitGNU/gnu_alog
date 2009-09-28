@@ -111,7 +111,6 @@ package body Alog.Protected_Containers is
 
       begin
          Data.Clear;
-         Exceptions_Available := False;
       end Clear;
 
       ----------------------------------------------------------------------
@@ -129,22 +128,24 @@ package body Alog.Protected_Containers is
       procedure Delete (Key : Ada.Task_Identification.Task_Id) is
       begin
          Data.Delete (Key => Key);
-         Exceptions_Available := not Data.Is_Empty;
       end Delete;
 
       ----------------------------------------------------------------------
 
-      entry Get
+      procedure Get
         (Key     :     Ada.Task_Identification.Task_Id;
          Element : out Ada.Exceptions.Exception_Occurrence)
-        when Exceptions_Available
       is
       begin
-         Ada.Exceptions.Save_Occurrence
-           (Target => Element,
-            Source => Data.Element (Key => Key).all);
-
-         Exceptions_Available := not Data.Is_Empty;
+         if Contains (Key => Key) then
+            Ada.Exceptions.Save_Occurrence
+              (Target => Element,
+               Source => Data.Element (Key => Key).all);
+         else
+            Ada.Exceptions.Save_Occurrence
+              (Target => Element,
+               Source => Ada.Exceptions.Null_Occurrence);
+         end if;
       end Get;
 
       ----------------------------------------------------------------------
@@ -156,7 +157,6 @@ package body Alog.Protected_Containers is
       begin
          Data.Insert (Key      => Key,
                       New_Item => Item);
-         Exceptions_Available := True;
       end Insert;
 
    end Protected_Exception_Map;

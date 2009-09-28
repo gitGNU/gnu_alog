@@ -88,10 +88,11 @@ package Alog.Protected_Containers is
       --  Insert the given Exception_Occurrence 'Element' with key 'Key' into
       --  the map.
 
-      entry Get
+      procedure Get
         (Key     :     Ada.Task_Identification.Task_Id;
          Element : out Ada.Exceptions.Exception_Occurrence);
-      --  Get the Exception_Occurrence with key 'Key' from the map.
+      --  Get the Exception_Occurrence with key 'Key' from the map. If the key
+      --  is not found in the map Null_Occurrence is stored in element.
 
       procedure Delete (Key : Ada.Task_Identification.Task_Id);
       --  Delete the Exception_Occurrence with key 'Key' from the map. Memory
@@ -107,15 +108,14 @@ package Alog.Protected_Containers is
 
    private
 
-      Data                 : Exception_Storage;
-      Exceptions_Available : Boolean := False;
+      Data : Exception_Storage;
 
    end Protected_Exception_Map;
    --  Protected map of exceptions. To make memory management more robust only
    --  copies of Excpetion_Occurrences and not handles are returned by the map.
    --  The memory of an occurrence pointed to by a previously inserted handle is
    --  freed upon calling Delete, Clear or during finalization of the protected
-   --  type
+   --  type.
 
 private
 

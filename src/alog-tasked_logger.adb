@@ -151,13 +151,8 @@ package body Alog.Tasked_Logger is
                do
                   Current_Caller := Instance.Get_Last_Exception'Caller;
 
-                  if Exceptions.Contains (Key => Current_Caller) then
-                     Exceptions.Get (Key     => Current_Caller,
-                                     Element => Occurrence);
-                  else
-                     Save_Occurrence (Target => Occurrence,
-                                      Source => Null_Occurrence);
-                  end if;
+                  Exceptions.Get (Key     => Current_Caller,
+                                  Element => Occurrence);
                end Get_Last_Exception;
             or
 
