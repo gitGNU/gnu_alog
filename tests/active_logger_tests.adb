@@ -98,18 +98,6 @@ package body Active_Logger_Tests is
    procedure Attach_Transform is
       Log       : aliased Active_Logger.Instance (Init => False);
       Transform : constant Transforms.Handle := new Transforms.Casing.Instance;
-
-      procedure Check_Transform (Transform_Handle : Transforms.Handle);
-      --  Verify that transform with given name is present in the logger.
-
-      procedure Check_Transform (Transform_Handle : Transforms.Handle)
-      is
-         use type Transforms.Handle;
-      begin
-         Assert (Condition => Transform_Handle = Transform,
-                 Message   => "transform mismatch");
-      end Check_Transform;
-
    begin
       declare
          Shutdown : Active_Logger.Shutdown_Helper (Logger => Log'Access);
@@ -118,21 +106,9 @@ package body Active_Logger_Tests is
          Assert (Condition => Log.Transform_Count = 0,
                  Message   => "transform count not 0");
 
-         begin
-            Log.Update (Name    => Transform.Get_Name,
-                        Process => Check_Transform'Access);
-
-         exception
-            when Logger.Transform_Not_Found =>
-               null;
-         end;
-
          Log.Attach_Transform (Transform => Transform);
          Assert (Condition => Log.Transform_Count = 1,
                  Message => "could not attach transform");
-
-         Log.Update (Name    => Transform.Get_Name,
-                     Process => Check_Transform'Access);
 
          begin
             Log.Attach_Transform (Transform => Transform);
@@ -337,16 +313,13 @@ package body Active_Logger_Tests is
          "update a facility");
       Ahven.Framework.Add_Test_Routine
         (T, Detach_Facility_Instance'Access,
-         "detach facility:instance");
+         "detach facility: instance");
       Ahven.Framework.Add_Test_Routine
         (T, Detach_Facility_Unattached'Access,
          "detach not attached facility");
       Ahven.Framework.Add_Test_Routine
         (T, Attach_Transform'Access,
          "attach a transform");
-      Ahven.Framework.Add_Test_Routine
-        (T, Update_Transform'Access,
-         "update a transform");
       Ahven.Framework.Add_Test_Routine
         (T, Detach_Transform_Instance'Access,
          "detach transform");
@@ -377,9 +350,6 @@ package body Active_Logger_Tests is
       Ahven.Framework.Add_Test_Routine
         (T, Verify_Iterate_Facilities'Access,
          "verify iterate facilities");
-      Ahven.Framework.Add_Test_Routine
-        (T, Verify_Iterate_Transforms'Access,
-         "verify iterate transforms");
    end Initialize;
 
    -------------------------------------------------------------------------
@@ -574,12 +544,12 @@ package body Active_Logger_Tests is
             Facility_Name : constant String            :=
               "Test_Facility";
 
-            procedure Update_Facility
+            procedure Toggle_Timestamp
               (Facility_Handle : Facilities.Handle)
             is
             begin
                Facility_Handle.Toggle_Write_Timestamp (State => True);
-            end Update_Facility;
+            end Toggle_Timestamp;
 
          begin
             Facility.Set_Name (Name => Facility_Name);
@@ -589,66 +559,12 @@ package body Active_Logger_Tests is
 
             Log.Attach_Facility (Facility => Facility);
             Log.Update (Name    => Facility_Name,
-                        Process => Update_Facility'Access);
+                        Process => Toggle_Timestamp'Access);
             Assert (Condition => Facility.Is_Write_Timestamp,
                     Message   => "Update failed");
          end;
       end;
    end Update_Facility;
-
-   -------------------------------------------------------------------------
-
-   procedure Update_Transform is
-      Log : aliased Active_Logger.Instance (Init => False);
-
-      procedure Do_Nothing
-        (Transform_Handle : Transforms.Handle) is null;
-      --  Just do nothing.
-
-   begin
-      declare
-         Shutdown : Active_Logger.Shutdown_Helper (Logger => Log'Access);
-         pragma Unreferenced (Shutdown);
-      begin
-         begin
-            Log.Update (Name    => "Nonexistent",
-                        Process => Do_Nothing'Access);
-            Fail (Message => "Expected Transform_Not_Found");
-
-         exception
-            when Logger.Transform_Not_Found =>
-               null;
-         end;
-
-         declare
-            Transform      : constant Transforms.Handle :=
-              new Transforms.Casing.Instance;
-            Transform_Name : constant String            :=
-              "Test_Transform";
-            Suffix         : constant String            :=
-              "_Updated";
-
-            procedure Update_Transform
-              (Transform_Handle : Transforms.Handle)
-            is
-            begin
-               Transform_Handle.Set_Name (Name => Transform_Name & Suffix);
-            end Update_Transform;
-
-         begin
-            Transform.Set_Name (Name => Transform_Name);
-            Assert (Condition => Transform.Get_Name = Transform_Name,
-                    Message   => "Transform name mismatch");
-
-            Log.Attach_Transform (Transform => Transform);
-            Log.Update (Name    => Transform_Name,
-                        Process => Update_Transform'Access);
-
-            Assert (Condition => Transform.Get_Name = Transform_Name & Suffix,
-                    Message   => "Transform update failed");
-         end;
-      end;
-   end Update_Transform;
 
    -------------------------------------------------------------------------
 
@@ -687,46 +603,6 @@ package body Active_Logger_Tests is
                  Message   => "counter not 2");
       end;
    end Verify_Iterate_Facilities;
-
-   -------------------------------------------------------------------------
-
-   procedure Verify_Iterate_Transforms is
-      Log        : aliased Active_Logger.Instance (Init => False);
-      Counter    : Natural := 0;
-
-      Transform1 : constant Transforms.Handle :=
-        new Transforms.Casing.Instance;
-      Transform2 : constant Transforms.Handle :=
-        new Transforms.Casing.Instance;
-
-      procedure Inc_Counter
-        (Transform_Handle : Transforms.Handle);
-      --  Increment counter.
-
-      procedure Inc_Counter
-        (Transform_Handle : Transforms.Handle)
-      is
-         pragma Unreferenced (Transform_Handle);
-      begin
-         Counter := Counter + 1;
-      end Inc_Counter;
-   begin
-      declare
-         Shutdown : Active_Logger.Shutdown_Helper (Logger => Log'Access);
-         pragma Unreferenced (Shutdown);
-      begin
-         Transform1.Set_Name (Name => "Transform1");
-         Transform2.Set_Name (Name => "Transform2");
-
-         Log.Attach_Transform (Transform => Transform1);
-         Log.Attach_Transform (Transform => Transform2);
-
-         Log.Iterate (Process => Inc_Counter'Access);
-
-         Assert (Condition => Counter = 2,
-                 Message   => "counter not 2");
-      end;
-   end Verify_Iterate_Transforms;
 
    -------------------------------------------------------------------------
 

@@ -50,9 +50,6 @@ package Active_Logger_Tests is
    procedure Attach_Transform;
    --  Test Transform attaching.
 
-   procedure Update_Transform;
-   --  Test Transform update operation.
-
    procedure Detach_Transform_Instance;
    --  Test Transform detaching by name.
 
@@ -83,8 +80,5 @@ package Active_Logger_Tests is
 
    procedure Verify_Iterate_Facilities;
    --  Test iterate for facilities of active logger.
-
-   procedure Verify_Iterate_Transforms;
-   --  Test iterate for transforms of active logger.
 
 end Active_Logger_Tests;

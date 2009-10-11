@@ -64,10 +64,18 @@ package body Alog.Active_Logger is
 
    -------------------------------------------------------------------------
 
+   procedure Check_Exception (Logger : in out Instance) is
+      EO : Ada.Exceptions.Exception_Occurrence;
+   begin
+      Logger.Backend.Get_Last_Exception (Occurrence => EO);
+      Ada.Exceptions.Reraise_Occurrence (X => EO);
+   end Check_Exception;
+
+   -------------------------------------------------------------------------
+
    procedure Clear (Logger : in out Instance) is
    begin
       Logger.Backend.Clear;
-      Logger.Exceptions.Clear;
    end Clear;
 
    -------------------------------------------------------------------------
@@ -101,8 +109,10 @@ package body Alog.Active_Logger is
    -------------------------------------------------------------------------
 
    function Facility_Count (Logger : Instance) return Natural is
+      F_Count : Natural;
    begin
-      return Logger.Backend.Facility_Count;
+      Logger.Backend.Facility_Count (Count => F_Count);
+      return F_Count;
    end Facility_Count;
 
    -------------------------------------------------------------------------
@@ -118,24 +128,10 @@ package body Alog.Active_Logger is
      (Logger     : in out Instance;
       Occurrence :    out Ada.Exceptions.Exception_Occurrence)
    is
-      use Ada.Exceptions;
-      use Ada.Task_Identification;
-
-      Current_Task_ID : constant Task_Id := Current_Task;
    begin
-      if Logger.Exceptions.Contains (Key => Current_Task_ID) then
-         declare
-            Exception_Handle : Exception_Occurrence;
-         begin
-            Logger.Exceptions.Get (Key     => Current_Task_ID,
-                                   Element => Exception_Handle);
-            Save_Occurrence (Target => Occurrence,
-                             Source => Exception_Handle);
-         end;
-      else
-         Save_Occurrence (Target => Occurrence,
-                          Source => Null_Occurrence);
-      end if;
+      Logger.Backend.Get_Last_Exception
+        (Occurrence => Occurrence,
+         Caller     => Ada.Task_Identification.Current_Task);
    end Get_Last_Exception;
 
    -------------------------------------------------------------------------
@@ -147,17 +143,7 @@ package body Alog.Active_Logger is
    is
    begin
       Logger.Backend.Iterate (Process);
-   end Iterate;
-
-   -------------------------------------------------------------------------
-
-   procedure Iterate
-     (Logger  : in out Instance;
-      Process : not null access procedure
-        (Transform_Handle : Transforms.Handle))
-   is
-   begin
-      Logger.Backend.Iterate (Process);
+      Logger.Check_Exception;
    end Iterate;
 
    -------------------------------------------------------------------------
@@ -168,9 +154,10 @@ package body Alog.Active_Logger is
       Msg    :        String)
    is
       New_Request : constant Log_Request.Instance :=
-        Log_Request.Create (ID      => Ada.Task_Identification.Current_Task,
-                            Level   => Level,
-                            Message => Msg);
+        Log_Request.Create
+          (ID      => Ada.Task_Identification.Current_Task,
+           Level   => Level,
+           Message => Msg);
    begin
       Logger.Message_Queue.Put (Element => New_Request);
    end Log_Message;
@@ -192,8 +179,10 @@ package body Alog.Active_Logger is
    -------------------------------------------------------------------------
 
    function Transform_Count (Logger : Instance) return Natural is
+      T_Count : Natural;
    begin
-      return Logger.Backend.Transform_Count;
+      Logger.Backend.Transform_Count (Count => T_Count);
+      return T_Count;
    end Transform_Count;
 
    -------------------------------------------------------------------------
@@ -205,19 +194,9 @@ package body Alog.Active_Logger is
         procedure (Facility_Handle : Facilities.Handle))
    is
    begin
-      Logger.Backend.Update (Name, Process);
-   end Update;
-
-   -------------------------------------------------------------------------
-
-   procedure Update
-     (Logger  : in out Instance;
-      Name    :        String;
-      Process : not null access
-        procedure (Transform_Handle : Transforms.Handle))
-   is
-   begin
-      Logger.Backend.Update (Name, Process);
+      Logger.Backend.Update (Name    => Name,
+                             Process => Process);
+      Logger.Check_Exception;
    end Update;
 
    -------------------------------------------------------------------------
@@ -255,23 +234,10 @@ package body Alog.Active_Logger is
                Parent.Message_Queue.Get
                  (Element => Current_Request);
 
-               if Parent.Exceptions.Contains
-                 (Key => Current_Request.Get_Caller_ID) then
-                  Parent.Exceptions.Delete
-                    (Key => Current_Request.Get_Caller_ID);
-               end if;
-
-               begin
-                  Parent.Backend.Log_Message
-                    (Level => Current_Request.Get_Log_Level,
-                     Msg   => Current_Request.Get_Message);
-
-               exception
-                  when E : others =>
-                     Parent.Exceptions.Insert
-                       (Key  => Current_Request.Get_Caller_ID,
-                        Item => Ada.Exceptions.Save_Occurrence (Source => E));
-               end;
+               Parent.Backend.Log_Message
+                 (Level  => Current_Request.Get_Log_Level,
+                  Msg    => Current_Request.Get_Message,
+                  Caller => Current_Request.Get_Caller_ID);
 
                Parent.Message_Queue.Done;
 

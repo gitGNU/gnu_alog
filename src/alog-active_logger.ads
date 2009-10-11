@@ -26,7 +26,7 @@ with Ada.Finalization;
 
 with Alog.Facilities;
 with Alog.Transforms;
-with Alog.Protected_Logger;
+with Alog.Tasked_Logger;
 with Alog.Protected_Containers;
 
 --  Active Logger instance. This logger is an active object and implements
@@ -94,20 +94,6 @@ package Alog.Active_Logger is
    function Transform_Count (Logger : Instance) return Natural;
    --  Return number of attached transforms.
 
-   procedure Update
-     (Logger  : in out Instance;
-      Name    :        String;
-      Process : not null access
-        procedure (Transform_Handle : Transforms.Handle));
-   --  Update a specific Transform identified by 'Name'. Call the 'Process'
-   --  procedure to perform the update operation.
-
-   procedure Iterate
-     (Logger  : in out Instance;
-      Process : not null access procedure
-        (Transform_Handle : Transforms.Handle));
-   --  Call 'Process' for all attached transforms.
-
    procedure Clear (Logger : in out Instance);
    --  Clear logger instance. Detach and teardown all attached facilities and
    --  transforms and clear the exception map.
@@ -147,6 +133,10 @@ package Alog.Active_Logger is
 
 private
 
+   procedure Check_Exception (Logger : in out Instance);
+   --  Check if call to backend raised an exception. Explicitly reraise it if
+   --  such an exception occured do nothing otherwise.
+
    task type Logging_Task (Parent : not null access Instance);
    --  This task takes logging requests from the parent's message queue and
    --  tries to actually log them to the parent's backend logger. If an
@@ -163,9 +153,8 @@ private
    type Instance (Init : Boolean) is new
      Ada.Finalization.Limited_Controlled with record
       Logger_Task   : Logging_Task (Parent => Instance'Access);
-      Backend       : Protected_Logger.Instance (Init);
+      Backend       : Tasked_Logger.Instance (Init);
       Message_Queue : Protected_Containers.Log_Request_List;
-      Exceptions    : Protected_Containers.Protected_Exception_Map;
       Trigger       : Trigger_Type;
    end record;
 
