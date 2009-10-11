@@ -31,7 +31,6 @@ with Facility_Tests.FD;
 with Transform_Tests.Casing;
 with Logger_Tests;
 with Tasked_Logger_Tests;
-with Protected_Logger_Tests;
 with Active_Logger_Tests;
 
 procedure Runner_Base is
@@ -56,8 +55,6 @@ begin
                              T     => new Logger_Tests.Testcase);
    Ahven.Framework.Add_Test (Suite => S.all,
                              T     => new Tasked_Logger_Tests.Testcase);
-   Ahven.Framework.Add_Test (Suite => S.all,
-                             T     => new Protected_Logger_Tests.Testcase);
    Ahven.Framework.Add_Test (Suite => S.all,
                              T     => new Active_Logger_Tests.Testcase);
 
