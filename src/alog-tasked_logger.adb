@@ -116,6 +116,29 @@ package body Alog.Tasked_Logger is
                         Item => Save_Occurrence (Source => E));
                end;
             or
+
+               ----------------------------------------------------------------
+
+               accept Iterate (Process : Facility_Update_Handle) do
+                  Current_Facility_Proc := Process;
+                  Current_Caller        := Instance.Iterate'Caller;
+               end Iterate;
+
+               if Exceptions.Contains (Key => Current_Caller) then
+                  Exceptions.Delete (Key => Current_Caller);
+               end if;
+
+               begin
+                  Logsink.Iterate (Process => Current_Facility_Proc);
+
+               exception
+                  when E : others =>
+                     Exceptions.Insert
+                       (Key  => Current_Caller,
+                        Item => Save_Occurrence (Source => E));
+               end;
+            or
+
                ----------------------------------------------------------------
 
                accept Attach_Transform (Transform : Transforms.Handle) do

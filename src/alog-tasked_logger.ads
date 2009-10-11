@@ -61,6 +61,9 @@ package Alog.Tasked_Logger is
       --  occurrence for the caller if none occurred or replace existing
       --  occurrence with new raised exception.
 
+      entry Iterate (Process : Facility_Update_Handle);
+      --  Call 'Process' for all attached facilities.
+
       entry Attach_Transform (Transform : Transforms.Handle);
       --  Attach a transform to tasked logger instance.
 

@@ -63,4 +63,10 @@ package Tasked_Logger_Tests is
    procedure Default_Facility_Handling;
    --  Test tasked logger attaching/detaching of default facility.
 
+   procedure Iterate_Facilities;
+   --  Test tasked logger facility iteration.
+
+   procedure Iterate_Facilities_Exceptions;
+   --  Test tasked logger facility iteration with exceptions.
+
 end Tasked_Logger_Tests;

@@ -40,8 +40,17 @@ package body Tasked_Logger_Tests is
    use Ahven;
    use Alog;
 
+   Counter : Natural := 0;
+   --  Iterate counter.
+
    procedure Do_Nothing (Facility_Handle : Facilities.Handle) is null;
    --  Just do nothing.
+
+   procedure Inc_Counter (F_Handle : Facilities.Handle);
+   --  Increment iterate counter.
+
+   procedure Raise_Exception (F_Handle : Facilities.Handle);
+   --  Raise constraint error.
 
    procedure Enable_Facility_Timestamp (Facility_Handle : Facilities.Handle);
 
@@ -215,6 +224,15 @@ package body Tasked_Logger_Tests is
 
    -------------------------------------------------------------------------
 
+   procedure Inc_Counter (F_Handle : Facilities.Handle)
+   is
+      pragma Unreferenced (F_Handle);
+   begin
+      Counter := Counter + 1;
+   end Inc_Counter;
+
+   -------------------------------------------------------------------------
+
    procedure Initialize (T : in out Testcase) is
    begin
       Set_Name (T, "Tests for Alog tasked Logger");
@@ -254,7 +272,67 @@ package body Tasked_Logger_Tests is
       Ahven.Framework.Add_Test_Routine
         (T, Default_Facility_Handling'Access,
          "tasked default facility handling");
+      Ahven.Framework.Add_Test_Routine
+        (T, Iterate_Facilities'Access,
+         "tasked iterate facilities");
+      Ahven.Framework.Add_Test_Routine
+        (T, Iterate_Facilities_Exceptions'Access,
+         "tasked iterate facilities (exceptions)");
    end Initialize;
+
+   -------------------------------------------------------------------------
+
+   procedure Iterate_Facilities is
+      Log       : Tasked_Logger.Instance (Init => False);
+
+      Facility1 : constant Facilities.Handle :=
+        new Facilities.File_Descriptor.Instance;
+      Facility2 : constant Facilities.Handle :=
+        new Facilities.File_Descriptor.Instance;
+   begin
+      Counter := 0;
+
+      Facility1.Set_Name (Name => "Facility1");
+      Facility2.Set_Name (Name => "Facility2");
+
+      Log.Attach_Facility (Facility => Facility1);
+      Log.Attach_Facility (Facility => Facility2);
+
+      Log.Iterate (Process => Inc_Counter'Access);
+
+      Log.Clear;
+      Assert (Condition => Counter = 2,
+              Message   => "counter not 2");
+   end Iterate_Facilities;
+
+   -------------------------------------------------------------------------
+
+   procedure Iterate_Facilities_Exceptions is
+      use Ada.Exceptions;
+
+      Log       : Tasked_Logger.Instance (Init => False);
+      Facility1 : constant Facilities.Handle :=
+        new Facilities.File_Descriptor.Instance;
+      EO        : Exception_Occurrence;
+   begin
+      Facility1.Set_Name (Name => "Facility1");
+
+      Log.Attach_Facility (Facility => Facility1);
+      Log.Iterate (Process => Raise_Exception'Access);
+
+      Log.Get_Last_Exception (Occurrence => EO);
+      Assert
+        (Condition => Exception_Name (X => EO) = "CONSTRAINT_ERROR",
+         Message   => "Expected Constraint_Error");
+
+      Log.Iterate (Process => Inc_Counter'Access);
+      Log.Get_Last_Exception (Occurrence => EO);
+      Assert
+        (Condition => Is_Null_Occurrence (X => EO),
+         Message   => "Exception not Null_Occurence");
+
+      Log.Clear;
+   end Iterate_Facilities_Exceptions;
 
    -------------------------------------------------------------------------
 
@@ -351,6 +429,13 @@ package body Tasked_Logger_Tests is
         (Condition => Is_Null_Occurrence (X => EO),
          Message   => "Exception not reset");
    end Logger_Exception_Handling;
+
+   -------------------------------------------------------------------------
+
+   procedure Raise_Exception (F_Handle : Facilities.Handle) is
+   begin
+      raise Constraint_Error with "DON'T PANIC! This is a test exception!";
+   end Raise_Exception;
 
    -------------------------------------------------------------------------
 
