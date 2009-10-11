@@ -21,7 +21,6 @@
 --  MA  02110-1301  USA
 --
 
-with Ada.Task_Identification;
 with Ada.Strings.Unbounded;
 
 with Alog.Logger;
@@ -40,6 +39,8 @@ package body Alog.Tasked_Logger is
    -------------------------------------------------------------------------
 
    task body Instance is
+      use type Ada.Task_Identification.Task_Id;
+
       Logsink               : Alog.Logger.Instance (Init => Init);
       Current_Level         : Log_Level;
       Current_Message       : Unbounded_String;
@@ -147,9 +148,19 @@ package body Alog.Tasked_Logger is
                ----------------------------------------------------------------
 
                accept Get_Last_Exception
-                 (Occurrence : out Exception_Occurrence)
+                 (Occurrence : out Exception_Occurrence;
+                  Caller     :     Ada.Task_Identification.Task_Id :=
+                    Ada.Task_Identification.Null_Task_Id)
                do
-                  Current_Caller := Instance.Get_Last_Exception'Caller;
+
+                  --  Get_Last_Exception'Caller can not be used as default
+                  --  parameter so we need to check for 'Null_Task_Id 'instead.
+
+                  if Caller = Ada.Task_Identification.Null_Task_Id then
+                     Current_Caller := Get_Last_Exception'Caller;
+                  else
+                     Current_Caller := Caller;
+                  end if;
 
                   Exceptions.Get (Key     => Current_Caller,
                                   Element => Occurrence);
@@ -159,12 +170,22 @@ package body Alog.Tasked_Logger is
                ----------------------------------------------------------------
 
                accept Log_Message
-                 (Level : Log_Level;
-                  Msg   : String)
+                 (Level  : Log_Level;
+                  Msg    : String;
+                  Caller : Ada.Task_Identification.Task_Id :=
+                    Ada.Task_Identification.Null_Task_Id)
                do
                   Current_Level   := Level;
                   Current_Message := To_Unbounded_String (Msg);
-                  Current_Caller  := Instance.Log_Message'Caller;
+
+                  --  Log_Message'Caller can not be used as default parameter so
+                  --  we need to check for 'Null_Task_Id' instead.
+
+                  if Caller = Ada.Task_Identification.Null_Task_Id then
+                     Current_Caller := Log_Message'Caller;
+                  else
+                     Current_Caller := Caller;
+                  end if;
                end Log_Message;
 
                if Exceptions.Contains (Key => Current_Caller) then

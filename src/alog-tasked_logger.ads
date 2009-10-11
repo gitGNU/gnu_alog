@@ -22,6 +22,7 @@
 --
 
 with Ada.Exceptions;
+with Ada.Task_Identification;
 
 with Alog.Facilities;
 with Alog.Transforms;
@@ -69,23 +70,33 @@ package Alog.Tasked_Logger is
       entry Transform_Count (Count : out Natural);
       --  Return number of attached transforms.
 
-      entry Log_Message (Level : Log_Level;
-                         Msg   : String);
+      entry Log_Message (Level  : Log_Level;
+                         Msg    : String;
+                         Caller : Ada.Task_Identification.Task_Id :=
+                           Ada.Task_Identification.Null_Task_Id);
       --  Log a message. The Write_Message() procedure of all attached
       --  facilities is called. Depending on the Log-Threshold set, the message
       --  is logged to different targets (depending on the facilites)
       --  automatically. Clear the last exception occurrence for the caller if
       --  none occurred or replace existing occurrence with new raised
       --  exception.
+      --  If caller is not specified the executing task's ID is used instead.
+      --  Since Log_Message'Caller can not be used as default parameter the
+      --  entry checks if the variable is set to 'Null_Task_Id' in the body.
 
       entry Clear;
       --  Clear tasked logger instance. Detach and teardown all attached
       --  facilities and transforms.
 
       entry Get_Last_Exception
-        (Occurrence : out Ada.Exceptions.Exception_Occurrence);
+        (Occurrence : out Ada.Exceptions.Exception_Occurrence;
+         Caller     :     Ada.Task_Identification.Task_Id :=
+           Ada.Task_Identification.Null_Task_Id);
       --  Return last known Exception_Occurrence. If no exception occured return
       --  Null_Occurrence.
+      --  If caller is not specified the executing task's ID is used instead.
+      --  Since Get_Last_Exception'Caller can not be used as default parameter
+      --  the entry checks if the variable is set to 'Null_Task_Id' in the body.
 
    end Instance;
    --  Tasked logger instance. The Init discriminant defines whether or not a

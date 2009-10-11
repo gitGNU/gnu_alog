@@ -23,6 +23,7 @@
 
 with Ada.Directories;
 with Ada.Exceptions.Is_Null_Occurrence;
+with Ada.Task_Identification;
 
 with Ahven;
 
@@ -33,7 +34,6 @@ with Alog.Facilities.File_Descriptor;
 with Alog.Facilities.Syslog;
 with Alog.Facilities.Mock;
 with Alog.Transforms.Casing;
-with Ada.Text_IO;
 
 package body Tasked_Logger_Tests is
 
@@ -326,6 +326,22 @@ package body Tasked_Logger_Tests is
            Facilities.Mock.Exception_Message,
          Message   => "Found wrong exception message");
 
+      --  Exception handling with explicit caller ID.
+
+      Log.Log_Message (Level  => DEBU,
+                       Msg    => "Test message with caller ID",
+                       Caller => Ada.Task_Identification.Current_Task);
+      Log.Get_Last_Exception
+        (Occurrence => EO,
+         Caller     => Ada.Task_Identification.Current_Task);
+      Assert
+        (Condition => Exception_Name (X => EO) = "CONSTRAINT_ERROR",
+         Message   => "Expected Constraint_Error for specific caller");
+      Assert
+        (Condition => Exception_Message (X => EO) =
+           Facilities.Mock.Exception_Message,
+         Message   => "Found wrong exception message for specific caller");
+
       Log.Detach_Facility (Name => Mock_Facility.Get_Name);
       Log.Log_Message (Level => DEBU,
                        Msg   => "Test message 2");
@@ -374,11 +390,6 @@ package body Tasked_Logger_Tests is
 
          Assert (Condition => Facility.Is_Write_Timestamp,
                  Message   => "Update failed");
-
-      exception
-         when E : others =>
-            Ada.Text_IO.Put_Line
-              (Ada.Exceptions.Exception_Information (X => E));
       end;
    end Update_Facility;
 
