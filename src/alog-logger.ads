@@ -34,8 +34,7 @@ with Alog.Controlled_Map;
 --  functions for logging facilities configuration.
 package Alog.Logger is
 
-   type Instance (Init : Boolean) is new
-     Ada.Finalization.Limited_Controlled with private;
+   type Instance (Init : Boolean) is tagged limited private;
    --  Logger instance. The Init discriminant defines whether or not a default
    --  'stdout' (FD facility without logfile set) is attached automatically. Set
    --  Init to 'True' if you want to make sure minimal stdout logging is
