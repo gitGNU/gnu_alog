@@ -165,6 +165,7 @@ package body Alog.Tasked_Logger is
 
                accept Clear do
                   Logsink.Clear;
+                  Exceptions.Clear;
                end Clear;
             or
 

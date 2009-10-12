@@ -89,7 +89,7 @@ package Alog.Tasked_Logger is
 
       entry Clear;
       --  Clear tasked logger instance. Detach and teardown all attached
-      --  facilities and transforms.
+      --  facilities and transforms and clear any stored exceptions.
 
       entry Get_Last_Exception
         (Occurrence : out Ada.Exceptions.Exception_Occurrence;
