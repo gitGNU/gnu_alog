@@ -73,10 +73,11 @@ package Alog.Tasked_Logger is
       entry Transform_Count (Count : out Natural);
       --  Return number of attached transforms.
 
-      entry Log_Message (Level  : Log_Level;
-                         Msg    : String;
-                         Caller : Ada.Task_Identification.Task_Id :=
-                           Ada.Task_Identification.Null_Task_Id);
+      entry Log_Message
+        (Level  : Log_Level;
+         Msg    : String;
+         Caller : Ada.Task_Identification.Task_Id :=
+           Ada.Task_Identification.Null_Task_Id);
       --  Log a message. The Write_Message() procedure of all attached
       --  facilities is called. Depending on the Log-Threshold set, the message
       --  is logged to different targets (depending on the facilites)

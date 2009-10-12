@@ -95,15 +95,17 @@ package Alog.Active_Logger is
 
    procedure Clear (Logger : in out Instance);
    --  Clear logger instance. Detach and teardown all attached facilities and
-   --  transforms and clear the exception map.
+   --  transforms.
 
    procedure Log_Message
      (Logger : in out Instance;
       Level  :        Log_Level;
       Msg    :        String);
-   --  Log a message. The Write_Message() procedure of all attached facilities
-   --  is called. Depending on the Log-Threshold set, the message is logged to
-   --  different targets (depending on the facilites) automatically.
+   --  Log the given message asynchronously. The message is put into a log
+   --  request queue which is continuously consumed by a logging task.
+   --
+   --  This procedure is *safe* to call from protected actions (e.g. from an
+   --  entry call statement or rendezvous).
 
    procedure Shutdown (Logger : in out Instance;
                        Flush  :        Boolean := True);
@@ -119,7 +121,7 @@ package Alog.Active_Logger is
      (Logger     : in out Instance;
       Occurrence :    out Ada.Exceptions.Exception_Occurrence);
    --  Return last known Exception_Occurrence for caller. If no exception
-   --  occured return Null_Occurrence.
+   --  occured Null_Occurrence is returned.
 
    type Shutdown_Helper (Logger : not null access Instance) is
      new Ada.Finalization.Limited_Controlled with private;
@@ -133,13 +135,12 @@ package Alog.Active_Logger is
 private
 
    procedure Check_Exception (Logger : in out Instance);
-   --  Check if call to backend raised an exception. Explicitly reraise it if
-   --  such an exception occured do nothing otherwise.
+   --  Check if call to backend raised an exception. Explicitly reraise if an
+   --  exception occured; do nothing otherwise.
 
    task type Logging_Task (Parent : not null access Instance);
    --  This task takes logging requests from the parent's message queue and
-   --  tries to actually log them to the parent's backend logger. If an
-   --  exception occurrs it is stored in the parent's exception map.
+   --  logs them using the parent's backend logger.
 
    protected type Trigger_Type is
       procedure Shutdown;
