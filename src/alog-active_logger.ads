@@ -34,8 +34,7 @@ with Alog.Protected_Containers;
 --  'simple' logger.
 package Alog.Active_Logger is
 
-   type Instance (Init : Boolean) is new
-     Ada.Finalization.Limited_Controlled with private;
+   type Instance (Init : Boolean) is tagged limited private;
    --  Active logger instance. Incoming messages (via Log_Message) are put into
    --  a request queue. This queue is consumed by a logging task. Exceptions
    --  that might be thrown while logging are saved into a map on a per-caller
@@ -150,8 +149,7 @@ private
    end Trigger_Type;
    --  This trigger is used to terminate the logger task by means of ATC.
 
-   type Instance (Init : Boolean) is new
-     Ada.Finalization.Limited_Controlled with record
+   type Instance (Init : Boolean) is tagged limited record
       Logger_Task   : Logging_Task (Parent => Instance'Access);
       Backend       : Tasked_Logger.Instance (Init);
       Message_Queue : Protected_Containers.Log_Request_List;
