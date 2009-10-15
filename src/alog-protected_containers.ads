@@ -102,6 +102,9 @@ package Alog.Protected_Containers is
       function Contains (Key : Ada.Task_Identification.Task_Id) return Boolean;
       --  Returns True if an element with key 'Key' is in the map.
 
+      function Is_Empty return Boolean;
+      --  Return True if the map is empty.
+
       procedure Clear;
       --  Remove all Exception_Occurrences in the map. Memory of the exception
       --  occurrences is freed.

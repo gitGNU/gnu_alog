@@ -159,6 +159,13 @@ package body Alog.Protected_Containers is
                       New_Item => Item);
       end Insert;
 
+      ----------------------------------------------------------------------
+
+      function Is_Empty return Boolean is
+      begin
+         return Data.Is_Empty;
+      end Is_Empty;
+
    end Protected_Exception_Map;
 
 end Alog.Protected_Containers;

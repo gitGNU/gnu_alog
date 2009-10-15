@@ -99,12 +99,17 @@ package body Protected_Container_Tests is
       Task_ID   : constant Ada.Task_Identification.Task_Id :=
         Ada.Task_Identification.Current_Task;
    begin
+      Assert (Condition => Map.Is_Empty,
+              Message   => "New map not empty");
+
       Map.Insert (Key  => Task_ID,
                   Item => Ex_Handle);
 
       Assert (Condition => Map.Contains
               (Key => Ada.Task_Identification.Current_Task),
               Message   => "unable to insert");
+      Assert (Condition => not Map.Is_Empty,
+              Message   => "Map still empty");
 
       declare
          Ex : Exception_Occurrence;
