@@ -21,6 +21,8 @@
 --  MA  02110-1301  USA
 --
 
+with Ada.Calendar.Time_Zones;
+
 with GNAT.Calendar.Time_IO;
 
 package body Alog.Facilities is
@@ -74,11 +76,29 @@ package body Alog.Facilities is
       return String
    is
       use GNAT.Calendar.Time_IO;
-      Timestamp : constant String := Image
-        (Date    => Time,
-         Picture => Picture_String (Facility.Timestamp_Format));
    begin
-      return Timestamp;
+      if Facility.Is_UTC_Timestamp then
+         declare
+            use type Ada.Calendar.Time;
+            use Ada.Calendar.Time_Zones;
+
+            UTC_Offset    : constant Time_Offset :=
+              UTC_Time_Offset (Time);
+            UTC_Timestamp : constant String      :=
+              Image (Date    => Time - Duration (UTC_Offset) * 60,
+                     Picture => Picture_String (Facility.Timestamp_Format));
+         begin
+            return UTC_Timestamp;
+         end;
+      else
+         declare
+            Timestamp : constant String :=
+              Image (Date    => Time,
+                     Picture => Picture_String (Facility.Timestamp_Format));
+         begin
+            return Timestamp;
+         end;
+      end if;
    end Get_Timestamp;
 
    -------------------------------------------------------------------------

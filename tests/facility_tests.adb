@@ -21,7 +21,7 @@
 --  MA  02110-1301  USA
 --
 
-with Ada.Calendar;
+with Ada.Calendar.Time_Zones;
 
 with Ahven; use Ahven;
 
@@ -79,18 +79,31 @@ package body Facility_Tests is
    -------------------------------------------------------------------------
 
    procedure Timestamp_Creation is
+      use Ada.Calendar;
+      use Ada.Calendar.Time_Zones;
+
       F : File_Descriptor.Instance;
 
-      Ref_Time : constant Ada.Calendar.Time :=
-        Ada.Calendar.Time_Of (Year    => 2009,
-                              Month   => 10,
-                              Day     => 10,
-                              Seconds => 55.0);
+      Ref_Time  : constant Time   := Time_Of
+        (Year    => 2009,
+         Month   => 10,
+         Day     => 10,
+         Seconds => 7255.0);
+      Ref_Stamp : constant String := "Oct 10 2009 02:00:55";
 
-      Ref_Stamp : constant String := "Oct 10 2009 00:00:55";
+      --  Adding the UTC time offset to the reference time should lead to the
+      --  same timestamp string when UTC timestamps are enabled since UTC time
+      --  is timezone-dependant time minus the UTC offset at that given time.
+
+      Ref_UTC_Time : constant Time := Ref_Time + Duration
+        (UTC_Time_Offset (Ref_Time)) * 60;
    begin
       Assert (Condition => Ref_Stamp = F.Get_Timestamp (Time => Ref_Time),
               Message   => "Timestamp mismatch");
+
+      F.Toggle_UTC_Timestamp (State => True);
+      Assert (Condition => F.Get_Timestamp (Time => Ref_UTC_Time) = Ref_Stamp,
+              Message   => "UTC timestamp mismatch!");
    end Timestamp_Creation;
 
    -------------------------------------------------------------------------
