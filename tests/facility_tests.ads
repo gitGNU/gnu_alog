@@ -49,4 +49,7 @@ package Facility_Tests is
    procedure Transform_Handling;
    --  Test attaching/detaching of transforms.
 
+   procedure Timestamp_Creation;
+   --  Test timestamp string creation.
+
 end Facility_Tests;

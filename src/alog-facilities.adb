@@ -21,8 +21,6 @@
 --  MA  02110-1301  USA
 --
 
-with Ada.Calendar;
-
 with GNAT.Calendar.Time_IO;
 
 package body Alog.Facilities is
@@ -70,10 +68,14 @@ package body Alog.Facilities is
 
    -------------------------------------------------------------------------
 
-   function Get_Timestamp (Facility : Class) return String is
+   function Get_Timestamp
+     (Facility : Class;
+      Time     : Ada.Calendar.Time := Ada.Calendar.Clock)
+      return String
+   is
       use GNAT.Calendar.Time_IO;
       Timestamp : constant String := Image
-        (Date    => Ada.Calendar.Clock,
+        (Date    => Time,
          Picture => Picture_String (Facility.Timestamp_Format));
    begin
       return Timestamp;

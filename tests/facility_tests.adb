@@ -21,6 +21,8 @@
 --  MA  02110-1301  USA
 --
 
+with Ada.Calendar;
+
 with Ahven; use Ahven;
 
 with Alog.Facilities.File_Descriptor;
@@ -48,6 +50,8 @@ package body Facility_Tests is
         (T, Toggle_UTC_Timestamp'Access, "toggle UTC timestamp");
       Ahven.Framework.Add_Test_Routine
         (T, Transform_Handling'Access, "transform handling");
+      Ahven.Framework.Add_Test_Routine
+        (T, Timestamp_Creation'Access, "timestamp creation");
    end Initialize;
 
    -------------------------------------------------------------------------
@@ -71,6 +75,23 @@ package body Facility_Tests is
       Assert (Condition => F.Get_Threshold = Expected,
               Message => "Log_Level not equal");
    end Set_Threshold;
+
+   -------------------------------------------------------------------------
+
+   procedure Timestamp_Creation is
+      F : File_Descriptor.Instance;
+
+      Ref_Time : constant Ada.Calendar.Time :=
+        Ada.Calendar.Time_Of (Year    => 2009,
+                              Month   => 10,
+                              Day     => 10,
+                              Seconds => 55.0);
+
+      Ref_Stamp : constant String := "Oct 10 2009 00:00:55";
+   begin
+      Assert (Condition => Ref_Stamp = F.Get_Timestamp (Time => Ref_Time),
+              Message   => "Timestamp mismatch");
+   end Timestamp_Creation;
 
    -------------------------------------------------------------------------
 

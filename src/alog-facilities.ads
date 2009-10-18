@@ -24,6 +24,7 @@
 with Ada.Strings.Bounded;
 with Ada.Strings.Unbounded;
 with Ada.Command_Line;
+with Ada.Calendar;
 
 with Alog.Transforms;
 with Alog.Controlled_Map;
@@ -61,8 +62,12 @@ package Alog.Facilities is
    function Get_Threshold (Facility : Class) return Log_Level;
    --  Get facility log level treshold.
 
-   function Get_Timestamp (Facility : Class) return String;
-   --  Creates a timestamp and returns it as String.
+   function Get_Timestamp
+     (Facility : Class;
+      Time     : Ada.Calendar.Time := Ada.Calendar.Clock)
+      return String;
+   --  Creates a timestamp and returns it as String. If no Time is given, the
+   --  current time is used.
 
    procedure Log_Message (Facility : Class;
                           Level    : Log_Level := INFO;
