@@ -45,6 +45,8 @@ package body Facility_Tests is
       Ahven.Framework.Add_Test_Routine
         (T, Toggle_Timestamp'Access, "toggle timestamp");
       Ahven.Framework.Add_Test_Routine
+        (T, Toggle_UTC_Timestamp'Access, "toggle UTC timestamp");
+      Ahven.Framework.Add_Test_Routine
         (T, Transform_Handling'Access, "transform handling");
    end Initialize;
 
@@ -94,6 +96,19 @@ package body Facility_Tests is
       Assert (Condition => not F.Is_Write_Timestamp,
               Message   => "Timestamp writing not 'False'");
    end Toggle_Timestamp;
+
+   -------------------------------------------------------------------------
+
+   procedure Toggle_UTC_Timestamp is
+      F : File_Descriptor.Instance;
+   begin
+      Assert (Condition => not F.Is_UTC_Timestamp,
+              Message   => "Default should be 'False'");
+
+      F.Toggle_UTC_Timestamp (State => True);
+      Assert (Condition => F.Is_UTC_Timestamp,
+              Message   => "Expected 'True'");
+   end Toggle_UTC_Timestamp;
 
    -------------------------------------------------------------------------
 

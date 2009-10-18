@@ -81,6 +81,13 @@ package body Alog.Facilities is
 
    -------------------------------------------------------------------------
 
+   function Is_UTC_Timestamp (Facility : Class) return Boolean is
+   begin
+      return Facility.UTC_Timestamp;
+   end Is_UTC_Timestamp;
+
+   -------------------------------------------------------------------------
+
    function Is_Write_Loglevel (Facility : Class) return Boolean is
    begin
       return Facility.Write_Loglevel;
@@ -174,6 +181,16 @@ package body Alog.Facilities is
    begin
       Facility.Threshold := Level;
    end Set_Threshold;
+
+   -------------------------------------------------------------------------
+
+   procedure Toggle_UTC_Timestamp
+     (Facility : in out Class;
+      State    :        Boolean)
+   is
+   begin
+      Facility.UTC_Timestamp := State;
+   end Toggle_UTC_Timestamp;
 
    -------------------------------------------------------------------------
 

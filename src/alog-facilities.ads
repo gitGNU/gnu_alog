@@ -82,8 +82,16 @@ package Alog.Facilities is
                                      State    :        Boolean);
    --  Enable/disable whether a timestamp is written for log messages.
 
+   procedure Toggle_UTC_Timestamp
+     (Facility : in out Class;
+      State    :        Boolean);
+   --  Enable/disable UTC timestamps for log messages.
+
    function Is_Write_Timestamp (Facility : Class) return Boolean;
    --  Returns the current value of Write_Timestamp.
+
+   function Is_UTC_Timestamp (Facility : Class) return Boolean;
+   --  Returns True if the timestamp of the facility is written in UTC time.
 
    procedure Toggle_Write_Loglevel (Facility : in out Class;
                                     State    :        Boolean);
@@ -160,6 +168,10 @@ private
 
       Write_Timestamp  : Boolean := True;
       --  If True, a timestamp is written with the log message. Default is True.
+
+      UTC_Timestamp    : Boolean := False;
+      --  If True, the timestamp is written in UTC time. The default is False
+      --  (log message timestamps are written timezone-dependant).
 
       Write_Loglevel   : Boolean := False;
       --  If True, the loglevel associated with the log message is written.
