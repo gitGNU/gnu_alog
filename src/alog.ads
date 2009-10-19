@@ -25,6 +25,8 @@
 --  facilities and log message transforms.
 package Alog is
 
+   pragma Preelaborate;
+
    type Log_Level is (EMER,  -- EMERGENCY
                       ALER,  -- ALERT
                       CRIT,  -- CRITICAL

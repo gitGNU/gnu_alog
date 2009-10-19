@@ -33,6 +33,8 @@ generic
 
 package Alog.Controlled_Map is
 
+   pragma Preelaborate;
+
    type Map is new Ada.Finalization.Limited_Controlled with private;
    --  Controlled variant of a map. The memory of an element pointed to by a
    --  previously inserted handle is freed upon calling Delete, Clear or during
