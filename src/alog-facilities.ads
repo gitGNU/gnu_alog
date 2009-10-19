@@ -29,8 +29,8 @@ with Ada.Calendar;
 with Alog.Transforms;
 with Alog.Controlled_Map;
 
---  Abstract package Facilities. Provides common data and methods used by all
---  Alog facilities.
+--  Alog facilities package. Provides common data and methods used by all
+--  facilities.
 package Alog.Facilities is
 
    use Ada.Strings.Bounded;
