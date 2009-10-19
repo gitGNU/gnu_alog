@@ -24,29 +24,18 @@
 with "aws";
 with "apq-postgresql";
 with "ahven";
+with "alog_common";
 
 project Alog_Full is
 
    type Build_Type is ("tests", "coverage");
-   Build : Build_Type := external ("ALOG_BUILD", "release");
-
-   Version := external ("ALOG_VERSION", "0.1");
-   for Languages use ("Ada");
-
-   Compiler_Switches := ("-gnaty3aAbcdefhiIklnprStuxM80o",
-                         "-gnatVa",
-                         "-gnat05",
-                         "-gnatwa",
-                         "-gnatf",
-                         "-fstack-check",
-                         "-gnato",
-                         "-g");
-
-   Linker_Switches   := ("-Wl,--as-needed",
-                         "-g");
+   Build : Build_Type := external ("ALOG_BUILD", "tests");
 
    for Source_Dirs use ("src", "tests");
    for Main use ("runner_full.adb");
+
+   Compiler_Switches := Alog_Common.Compiler_Switches;
+   Linker_Switches   := Alog_Common.Linker_Switches;
 
    case Build is
       when "tests" =>

@@ -21,34 +21,25 @@
 --  MA  02110-1301  USA
 --
 
-with "aws";
-with "apq-postgresql";
-with "alog_common";
+project Alog_Common is
 
-project Alog_Full is
+   for Source_Dirs use ();
 
-   for Source_Dirs use ("src");
-   for Object_Dir use "obj/full/lib";
-   for Library_Name use "alog";
-   for Library_Dir use "lib/full";
-   for Library_Kind use external ("LIBRARY_KIND", "dynamic");
-   for Library_Version use "libalog.so." & Alog_Common.Version;
+   Version := external ("ALOG_VERSION", "0.1");
 
-   package Compiler is
-      for Default_Switches ("ada") use Alog_Common.Compiler_Switches;
-   end Compiler;
+   for Languages use ("Ada");
 
-   package Builder is
-      for Default_Switches ("ada") use ("-g");
-   end Builder;
+   Compiler_Switches := ("-gnaty3aAbcdefhiIklnprStuxM80o",
+                         "-gnatVa",
+                         "-gnat05",
+                         "-gnatwal",
+                         "-gnatf",
+                         "-fstack-check",
+                         "-gnato",
+                         "-g",
+                         "-fPIC");
 
-   package Linker is
-      for Default_Switches ("ada") use ("-g");
-   end Linker;
-
-   package Binder is
-      for Default_Switches ("ada") use ("-E");
-   end Binder;
-
-end Alog_Full;
+   Linker_Switches   := ("-Wl,--as-needed",
+                         "-g");
+end Alog_Common;
 

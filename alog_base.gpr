@@ -21,20 +21,9 @@
 --  MA  02110-1301  USA
 --
 
+with "alog_common";
+
 project Alog_Base is
-
-   Version := external ("ALOG_VERSION", "0.1");
-   for Languages use ("Ada");
-
-   Compiler_Switches := ("-gnaty3aAbcdefhiIklnprStuxM80o",
-                         "-gnatVa",
-                         "-gnat05",
-                         "-gnatwa",
-                         "-gnatf",
-                         "-fstack-check",
-                         "-gnato",
-                         "-g",
-                         "-fPIC");
 
    for Source_Dirs use ("src");
    for Source_List_File use "config/base-list";
@@ -42,10 +31,10 @@ project Alog_Base is
    for Library_Name use "alog";
    for Library_Dir use "lib/base";
    for Library_Kind use external ("LIBRARY_KIND", "dynamic");
-   for Library_Version use "libalog.so." & Version;
+   for Library_Version use "libalog.so." & Alog_Common.Version;
 
    package Compiler is
-      for Default_Switches ("ada") use Compiler_Switches;
+      for Default_Switches ("ada") use Alog_Common.Compiler_Switches;
    end Compiler;
 
    package Builder is
