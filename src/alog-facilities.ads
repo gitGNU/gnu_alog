@@ -176,7 +176,7 @@ private
 
       UTC_Timestamp    : Boolean := False;
       --  If True, the timestamp is written in UTC time. The default is False
-      --  (log message timestamps are written timezone-dependant).
+      --  (log message timestamps are written timezone-dependent).
 
       Write_Loglevel   : Boolean := False;
       --  If True, the loglevel associated with the log message is written.

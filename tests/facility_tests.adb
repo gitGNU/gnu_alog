@@ -93,7 +93,7 @@ package body Facility_Tests is
 
       --  Adding the UTC time offset to the reference time should lead to the
       --  same timestamp string when UTC timestamps are enabled since UTC time
-      --  is timezone-dependant time minus the UTC offset at that given time.
+      --  is timezone-dependent time minus the UTC offset at that given time.
 
       Ref_UTC_Time : constant Time := Ref_Time + Duration
         (UTC_Time_Offset (Ref_Time)) * 60;
