@@ -21,6 +21,8 @@
 --  MA  02110-1301  USA
 --
 
+pragma Detect_Blocking;
+
 --  Alog: Ada Logging Components. Provides easy to use API for different logging
 --  facilities and log message transforms.
 package Alog is
