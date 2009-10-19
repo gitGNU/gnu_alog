@@ -34,7 +34,7 @@ project Alog_Base_Tests is
    Compiler_Switches := ("-gnaty3aAbcdefhiIklnprStuxM80o",
                          "-gnatVa",
                          "-gnat05",
-                         "-gnatwa",
+                         "-gnatwal",
                          "-gnatf",
                          "-fstack-check",
                          "-gnato",
