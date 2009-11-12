@@ -152,7 +152,7 @@ package body Alog.Facilities is
       end Do_Transform;
 
    begin
-      if Level <= Facility.Get_Threshold then
+      if Level >= Facility.Get_Threshold then
          if Facility.Is_Write_Timestamp then
             Append (Source   => Message,
                     New_Item => Facility.Get_Timestamp & " ");

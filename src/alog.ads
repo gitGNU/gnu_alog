@@ -30,14 +30,14 @@ package Alog is
    pragma Preelaborate;
 
    type Log_Level is
-     (Emergency,
-      Alert,
-      Critical,
-      Error,
-      Warning,
-      Notice,
+     (Debug,
       Info,
-      Debug);
+      Notice,
+      Warning,
+      Error,
+      Critical,
+      Alert,
+      Emergency);
    --  Provided log levels. These log levels can be used to categorize log
    --  messages.
 

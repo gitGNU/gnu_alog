@@ -1,8 +1,8 @@
-[EMER] Testmessage
-[ALER] Testmessage
-[CRIT] Testmessage
-[ERRO] Testmessage
-[WARN] Testmessage
-[NOTI] Testmessage
-[INFO] Testmessage
 [DEBU] Testmessage
+[INFO] Testmessage
+[NOTI] Testmessage
+[WARN] Testmessage
+[ERRO] Testmessage
+[CRIT] Testmessage
+[ALER] Testmessage
+[EMER] Testmessage

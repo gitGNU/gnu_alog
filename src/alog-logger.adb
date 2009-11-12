@@ -254,7 +254,7 @@ package body Alog.Logger is
       Position := Logger.Sources.Find (Key => To_Unbounded_String (Source));
 
       if Position /= MOSLP.No_Element then
-         if Level > MOSLP.Element (Position => Position) then
+         if Level < MOSLP.Element (Position => Position) then
             return;
          end if;
       end if;
