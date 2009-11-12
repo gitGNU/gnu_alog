@@ -35,7 +35,7 @@ package body Alog.Transforms.Casing is
    -------------------------------------------------------------------------
 
    function Transform_Message (Transform : Instance;
-                               Level     : Log_Level := INFO;
+                               Level     : Log_Level := Info;
                                Msg       : String) return String is
       pragma Unreferenced (Level);
    begin

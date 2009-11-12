@@ -156,7 +156,7 @@ package body Protected_Container_Tests is
       R_List.Clear;
 
       Ref_Request := Log_Request.Create (ID      => Ref_ID,
-                                         Level   => NOTI,
+                                         Level   => Notice,
                                          Message => Ref_Msg);
       R_List.Put (Element => Ref_Request);
       Assert (Condition => R_List.Length = 1,
@@ -178,7 +178,7 @@ package body Protected_Container_Tests is
       Ref_Msg     : constant String  := "Some log message";
    begin
       Ref_Request := Log_Request.Create (ID      => Ref_ID,
-                                         Level   => NOTI,
+                                         Level   => Notice,
                                          Message => Ref_Msg);
 
       Assert (Condition => R_List.Pending = 0,
@@ -210,7 +210,7 @@ package body Protected_Container_Tests is
       Ref_Msg     : constant String  := "Some log message";
    begin
       Ref_Request := Log_Request.Create (ID      => Ref_ID,
-                                         Level   => NOTI,
+                                         Level   => Notice,
                                          Message => Ref_Msg);
 
       Assert (Condition => R_List.Length = 0,

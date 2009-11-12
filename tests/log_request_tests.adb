@@ -51,18 +51,18 @@ package body Log_Request_Tests is
    begin
       Assert (Condition => Request.Get_Caller_ID = Null_Task_Id,
               Message   => "Default ID not Null_Task_Id");
-      Assert (Condition => Request.Get_Log_Level = INFO,
+      Assert (Condition => Request.Get_Log_Level = Info,
               Message   => "Default log level not INFO");
       Assert (Condition => Request.Get_Message = "",
               Message   => "Default message not empty");
 
       Request := Log_Request.Create (ID      => Ref_ID,
-                                     Level   => NOTI,
+                                     Level   => Notice,
                                      Message => Ref_Msg);
 
       Assert (Condition => Request.Get_Caller_ID = Ref_ID,
               Message   => "Caller ID mismatch");
-      Assert (Condition => Request.Get_Log_Level = NOTI,
+      Assert (Condition => Request.Get_Log_Level = Notice,
               Message   => "Log level mismatch");
       Assert (Condition => Request.Get_Message = Ref_Msg,
               Message   => "Message mismatch");

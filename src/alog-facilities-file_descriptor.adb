@@ -92,7 +92,7 @@ package body Alog.Facilities.File_Descriptor is
    -------------------------------------------------------------------------
 
    procedure Write_Message (Facility : Instance;
-                            Level    : Log_Level := INFO;
+                            Level    : Log_Level := Info;
                             Msg      : String)
    is
       pragma Unreferenced (Level);

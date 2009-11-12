@@ -29,7 +29,7 @@ package body Alog.Log_Request is
 
    function Create
      (ID      : Ada.Task_Identification.Task_Id;
-      Level   : Log_Level := Alog.DEBU;
+      Level   : Log_Level := Alog.Debug;
       Message : String)
       return Instance
    is

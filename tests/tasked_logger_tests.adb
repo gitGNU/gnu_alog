@@ -365,7 +365,7 @@ package body Tasked_Logger_Tests is
       Assert (Condition => F_Count = 1,
               Message   => "facility count not 1");
 
-      Log.Log_Message (Level => DEBU,
+      Log.Log_Message (Level => Debug,
                        Msg   => "Logger testmessage, one fd facility");
 
       Log.Clear;
@@ -392,7 +392,7 @@ package body Tasked_Logger_Tests is
          Message   => "Exception not Null_Occurence");
 
       Log.Attach_Facility (Facility => Mock_Facility);
-      Log.Log_Message (Level => DEBU,
+      Log.Log_Message (Level => Debug,
                        Msg   => "Test message");
 
       Log.Get_Last_Exception (Occurrence => EO);
@@ -406,7 +406,7 @@ package body Tasked_Logger_Tests is
 
       --  Exception handling with explicit caller ID.
 
-      Log.Log_Message (Level  => DEBU,
+      Log.Log_Message (Level  => Debug,
                        Msg    => "Test message with caller ID",
                        Caller => Ada.Task_Identification.Current_Task);
       Log.Get_Last_Exception
@@ -421,7 +421,7 @@ package body Tasked_Logger_Tests is
          Message   => "Found wrong exception message for specific caller");
 
       Log.Detach_Facility (Name => Mock_Facility.Get_Name);
-      Log.Log_Message (Level => DEBU,
+      Log.Log_Message (Level => Debug,
                        Msg   => "Test message 2");
 
       Log.Get_Last_Exception (Occurrence => EO);

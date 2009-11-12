@@ -31,7 +31,7 @@ package Alog.Facilities.Mock is
 
    overriding
    procedure Write_Message (Facility : Instance;
-                            Level    : Log_Level := INFO;
+                            Level    : Log_Level := Info;
                             Msg      : String);
    --  Implementation of Write_Message.
 

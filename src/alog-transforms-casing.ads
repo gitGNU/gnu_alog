@@ -33,7 +33,7 @@ package Alog.Transforms.Casing is
 
    overriding
    function Transform_Message (Transform : Instance;
-                               Level     : Log_Level := INFO;
+                               Level     : Log_Level := Info;
                                Msg       : String) return String;
    --  Implementation of Transform_Message.
 

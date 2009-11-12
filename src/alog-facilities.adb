@@ -135,7 +135,7 @@ package body Alog.Facilities is
    -------------------------------------------------------------------------
 
    procedure Log_Message (Facility : Class;
-                          Level    : Log_Level := INFO;
+                          Level    : Log_Level := Info;
                           Msg      : String)
    is
       Message : Unbounded_String;
@@ -159,7 +159,7 @@ package body Alog.Facilities is
          end if;
          if Facility.Is_Write_Loglevel then
             Append (Source   => Message,
-                    New_Item => "[" & Log_Level'Image (Level) & "] ");
+                    New_Item => "[" & Log_Level'Image (Level) (1 .. 4) & "] ");
          end if;
 
          Append (Source   => Message,

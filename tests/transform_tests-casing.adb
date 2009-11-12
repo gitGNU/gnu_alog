@@ -53,7 +53,7 @@ package body Transform_Tests.Casing is
    begin
       T.Setup;
       Transformed_Msg := To_Unbounded_String (
-                           T.Transform_Message (INFO, Message));
+                           T.Transform_Message (Info, Message));
       Assert (Condition => Transformed_Msg = Ref_Transformed_Msg,
               Message   => "Output does not match expected value (lowercase)");
       T.Teardown;
@@ -70,7 +70,7 @@ package body Transform_Tests.Casing is
       T.Setup;
       T.Set_Mode (Alog.Transforms.Casing.Uppercase);
       Transformed_Msg := To_Unbounded_String (
-                           T.Transform_Message (INFO, Message));
+                           T.Transform_Message (Info, Message));
       Assert (Condition => Transformed_Msg = Ref_Transformed_Msg,
               Message   => "Output does not match expected value (uppercase)");
       T.Teardown;

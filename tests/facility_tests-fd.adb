@@ -157,12 +157,12 @@ package body Facility_Tests.FD is
       F.Toggle_Write_Timestamp (State => False);
       F.Toggle_Write_Loglevel (State => True);
       F.Set_Logfile (Path => Testfile);
-      F.Log_Message (Level => DEBU,
+      F.Log_Message (Level => Debug,
                      Msg   => "this message should appear in log");
-      F.Set_Threshold (Level => INFO);
-      F.Log_Message (Level => DEBU,
+      F.Set_Threshold (Level => Info);
+      F.Log_Message (Level => Debug,
                      Msg   => "this message should not appear");
-      F.Log_Message (Level => INFO,
+      F.Log_Message (Level => Info,
                      Msg   => "this message should appear again");
 
       F.Close_Logfile;

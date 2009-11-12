@@ -168,7 +168,7 @@ package body Logger_Tests is
       Assert (Condition => Logger1.Facility_Count = 1,
               Message   => "Attached facility twice");
 
-      Logger1.Log_Message (Level => DEBU,
+      Logger1.Log_Message (Level => Debug,
                            Msg => "Testing default logger");
 
       Logger1.Detach_Default_Facility;
@@ -360,7 +360,7 @@ package body Logger_Tests is
       Log.Attach_Facility (Facility => Facility);
       Log.Attach_Transform (Transform => Transform);
 
-      Log.Log_Message (Level => DEBU,
+      Log.Log_Message (Level => Debug,
                        Msg   => "Logger Test Message, " &
                        "FD Facility With Lowercase Transform");
 
@@ -403,16 +403,16 @@ package body Logger_Tests is
         (Facility2).Set_Logfile (Testfile2);
 
       --  Set INFO-threshold for second facility.
-      Facility2.Set_Threshold (Level => INFO);
+      Facility2.Set_Threshold (Level => Info);
 
       --  Attach both facilities to logger instance.
       Log.Attach_Facility (Facility => Facility1);
       Log.Attach_Facility (Facility => Facility2);
 
       --  Log two messages with different loglevels.
-      Log.Log_Message (Level => DEBU,
+      Log.Log_Message (Level => Debug,
                        Msg   => "Logger testmessage, multiple facilities");
-      Log.Log_Message (Level => INFO,
+      Log.Log_Message (Level => Info,
                        Msg   => "Logger testmessage, multiple facilities");
 
       Log.Clear;
@@ -444,7 +444,7 @@ package body Logger_Tests is
         (Facility).Set_Logfile (Testfile);
 
       Log.Attach_Facility (Facility => Facility);
-      Log.Log_Message (Level => DEBU,
+      Log.Log_Message (Level => Debug,
                        Msg   => "Logger testmessage, one fd facility");
 
       Log.Clear;
@@ -461,15 +461,15 @@ package body Logger_Tests is
       Log : Logger.Instance (Init => False);
    begin
       Log.Set_Source_Loglevel (Source => "Foo",
-                               Level  => INFO);
+                               Level  => Info);
       Assert (Condition => Log.Get_Source_Loglevel
-              (Source => "Foo") = INFO,
+              (Source => "Foo") = Info,
               Message   => "Source loglevel mismatch");
 
       Log.Set_Source_Loglevel (Source => "Foo",
-                               Level  => ERRO);
+                               Level  => Error);
       Assert (Condition => Log.Get_Source_Loglevel
-              (Source => "Foo") = ERRO,
+              (Source => "Foo") = Error,
               Message   => "Unable to update source loglevel");
 
       declare
@@ -504,18 +504,18 @@ package body Logger_Tests is
       Log.Attach_Facility (Facility => Facility);
 
       Log.Set_Source_Loglevel (Source => "Test",
-                               Level  => INFO);
+                               Level  => Info);
 
       Log.Log_Message (Source => "Test",
-                       Level  => DEBU,
+                       Level  => Debug,
                        Msg    => "Source test (discard)");
       Log.Log_Message (Source => "Test",
-                       Level  => INFO,
+                       Level  => Info,
                        Msg    => "Source test (logged)");
-      Log.Log_Message (Level => DEBU,
+      Log.Log_Message (Level => Debug,
                        Msg   => "Default source (logged)");
       Log.Log_Message (Source => "Unknown",
-                       Level  => NOTI,
+                       Level  => Notice,
                        Msg    => "Unknown source (logged)");
 
       Log.Clear;

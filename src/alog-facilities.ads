@@ -70,14 +70,14 @@ package Alog.Facilities is
    --  current time is used.
 
    procedure Log_Message (Facility : Class;
-                          Level    : Log_Level := INFO;
+                          Level    : Log_Level := Info;
                           Msg      : String);
    --  Log a message 'Msg' with loglevel 'Level'. All attached transforms are
    --  applied to the message before actually logging the message. This
    --  procedure is intended for facility users.
 
    procedure Write_Message (Facility : Instance;
-                            Level    : Log_Level := INFO;
+                            Level    : Log_Level := Info;
                             Msg      : String) is abstract;
    --  Write message with specified log level. This procedure must be
    --  implemented by all facilities and is called by Log_Message after all
@@ -165,7 +165,7 @@ private
       --  Facility Name. Defaults to command-name (first argument). If multiple
       --  facilities are used, names must be set differently.
 
-      Threshold        : Log_Level := DEBU;
+      Threshold        : Log_Level := Debug;
       --  Facility default threshold.
 
       Timestamp_Format : String (1 .. 11) := "%b %d %Y %T";

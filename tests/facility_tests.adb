@@ -69,7 +69,7 @@ package body Facility_Tests is
 
    procedure Set_Threshold is
       F        : File_Descriptor.Instance;
-      Expected : constant Log_Level := DEBU;
+      Expected : constant Log_Level := Debug;
    begin
       F.Set_Threshold (Level => Expected);
       Assert (Condition => F.Get_Threshold = Expected,

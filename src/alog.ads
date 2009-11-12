@@ -29,16 +29,17 @@ package Alog is
 
    pragma Preelaborate;
 
-   type Log_Level is (EMER,  -- EMERGENCY
-                      ALER,  -- ALERT
-                      CRIT,  -- CRITICAL
-                      ERRO,  -- ERROR
-                      WARN,  -- WARNING
-                      NOTI,  -- NOTICE
-                      INFO,  -- INFO
-                      DEBU); -- DEBUG
-   --  Provided log levels. These log levels can be used
-   --  to categorize log messages.
+   type Log_Level is
+     (Emergency,
+      Alert,
+      Critical,
+      Error,
+      Warning,
+      Notice,
+      Info,
+      Debug);
+   --  Provided log levels. These log levels can be used to categorize log
+   --  messages.
 
    Max_Path_Length : constant Natural := 128;
    --  Maximal length of path names.

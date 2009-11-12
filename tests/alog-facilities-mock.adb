@@ -25,7 +25,7 @@ package body Alog.Facilities.Mock is
    -------------------------------------------------------------------------
 
    procedure Write_Message (Facility : Instance;
-                            Level    : Log_Level := INFO;
+                            Level    : Log_Level := Info;
                             Msg      : String)
    is
    begin

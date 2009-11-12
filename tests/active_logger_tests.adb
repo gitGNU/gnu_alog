@@ -170,7 +170,7 @@ package body Active_Logger_Tests is
          Assert (Condition => Logger1.Facility_Count = 1,
                  Message   => "Attached facility twice");
 
-         Logger1.Log_Message (Level => DEBU,
+         Logger1.Log_Message (Level => Debug,
                               Msg => "Testing default logger");
 
          Logger1.Detach_Default_Facility;
@@ -380,7 +380,7 @@ package body Active_Logger_Tests is
          Log.Attach_Facility (Facility => Facility);
          Log.Attach_Transform (Transform => Transform);
 
-         Log.Log_Message (Level => DEBU,
+         Log.Log_Message (Level => Debug,
                           Msg   => "Logger Test Message, " &
                           "FD Facility With Lowercase Transform");
       end;
@@ -426,16 +426,16 @@ package body Active_Logger_Tests is
            (Facility2).Set_Logfile (Testfile2);
 
          --  Set INFO-threshold for second facility.
-         Facility2.Set_Threshold (Level => INFO);
+         Facility2.Set_Threshold (Level => Info);
 
          --  Attach both facilities to logger instance.
          Log.Attach_Facility (Facility => Facility1);
          Log.Attach_Facility (Facility => Facility2);
 
          --  Log two messages with different loglevels.
-         Log.Log_Message (Level => DEBU,
+         Log.Log_Message (Level => Debug,
                           Msg   => "Logger testmessage, multiple facilities");
-         Log.Log_Message (Level => INFO,
+         Log.Log_Message (Level => Info,
                           Msg   => "Logger testmessage, multiple facilities");
       end;
 
@@ -472,7 +472,7 @@ package body Active_Logger_Tests is
       task body Test_Log_Task is
       begin
          for I in 1 .. Nr_Of_Messages loop
-            Logger.Log_Message (Level  => DEBU,
+            Logger.Log_Message (Level  => Debug,
                                 Msg    => Test_Message);
          end loop;
       end Test_Log_Task;
@@ -502,7 +502,7 @@ package body Active_Logger_Tests is
             Logger1 : Test_Log_Task (Log'Access);
          begin
             for I in 1 .. Nr_Of_Messages loop
-               Log.Log_Message (Level  => DEBU,
+               Log.Log_Message (Level  => Debug,
                                 Msg    => Test_Message);
             end loop;
          end;
@@ -624,7 +624,7 @@ package body Active_Logger_Tests is
             Message   => "Exception not Null_Occurence");
 
          Log.Attach_Facility (Facility => Mock_Facility);
-         Log.Log_Message (Level => DEBU,
+         Log.Log_Message (Level => Debug,
                           Msg   => "Test message");
          Log.All_Done;
 
@@ -639,7 +639,7 @@ package body Active_Logger_Tests is
             Message   => "Found wrong exception message");
 
          Log.Detach_Facility (Name => Mock_Facility.Get_Name);
-         Log.Log_Message (Level => DEBU,
+         Log.Log_Message (Level => Debug,
                           Msg   => "Test message 2");
          Log.All_Done;
 

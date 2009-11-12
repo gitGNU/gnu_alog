@@ -28,7 +28,7 @@ package body Alog.Facilities.Syslog is
    -------------------------------------------------------------------------
 
    procedure Write_Message (Facility : Instance;
-                            Level    : Log_Level := INFO;
+                            Level    : Log_Level := Info;
                             Msg      : String)
    is
       pragma Unreferenced (Facility);
