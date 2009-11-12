@@ -24,6 +24,7 @@
 with Ada.Finalization;
 with Ada.Unchecked_Deallocation;
 with Ada.Strings.Unbounded;
+with Ada.Containers.Ordered_Maps;
 
 with Alog.Facilities;
 with Alog.Transforms;
@@ -119,6 +120,20 @@ package Alog.Logger is
    --  is called. Depending on the Log-Threshold set, the message is logged to
    --  different targets (depending on the facilites) automatically.
 
+   procedure Set_Source_Loglevel
+     (Logger : in out Instance;
+      Source :        String;
+      Level  :        Log_Level);
+   --  Set given loglevel for specified source. If source is already present the
+   --  loglevel is updated.
+
+   function Get_Source_Loglevel
+     (Logger : Instance;
+      Source : String)
+      return Log_Level;
+   --  Return loglevel for given source. Raises No_Source_Loglevel exception if
+   --  no entry for given source is found.
+
    procedure Free is new Ada.Unchecked_Deallocation
      (Object => Facilities.Class,
       Name   => Facilities.Handle);
@@ -137,6 +152,8 @@ package Alog.Logger is
    --  Will be raised if a requested transform is not found.
    Transform_Already_Present : exception;
    --  Will be raised if a facility is already present.
+   No_Source_Loglevel        : exception;
+   --  Will be raised if loglevel is not found for a requested source.
 
    Default_Facility_Name : constant String := "__Default_Facility";
 
@@ -166,6 +183,12 @@ private
 
    package MOFP renames Map_Of_Facilities_Package;
 
+   package Map_Of_Source_Loglevels_Package is new Ada.Containers.Ordered_Maps
+     (Key_Type     => Unbounded_String,
+      Element_Type => Log_Level);
+
+   package MOSLP renames Map_Of_Source_Loglevels_Package;
+
    type Instance (Init : Boolean) is new
      Ada.Finalization.Limited_Controlled with record
       F_Stack : MOFP.Map;
@@ -173,6 +196,9 @@ private
 
       T_Stack : MOTP.Map;
       --  Attached transforms.
+
+      Sources : MOSLP.Map;
+      --  Map of source loglevels.
    end record;
 
 end Alog.Logger;

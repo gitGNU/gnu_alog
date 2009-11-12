@@ -327,6 +327,9 @@ package body Logger_Tests is
       Ahven.Framework.Add_Test_Routine
         (T, Default_Facility_Handling'Access,
          "default facility handling");
+      Ahven.Framework.Add_Test_Routine
+        (T, Log_Source_Handling'Access,
+         "source logging setup");
    end Initialize;
 
    -------------------------------------------------------------------------
@@ -447,6 +450,36 @@ package body Logger_Tests is
                Filename2 => Testfile),
               Message   => "files not equal");
    end Log_One_FD_Facility;
+
+   -------------------------------------------------------------------------
+
+   procedure Log_Source_Handling is
+      Log : Logger.Instance (Init => False);
+   begin
+      Log.Set_Source_Loglevel (Source => "Foo",
+                               Level  => INFO);
+      Assert (Condition => Log.Get_Source_Loglevel
+              (Source => "Foo") = INFO,
+              Message   => "Source loglevel mismatch");
+
+      Log.Set_Source_Loglevel (Source => "Foo",
+                               Level  => ERRO);
+      Assert (Condition => Log.Get_Source_Loglevel
+              (Source => "Foo") = ERRO,
+              Message   => "Unable to update source loglevel");
+
+      declare
+         Level : Log_Level;
+         pragma Unreferenced (Level);
+      begin
+         Level := Log.Get_Source_Loglevel (Source => "Bar");
+         Fail (Message => "Expected No_Source_Loglevel");
+
+      exception
+         when Logger.No_Source_Loglevel =>
+            null;
+      end;
+   end Log_Source_Handling;
 
    -------------------------------------------------------------------------
 

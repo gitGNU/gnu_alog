@@ -77,4 +77,7 @@ package Logger_Tests is
    procedure Default_Facility_Handling;
    --  Test attaching/detaching of default facility.
 
+   procedure Log_Source_Handling;
+   --  Test setting/getting of log source loglevels.
+
 end Logger_Tests;

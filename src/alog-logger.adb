@@ -171,6 +171,23 @@ package body Alog.Logger is
 
    -------------------------------------------------------------------------
 
+   function Get_Source_Loglevel
+     (Logger : Instance;
+      Source : String)
+      return Log_Level
+   is
+   begin
+      return Logger.Sources.Element
+        (Key => To_Unbounded_String (Source));
+
+   exception
+      when Constraint_Error =>
+         raise No_Source_Loglevel with
+           "No loglevel for source '" & Source & "'";
+   end Get_Source_Loglevel;
+
+   -------------------------------------------------------------------------
+
    procedure Initialize (Logger : in out Instance) is
    begin
       if Logger.Init then
@@ -207,7 +224,7 @@ package body Alog.Logger is
       Level  : Log_Level;
       Msg    : String)
    is
-      Out_Msg    : String := Msg;
+      Out_Msg : String := Msg;
 
       procedure Do_Log (Facility_Handle : Facilities.Handle);
       --  Log message for each facility.
@@ -233,6 +250,31 @@ package body Alog.Logger is
       Logger.Iterate (Process => Do_Transform'Access);
       Logger.Iterate (Process => Do_Log'Access);
    end Log_Message;
+
+   -------------------------------------------------------------------------
+
+   procedure Set_Source_Loglevel
+     (Logger : in out Instance;
+      Source :        String;
+      Level  :        Log_Level)
+   is
+      use type MOSLP.Cursor;
+
+      Key      : constant Unbounded_String := To_Unbounded_String (Source);
+      Position : MOSLP.Cursor;
+   begin
+      Position := Logger.Sources.Find (Key => Key);
+
+      if Position = MOSLP.No_Element then
+         Logger.Sources.Insert
+           (Key      => Key,
+            New_Item => Level);
+      else
+         Logger.Sources.Replace_Element
+           (Position => Position,
+            New_Item => Level);
+      end if;
+   end Set_Source_Loglevel;
 
    -------------------------------------------------------------------------
 
