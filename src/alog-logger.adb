@@ -221,9 +221,12 @@ package body Alog.Logger is
 
    procedure Log_Message
      (Logger : Instance;
+      Source : String := "";
       Level  : Log_Level;
       Msg    : String)
    is
+      use type MOSLP.Cursor;
+
       Out_Msg : String := Msg;
 
       procedure Do_Log (Facility_Handle : Facilities.Handle);
@@ -246,7 +249,16 @@ package body Alog.Logger is
             Msg   => Out_Msg);
       end Do_Transform;
 
+      Position : MOSLP.Cursor;
    begin
+      Position := Logger.Sources.Find (Key => To_Unbounded_String (Source));
+
+      if Position /= MOSLP.No_Element then
+         if Level > MOSLP.Element (Position => Position) then
+            return;
+         end if;
+      end if;
+
       Logger.Iterate (Process => Do_Transform'Access);
       Logger.Iterate (Process => Do_Log'Access);
    end Log_Message;

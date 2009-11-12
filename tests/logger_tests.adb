@@ -263,7 +263,8 @@ package body Logger_Tests is
         (BS_Path.To_Bounded_String ("./data/Log_One_FD_Facility"),
          BS_Path.To_Bounded_String ("./data/Log_Multiple_FD_Facilities1"),
          BS_Path.To_Bounded_String ("./data/Log_Multiple_FD_Facilities2"),
-         BS_Path.To_Bounded_String ("./data/Log_FD_Facility_Lowercase")
+         BS_Path.To_Bounded_String ("./data/Log_FD_Facility_Lowercase"),
+         BS_Path.To_Bounded_String ("./data/Log_Source_Loglevel")
         );
    begin
       for C in Files'Range loop
@@ -330,6 +331,9 @@ package body Logger_Tests is
       Ahven.Framework.Add_Test_Routine
         (T, Log_Source_Handling'Access,
          "source logging setup");
+      Ahven.Framework.Add_Test_Routine
+        (T, Source_Based_Logging'Access,
+         "per-source loglevel handling");
    end Initialize;
 
    -------------------------------------------------------------------------
@@ -480,6 +484,47 @@ package body Logger_Tests is
             null;
       end;
    end Log_Source_Handling;
+
+   -------------------------------------------------------------------------
+
+   procedure Source_Based_Logging is
+      Log      : Logger.Instance (Init => False);
+      Facility : constant Facilities.Handle :=
+        new Facilities.File_Descriptor.Instance;
+      Testfile : constant String := "./data/Log_Source_Loglevel";
+      Reffile  : constant String := "./data/Log_Source_Loglevel.ref";
+   begin
+      Facility.Toggle_Write_Timestamp (State => False);
+      Facility.Toggle_Write_Loglevel (State => True);
+
+      --  Call facility fd specific procedures.
+      Facilities.File_Descriptor.Handle
+        (Facility).Set_Logfile (Testfile);
+
+      Log.Attach_Facility (Facility => Facility);
+
+      Log.Set_Source_Loglevel (Source => "Test",
+                               Level  => INFO);
+
+      Log.Log_Message (Source => "Test",
+                       Level  => DEBU,
+                       Msg    => "Source test (discard)");
+      Log.Log_Message (Source => "Test",
+                       Level  => INFO,
+                       Msg    => "Source test (logged)");
+      Log.Log_Message (Level => DEBU,
+                       Msg   => "Default source (logged)");
+      Log.Log_Message (Source => "Unknown",
+                       Level  => NOTI,
+                       Msg    => "Unknown source (logged)");
+
+      Log.Clear;
+
+      Assert (Condition => Helpers.Assert_Files_Equal
+              (Filename1 => Reffile,
+               Filename2 => Testfile),
+              Message   => "Files not equal");
+   end Source_Based_Logging;
 
    -------------------------------------------------------------------------
 
