@@ -247,7 +247,8 @@ package body Alog.Active_Logger is
                   --  The Queue has terminated, let's shutdown.
 
                   exit Log_Loop;
-                  when others =>
+
+               when others =>
 
                   --  Ignore other errors and resume normal operation.
 
