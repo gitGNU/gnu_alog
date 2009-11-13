@@ -102,6 +102,24 @@ package Alog.Tasked_Logger is
       --  Since Get_Last_Exception'Caller can not be used as default parameter
       --  the entry checks if the variable is set to 'Null_Task_Id' in the body.
 
+      entry Set_Loglevel (Level : Log_Level);
+      --  Set given loglevel for logger.
+
+      entry Get_Loglevel (Level : out Log_Level);
+      --  Return current logger loglevel.
+
+      entry Set_Source_Loglevel
+        (Source : String;
+         Level  : Log_Level);
+      --  Set given loglevel for specified source. If source is already present
+      --  the loglevel is updated.
+
+      entry Get_Source_Loglevel
+        (Source :     String;
+         Level  : out Log_Level);
+      --  Return loglevel for given source. Raises No_Source_Loglevel exception
+      --  if no entry for given source is found.
+
    end Instance;
    --  Tasked logger instance. The Init discriminant defines whether or not a
    --  default 'stdout' (FD facility without logfile set) is attached

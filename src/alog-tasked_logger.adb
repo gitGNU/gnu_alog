@@ -55,42 +55,42 @@ package body Alog.Tasked_Logger is
 
             select
 
-               ----------------------------------------------------------------
+               -------------------------------------------------------------
 
                accept Attach_Facility (Facility : Facilities.Handle) do
                   Logsink.Attach_Facility (Facility => Facility);
                end Attach_Facility;
             or
 
-               ----------------------------------------------------------------
+               -------------------------------------------------------------
 
                accept Attach_Default_Facility do
                   Logsink.Attach_Default_Facility;
                end Attach_Default_Facility;
             or
 
-               ----------------------------------------------------------------
+               -------------------------------------------------------------
 
                accept Detach_Facility (Name : String) do
                   Logsink.Detach_Facility (Name => Name);
                end Detach_Facility;
             or
 
-               ----------------------------------------------------------------
+               -------------------------------------------------------------
 
                accept Detach_Default_Facility do
                   Logsink.Detach_Default_Facility;
                end Detach_Default_Facility;
             or
 
-               ----------------------------------------------------------------
+               -------------------------------------------------------------
 
                accept Facility_Count (Count : out Natural) do
                   Count := Logsink.Facility_Count;
                end Facility_Count;
             or
 
-               ----------------------------------------------------------------
+               -------------------------------------------------------------
 
                accept Update
                  (Name    : String;
@@ -117,7 +117,7 @@ package body Alog.Tasked_Logger is
                end;
             or
 
-               ----------------------------------------------------------------
+               -------------------------------------------------------------
 
                accept Iterate (Process : Facility_Update_Handle) do
                   Current_Facility_Proc := Process;
@@ -139,21 +139,21 @@ package body Alog.Tasked_Logger is
                end;
             or
 
-               ----------------------------------------------------------------
+               -------------------------------------------------------------
 
                accept Attach_Transform (Transform : Transforms.Handle) do
                   Logsink.Attach_Transform (Transform => Transform);
                end Attach_Transform;
             or
 
-               ----------------------------------------------------------------
+               -------------------------------------------------------------
 
                accept Detach_Transform (Name : String) do
                   Logsink.Detach_Transform (Name => Name);
                end Detach_Transform;
 
             or
-               ----------------------------------------------------------------
+               -------------------------------------------------------------
 
                accept Transform_Count (Count : out Natural) do
                   Count := Logsink.Transform_Count;
@@ -161,7 +161,7 @@ package body Alog.Tasked_Logger is
 
             or
 
-               ----------------------------------------------------------------
+               -------------------------------------------------------------
 
                accept Clear do
                   Logsink.Clear;
@@ -169,7 +169,7 @@ package body Alog.Tasked_Logger is
                end Clear;
             or
 
-               ----------------------------------------------------------------
+               -------------------------------------------------------------
 
                accept Get_Last_Exception
                  (Occurrence : out Exception_Occurrence;
@@ -191,7 +191,7 @@ package body Alog.Tasked_Logger is
                end Get_Last_Exception;
             or
 
-               ----------------------------------------------------------------
+               -------------------------------------------------------------
 
                accept Log_Message
                  (Level  : Log_Level;
@@ -231,6 +231,44 @@ package body Alog.Tasked_Logger is
 
             or
 
+               -------------------------------------------------------------
+
+               accept Set_Loglevel (Level : Log_Level) do
+                  Logsink.Set_Loglevel (Level => Level);
+               end Set_Loglevel;
+
+            or
+
+               -------------------------------------------------------------
+
+               accept Get_Loglevel (Level : out Log_Level) do
+                  Level := Logsink.Get_Loglevel;
+               end Get_Loglevel;
+
+            or
+
+               -------------------------------------------------------------
+
+               accept Set_Source_Loglevel
+                 (Source : String;
+                  Level  : Log_Level)
+               do
+                  Logsink.Set_Source_Loglevel (Source => Source,
+                                               Level  => Level);
+               end Set_Source_Loglevel;
+
+            or
+
+               -------------------------------------------------------------
+
+               accept Get_Source_Loglevel
+                 (Source :     String;
+                  Level  : out Log_Level)
+               do
+                  Level := Logsink.Get_Source_Loglevel (Source => Source);
+               end Get_Source_Loglevel;
+
+            or
                terminate;
             end select;
 
