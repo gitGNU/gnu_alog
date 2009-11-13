@@ -35,7 +35,7 @@ project Alog_Full is
    for Main use ("runner_full.adb");
 
    Compiler_Switches := Alog_Common.Compiler_Switches;
-   Linker_Switches   := Alog_Common.Linker_Switches;
+   Linker_Switches   := ();
 
    case Build is
       when "tests" =>
@@ -55,13 +55,13 @@ project Alog_Full is
       for Default_Switches ("ada") use Compiler_Switches;
    end Compiler;
 
-   package Builder is
-      for Default_Switches ("ada") use ("-g");
-   end Builder;
-
    package Linker is
       for Default_Switches ("ada") use Linker_Switches;
    end Linker;
+
+   package Builder is
+      for Default_Switches ("ada") use ("-g");
+   end Builder;
 
    package Binder is
       for Default_Switches ("ada") use ("-E");

@@ -37,8 +37,5 @@ project Alog_Common is
                          "-fstack-check",
                          "-gnato",
                          "-g");
-
-   Linker_Switches   := ("-Wl,--as-needed",
-                         "-g");
 end Alog_Common;
 
