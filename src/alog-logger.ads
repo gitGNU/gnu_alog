@@ -122,10 +122,19 @@ package Alog.Logger is
    --  different targets (depending on the facilites) automatically.
    --
    --  If source is specified the logger checks if there is an existing loglevel
-   --  entry for this source in the sources map. If no entry is found the
-   --  message is logged. If an associated loglevel is found the message is
-   --  processed only if the specified loglevel 'Level' is greater or equal than
-   --  the one in the map.
+   --  entry for this source in the sources map. If an associated loglevel is
+   --  found the message is processed only if the specified loglevel 'Level' is
+   --  greater or equal than the one in the map.
+   --  If no entry is found the message is only processed if the specified
+   --  loglevel 'Level' is greater or equal than the logger's loglevel.
+
+   procedure Set_Loglevel
+     (Logger : in out Instance;
+      Level  :        Log_Level);
+   --  Set given loglevel for logger.
+
+   function Get_Loglevel (Logger : Instance) return Log_Level;
+   --  Return current logger loglevel.
 
    procedure Set_Source_Loglevel
      (Logger : in out Instance;
@@ -206,6 +215,9 @@ private
 
       Sources : MOSLP.Map;
       --  Map of source loglevels.
+
+      Loglevel : Log_Level := Debug;
+      --  Loglevel of logger.
    end record;
 
 end Alog.Logger;

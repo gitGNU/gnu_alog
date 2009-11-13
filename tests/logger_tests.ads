@@ -83,4 +83,7 @@ package Logger_Tests is
    procedure Source_Based_Logging;
    --  Test per-source loglevel handling.
 
+   procedure Loglevel_Handling;
+   --  Test loglevel handling.
+
 end Logger_Tests;

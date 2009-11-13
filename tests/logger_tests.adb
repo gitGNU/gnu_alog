@@ -264,7 +264,8 @@ package body Logger_Tests is
          BS_Path.To_Bounded_String ("./data/Log_Multiple_FD_Facilities1"),
          BS_Path.To_Bounded_String ("./data/Log_Multiple_FD_Facilities2"),
          BS_Path.To_Bounded_String ("./data/Log_FD_Facility_Lowercase"),
-         BS_Path.To_Bounded_String ("./data/Log_Source_Loglevel")
+         BS_Path.To_Bounded_String ("./data/Log_Source_Loglevel"),
+         BS_Path.To_Bounded_String ("./data/Logger_Loglevel")
         );
    begin
       for C in Files'Range loop
@@ -334,6 +335,9 @@ package body Logger_Tests is
       Ahven.Framework.Add_Test_Routine
         (T, Source_Based_Logging'Access,
          "per-source loglevel handling");
+      Ahven.Framework.Add_Test_Routine
+        (T, Loglevel_Handling'Access,
+         "loglevel handling");
    end Initialize;
 
    -------------------------------------------------------------------------
@@ -484,6 +488,44 @@ package body Logger_Tests is
             null;
       end;
    end Log_Source_Handling;
+
+   -------------------------------------------------------------------------
+
+   procedure Loglevel_Handling is
+      Log      : Logger.Instance (Init => False);
+      Facility : constant Facilities.Handle :=
+        new Facilities.File_Descriptor.Instance;
+      Testfile : constant String := "./data/Logger_Loglevel";
+      Reffile  : constant String := "./data/Logger_Loglevel.ref";
+   begin
+      Facility.Toggle_Write_Timestamp (State => False);
+      Facility.Toggle_Write_Loglevel (State => True);
+
+      --  Call facility fd specific procedures.
+      Facilities.File_Descriptor.Handle
+        (Facility).Set_Logfile (Testfile);
+
+      Log.Attach_Facility (Facility => Facility);
+
+      Assert (Condition => Log.Get_Loglevel = Debug,
+              Message   => "Default loglevel mismatch");
+
+      Log.Log_Message (Level  => Debug,
+                       Msg    => "Debug message (logged)");
+      Log.Set_Loglevel (Level => Notice);
+
+      Log.Log_Message (Level  => Debug,
+                       Msg    => "Debug message (discard)");
+      Log.Log_Message (Level  => Notice,
+                       Msg    => "Notice message (logged)");
+
+      Log.Clear;
+
+      Assert (Condition => Helpers.Assert_Files_Equal
+              (Filename1 => Reffile,
+               Filename2 => Testfile),
+              Message   => "Files not equal");
+   end Loglevel_Handling;
 
    -------------------------------------------------------------------------
 

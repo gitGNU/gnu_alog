@@ -171,6 +171,13 @@ package body Alog.Logger is
 
    -------------------------------------------------------------------------
 
+   function Get_Loglevel (Logger : Instance) return Log_Level is
+   begin
+      return Logger.Loglevel;
+   end Get_Loglevel;
+
+   -------------------------------------------------------------------------
+
    function Get_Source_Loglevel
      (Logger : Instance;
       Source : String)
@@ -257,11 +264,25 @@ package body Alog.Logger is
          if Level < MOSLP.Element (Position => Position) then
             return;
          end if;
+      else
+         if Level < Logger.Loglevel then
+            return;
+         end if;
       end if;
 
       Logger.Iterate (Process => Do_Transform'Access);
       Logger.Iterate (Process => Do_Log'Access);
    end Log_Message;
+
+   -------------------------------------------------------------------------
+
+   procedure Set_Loglevel
+     (Logger : in out Instance;
+      Level  :        Log_Level)
+   is
+   begin
+      Logger.Loglevel := Level;
+   end Set_Loglevel;
 
    -------------------------------------------------------------------------
 
