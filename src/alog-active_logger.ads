@@ -132,6 +132,28 @@ package Alog.Active_Logger is
    --  smaller scope than the active logger on which the helper supposed to
    --  work.
 
+   procedure Set_Loglevel
+     (Logger : in out Instance;
+      Level  :        Log_Level);
+   --  Set given loglevel for active logger.
+
+   function Get_Loglevel (Logger : Instance) return Log_Level;
+   --  Return current active logger loglevel.
+
+   procedure Set_Source_Loglevel
+     (Logger : in out Instance;
+      Source :        String;
+      Level  :        Log_Level);
+   --  Set given loglevel for specified source. If source is already present the
+   --  loglevel is updated.
+
+   function Get_Source_Loglevel
+     (Logger : Instance;
+      Source : String)
+      return Log_Level;
+   --  Return loglevel for given source. Raises No_Source_Loglevel exception if
+   --  no entry for given source is found.
+
 private
 
    procedure Check_Exception (Logger : in out Instance);
