@@ -44,12 +44,14 @@ package Alog.Facilities is
 
    type Handle is access all Class;
 
-   function "=" (Left  : Handle;
-                 Right : Handle) return Boolean;
+   function "="
+     (Left  : Handle;
+      Right : Handle) return Boolean;
    --  Equal function.
 
-   procedure Set_Name (Facility : in out Class;
-                       Name     :        String);
+   procedure Set_Name
+     (Facility : in out Class;
+      Name     :        String);
    --  Set facility name.
 
    function Get_Name (Facility : Class) return String;
@@ -69,22 +71,25 @@ package Alog.Facilities is
    --  Creates a timestamp and returns it as String. If no Time is given, the
    --  current time is used.
 
-   procedure Log_Message (Facility : Class;
-                          Level    : Log_Level := Info;
-                          Msg      : String);
+   procedure Log_Message
+     (Facility : Class;
+      Level    : Log_Level := Info;
+      Msg      : String);
    --  Log a message 'Msg' with loglevel 'Level'. All attached transforms are
    --  applied to the message before actually logging the message. This
    --  procedure is intended for facility users.
 
-   procedure Write_Message (Facility : Instance;
-                            Level    : Log_Level := Info;
-                            Msg      : String) is abstract;
+   procedure Write_Message
+     (Facility : Instance;
+      Level    : Log_Level := Info;
+      Msg      : String) is abstract;
    --  Write message with specified log level. This procedure must be
    --  implemented by all facilities and is called by Log_Message after all
    --  transforms have been applied.
 
-   procedure Toggle_Write_Timestamp (Facility : in out Class;
-                                     State    :        Boolean);
+   procedure Toggle_Write_Timestamp
+     (Facility : in out Class;
+      State    :        Boolean);
    --  Enable/disable whether a timestamp is written for log messages.
 
    procedure Toggle_UTC_Timestamp
@@ -98,8 +103,9 @@ package Alog.Facilities is
    function Is_UTC_Timestamp (Facility : Class) return Boolean;
    --  Returns True if the timestamp of the facility is written in UTC time.
 
-   procedure Toggle_Write_Loglevel (Facility : in out Class;
-                                    State    :        Boolean);
+   procedure Toggle_Write_Loglevel
+     (Facility : in out Class;
+      State    :        Boolean);
    --  Enable/disable whether the loglevel is written for log messages.
 
    function Is_Write_Loglevel (Facility : Class) return Boolean;
@@ -115,12 +121,14 @@ package Alog.Facilities is
    --  called by Logger instances when detaching Facilities or when the logger
    --  object gets out of scope.
 
-   procedure Add_Transform (Facility  : in out Class;
-                            Transform :        Transforms.Handle);
+   procedure Add_Transform
+     (Facility  : in out Class;
+      Transform :        Transforms.Handle);
    --  Adds a Transform to the facility's transform list.
 
-   procedure Remove_Transform (Facility : in out Class;
-                               Name     :        String);
+   procedure Remove_Transform
+     (Facility : in out Class;
+      Name     :        String);
    --  Removes a transform with name 'Name' from the facility's transform list.
    --  If the transform is not found Transform_Not_Found exception is raised.
 

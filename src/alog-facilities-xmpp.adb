@@ -28,7 +28,8 @@ package body Alog.Facilities.XMPP is
 
    -------------------------------------------------------------------------
 
-   procedure Set_Recipient (Facility : in out Instance;
+   procedure Set_Recipient
+     (Facility : in out Instance;
                             JID      :        String)
    is
    begin
@@ -38,9 +39,10 @@ package body Alog.Facilities.XMPP is
 
    -------------------------------------------------------------------------
 
-   procedure Set_Sender (Facility : in out Instance;
-                         JID      :        String;
-                         Password :        String)
+   procedure Set_Sender
+     (Facility : in out Instance;
+      JID      :        String;
+      Password :        String)
    is
    begin
       Facility.Sender    := (JID      => To_Unbounded_String (JID),
@@ -50,8 +52,9 @@ package body Alog.Facilities.XMPP is
 
    -------------------------------------------------------------------------
 
-   procedure Set_Server (Facility : in out Instance;
-                         Name     :        String)
+   procedure Set_Server
+     (Facility : in out Instance;
+      Name     :        String)
    is
    begin
       Facility.Server    := To_Unbounded_String (Name);
@@ -60,9 +63,10 @@ package body Alog.Facilities.XMPP is
 
    -------------------------------------------------------------------------
 
-   procedure Write_Message (Facility : Instance;
-                            Level    : Log_Level := INFO;
-                            Msg      : String)
+   procedure Write_Message
+     (Facility : Instance;
+      Level    : Log_Level := INFO;
+      Msg      : String)
    is
       use AWS.Jabber;
    begin
@@ -91,15 +95,17 @@ package body Alog.Facilities.XMPP is
          Status : AWS.Jabber.Presence_Status;
       begin
          --  Init xmpp server.
-         AWS.Jabber.Connect (Server,
-                             To_String (Facility.Server),
-                             To_String (Facility.Sender.JID),
-                             To_String (Facility.Sender.Password));
+         AWS.Jabber.Connect
+           (Server,
+            To_String (Facility.Server),
+            To_String (Facility.Sender.JID),
+            To_String (Facility.Sender.Password));
 
          --  Check presence of recipient
-         AWS.Jabber.Check_Presence (Server,
-                                    To_String (Facility.Recipient),
-                                    Status);
+         AWS.Jabber.Check_Presence
+           (Server,
+            To_String (Facility.Recipient),
+            Status);
          if Status not in Available .. Do_Not_Disturb then
             raise Recipient_Not_Present;
          end if;

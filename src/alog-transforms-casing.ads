@@ -32,9 +32,11 @@ package Alog.Transforms.Casing is
    type Handle is access all Instance;
 
    overriding
-   function Transform_Message (Transform : Instance;
-                               Level     : Log_Level := Info;
-                               Msg       : String) return String;
+   function Transform_Message
+     (Transform : Instance;
+      Level     : Log_Level := Info;
+      Msg       : String)
+      return String;
    --  Implementation of Transform_Message.
 
    overriding
@@ -45,7 +47,9 @@ package Alog.Transforms.Casing is
    procedure Teardown (Transform : in out Instance) is null;
    --  Implementation of Teardown-procedure.
 
-   procedure Set_Mode (Transform : in out Instance; Mode : Operation_Mode);
+   procedure Set_Mode
+     (Transform : in out Instance;
+      Mode      :        Operation_Mode);
    --  Set operation mode of transform.
 
 private

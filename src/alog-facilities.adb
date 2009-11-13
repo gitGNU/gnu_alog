@@ -29,16 +29,19 @@ package body Alog.Facilities is
 
    -------------------------------------------------------------------------
 
-   function "=" (Left  : Handle;
-                 Right : Handle) return Boolean is
+   function "="
+     (Left  : Handle;
+      Right : Handle)
+      return Boolean is
    begin
       return Left.Get_Name = Right.Get_Name;
    end "=";
 
    -------------------------------------------------------------------------
 
-   procedure Add_Transform (Facility  : in out Class;
-                            Transform :        Transforms.Handle)
+   procedure Add_Transform
+     (Facility  : in out Class;
+      Transform :        Transforms.Handle)
    is
       T_Name : constant Unbounded_String :=
         To_Unbounded_String (Transform.Get_Name);
@@ -134,9 +137,10 @@ package body Alog.Facilities is
 
    -------------------------------------------------------------------------
 
-   procedure Log_Message (Facility : Class;
-                          Level    : Log_Level := Info;
-                          Msg      : String)
+   procedure Log_Message
+     (Facility : Class;
+      Level    : Log_Level := Info;
+      Msg      : String)
    is
       Message : Unbounded_String;
 
@@ -176,8 +180,9 @@ package body Alog.Facilities is
 
    -------------------------------------------------------------------------
 
-   procedure Remove_Transform (Facility : in out Class;
-                               Name     :        String)
+   procedure Remove_Transform
+     (Facility : in out Class;
+      Name     :        String)
    is
       T_Name : constant Unbounded_String := To_Unbounded_String (Name);
    begin
@@ -190,8 +195,10 @@ package body Alog.Facilities is
 
    -------------------------------------------------------------------------
 
-   procedure Set_Name (Facility : in out Class;
-                       Name     :        String) is
+   procedure Set_Name
+     (Facility : in out Class;
+      Name     :        String)
+   is
    begin
       Facility.Name := To_Unbounded_String (Name);
    end Set_Name;
@@ -216,8 +223,9 @@ package body Alog.Facilities is
 
    -------------------------------------------------------------------------
 
-   procedure Toggle_Write_Loglevel (Facility : in out Class;
-                                    State    :        Boolean)
+   procedure Toggle_Write_Loglevel
+     (Facility : in out Class;
+      State    :        Boolean)
    is
    begin
       Facility.Write_Loglevel := State;
@@ -225,8 +233,9 @@ package body Alog.Facilities is
 
    -------------------------------------------------------------------------
 
-   procedure Toggle_Write_Timestamp (Facility : in out Class;
-                                     State    :        Boolean)
+   procedure Toggle_Write_Timestamp
+     (Facility : in out Class;
+      State    :        Boolean)
    is
    begin
       Facility.Write_Timestamp := State;

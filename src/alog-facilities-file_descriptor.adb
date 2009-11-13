@@ -27,8 +27,9 @@ package body Alog.Facilities.File_Descriptor is
 
    -------------------------------------------------------------------------
 
-   procedure Close_Logfile (Facility : in out Instance;
-                            Remove   :        Boolean := False)
+   procedure Close_Logfile
+     (Facility : in out Instance;
+      Remove   :        Boolean := False)
    is
       use Ada.Text_IO;
    begin
@@ -91,9 +92,10 @@ package body Alog.Facilities.File_Descriptor is
 
    -------------------------------------------------------------------------
 
-   procedure Write_Message (Facility : Instance;
-                            Level    : Log_Level := Info;
-                            Msg      : String)
+   procedure Write_Message
+     (Facility : Instance;
+      Level    : Log_Level := Info;
+      Msg      : String)
    is
       pragma Unreferenced (Level);
 

@@ -34,7 +34,7 @@ package Alog.Log_Request is
 
    function Create
      (ID      : Ada.Task_Identification.Task_Id;
-      Level   : Log_Level := Alog.Debug;
+      Level   : Log_Level := Debug;
       Message : String)
       return Instance;
    --  Create a log request object from the specified parameters.

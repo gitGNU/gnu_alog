@@ -31,27 +31,30 @@ package Alog.Facilities.Syslog is
 
    type Handle is access all Instance;
 
-   type S_Facility is (LOG_AUTH,
-                       LOG_USER,
-                       LOG_MAIL,
-                       LOG_DAEMON,
-                       LOG_SYSLOG,
-                       LOG_CRON);
+   type S_Facility is
+     (LOG_AUTH,
+      LOG_USER,
+      LOG_MAIL,
+      LOG_DAEMON,
+      LOG_SYSLOG,
+      LOG_CRON);
    --  Corresponding Ada-Implementation of syslogs "facility" parameter.
    --  Only the important/usable facilities are mapped.
 
-   for S_Facility use (LOG_AUTH   => 0,
-                       LOG_USER   => 8,
-                       LOG_MAIL   => 16,
-                       LOG_DAEMON => 24,
-                       LOG_SYSLOG => 40,
-                       LOG_CRON   => 72);
+   for S_Facility use
+     (LOG_AUTH   => 0,
+      LOG_USER   => 8,
+      LOG_MAIL   => 16,
+      LOG_DAEMON => 24,
+      LOG_SYSLOG => 40,
+      LOG_CRON   => 72);
    --  Facility map table.
 
    overriding
-   procedure Write_Message (Facility : Instance;
-                            Level    : Log_Level := Info;
-                            Msg      : String);
+   procedure Write_Message
+     (Facility : Instance;
+      Level    : Log_Level := Info;
+      Msg      : String);
    --  Implementation of Write_Message.
 
    overriding

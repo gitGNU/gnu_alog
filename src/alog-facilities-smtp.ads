@@ -36,9 +36,10 @@ package Alog.Facilities.SMTP is
    type Handle is access all Instance;
 
    overriding
-   procedure Write_Message (Facility : Instance;
-                            Level    : Log_Level := INFO;
-                            Msg      : String);
+   procedure Write_Message
+     (Facility : Instance;
+      Level    : Log_Level := INFO;
+      Msg      : String);
    --  Implementation of Write_Message.
 
    overriding
@@ -49,19 +50,22 @@ package Alog.Facilities.SMTP is
    procedure Teardown (Facility : in out Instance) is null;
    --  Implementation of Teardown-procedure.
 
-   procedure Set_Recipient (Facility : in out Instance;
-                            Name     :        String;
-                            EMail    :        String);
+   procedure Set_Recipient
+     (Facility : in out Instance;
+      Name     :        String;
+      EMail    :        String);
    --  Set recipient for log-messages. This procedure MUST be called before
    --  subsequent calls to Write_Message().
 
-   procedure Set_Server (Facility : in out Instance;
-                         Name     :        String);
+   procedure Set_Server
+     (Facility : in out Instance;
+      Name     :        String);
    --  Set server for log-messages. This procedure MUST be called before
    --  subsequent calls to Write_Message().
 
-   procedure Set_Header (Facility : in out Instance;
-                         Header   :        String);
+   procedure Set_Header
+     (Facility : in out Instance;
+      Header   :        String);
    --  Set Message-Header of log-messages.
 
    function Get_Header (Facility : Instance) return String;
@@ -80,10 +84,11 @@ package Alog.Facilities.SMTP is
 
 private
 
-   function Format_Message (Facility : Instance;
-                            Level    : Log_Level;
-                            Msg      : String)
-                            return String;
+   function Format_Message
+     (Facility : Instance;
+      Level    : Log_Level;
+      Msg      : String)
+      return String;
    --  Compose a message from Msg, Header, Loglevel, Timestamp, PID.
 
    EOL : constant Character := Ada.Characters.Latin_1.LF;

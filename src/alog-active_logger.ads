@@ -107,8 +107,9 @@ package Alog.Active_Logger is
    --  This procedure is *safe* to call from protected actions (e.g. from an
    --  entry call statement or rendezvous).
 
-   procedure Shutdown (Logger : in out Instance;
-                       Flush  :        Boolean := True);
+   procedure Shutdown
+     (Logger : in out Instance;
+      Flush  :        Boolean := True);
    --  Shutdown the active logger. This procedure must be called in order for
    --  the logger task to be terminated properly. If 'Flush' is set to True the
    --  procedure will wait for all queued messages to be logged.

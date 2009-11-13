@@ -26,10 +26,11 @@ package body Alog.Facilities.SMTP is
 
    -------------------------------------------------------------------------
 
-   function Format_Message (Facility : Instance;
-                            Level    : Log_Level;
-                            Msg      : String)
-                            return String
+   function Format_Message
+     (Facility : Instance;
+      Level    : Log_Level;
+      Msg      : String)
+      return String
    is
       Message : constant String :=
       --  Header
@@ -54,8 +55,9 @@ package body Alog.Facilities.SMTP is
 
    -------------------------------------------------------------------------
 
-   procedure Set_Header (Facility : in out Instance;
-                         Header   :        String)
+   procedure Set_Header
+     (Facility : in out Instance;
+      Header   :        String)
    is
    begin
       Facility.Header := To_Unbounded_String (Header);
@@ -63,9 +65,10 @@ package body Alog.Facilities.SMTP is
 
    -------------------------------------------------------------------------
 
-   procedure Set_Recipient (Facility : in out Instance;
-                            Name     :        String;
-                            EMail    :        String)
+   procedure Set_Recipient
+     (Facility : in out Instance;
+      Name     :        String;
+      EMail    :        String)
    is
    begin
       Facility.Recipient    := (Name  => To_Unbounded_String (Name),
@@ -75,8 +78,9 @@ package body Alog.Facilities.SMTP is
 
    -------------------------------------------------------------------------
 
-   procedure Set_Server (Facility : in out Instance;
-                         Name     :        String)
+   procedure Set_Server
+     (Facility : in out Instance;
+      Name     :        String)
    is
    begin
       Facility.Server    := To_Unbounded_String (Name);
@@ -85,9 +89,10 @@ package body Alog.Facilities.SMTP is
 
    -------------------------------------------------------------------------
 
-   procedure Write_Message (Facility : Instance;
-                            Level    : Log_Level := INFO;
-                            Msg      : String)
+   procedure Write_Message
+     (Facility : Instance;
+      Level    : Log_Level := INFO;
+      Msg      : String)
    is
    begin
       --  Raise No_Recipient if no recipient has been set

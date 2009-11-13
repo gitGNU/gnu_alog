@@ -96,13 +96,15 @@ package body Alog.Facilities.Pgsql is
 
    -------------------------------------------------------------------------
 
-   procedure Set_Credentials (Facility : in out Instance;
-                              Username : String;
-                              Password : String)
+   procedure Set_Credentials
+     (Facility : in out Instance;
+      Username :        String;
+      Password :        String)
    is
    begin
-      Facility.Log_Connection.Set_User_Password (User_Name     => Username,
-                                                 User_Password => Password);
+      Facility.Log_Connection.Set_User_Password
+        (User_Name     => Username,
+         User_Password => Password);
    end Set_Credentials;
 
    -------------------------------------------------------------------------
@@ -114,8 +116,9 @@ package body Alog.Facilities.Pgsql is
 
    -------------------------------------------------------------------------
 
-   procedure Set_Host_Address (Facility : in out Instance;
-                               Address  : String)
+   procedure Set_Host_Address
+     (Facility : in out Instance;
+      Address  :        String)
    is
    begin
       Facility.Log_Connection.Set_Host_Address (Address);
@@ -137,8 +140,10 @@ package body Alog.Facilities.Pgsql is
 
    -------------------------------------------------------------------------
 
-   procedure Set_Level_Column_Name (Facility          : in out Instance;
-                                    Column_Name : String) is
+   procedure Set_Level_Column_Name
+     (Facility    : in out Instance;
+      Column_Name :        String)
+   is
    begin
       Facility.Log_Table.Level_Column :=
         To_Unbounded_String (Column_Name);
@@ -146,8 +151,10 @@ package body Alog.Facilities.Pgsql is
 
    -------------------------------------------------------------------------
 
-   procedure Set_Message_Column_Name (Facility    : in out Instance;
-                                      Column_Name : String) is
+   procedure Set_Message_Column_Name
+     (Facility    : in out Instance;
+      Column_Name :        String)
+   is
    begin
       Facility.Log_Table.Message_Column :=
         To_Unbounded_String (Column_Name);
@@ -155,9 +162,10 @@ package body Alog.Facilities.Pgsql is
 
    -------------------------------------------------------------------------
 
-   procedure Set_SQL_Trace (Facility : in out Instance;
-                            Filename :        String;
-                            Mode     :        APQ.Trace_Mode_Type)
+   procedure Set_SQL_Trace
+     (Facility : in out Instance;
+      Filename :        String;
+      Mode     :        APQ.Trace_Mode_Type)
    is
    begin
       Facility.Trace_Filename := To_Unbounded_String (Filename);
@@ -166,8 +174,9 @@ package body Alog.Facilities.Pgsql is
 
    -------------------------------------------------------------------------
 
-   procedure Set_Table_Name (Facility   : in out Instance;
-                             Table_Name :        String)
+   procedure Set_Table_Name
+     (Facility   : in out Instance;
+      Table_Name :        String)
    is
    begin
       Facility.Log_Table.Name := To_Unbounded_String (Table_Name);
@@ -175,8 +184,9 @@ package body Alog.Facilities.Pgsql is
 
    -------------------------------------------------------------------------
 
-   procedure Set_Timestamp_Column_Name (Facility    : in out Instance;
-                                        Column_Name :        String)
+   procedure Set_Timestamp_Column_Name
+     (Facility    : in out Instance;
+      Column_Name :        String)
    is
    begin
       Facility.Log_Table.Timestamp_Column :=
@@ -200,8 +210,9 @@ package body Alog.Facilities.Pgsql is
 
    -------------------------------------------------------------------------
 
-   procedure Toggle_SQL_Trace (Facility : in out Instance;
-                               Set      :        Boolean)
+   procedure Toggle_SQL_Trace
+     (Facility : in out Instance;
+      Set      :        Boolean)
    is
    begin
       Facility.Log_Connection.Set_Trace (Set);
@@ -209,9 +220,10 @@ package body Alog.Facilities.Pgsql is
 
    -------------------------------------------------------------------------
 
-   procedure Write_Message (Facility : Instance;
-                            Level    : Log_Level := INFO;
-                            Msg      : String)
+   procedure Write_Message
+     (Facility : Instance;
+      Level    : Log_Level := INFO;
+      Msg      : String)
    is
       use APQ.PostgreSQL.Client;
 

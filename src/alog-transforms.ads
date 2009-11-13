@@ -36,21 +36,25 @@ package Alog.Transforms is
 
    type Handle is access Class;
 
-   function "=" (Left  : Handle;
-                 Right : Handle) return Boolean;
+   function "="
+     (Left  : Handle;
+      Right : Handle)
+      return Boolean;
    --  Equal function.
 
-   procedure Set_Name (Transform : in out Class;
-                       Name      :        String);
+   procedure Set_Name
+     (Transform : in out Class;
+      Name      :        String);
    --  Set transform name.
 
    function Get_Name (Transform : Class) return String;
    --  Get transform name.
 
-   function Transform_Message (Transform : Instance;
-                               Level     : Log_Level;
-                               Msg       : String)
-                               return String is abstract;
+   function Transform_Message
+     (Transform : Instance;
+      Level     : Log_Level;
+      Msg       : String)
+      return String is abstract;
    --  Transform message with specified log level.
 
    procedure Setup (Transform : in out Instance) is abstract;

@@ -25,8 +25,10 @@ package body Alog.Transforms is
 
    -------------------------------------------------------------------------
 
-   function "=" (Left  : Handle;
-                 Right : Handle) return Boolean is
+   function "="
+     (Left  : Handle;
+      Right : Handle)
+      return Boolean is
    begin
       return Left.Get_Name = Right.Get_Name;
    end "=";
@@ -40,8 +42,9 @@ package body Alog.Transforms is
 
    -------------------------------------------------------------------------
 
-   procedure Set_Name (Transform : in out Class;
-                       Name      :        String)
+   procedure Set_Name
+     (Transform : in out Class;
+      Name      :        String)
    is
    begin
       Transform.Name := To_Unbounded_String (Name);

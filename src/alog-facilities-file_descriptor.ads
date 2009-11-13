@@ -33,9 +33,10 @@ package Alog.Facilities.File_Descriptor is
    type Handle is access all Instance;
 
    overriding
-   procedure Write_Message (Facility : Instance;
-                            Level    : Log_Level := Info;
-                            Msg      : String);
+   procedure Write_Message
+     (Facility : Instance;
+      Level    : Log_Level := Info;
+      Msg      : String);
    --  Implementation of Write_Message.
 
    overriding
@@ -46,15 +47,18 @@ package Alog.Facilities.File_Descriptor is
    procedure Teardown (Facility : in out Instance);
    --  Implementation of Teardown-procedure.
 
-   procedure Set_Logfile (Facility : in out Instance; Path : String);
+   procedure Set_Logfile
+     (Facility : in out Instance;
+      Path     :        String);
    --  Set logfile to use. If not set, standard output is used
    --  for logging (e.g. stdout).
 
    function Get_Logfile (Facility : Instance) return Ada.Text_IO.File_Access;
    --  Get currently used logfile.
 
-   procedure Close_Logfile (Facility : in out Instance;
-                            Remove   :        Boolean := False);
+   procedure Close_Logfile
+     (Facility : in out Instance;
+      Remove   :        Boolean := False);
    --  Close opened logfile.
 
 private

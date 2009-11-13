@@ -32,9 +32,10 @@ package Alog.Facilities.Pgsql is
    type Handle is access all Instance;
 
    overriding
-   procedure Write_Message (Facility : Instance;
-                            Level    : Log_Level := INFO;
-                            Msg      : String);
+   procedure Write_Message
+     (Facility : Instance;
+      Level    : Log_Level := INFO;
+      Msg      : String);
    --  Implementation of Write_Message.
 
    overriding
@@ -60,13 +61,15 @@ package Alog.Facilities.Pgsql is
    function Get_Host_Port (Facility : Instance) return Natural;
    --  Get port of database server.
 
-   procedure Set_SQL_Trace (Facility : in out Instance;
-                            Filename : String;
-                            Mode     : APQ.Trace_Mode_Type);
+   procedure Set_SQL_Trace
+     (Facility : in out Instance;
+      Filename :        String;
+      Mode     :        APQ.Trace_Mode_Type);
    --  Set SQL trace parameters.
 
-   procedure Toggle_SQL_Trace (Facility : in out Instance;
-                               Set      :        Boolean);
+   procedure Toggle_SQL_Trace
+     (Facility : in out Instance;
+      Set      :        Boolean);
    --  Toggles tracing of SQL statements.
 
    function Is_SQL_Trace (Facility : Instance) return Boolean;
@@ -84,30 +87,34 @@ package Alog.Facilities.Pgsql is
    function Get_Table_Name (Facility : Instance) return String;
    --  Get name of database table.
 
-   procedure Set_Level_Column_Name (Facility    : in out Instance;
-                                    Column_Name : String);
+   procedure Set_Level_Column_Name
+     (Facility    : in out Instance;
+      Column_Name : String);
    --  Set name of log level column.
 
    function Get_Level_Column_Name (Facility : Instance) return String;
    --  Get name of log level column.
 
-   procedure Set_Timestamp_Column_Name (Facility    : in out Instance;
-                                        Column_Name : String);
+   procedure Set_Timestamp_Column_Name
+     (Facility    : in out Instance;
+      Column_Name : String);
    --  Set name of log level column.
 
    function Get_Timestamp_Column_Name (Facility : Instance) return String;
    --  Get name of timestamp column.
 
-   procedure Set_Message_Column_Name (Facility    : in out Instance;
-                                      Column_Name : String);
+   procedure Set_Message_Column_Name
+     (Facility    : in out Instance;
+      Column_Name : String);
    --  Set name of log message column.
 
    function Get_Message_Column_Name (Facility : Instance) return String;
    --  Get name of log message column.
 
-   procedure Set_Credentials (Facility : in out Instance;
-                              Username : String;
-                              Password : String);
+   procedure Set_Credentials
+     (Facility : in out Instance;
+      Username :        String;
+      Password :        String);
    --  Set credentials for the database connection.
 
    function Get_Credentials (Facility : Instance) return String;

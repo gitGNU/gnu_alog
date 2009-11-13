@@ -27,16 +27,22 @@ package body Alog.Transforms.Casing is
 
    -------------------------------------------------------------------------
 
-   procedure Set_Mode (Transform : in out Instance; Mode : Operation_Mode) is
+   procedure Set_Mode
+     (Transform : in out Instance;
+      Mode      :        Operation_Mode)
+   is
    begin
       Transform.Mode := Mode;
    end Set_Mode;
 
    -------------------------------------------------------------------------
 
-   function Transform_Message (Transform : Instance;
-                               Level     : Log_Level := Info;
-                               Msg       : String) return String is
+   function Transform_Message
+     (Transform : Instance;
+      Level     : Log_Level := Info;
+      Msg       : String)
+      return String
+   is
       pragma Unreferenced (Level);
    begin
       if Transform.Mode = Lowercase then

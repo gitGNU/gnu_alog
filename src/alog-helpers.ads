@@ -26,8 +26,10 @@ with Ada.Direct_IO;
 --  Alog helper functions/procedures.
 package Alog.Helpers is
 
-   function Assert_Files_Equal (Filename1 : String;
-                                Filename2 : String) return Boolean;
+   function Assert_Files_Equal
+     (Filename1 : String;
+      Filename2 : String)
+      return Boolean;
    --  Compare two files byte-wise. Returns True if both files are equal.
    --  The two files are closed but not removed after comparison.
 

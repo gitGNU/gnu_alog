@@ -31,9 +31,10 @@ package Alog.Facilities.XMPP is
    type Handle is access all Instance;
 
    overriding
-   procedure Write_Message (Facility : Instance;
-                            Level    : Log_Level := INFO;
-                            Msg      : String);
+   procedure Write_Message
+     (Facility : Instance;
+      Level    : Log_Level := INFO;
+      Msg      : String);
    --  Implementation of Write_Message.
 
    overriding
@@ -44,35 +45,38 @@ package Alog.Facilities.XMPP is
    procedure Teardown (Facility : in out Instance) is null;
    --  Implementation of Teardown-procedure.
 
-   procedure Set_Sender (Facility : in out Instance;
-                         JID      :        String;
-                         Password :        String);
+   procedure Set_Sender
+     (Facility : in out Instance;
+      JID      :        String;
+      Password :        String);
    --  Set sender for log messages. This procedure MUST be called before
    --  subsequent calls to Write_Message().
 
-   procedure Set_Recipient (Facility : in out Instance;
-                            JID      :        String);
+   procedure Set_Recipient
+     (Facility : in out Instance;
+      JID      :        String);
    --  Set recipient for log-messages. This procedure MUST be called before
    --  subsequent calls to Write_Message().
 
-   procedure Set_Server (Facility : in out Instance;
-                         Name     :        String);
+   procedure Set_Server
+     (Facility : in out Instance;
+      Name     :        String);
    --  Set server for log-messages. This procedure MUST be called before
    --  subsequent calls to Write_Message().
 
-   No_Sender                  : exception;
+   No_Sender             : exception;
    --  No sender ID specified. Cannot send message.
 
-   No_Recipient               : exception;
+   No_Recipient          : exception;
    --  No recipient specified. Cannot send message.
 
-   No_Server                  : exception;
+   No_Server             : exception;
    --  No server specified. Cannot send message.
 
-   Recipient_Not_Present      : exception;
+   Recipient_Not_Present : exception;
    --  Recipient can not be reached through specified server.
 
-   Delivery_Failed            : exception;
+   Delivery_Failed       : exception;
    --  Message could not be delivered.
 
 private
