@@ -117,7 +117,7 @@ docs: prepare
 cov: prepare
 	@rm -f $(OBJECTDIR)/cov/*.gcda
 	@gnatmake -p -Palog_$(TARGET)_tests -j$(NUM_CPUS) -XALOG_BUILD="coverage"
-	@$(OBJECTDIR)/cov/runner_$(TARGET)
+	@$(OBJECTDIR)/cov/runner_$(TARGET) || true
 	@lcov -c -d $(OBJECTDIR)/cov/ -o $(OBJECTDIR)/cov/alog_tmp.info
 	@lcov -e $(OBJECTDIR)/cov/alog_tmp.info "$(PWD)/src/*.adb" -o $(OBJECTDIR)/cov/alog.info
 	@genhtml $(OBJECTDIR)/cov/alog.info -o $(COVDIR)
