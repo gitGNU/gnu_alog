@@ -124,14 +124,6 @@ package Alog.Active_Logger is
    --  Return last known Exception_Occurrence for caller. If no exception
    --  occured Null_Occurrence is returned.
 
-   type Shutdown_Helper (Logger : not null access Instance) is limited private;
-   --  This helper will call Shutdown on the logger given as discriminant when
-   --  it goes out of scope. This relieves the user from having to excplicitly
-   --  call shutdown on an instance of Alog active logger when wanting to
-   --  terminate. Users must make sure to declare any shutdown helper in a
-   --  smaller scope than the active logger on which the helper supposed to
-   --  work.
-
    procedure Set_Loglevel
      (Logger : in out Instance;
       Level  :        Log_Level);
@@ -153,6 +145,14 @@ package Alog.Active_Logger is
       return Log_Level;
    --  Return loglevel for given source. Raises No_Source_Loglevel exception if
    --  no entry for given source is found.
+
+   type Shutdown_Helper (Logger : not null access Instance) is private;
+   --  This helper will call Shutdown on the logger given as discriminant when
+   --  it goes out of scope. This relieves the user from having to excplicitly
+   --  call shutdown on an instance of Alog active logger when wanting to
+   --  terminate. Users must make sure to declare any shutdown helper in a
+   --  smaller scope than the active logger on which the helper supposed to
+   --  work.
 
 private
 
@@ -180,7 +180,7 @@ private
    end record;
 
    type Shutdown_Helper (Logger : not null access Instance) is
-     new Ada.Finalization.Limited_Controlled with null record;
+     new Ada.Finalization.Controlled with null record;
 
    overriding
    procedure Finalize (Helper : in out Shutdown_Helper);
