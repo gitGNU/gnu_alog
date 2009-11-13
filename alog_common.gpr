@@ -35,7 +35,6 @@ project Alog_Common is
                          "-gnatwal",
                          "-gnatf",
                          "-fstack-check",
-                         "-gnato",
-                         "-g");
+                         "-gnato");
 end Alog_Common;
 
