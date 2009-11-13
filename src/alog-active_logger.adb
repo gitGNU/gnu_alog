@@ -175,12 +175,14 @@ package body Alog.Active_Logger is
 
    procedure Log_Message
      (Logger : in out Instance;
+      Source :        String := "";
       Level  :        Log_Level;
       Msg    :        String)
    is
       New_Request : constant Log_Request.Instance :=
         Log_Request.Create
           (ID      => Ada.Task_Identification.Current_Task,
+           Source  => Source,
            Level   => Level,
            Message => Msg);
    begin
@@ -283,7 +285,8 @@ package body Alog.Active_Logger is
                  (Element => Current_Request);
 
                Parent.Backend.Log_Message
-                 (Level  => Current_Request.Get_Log_Level,
+                 (Source => Current_Request.Get_Source,
+                  Level  => Current_Request.Get_Log_Level,
                   Msg    => Current_Request.Get_Message,
                   Caller => Current_Request.Get_Caller_ID);
 

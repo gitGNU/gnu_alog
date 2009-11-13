@@ -34,6 +34,7 @@ package Alog.Log_Request is
 
    function Create
      (ID      : Ada.Task_Identification.Task_Id;
+      Source  : String    := "";
       Level   : Log_Level := Debug;
       Message : String)
       return Instance;
@@ -43,6 +44,9 @@ package Alog.Log_Request is
      (Request : Instance)
       return Ada.Task_Identification.Task_Id;
    --  Return the caller ID of the request object.
+
+   function Get_Source (Request : Instance) return String;
+   --  Return the source of the request object.
 
    function Get_Log_Level (Request : Instance) return Log_Level;
    --  Return the loglevel of the request object.
@@ -55,6 +59,7 @@ private
    type Instance is tagged record
       Caller_ID : Ada.Task_Identification.Task_Id :=
         Ada.Task_Identification.Null_Task_Id;
+      Source    : Ada.Strings.Unbounded.Unbounded_String;
       Level     : Log_Level                       := Info;
       Message   : Ada.Strings.Unbounded.Unbounded_String;
    end record;

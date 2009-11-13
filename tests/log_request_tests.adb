@@ -47,6 +47,7 @@ package body Log_Request_Tests is
 
       Request : Log_Request.Instance;
       Ref_ID  : constant Task_Id := Current_Task;
+      Ref_Src : constant String  := "Foo";
       Ref_Msg : constant String  := "Some log message";
    begin
       Assert (Condition => Request.Get_Caller_ID = Null_Task_Id,
@@ -57,11 +58,14 @@ package body Log_Request_Tests is
               Message   => "Default message not empty");
 
       Request := Log_Request.Create (ID      => Ref_ID,
+                                     Source  => Ref_Src,
                                      Level   => Notice,
                                      Message => Ref_Msg);
 
       Assert (Condition => Request.Get_Caller_ID = Ref_ID,
               Message   => "Caller ID mismatch");
+      Assert (Condition => Request.Get_Source = Ref_Src,
+              Message   => "Source mismatch");
       Assert (Condition => Request.Get_Log_Level = Notice,
               Message   => "Log level mismatch");
       Assert (Condition => Request.Get_Message = Ref_Msg,

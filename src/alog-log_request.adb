@@ -29,12 +29,14 @@ package body Alog.Log_Request is
 
    function Create
      (ID      : Ada.Task_Identification.Task_Id;
+      Source  : String    := "";
       Level   : Log_Level := Debug;
       Message : String)
       return Instance
    is
    begin
       return Instance'(Caller_ID => ID,
+                       Source    => To_Unbounded_String (Source),
                        Level     => Level,
                        Message   => To_Unbounded_String (Message));
    end Create;
@@ -62,5 +64,12 @@ package body Alog.Log_Request is
    begin
       return To_String (Request.Message);
    end Get_Message;
+
+   -------------------------------------------------------------------------
+
+   function Get_Source (Request : Instance) return String is
+   begin
+      return To_String (Request.Source);
+   end Get_Source;
 
 end Alog.Log_Request;
