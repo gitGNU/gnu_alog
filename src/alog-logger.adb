@@ -73,13 +73,13 @@ package body Alog.Logger is
       T_Name : constant Unbounded_String :=
         To_Unbounded_String (Transform.Get_Name);
    begin
-      if Logger.T_Stack.Contains (Key => T_Name) then
+      if Logger.Transforms.Contains (Key => T_Name) then
          raise Transform_Already_Present with "Transform '"
            & To_String (T_Name)
            & "' is already present.";
       end if;
 
-      Logger.T_Stack.Insert
+      Logger.Transforms.Insert
         (Key      =>  T_Name,
          New_Item => Transform);
    end Attach_Transform;
@@ -108,8 +108,8 @@ package body Alog.Logger is
       L.Facilities.Iterate (Process => Teardown_Facility'Access);
       L.Facilities.Clear;
 
-      L.T_Stack.Iterate (Process => Teardown_Transform'Access);
-      L.T_Stack.Clear;
+      L.Transforms.Iterate (Process => Teardown_Transform'Access);
+      L.Transforms.Clear;
    end Clear;
 
    -------------------------------------------------------------------------
@@ -147,12 +147,12 @@ package body Alog.Logger is
    is
       T_Name   : constant Unbounded_String := To_Unbounded_String (Name);
    begin
-      if not Logger.T_Stack.Contains (Key => T_Name) then
+      if not Logger.Transforms.Contains (Key => T_Name) then
          raise Transform_Not_Found with "Transform '"
            & Name & "' not found.";
       end if;
 
-      Logger.T_Stack.Delete (Key => T_Name);
+      Logger.Transforms.Delete (Key => T_Name);
    end Detach_Transform;
 
    -------------------------------------------------------------------------
@@ -221,7 +221,7 @@ package body Alog.Logger is
         (Transform_Handle : Transforms.Handle))
    is
    begin
-      Logger.T_Stack.Iterate (Process => Process);
+      Logger.Transforms.Iterate (Process => Process);
    end Iterate;
 
    -------------------------------------------------------------------------
@@ -313,7 +313,7 @@ package body Alog.Logger is
 
    function Transform_Count (Logger : Instance) return Natural is
    begin
-      return Natural (Logger.T_Stack.Length);
+      return Natural (Logger.Transforms.Length);
    end Transform_Count;
 
    -------------------------------------------------------------------------
@@ -348,13 +348,13 @@ package body Alog.Logger is
    is
       T_Name : constant Unbounded_String := To_Unbounded_String (Name);
    begin
-      if not Logger.T_Stack.Contains (Key => T_Name) then
+      if not Logger.Transforms.Contains (Key => T_Name) then
          raise Transform_Not_Found with "Transform '" & Name & "' not found";
       end if;
 
       declare
          Handle : constant Transforms.Handle :=
-           Logger.T_Stack.Element (Key => T_Name);
+           Logger.Transforms.Element (Key => T_Name);
       begin
          Process (Transform_Handle => Handle);
       end;
