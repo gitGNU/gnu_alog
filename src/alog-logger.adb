@@ -30,7 +30,7 @@ package body Alog.Logger is
    procedure Attach_Default_Facility (Logger : in out Instance)
    is
    begin
-      if not Logger.F_Stack.Contains
+      if not Logger.Facilities.Contains
         (Key => To_Unbounded_String (Default_Facility_Name)) then
          declare
             Default_Handle : Facilities.File_Descriptor.Handle;
@@ -53,13 +53,13 @@ package body Alog.Logger is
       F_Name : constant Unbounded_String :=
         To_Unbounded_String (Facility.Get_Name);
    begin
-      if Logger.F_Stack.Contains (Key => F_Name) then
+      if Logger.Facilities.Contains (Key => F_Name) then
          raise Facility_Already_Present with "Facility '"
            & To_String (F_Name)
            & "' is already present.";
       end if;
 
-      Logger.F_Stack.Insert
+      Logger.Facilities.Insert
         (Key      => F_Name,
          New_Item => Facility);
    end Attach_Facility;
@@ -105,8 +105,8 @@ package body Alog.Logger is
       end Teardown_Transform;
 
    begin
-      L.F_Stack.Iterate (Process => Teardown_Facility'Access);
-      L.F_Stack.Clear;
+      L.Facilities.Iterate (Process => Teardown_Facility'Access);
+      L.Facilities.Clear;
 
       L.T_Stack.Iterate (Process => Teardown_Transform'Access);
       L.T_Stack.Clear;
@@ -117,7 +117,7 @@ package body Alog.Logger is
    procedure Detach_Default_Facility (Logger : in out Instance)
    is
    begin
-      if Logger.F_Stack.Contains
+      if Logger.Facilities.Contains
         (Key => To_Unbounded_String (Default_Facility_Name)) then
          Logger.Detach_Facility (Name => Default_Facility_Name);
       end if;
@@ -131,12 +131,12 @@ package body Alog.Logger is
    is
       F_Name : constant Unbounded_String := To_Unbounded_String (Name);
    begin
-      if not Logger.F_Stack.Contains (Key => F_Name) then
+      if not Logger.Facilities.Contains (Key => F_Name) then
          raise Facility_Not_Found with "Facility '"
            & Name & "' not found.";
       end if;
 
-      Logger.F_Stack.Delete (Key => F_Name);
+      Logger.Facilities.Delete (Key => F_Name);
    end Detach_Facility;
 
    -------------------------------------------------------------------------
@@ -159,7 +159,7 @@ package body Alog.Logger is
 
    function Facility_Count (Logger : Instance) return Natural is
    begin
-      return Natural (Logger.F_Stack.Length);
+      return Natural (Logger.Facilities.Length);
    end Facility_Count;
 
    -------------------------------------------------------------------------
@@ -210,7 +210,7 @@ package body Alog.Logger is
         procedure (Facility_Handle : Facilities.Handle))
    is
    begin
-      Logger.F_Stack.Iterate (Process => Process);
+      Logger.Facilities.Iterate (Process => Process);
    end Iterate;
 
    -------------------------------------------------------------------------
@@ -326,13 +326,13 @@ package body Alog.Logger is
    is
       F_Name : constant Unbounded_String := To_Unbounded_String (Name);
    begin
-      if not Logger.F_Stack.Contains (Key => F_Name) then
+      if not Logger.Facilities.Contains (Key => F_Name) then
          raise Facility_Not_Found with "Facility '" & Name & "' not found";
       end if;
 
       declare
          Handle : constant Facilities.Handle :=
-           Logger.F_Stack.Element (Key => F_Name);
+           Logger.Facilities.Element (Key => F_Name);
       begin
          Process (Facility_Handle => Handle);
       end;

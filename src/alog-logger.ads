@@ -207,13 +207,13 @@ private
 
    type Instance (Init : Boolean) is new
      Ada.Finalization.Limited_Controlled with record
-      F_Stack : MOFP.Map;
+      Facilities : MOFP.Map;
       --  Attached facilities.
 
-      T_Stack : MOTP.Map;
+      T_Stack    : MOTP.Map;
       --  Attached transforms.
 
-      Sources : MOSLP.Map;
+      Sources    : MOSLP.Map;
       --  Map of source loglevels.
 
       Loglevel : Log_Level := Debug;
