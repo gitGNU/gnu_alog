@@ -36,8 +36,7 @@ project Alog_Common is
                          "-gnatf",
                          "-fstack-check",
                          "-gnato",
-                         "-g",
-                         "-fPIC");
+                         "-g");
 
    Linker_Switches   := ("-Wl,--as-needed",
                          "-g");
