@@ -111,12 +111,12 @@ package Alog.Facilities is
    function Is_Write_Loglevel (Facility : Class) return Boolean;
    --  Returns the current value of Write_Loglevel.
 
-   procedure Setup (Facility : in out Instance) is abstract;
+   procedure Setup (Facility : in out Instance) is null;
    --  Each facility must provide a Setup-procedure. These procedures are called
    --  by Logger instances when attaching Facilities. All needed operations
    --  prior to writing log messages should be done here.
 
-   procedure Teardown (Facility : in out Instance) is abstract;
+   procedure Teardown (Facility : in out Instance) is null;
    --  Each facility must provide a Teardown-procedure. These procedures are
    --  called by Logger instances when detaching Facilities or when the logger
    --  object gets out of scope.

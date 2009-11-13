@@ -39,14 +39,6 @@ package Alog.Transforms.Casing is
       return String;
    --  Implementation of Transform_Message.
 
-   overriding
-   procedure Setup (Transform : in out Instance) is null;
-   --  Implementation of Setup-procedure.
-
-   overriding
-   procedure Teardown (Transform : in out Instance) is null;
-   --  Implementation of Teardown-procedure.
-
    procedure Set_Mode
      (Transform : in out Instance;
       Mode      :        Operation_Mode);

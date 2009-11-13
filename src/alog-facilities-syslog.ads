@@ -57,14 +57,6 @@ package Alog.Facilities.Syslog is
       Msg      : String);
    --  Implementation of Write_Message.
 
-   overriding
-   procedure Setup (Facility : in out Instance) is null;
-   --  Implementation of Setup-procedure.
-
-   overriding
-   procedure Teardown (Facility : in out Instance) is null;
-   --  Implementation of Teardown-procedure.
-
 private
 
    type Instance is new Alog.Facilities.Instance with null record;

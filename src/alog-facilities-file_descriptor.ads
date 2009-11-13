@@ -40,10 +40,6 @@ package Alog.Facilities.File_Descriptor is
    --  Implementation of Write_Message.
 
    overriding
-   procedure Setup (Facility : in out Instance) is null;
-   --  Implementation of Setup-procedure.
-
-   overriding
    procedure Teardown (Facility : in out Instance);
    --  Implementation of Teardown-procedure.
 

@@ -57,12 +57,12 @@ package Alog.Transforms is
       return String is abstract;
    --  Transform message with specified log level.
 
-   procedure Setup (Transform : in out Instance) is abstract;
+   procedure Setup (Transform : in out Instance) is null;
    --  Each transform must provide a Setup-procedure. These procedures are
    --  called by logger instances when attaching Transforms. All needed
    --  operations prior to transforming log messages should be done here.
 
-   procedure Teardown (Transform : in out Instance) is abstract;
+   procedure Teardown (Transform : in out Instance) is null;
    --  Each transform must provide a Teardown-procedure. These procedures are
    --  called by logger instances when detaching Transforms or when the logger
    --  object gets out of scope.
