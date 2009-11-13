@@ -74,7 +74,8 @@ package Alog.Tasked_Logger is
       --  Return number of attached transforms.
 
       entry Log_Message
-        (Level  : Log_Level;
+        (Source : String := "";
+         Level  : Log_Level;
          Msg    : String;
          Caller : Ada.Task_Identification.Task_Id :=
            Ada.Task_Identification.Null_Task_Id);
@@ -87,6 +88,13 @@ package Alog.Tasked_Logger is
       --  If caller is not specified the executing task's ID is used instead.
       --  Since Log_Message'Caller can not be used as default parameter the
       --  entry checks if the variable is set to 'Null_Task_Id' in the body.
+      --
+      --  If source is specified the logger checks if there is an existing
+      --  loglevel entry for this source in the sources map. If an associated
+      --  loglevel is found the message is processed only if the specified
+      --  loglevel 'Level' is greater or equal than the one in the map.
+      --  If no entry is found the message is only processed if the specified
+      --  loglevel 'Level' is greater or equal than the logger's loglevel.
 
       entry Clear;
       --  Clear tasked logger instance. Detach and teardown all attached

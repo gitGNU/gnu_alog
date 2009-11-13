@@ -42,6 +42,7 @@ package body Alog.Tasked_Logger is
       use type Ada.Task_Identification.Task_Id;
 
       Logsink               : Alog.Logger.Instance (Init => Init);
+      Current_Source        : Unbounded_String;
       Current_Level         : Log_Level;
       Current_Message       : Unbounded_String;
       Current_Caller        : Ada.Task_Identification.Task_Id;
@@ -194,11 +195,13 @@ package body Alog.Tasked_Logger is
                -------------------------------------------------------------
 
                accept Log_Message
-                 (Level  : Log_Level;
+                 (Source : String := "";
+                  Level  : Log_Level;
                   Msg    : String;
                   Caller : Ada.Task_Identification.Task_Id :=
                     Ada.Task_Identification.Null_Task_Id)
                do
+                  Current_Source  := To_Unbounded_String (Source);
                   Current_Level   := Level;
                   Current_Message := To_Unbounded_String (Msg);
 
@@ -218,8 +221,9 @@ package body Alog.Tasked_Logger is
 
                begin
                   Logsink.Log_Message
-                    (Level => Current_Level,
-                     Msg   => To_String (Current_Message));
+                    (Source => To_String (Current_Source),
+                     Level  => Current_Level,
+                     Msg    => To_String (Current_Message));
 
                exception
                   when E : others =>
