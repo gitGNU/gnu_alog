@@ -161,6 +161,14 @@ package body Alog.Active_Logger is
 
    -------------------------------------------------------------------------
 
+   function Is_Terminated (Logger : Instance) return Boolean is
+   begin
+      return Logger.Backend'Terminated
+        and then Logger.Logger_Task'Terminated;
+   end Is_Terminated;
+
+   -------------------------------------------------------------------------
+
    procedure Iterate
      (Logger  : in out Instance;
       Process : not null access
@@ -218,12 +226,17 @@ package body Alog.Active_Logger is
      (Logger : in out Instance;
       Flush  :        Boolean := True) is
    begin
+      if Logger.Is_Terminated then
+         return;
+      end if;
+
       if Flush then
          Logger.Message_Queue.All_Done;
       end if;
 
       Logger.Clear;
       Logger.Trigger.Shutdown;
+      Logger.Backend.Shutdown;
    end Shutdown;
 
    -------------------------------------------------------------------------

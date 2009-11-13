@@ -84,4 +84,7 @@ package Active_Logger_Tests is
    procedure Loglevel_Handling;
    --  Test active logger loglevel handling.
 
+   procedure Task_Termination;
+   --  Test active logger task termination.
+
 end Active_Logger_Tests;

@@ -51,6 +51,7 @@ package body Alog.Tasked_Logger is
       Exceptions            : Protected_Containers.Protected_Exception_Map;
    begin
 
+      Main_Loop :
       loop
          begin
 
@@ -273,6 +274,13 @@ package body Alog.Tasked_Logger is
                end Get_Source_Loglevel;
 
             or
+
+               -------------------------------------------------------------
+
+               accept Shutdown;
+               exit Main_Loop;
+
+            or
                terminate;
             end select;
 
@@ -284,7 +292,7 @@ package body Alog.Tasked_Logger is
             when others =>
                null;
          end;
-      end loop;
+      end loop Main_Loop;
 
    end Instance;
 

@@ -353,6 +353,9 @@ package body Active_Logger_Tests is
       Ahven.Framework.Add_Test_Routine
         (T, Loglevel_Handling'Access,
          "loglevel handling");
+      Ahven.Framework.Add_Test_Routine
+        (T, Task_Termination'Access,
+         "task termination");
    end Initialize;
 
    -------------------------------------------------------------------------
@@ -484,6 +487,34 @@ package body Active_Logger_Tests is
          end;
       end;
    end Loglevel_Handling;
+
+   -------------------------------------------------------------------------
+
+   procedure Task_Termination is
+      Log : aliased Active_Logger.Instance (Init => False);
+   begin
+      declare
+         Shutdown : Active_Logger.Shutdown_Helper (Logger => Log'Access);
+         pragma Unreferenced (Shutdown);
+      begin
+         Assert (Condition => Log.Is_Terminated = False,
+                 Message   => "New Logger terminated");
+
+         declare
+            Counter : Natural := 0;
+         begin
+            Log.Shutdown;
+
+            while not Log.Is_Terminated loop
+               delay 0.01;
+               Counter := Counter + 1;
+               if Counter = 200 then
+                  Fail (Message => "Logger still running");
+               end if;
+            end loop;
+         end;
+      end;
+   end Task_Termination;
 
    -------------------------------------------------------------------------
 

@@ -115,6 +115,9 @@ package Alog.Active_Logger is
    --  the logger task to be terminated properly. If 'Flush' is set to True the
    --  procedure will wait for all queued messages to be logged.
 
+   function Is_Terminated (Logger : Instance) return Boolean;
+   --  Returns True if active logger shutdown sequence is complete.
+
    procedure All_Done (Logger : in out Instance);
    --  This procedure blocks until all queued logging requests have been
    --  consumed.

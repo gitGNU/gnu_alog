@@ -128,6 +128,9 @@ package Alog.Tasked_Logger is
       --  Return loglevel for given source. Raises No_Source_Loglevel exception
       --  if no entry for given source is found.
 
+      entry Shutdown;
+      --  Explicitly shutdown tasked logger.
+
    end Instance;
    --  Tasked logger instance. The Init discriminant defines whether or not a
    --  default 'stdout' (FD facility without logfile set) is attached
