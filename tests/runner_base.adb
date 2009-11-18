@@ -32,6 +32,7 @@ with Transform_Tests.Casing;
 with Logger_Tests;
 with Tasked_Logger_Tests;
 with Active_Logger_Tests;
+with Maps_Tests;
 
 procedure Runner_Base is
    S : constant Ahven.Framework.Test_Suite_Access :=
@@ -43,6 +44,8 @@ begin
                              T     => new Log_Request_Tests.Testcase);
    Ahven.Framework.Add_Test (Suite => S.all,
                              T     => new Protected_Container_Tests.Testcase);
+   Ahven.Framework.Add_Test (Suite => S.all,
+                             T     => new Maps_Tests.Testcase);
    Ahven.Framework.Add_Test (Suite => S.all,
                              T     => new Facility_Tests.Testcase);
    Ahven.Framework.Add_Test (Suite => S.all,
