@@ -184,8 +184,7 @@ package body Alog.Logger is
       return Log_Level
    is
    begin
-      return Logger.Sources.Element
-        (Key => To_Unbounded_String (Source));
+      return Logger.Sources.Element (Key => Source);
 
    exception
       when Constraint_Error =>
@@ -232,7 +231,7 @@ package body Alog.Logger is
       Level  : Log_Level;
       Msg    : String)
    is
-      use type MOSLP.Cursor;
+      use type Alog.Maps.Cursor;
 
       Out_Msg : String := Msg;
 
@@ -256,12 +255,12 @@ package body Alog.Logger is
             Msg   => Out_Msg);
       end Do_Transform;
 
-      Position : MOSLP.Cursor;
+      Position : Maps.Cursor;
    begin
-      Position := Logger.Sources.Find (Key => To_Unbounded_String (Source));
+      Position := Logger.Sources.Lookup (Key => Source);
 
-      if Position /= MOSLP.No_Element then
-         if Level < MOSLP.Element (Position => Position) then
+      if Position /= Maps.No_Element then
+         if Level < Maps.Element (Position => Position) then
             return;
          end if;
       else
@@ -291,22 +290,9 @@ package body Alog.Logger is
       Source :        String;
       Level  :        Log_Level)
    is
-      use type MOSLP.Cursor;
-
-      Key      : constant Unbounded_String := To_Unbounded_String (Source);
-      Position : MOSLP.Cursor;
    begin
-      Position := Logger.Sources.Find (Key => Key);
-
-      if Position = MOSLP.No_Element then
-         Logger.Sources.Insert
-           (Key      => Key,
-            New_Item => Level);
-      else
-         Logger.Sources.Replace_Element
-           (Position => Position,
-            New_Item => Level);
-      end if;
+      Logger.Sources.Insert (Key  => Source,
+                             Item => Level);
    end Set_Source_Loglevel;
 
    -------------------------------------------------------------------------
