@@ -94,6 +94,9 @@ package body Helper_Tests is
         (Routine => Read_Config'Access,
          Name    => "read loglevel config file");
       T.Add_Test_Routine
+        (Routine => Read_Config_Nodefault'Access,
+         Name    => "read config without default loglevel");
+      T.Add_Test_Routine
         (Routine => Read_Config_Invalid_Loglevel'Access,
          Name    => "read config with invalid loglevel");
    end Initialize;
@@ -102,7 +105,7 @@ package body Helper_Tests is
 
    procedure Read_Config is
       Config_File   : constant String := "./data/Loglevel_Config.ref";
-      Default_Level : Log_Level;
+      Default_Level : Log_Level       := Debug;
       Source_Map    : Maps.Wildcard_Level_Map;
    begin
       Read_Loglevels (Filename         => Config_File,
@@ -124,7 +127,7 @@ package body Helper_Tests is
 
    procedure Read_Config_Invalid_Loglevel is
       Config_File   : constant String := "./data/Loglevel_Config_Invalid1.ref";
-      Default_Level : Log_Level;
+      Default_Level : Log_Level       := Debug;
       Source_Map    : Maps.Wildcard_Level_Map;
    begin
       Read_Loglevels (Filename         => Config_File,
@@ -136,5 +139,22 @@ package body Helper_Tests is
       when Invalid_Config =>
          null;
    end Read_Config_Invalid_Loglevel;
+
+   -------------------------------------------------------------------------
+
+   procedure Read_Config_Nodefault is
+      Config_File   : constant String := "./data/Loglevel_Config_Nodef.ref";
+      Default_Level : Log_Level       := Debug;
+      Source_Map    : Maps.Wildcard_Level_Map;
+   begin
+      Read_Loglevels (Filename         => Config_File,
+                      Default_Loglevel => Default_Level,
+                      Sources          => Source_Map);
+      Assert (Condition => Default_Level = Debug,
+              Message   => "default loglevel changed");
+
+      Assert (Condition => Source_Map.Element (Key => "Foo.*") = Debug,
+              Message   => "Foo.* mismatch");
+   end Read_Config_Nodefault;
 
 end Helper_Tests;

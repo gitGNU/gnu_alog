@@ -40,6 +40,9 @@ package Helper_Tests is
    procedure Read_Config;
    --  Verify configuration file loading.
 
+   procedure Read_Config_Nodefault;
+   --  Read a loglevel config file without default loglevel line.
+
    procedure Read_Config_Invalid_Loglevel;
    --  Try to read a loglevel config file with invalid loglevel.
 

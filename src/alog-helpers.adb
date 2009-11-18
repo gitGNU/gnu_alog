@@ -96,17 +96,15 @@ package body Alog.Helpers is
    -------------------------------------------------------------------------
 
    procedure Read_Loglevels
-     (Filename         :     String;
-      Default_Loglevel : out Log_Level;
-      Sources          : out Maps.Wildcard_Level_Map)
+     (Filename         :        String;
+      Default_Loglevel : in out Log_Level;
+      Sources          :    out Maps.Wildcard_Level_Map)
    is
       Conf_File  : Ada.Text_IO.File_Type;
       Line_Count : Natural := 0;
       Line       : String (1 .. 1_024);
       Last       : Integer;
    begin
-      Default_Loglevel := Debug;
-
       Ada.Text_IO.Open (File => Conf_File,
                         Mode => Ada.Text_IO.In_File,
                         Name => Filename);
