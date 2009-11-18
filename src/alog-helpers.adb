@@ -123,47 +123,53 @@ package body Alog.Helpers is
                null;
             else
                declare
-                  Eq : constant Natural :=
-                    Ada.Strings.Fixed.Index
-                      (Source  => Line,
-                       Pattern => "=");
+                  Trimmed : constant String := Ada.Strings.Fixed.Trim
+                    (Source => Line (Line'First .. Last),
+                     Side   => Ada.Strings.Both);
+                  Eq      : Natural;
                begin
-                  if Eq not in Line'First + 1 .. Last then
-                     Ada.Text_IO.Close (File => Conf_File);
-                     raise Invalid_Config with "Syntax error on line"
-                       & Line_Count'Img & ": no assignment operator";
-                  end if;
+                  if Trimmed'Length /= 0 then
+                     Eq := Ada.Strings.Fixed.Index
+                       (Source  => Trimmed,
+                        Pattern => "=");
 
-                  --  Line seems valid
-
-                  declare
-                     Key   : constant String := Ada.Strings.Fixed.Trim
-                       (Source => Line (Line'First .. Eq - 1),
-                        Side   => Ada.Strings.Both);
-                     Value : constant String := Ada.Strings.Fixed.Trim
-                       (Source => Line (Eq + 1 .. Last),
-                        Side   => Ada.Strings.Both);
-
-                     Loglevel : Log_Level;
-                  begin
-                     begin
-                        Loglevel := Log_Level'Value (Value);
-
-                     exception
-                        when others =>
-                           Ada.Text_IO.Close (File => Conf_File);
-                           raise Invalid_Config with "Syntax error on line"
-                             & Line_Count'Img & ": invalid loglevel '"
-                             & Value & "'";
-                     end;
-
-                     if Key = "Default" then
-                        Default_Loglevel := Loglevel;
-                     else
-                        Sources.Insert (Key  => Key,
-                                        Item => Loglevel);
+                     if Eq not in Trimmed'First + 1 .. Trimmed'Last then
+                        Ada.Text_IO.Close (File => Conf_File);
+                        raise Invalid_Config with "Syntax error on line"
+                          & Line_Count'Img & ": no assignment operator";
                      end if;
-                  end;
+
+                     --  Line seems valid
+
+                     declare
+                        Key   : constant String := Ada.Strings.Fixed.Trim
+                          (Source => Trimmed (Trimmed'First .. Eq - 1),
+                           Side   => Ada.Strings.Both);
+                        Value : constant String := Ada.Strings.Fixed.Trim
+                          (Source => Trimmed (Eq + 1 .. Trimmed'Last),
+                           Side   => Ada.Strings.Both);
+
+                        Loglevel : Log_Level;
+                     begin
+                        begin
+                           Loglevel := Log_Level'Value (Value);
+
+                        exception
+                           when others =>
+                              Ada.Text_IO.Close (File => Conf_File);
+                              raise Invalid_Config with "Syntax error on line"
+                                & Line_Count'Img & ": invalid loglevel '"
+                                & Value & "'";
+                        end;
+
+                        if Key = "Default" then
+                           Default_Loglevel := Loglevel;
+                        else
+                           Sources.Insert (Key  => Key,
+                                           Item => Loglevel);
+                        end if;
+                     end;
+                  end if;
                end;
             end if;
          end if;
