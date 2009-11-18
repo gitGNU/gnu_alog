@@ -33,13 +33,13 @@ package Alog.Helpers is
    --  Compare two files byte-wise. Returns True if both files are equal.
    --  The two files are closed but not removed after comparison.
 
-   function Wildcard_Strip (Input : String) return String;
-   --  This function searches for the right-most '.' in input and replaces the
-   --  tail with the Alog.Maps package wildcard character. If input contains no
-   --  dots empty string is returned.
+   function Dot_Strip (Input : String) return String;
+   --  This function searches for the right-most '.' (dot) in the input string
+   --  and strips the part after the dot. If the input contains no dots an empty
+   --  string is returned.
    --
-   --  Example :
-   --     "Foo.Bar.Foo" -> "Foo.Bar.*"
+   --  Examples:
+   --     "Foo.Bar.Foo" -> "Foo.Bar"
    --     "Foo"         -> ""
 
 private

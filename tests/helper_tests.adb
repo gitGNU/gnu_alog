@@ -59,6 +59,26 @@ package body Helper_Tests is
 
    -------------------------------------------------------------------------
 
+   procedure Dot_Stripping is
+      Off_String : constant String (5 .. 11) := "Foo.Bar";
+   begin
+      Assert (Condition => Dot_Strip (Input => "Foo") = "",
+              Message   => "empty string expected");
+
+      Assert (Condition => Dot_Strip
+              (Input => "Foo.Bar.Foo") = "Foo.Bar",
+              Message   => "Foo.Bar expected");
+
+      Assert (Condition => Dot_Strip
+              (Input => "Foo.Bar") = "Foo",
+              Message   => "Foo expected");
+
+      Assert (Condition => Dot_Strip (Input => Off_String) = "Foo",
+              Message   => "Foo expected (offstring)");
+   end Dot_Stripping;
+
+   -------------------------------------------------------------------------
+
    procedure Initialize (T : in out Testcase) is
    begin
       T.Set_Name (Name => "Tests for Alog helpers");
@@ -66,28 +86,8 @@ package body Helper_Tests is
         (Routine => Compare_Files'Access,
          Name    => "test file equality helper");
       T.Add_Test_Routine
-        (Routine => Wildcard_Stripping'Access,
-         Name    => "wildcard stripping");
+        (Routine => Dot_Stripping'Access,
+         Name    => "dot stripping");
    end Initialize;
-
-   -------------------------------------------------------------------------
-
-   procedure Wildcard_Stripping is
-      Off_String : constant String (5 .. 11) := "Foo.Bar";
-   begin
-      Assert (Condition => Wildcard_Strip (Input => "Foo") = "",
-              Message   => "empty string expected");
-
-      Assert (Condition => Wildcard_Strip
-              (Input => "Foo.Bar.Foo") = "Foo.Bar.*",
-              Message   => "Foo.Bar.* expected");
-
-      Assert (Condition => Wildcard_Strip
-              (Input => "Foo.Bar") = "Foo.*",
-              Message   => "Foo.* expected");
-
-      Assert (Condition => Wildcard_Strip (Input => Off_String) = "Foo.*",
-              Message   => "Foo.* expected (offstring)");
-   end Wildcard_Stripping;
 
 end Helper_Tests;

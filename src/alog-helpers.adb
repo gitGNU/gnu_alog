@@ -23,8 +23,6 @@
 
 with Ada.Strings.Fixed;
 
-with Alog.Maps;
-
 package body Alog.Helpers is
 
    -------------------------------------------------------------------------
@@ -75,7 +73,7 @@ package body Alog.Helpers is
 
    -------------------------------------------------------------------------
 
-   function Wildcard_Strip (Input : String) return String is
+   function Dot_Strip (Input : String) return String is
       Dot_Pos : constant Natural := Ada.Strings.Fixed.Index
         (Source  => Input,
          Pattern => ".",
@@ -85,10 +83,13 @@ package body Alog.Helpers is
          return "";
       end if;
 
-      return Result : String (Input'First .. Dot_Pos + 1) do
-         Result (Input'First .. Dot_Pos) := Input (Input'First .. Dot_Pos);
-         Result (Dot_Pos + 1) := Maps.Wildcard;
-      end return;
-   end Wildcard_Strip;
+      declare
+         End_Pos : constant Positive := Dot_Pos - 1;
+         Result  : String (Input'First .. End_Pos);
+      begin
+         Result := Input (Input'First .. End_Pos);
+         return Result;
+      end;
+   end Dot_Strip;
 
 end Alog.Helpers;
