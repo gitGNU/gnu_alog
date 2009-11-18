@@ -1,5 +1,5 @@
 --
---  Copyright (c) 2008,
+--  Copyright (c) 2008-2009,
 --  Reto Buerki, Adrian-Ken Rueegsegger
 --  secunet SwissIT AG
 --
@@ -20,6 +20,10 @@
 --  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,
 --  MA  02110-1301  USA
 --
+
+with Ada.Strings.Fixed;
+
+with Alog.Maps;
 
 package body Alog.Helpers is
 
@@ -72,8 +76,19 @@ package body Alog.Helpers is
    -------------------------------------------------------------------------
 
    function Wildcard_Strip (Input : String) return String is
+      Dot_Pos : constant Natural := Ada.Strings.Fixed.Index
+        (Source  => Input,
+         Pattern => ".",
+         Going   => Ada.Strings.Backward);
    begin
-      return Input;
+      if Dot_Pos = 0 then
+         return "";
+      end if;
+
+      return Result : String (Input'First .. Dot_Pos + 1) do
+         Result (Input'First .. Dot_Pos) := Input (Input'First .. Dot_Pos);
+         Result (Dot_Pos + 1) := Maps.Wildcard;
+      end return;
    end Wildcard_Strip;
 
 end Alog.Helpers;

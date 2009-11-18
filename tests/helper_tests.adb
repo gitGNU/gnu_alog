@@ -73,6 +73,7 @@ package body Helper_Tests is
    -------------------------------------------------------------------------
 
    procedure Wildcard_Stripping is
+      Off_String : constant String (5 .. 11) := "Foo.Bar";
    begin
       Assert (Condition => Wildcard_Strip (Input => "Foo") = "",
               Message   => "empty string expected");
@@ -80,6 +81,13 @@ package body Helper_Tests is
       Assert (Condition => Wildcard_Strip
               (Input => "Foo.Bar.Foo") = "Foo.Bar.*",
               Message   => "Foo.Bar.* expected");
+
+      Assert (Condition => Wildcard_Strip
+              (Input => "Foo.Bar") = "Foo.*",
+              Message   => "Foo.* expected");
+
+      Assert (Condition => Wildcard_Strip (Input => Off_String) = "Foo.*",
+              Message   => "Foo.* expected (offstring)");
    end Wildcard_Stripping;
 
 end Helper_Tests;
