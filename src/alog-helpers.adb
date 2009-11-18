@@ -21,6 +21,7 @@
 --  MA  02110-1301  USA
 --
 
+with Ada.Text_IO;
 with Ada.Strings.Fixed;
 
 package body Alog.Helpers is
@@ -91,5 +92,73 @@ package body Alog.Helpers is
          return Result;
       end;
    end Dot_Strip;
+
+   -------------------------------------------------------------------------
+
+   procedure Read_Loglevels
+     (Filename         :     String;
+      Default_Loglevel : out Log_Level;
+      Sources          : out Maps.Wildcard_Level_Map)
+   is
+      Conf_File  : Ada.Text_IO.File_Type;
+      Line_Count : Natural := 0;
+      Line       : String (1 .. 1_024);
+      Last       : Integer;
+   begin
+      Default_Loglevel := Debug;
+
+      Ada.Text_IO.Open (File => Conf_File,
+                        Mode => Ada.Text_IO.In_File,
+                        Name => Filename);
+
+      while not Ada.Text_IO.End_Of_File (File => Conf_File) loop
+         Ada.Text_IO.Get_Line
+           (File => Conf_File,
+            Item => Line,
+            Last => Last);
+         Line_Count := Line_Count + 1;
+
+         if Last - Line'First >= 0 then
+            if Line (Line'First) = '#' then
+               null;
+            else
+               declare
+                  Eq : constant Natural :=
+                    Ada.Strings.Fixed.Index
+                      (Source  => Line,
+                       Pattern => "=");
+               begin
+                  if Eq not in Line'First + 1 .. Last then
+                     Ada.Text_IO.Close (File => Conf_File);
+                     raise Invalid_Config with "Syntax error on line"
+                       & Line_Count'Img & " : no assignment operator";
+                  end if;
+
+                  --  Line seems valid
+
+                  declare
+                     Key   : constant String := Ada.Strings.Fixed.Trim
+                       (Source => Line (Line'First .. Eq - 1),
+                        Side   => Ada.Strings.Both);
+                     Value : constant String := Ada.Strings.Fixed.Trim
+                       (Source => Line (Eq + 1 .. Last),
+                        Side   => Ada.Strings.Both);
+
+                     Loglevel : constant Log_Level := Log_Level'Value (Value);
+                  begin
+                     if Key = "Default" then
+                        Default_Loglevel := Loglevel;
+                     else
+                        Sources.Insert (Key  => Key,
+                                        Item => Loglevel);
+                     end if;
+                  end;
+               end;
+            end if;
+         end if;
+      end loop;
+
+      Ada.Text_IO.Close (File => Conf_File);
+   end Read_Loglevels;
 
 end Alog.Helpers;

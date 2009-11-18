@@ -37,4 +37,7 @@ package Helper_Tests is
    procedure Dot_Stripping;
    --  Verify dot strip function.
 
+   procedure Read_Config_File;
+   --  Verify configuration file loading.
+
 end Helper_Tests;

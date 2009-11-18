@@ -23,6 +23,8 @@
 
 with Ada.Direct_IO;
 
+with Alog.Maps;
+
 --  Alog helper functions/procedures.
 package Alog.Helpers is
 
@@ -41,6 +43,28 @@ package Alog.Helpers is
    --  Examples:
    --     "Foo.Bar.Foo" -> "Foo.Bar"
    --     "Foo"         -> ""
+
+   procedure Read_Loglevels
+     (Filename         :     String;
+      Default_Loglevel : out Log_Level;
+      Sources          : out Maps.Wildcard_Level_Map);
+   --  Read default loglevels and (optional) source loglevels from file given by
+   --  filename. The format is as follows:
+   --
+   --  # This is a comment (ignored)
+   --
+   --  # Default loglevel
+   --  Default = Info
+   --
+   --  # Source-specific loglevels
+   --  Foo.* = Debug
+   --  Foo.Bar = Info
+   --
+   --  If no Default loglevel is found in the file, the library default loglevel
+   --  is returned.
+
+   Invalid_Config : exception;
+   --  Exception is raised if a loglevel config file is invalid.
 
 private
    type My_Rec is record

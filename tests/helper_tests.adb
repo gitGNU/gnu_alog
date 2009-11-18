@@ -24,10 +24,12 @@
 with Ahven;
 
 with Alog.Helpers;
+with Alog.Maps;
 
 package body Helper_Tests is
 
    use Ahven;
+   use Alog;
    use Alog.Helpers;
 
    -------------------------------------------------------------------------
@@ -88,6 +90,31 @@ package body Helper_Tests is
       T.Add_Test_Routine
         (Routine => Dot_Stripping'Access,
          Name    => "dot stripping");
+      T.Add_Test_Routine
+        (Routine => Read_Config_File'Access,
+         Name    => "read loglevel config file");
    end Initialize;
+
+   -------------------------------------------------------------------------
+
+   procedure Read_Config_File is
+      Config_File   : constant String := "./data/Loglevel_Config.ref";
+      Default_Level : Log_Level;
+      Source_Map    : Maps.Wildcard_Level_Map;
+   begin
+      Read_Loglevels (Filename         => Config_File,
+                      Default_Loglevel => Default_Level,
+                      Sources          => Source_Map);
+
+      Assert (Condition => Default_Level = Info,
+              Message   => "default loglevel mismatch");
+
+      Assert (Condition => Source_Map.Element (Key => "Foo.*") = Debug,
+              Message   => "Foo.* mismatch");
+      Assert (Condition => Source_Map.Element (Key => "Foo.Bar") = Alert,
+              Message   => "Foo.Bar mismatch");
+      Assert (Condition => Source_Map.Element (Key => "Foo.Foo") = Notice,
+              Message   => "Foo.Foo mismatch");
+   end Read_Config_File;
 
 end Helper_Tests;
