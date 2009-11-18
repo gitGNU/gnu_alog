@@ -131,7 +131,7 @@ package body Alog.Helpers is
                   if Eq not in Line'First + 1 .. Last then
                      Ada.Text_IO.Close (File => Conf_File);
                      raise Invalid_Config with "Syntax error on line"
-                       & Line_Count'Img & " : no assignment operator";
+                       & Line_Count'Img & ": no assignment operator";
                   end if;
 
                   --  Line seems valid
@@ -144,8 +144,19 @@ package body Alog.Helpers is
                        (Source => Line (Eq + 1 .. Last),
                         Side   => Ada.Strings.Both);
 
-                     Loglevel : constant Log_Level := Log_Level'Value (Value);
+                     Loglevel : Log_Level;
                   begin
+                     begin
+                        Loglevel := Log_Level'Value (Value);
+
+                     exception
+                        when others =>
+                           Ada.Text_IO.Close (File => Conf_File);
+                           raise Invalid_Config with "Syntax error on line"
+                             & Line_Count'Img & ": invalid loglevel '"
+                             & Value & "'";
+                     end;
+
                      if Key = "Default" then
                         Default_Loglevel := Loglevel;
                      else

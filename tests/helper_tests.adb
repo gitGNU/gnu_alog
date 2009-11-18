@@ -91,13 +91,16 @@ package body Helper_Tests is
         (Routine => Dot_Stripping'Access,
          Name    => "dot stripping");
       T.Add_Test_Routine
-        (Routine => Read_Config_File'Access,
+        (Routine => Read_Config'Access,
          Name    => "read loglevel config file");
+      T.Add_Test_Routine
+        (Routine => Read_Config_Invalid_Loglevel'Access,
+         Name    => "read config with invalid loglevel");
    end Initialize;
 
    -------------------------------------------------------------------------
 
-   procedure Read_Config_File is
+   procedure Read_Config is
       Config_File   : constant String := "./data/Loglevel_Config.ref";
       Default_Level : Log_Level;
       Source_Map    : Maps.Wildcard_Level_Map;
@@ -115,6 +118,23 @@ package body Helper_Tests is
               Message   => "Foo.Bar mismatch");
       Assert (Condition => Source_Map.Element (Key => "Foo.Foo") = Notice,
               Message   => "Foo.Foo mismatch");
-   end Read_Config_File;
+   end Read_Config;
+
+   -------------------------------------------------------------------------
+
+   procedure Read_Config_Invalid_Loglevel is
+      Config_File   : constant String := "./data/Loglevel_Config_Invalid1.ref";
+      Default_Level : Log_Level;
+      Source_Map    : Maps.Wildcard_Level_Map;
+   begin
+      Read_Loglevels (Filename         => Config_File,
+                      Default_Loglevel => Default_Level,
+                      Sources          => Source_Map);
+      Fail (Message => "expected Invalid_Config");
+
+   exception
+      when Invalid_Config =>
+         null;
+   end Read_Config_Invalid_Loglevel;
 
 end Helper_Tests;
