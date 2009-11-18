@@ -133,6 +133,24 @@ package body Maps_Tests is
          Assert (Condition => Maps.Element (Position => Position) = Notice,
                  Message   => "Loglevel not notice");
       end;
+
+      declare
+         Position : Maps.Cursor;
+      begin
+         Position := Map.Lookup (Key => "Foo.Bar.Foo");
+         Assert (Condition => Maps.Element (Position => Position) = Notice,
+                 Message   => "Loglevel not notice2");
+      end;
+
+      declare
+         use type Maps.Cursor;
+
+         Position : Maps.Cursor;
+      begin
+         Position := Map.Lookup (Key => "Bar.Bar");
+         Assert (Condition => Position = Maps.No_Element,
+                 Message   => "No_Element expected");
+      end;
    end Wildcard_Lookup;
 
 end Maps_Tests;

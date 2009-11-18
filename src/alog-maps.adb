@@ -21,6 +21,8 @@
 --  MA  02110-1301  USA
 --
 
+with Alog.Helpers;
+
 package body Alog.Maps is
 
    -------------------------------------------------------------------------
@@ -90,6 +92,26 @@ package body Alog.Maps is
       if Position /= No_Element then
          return Position;
       end if;
+
+      Find_Closest_Match :
+      declare
+         Lookup_Key : Unbounded_String := To_Unbounded_String
+           (Helpers.Dot_Strip (Input => Key));
+      begin
+
+         while Lookup_Key /= "" loop
+            Position := Map.Find
+              (Key => To_String
+                 (Lookup_Key) & "." & Wildcard);
+
+            if Position /= No_Element then
+               return Position;
+            end if;
+
+            Lookup_Key := To_Unbounded_String
+              (Helpers.Dot_Strip (Input => To_String (Lookup_Key)));
+         end loop;
+      end Find_Closest_Match;
 
       return No_Element;
    end Lookup;
