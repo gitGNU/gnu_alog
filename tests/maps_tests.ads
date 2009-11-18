@@ -37,4 +37,7 @@ package Maps_Tests is
    procedure Update_Element;
    --  Update a wildcard map element.
 
+   procedure Wildcard_Lookup;
+   --  Verify wildcard lookup.
+
 end Maps_Tests;

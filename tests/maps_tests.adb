@@ -40,6 +40,9 @@ package body Maps_Tests is
       T.Add_Test_Routine
         (Routine => Update_Element'Access,
          Name    => "Update element");
+      T.Add_Test_Routine
+        (Routine => Wildcard_Lookup'Access,
+         Name    => "Wildcard lookup");
    end Initialize;
 
    -------------------------------------------------------------------------
@@ -104,5 +107,32 @@ package body Maps_Tests is
       Assert (Condition => Map.Element (Key => "Foo") = Error,
               Message   => "Update failed");
    end Update_Element;
+
+   -------------------------------------------------------------------------
+
+   procedure Wildcard_Lookup is
+      Map : Maps.Wildcard_Level_Map;
+   begin
+      Map.Insert (Key  => "Foo.*",
+                  Item => Notice);
+      Map.Insert (Key  => "Foo.Bar",
+                  Item => Warning);
+
+      declare
+         Position : Maps.Cursor;
+      begin
+         Position := Map.Lookup (Key => "Foo.Bar");
+         Assert (Condition => Maps.Element (Position => Position) = Warning,
+                 Message   => "Loglevel not warning");
+      end;
+
+      declare
+         Position : Maps.Cursor;
+      begin
+         Position := Map.Lookup (Key => "Foo.Foo");
+         Assert (Condition => Maps.Element (Position => Position) = Notice,
+                 Message   => "Loglevel not notice");
+      end;
+   end Wildcard_Lookup;
 
 end Maps_Tests;

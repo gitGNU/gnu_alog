@@ -69,4 +69,11 @@ package body Alog.Helpers is
 
    end Assert_Files_Equal;
 
+   -------------------------------------------------------------------------
+
+   function Wildcard_Strip (Input : String) return String is
+   begin
+      return Input;
+   end Wildcard_Strip;
+
 end Alog.Helpers;

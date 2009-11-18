@@ -61,10 +61,25 @@ package body Helper_Tests is
 
    procedure Initialize (T : in out Testcase) is
    begin
-      Set_Name (T, "Tests for Alog helpers");
-      Ahven.Framework.Add_Test_Routine
-        (T, Compare_Files'Access,
-         "test file equality helper");
+      T.Set_Name (Name => "Tests for Alog helpers");
+      T.Add_Test_Routine
+        (Routine => Compare_Files'Access,
+         Name    => "test file equality helper");
+      T.Add_Test_Routine
+        (Routine => Wildcard_Stripping'Access,
+         Name    => "wildcard stripping");
    end Initialize;
+
+   -------------------------------------------------------------------------
+
+   procedure Wildcard_Stripping is
+   begin
+      Assert (Condition => Wildcard_Strip (Input => "Foo") = "",
+              Message   => "empty string expected");
+
+      Assert (Condition => Wildcard_Strip
+              (Input => "Foo.Bar.Foo") = "Foo.Bar.*",
+              Message   => "Foo.Bar.* expected");
+   end Wildcard_Stripping;
 
 end Helper_Tests;

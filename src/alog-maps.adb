@@ -73,4 +73,25 @@ package body Alog.Maps is
       end if;
    end Insert;
 
+   -------------------------------------------------------------------------
+
+   function Lookup
+     (Map : Wildcard_Level_Map;
+      Key : String)
+      return Cursor
+   is
+      Position : Cursor;
+   begin
+
+      --  Exact match
+
+      Position := Map.Find (Key => Key);
+
+      if Position /= No_Element then
+         return Position;
+      end if;
+
+      return No_Element;
+   end Lookup;
+
 end Alog.Maps;

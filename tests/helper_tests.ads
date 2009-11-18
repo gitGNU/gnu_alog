@@ -34,4 +34,7 @@ package Helper_Tests is
    procedure Compare_Files;
    --  Verify Assert_Files_Equal helper function.
 
+   procedure Wildcard_Stripping;
+   --  Verify wildcard strip function.
+
 end Helper_Tests;

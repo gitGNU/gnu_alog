@@ -34,6 +34,9 @@ package Alog.Maps is
 
    No_Element : constant Cursor;
 
+   Wildcard   : constant Character := '*';
+   --  Character used as wildcard indicator in lookups.
+
    function Element
      (Map : Wildcard_Level_Map;
       Key : String)
@@ -49,6 +52,23 @@ package Alog.Maps is
       return Cursor;
    --  Returns the position for an element with specified key. If no element is
    --  found No_Element is returned.
+
+   function Lookup
+     (Map : Wildcard_Level_Map;
+      Key : String)
+      return Cursor;
+   --  Returns the position of the element with the closest match to given key.
+   --  This function considers wildcards when searching for an element.
+   --
+   --  Example:      Key   | Element
+   --             -------------------
+   --              Foo.*   |  Debug
+   --              Foo.Bar |  Alert
+   --
+   --  A lookup for "Foo.Foo" has no exact match. The next closest match is
+   --  "Foo.*" which will return the Debug element.
+   --
+   --  If no exact and wildcard match is found No_Element is returned.
 
    procedure Insert
      (Map  : in out Wildcard_Level_Map;
