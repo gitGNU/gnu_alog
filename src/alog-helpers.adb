@@ -132,7 +132,8 @@ package body Alog.Helpers is
 
                   if Eq not in Trimmed'First + 1 .. Trimmed'Last then
                      Ada.Text_IO.Close (File => Conf_File);
-                     raise Invalid_Config with "Syntax error on line"
+                     raise Invalid_Config with "Syntax error in file "
+                       & Filename & " on line"
                        & Line_Count'Img & ": no assignment operator";
                   end if;
 
@@ -154,7 +155,8 @@ package body Alog.Helpers is
                      exception
                         when others =>
                            Ada.Text_IO.Close (File => Conf_File);
-                           raise Invalid_Config with "Syntax error on line"
+                           raise Invalid_Config with "Syntax error in file "
+                             & Filename & " on line"
                              & Line_Count'Img & ": invalid loglevel '"
                              & Value & "'";
                      end;
