@@ -95,10 +95,8 @@ package body Alog.Maps is
 
       Find_Closest_Match :
       declare
-         Lookup_Key : Unbounded_String := To_Unbounded_String
-           (Helpers.Dot_Strip (Input => Key));
+         Lookup_Key : Unbounded_String := To_Unbounded_String (Key);
       begin
-
          while Lookup_Key /= "" loop
             Position := Map.Find
               (Key => To_String

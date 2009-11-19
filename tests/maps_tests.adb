@@ -121,9 +121,17 @@ package body Maps_Tests is
       declare
          Position : Maps.Cursor;
       begin
+         Position := Map.Lookup (Key => "Foo");
+         Assert (Condition => Maps.Element (Position => Position) = Notice,
+                 Message   => "Loglevel for Foo not notice");
+      end;
+
+      declare
+         Position : Maps.Cursor;
+      begin
          Position := Map.Lookup (Key => "Foo.Bar");
          Assert (Condition => Maps.Element (Position => Position) = Warning,
-                 Message   => "Loglevel not warning");
+                 Message   => "Loglevel for Foo.Bar not warning");
       end;
 
       declare
@@ -131,7 +139,7 @@ package body Maps_Tests is
       begin
          Position := Map.Lookup (Key => "Foo.Foo");
          Assert (Condition => Maps.Element (Position => Position) = Notice,
-                 Message   => "Loglevel not notice");
+                 Message   => "Loglevel for Foo.Foo not notice");
       end;
 
       declare
@@ -139,7 +147,7 @@ package body Maps_Tests is
       begin
          Position := Map.Lookup (Key => "Foo.Bar.Foo");
          Assert (Condition => Maps.Element (Position => Position) = Notice,
-                 Message   => "Loglevel not notice2");
+                 Message   => "Loglevel for Foo.Bar.Foo not notice");
       end;
 
       declare

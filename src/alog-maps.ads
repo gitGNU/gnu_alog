@@ -66,7 +66,8 @@ package Alog.Maps is
    --              Foo.Bar |  Alert
    --
    --  A lookup for "Foo.Foo" has no exact match. The next closest match is
-   --  "Foo.*" which will return the Debug element.
+   --  "Foo.*" which will return the Debug element. Looking for "Foo" will
+   --  return Debug since it matches the wildcard "Foo.*".
    --
    --  If no exact and wildcard match is found No_Element is returned.
 
