@@ -24,6 +24,7 @@
 with Ada.Exceptions;
 with Ada.Task_Identification;
 
+with Alog.Maps;
 with Alog.Facilities;
 with Alog.Transforms;
 
@@ -121,6 +122,10 @@ package Alog.Tasked_Logger is
          Level  : Log_Level);
       --  Set given loglevel for specified source. If source is already present
       --  the loglevel is updated.
+
+      entry Set_Source_Loglevel
+        (Sources : Maps.Wildcard_Level_Map);
+      --  Apply source loglevels stored in map.
 
       entry Get_Source_Loglevel
         (Source :     String;

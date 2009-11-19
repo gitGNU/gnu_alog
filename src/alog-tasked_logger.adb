@@ -266,6 +266,16 @@ package body Alog.Tasked_Logger is
 
                -------------------------------------------------------------
 
+               accept Set_Source_Loglevel
+                 (Sources : Maps.Wildcard_Level_Map)
+               do
+                  Logsink.Set_Source_Loglevel (Sources => Sources);
+               end Set_Source_Loglevel;
+
+            or
+
+               -------------------------------------------------------------
+
                accept Get_Source_Loglevel
                  (Source :     String;
                   Level  : out Log_Level)

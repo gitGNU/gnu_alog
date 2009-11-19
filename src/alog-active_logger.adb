@@ -222,6 +222,16 @@ package body Alog.Active_Logger is
 
    -------------------------------------------------------------------------
 
+   procedure Set_Source_Loglevel
+     (Logger  : in out Instance;
+      Sources :        Maps.Wildcard_Level_Map)
+   is
+   begin
+      Logger.Backend.Set_Source_Loglevel (Sources => Sources);
+   end Set_Source_Loglevel;
+
+   -------------------------------------------------------------------------
+
    procedure Shutdown
      (Logger : in out Instance;
       Flush  :        Boolean := True) is
