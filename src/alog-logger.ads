@@ -153,6 +153,11 @@ package Alog.Logger is
    --  Example:
    --     Foo.Bar.* -> Debug
 
+   procedure Set_Source_Loglevel
+     (Logger  : in out Instance;
+      Sources :        Maps.Wildcard_Level_Map);
+   --  Apply source loglevels stored in map.
+
    function Get_Source_Loglevel
      (Logger : Instance;
       Source : String)

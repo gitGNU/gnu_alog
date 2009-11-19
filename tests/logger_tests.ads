@@ -86,4 +86,7 @@ package Logger_Tests is
    procedure Loglevel_Handling;
    --  Test loglevel handling.
 
+   procedure Set_Sources_Map;
+   --  Test setting of source loglevels with map.
+
 end Logger_Tests;

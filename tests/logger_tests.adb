@@ -30,6 +30,7 @@ with Alog.Logger;
 with Alog.Facilities.File_Descriptor;
 with Alog.Facilities.Syslog;
 with Alog.Transforms.Casing;
+with Alog.Maps;
 
 package body Logger_Tests is
 
@@ -338,6 +339,9 @@ package body Logger_Tests is
       Ahven.Framework.Add_Test_Routine
         (T, Loglevel_Handling'Access,
          "loglevel handling");
+      Ahven.Framework.Add_Test_Routine
+        (T, Set_Sources_Map'Access,
+         "set sources with map");
    end Initialize;
 
    -------------------------------------------------------------------------
@@ -526,6 +530,25 @@ package body Logger_Tests is
                Filename2 => Testfile),
               Message   => "Files not equal");
    end Loglevel_Handling;
+
+   -------------------------------------------------------------------------
+
+   procedure Set_Sources_Map is
+      Log : Logger.Instance (Init => False);
+      Map : Maps.Wildcard_Level_Map;
+   begin
+      Map.Insert (Key  => "Foo",
+                  Item => Notice);
+      Map.Insert (Key  => "Bar",
+                  Item => Warning);
+
+      Log.Set_Source_Loglevel (Sources => Map);
+
+      Assert (Condition => Log.Get_Source_Loglevel (Source => "Foo") = Notice,
+              Message   => "Foo source loglevel mismatch");
+      Assert (Condition => Log.Get_Source_Loglevel (Source => "Bar") = Warning,
+              Message   => "Bar source loglevel mismatch");
+   end Set_Sources_Map;
 
    -------------------------------------------------------------------------
 

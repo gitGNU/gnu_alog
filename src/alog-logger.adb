@@ -297,6 +297,16 @@ package body Alog.Logger is
 
    -------------------------------------------------------------------------
 
+   procedure Set_Source_Loglevel
+     (Logger  : in out Instance;
+      Sources :        Maps.Wildcard_Level_Map)
+   is
+   begin
+      Logger.Sources := Sources;
+   end Set_Source_Loglevel;
+
+   -------------------------------------------------------------------------
+
    function Transform_Count (Logger : Instance) return Natural is
    begin
       return Natural (Logger.Transforms.Length);
