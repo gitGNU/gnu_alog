@@ -96,9 +96,9 @@ package body Alog.Helpers is
    -------------------------------------------------------------------------
 
    procedure Read_Loglevels
-     (Filename         :        String;
-      Default_Loglevel : in out Log_Level;
-      Sources          :    out Maps.Wildcard_Level_Map)
+     (Filename      :        String;
+      Default_Level : in out Log_Level;
+      Sources       :    out Maps.Wildcard_Level_Map)
    is
       Conf_File  : Ada.Text_IO.File_Type;
       Line_Count : Natural := 0;
@@ -160,7 +160,7 @@ package body Alog.Helpers is
                      end;
 
                      if Key = "Default" then
-                        Default_Loglevel := Loglevel;
+                        Default_Level := Loglevel;
                      else
                         Sources.Insert (Key  => Key,
                                         Item => Loglevel);

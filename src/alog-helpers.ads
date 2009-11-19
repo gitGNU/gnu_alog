@@ -45,9 +45,9 @@ package Alog.Helpers is
    --     "Foo"         -> ""
 
    procedure Read_Loglevels
-     (Filename         :        String;
-      Default_Loglevel : in out Log_Level;
-      Sources          :    out Maps.Wildcard_Level_Map);
+     (Filename      :        String;
+      Default_Level : in out Log_Level;
+      Sources       :    out Maps.Wildcard_Level_Map);
    --  Read default loglevels and (optional) source loglevels from file given by
    --  filename. The format is as follows:
    --
@@ -61,7 +61,7 @@ package Alog.Helpers is
    --  Foo.Bar = Info
    --
    --  If no default loglevel setting is found in the file, the loglevel passed
-   --  as Default_Loglevel parameter is returned unchanged.
+   --  as Default_Level parameter is returned unchanged.
 
    Invalid_Config : exception;
    --  Exception is raised if a loglevel config file is invalid.

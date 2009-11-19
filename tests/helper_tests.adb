@@ -108,9 +108,9 @@ package body Helper_Tests is
       Default_Level : Log_Level       := Debug;
       Source_Map    : Maps.Wildcard_Level_Map;
    begin
-      Read_Loglevels (Filename         => Config_File,
-                      Default_Loglevel => Default_Level,
-                      Sources          => Source_Map);
+      Read_Loglevels (Filename      => Config_File,
+                      Default_Level => Default_Level,
+                      Sources       => Source_Map);
 
       Assert (Condition => Default_Level = Info,
               Message   => "default loglevel mismatch");
@@ -130,9 +130,9 @@ package body Helper_Tests is
       Default_Level : Log_Level       := Debug;
       Source_Map    : Maps.Wildcard_Level_Map;
    begin
-      Read_Loglevels (Filename         => Config_File,
-                      Default_Loglevel => Default_Level,
-                      Sources          => Source_Map);
+      Read_Loglevels (Filename      => Config_File,
+                      Default_Level => Default_Level,
+                      Sources       => Source_Map);
       Fail (Message => "expected Invalid_Config");
 
    exception
@@ -147,9 +147,9 @@ package body Helper_Tests is
       Default_Level : Log_Level       := Debug;
       Source_Map    : Maps.Wildcard_Level_Map;
    begin
-      Read_Loglevels (Filename         => Config_File,
-                      Default_Loglevel => Default_Level,
-                      Sources          => Source_Map);
+      Read_Loglevels (Filename      => Config_File,
+                      Default_Level => Default_Level,
+                      Sources       => Source_Map);
       Assert (Condition => Default_Level = Debug,
               Message   => "default loglevel changed");
 
