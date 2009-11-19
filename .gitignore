@@ -2,5 +2,6 @@ cov
 doc
 lib
 obj
+perf
 src/alog-version.ads
 alog.specs
