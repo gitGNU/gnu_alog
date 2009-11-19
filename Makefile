@@ -54,13 +54,13 @@ tests: build_tests
 	@$(OBJECTDIR)/runner_$(TARGET)
 
 build_lib: prepare
-	@gnatmake -Palog_$(TARGET) -j$(NUM_CPUS) -XALOG_VERSION="$(VERSION)" -XLIBRARY_KIND="$(LIBRARY_KIND)"
+	@gnatmake -p -Palog_$(TARGET) -j$(NUM_CPUS) -XALOG_VERSION="$(VERSION)" -XLIBRARY_KIND="$(LIBRARY_KIND)"
 
 build_tests: prepare
-	@gnatmake -Palog_$(TARGET)_tests -j$(NUM_CPUS) -XALOG_BUILD="tests"
+	@gnatmake -p -Palog_$(TARGET)_tests -j$(NUM_CPUS) -XALOG_BUILD="tests"
 
 prepare: $(SOURCEDIR)/alog-version.ads
-	@mkdir -p $(OBJECTDIR)/lib $(LIBDIR) $(COVDIR) $(PERFDIR)
+	@mkdir -p $(COVDIR) $(PERFDIR)
 
 $(SOURCEDIR)/alog-version.ads:
 	@echo "package Alog.Version is"                 > $@
