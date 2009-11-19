@@ -13,6 +13,8 @@ alog-logger.adb
 alog-logger.ads
 alog-log_request.adb
 alog-log_request.ads
+alog-maps.adb
+alog-maps.ads
 alog-protected_containers.adb
 alog-protected_containers.ads
 alog-tasked_logger.adb
