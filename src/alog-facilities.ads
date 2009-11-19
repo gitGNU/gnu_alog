@@ -180,15 +180,14 @@ private
       --  Default timestamp format to use in this facility.
 
       Write_Timestamp  : Boolean := True;
-      --  If True, a timestamp is written with the log message. Default is True.
+      --  If True, a timestamp is written with the log message.
 
       UTC_Timestamp    : Boolean := False;
-      --  If True, the timestamp is written in UTC time. The default is False
+      --  If True, the timestamp is written in UTC time.
       --  (log message timestamps are written timezone-dependent).
 
       Write_Loglevel   : Boolean := False;
       --  If True, the loglevel associated with the log message is written.
-      --  Default is False.
 
       Transforms       : MOTP.Map;
       --  Map of transforms.

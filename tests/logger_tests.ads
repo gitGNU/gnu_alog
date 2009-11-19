@@ -89,4 +89,7 @@ package Logger_Tests is
    procedure Set_Sources_Map;
    --  Test setting of source loglevels with map.
 
+   procedure Write_Source;
+   --  Test logging of log message sources.
+
 end Logger_Tests;

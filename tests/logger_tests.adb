@@ -266,7 +266,8 @@ package body Logger_Tests is
          BS_Path.To_Bounded_String ("./data/Log_Multiple_FD_Facilities2"),
          BS_Path.To_Bounded_String ("./data/Log_FD_Facility_Lowercase"),
          BS_Path.To_Bounded_String ("./data/Log_Source_Loglevel"),
-         BS_Path.To_Bounded_String ("./data/Logger_Loglevel")
+         BS_Path.To_Bounded_String ("./data/Logger_Loglevel"),
+         BS_Path.To_Bounded_String ("./data/Write_Source")
         );
    begin
       for C in Files'Range loop
@@ -342,6 +343,9 @@ package body Logger_Tests is
       Ahven.Framework.Add_Test_Routine
         (T, Set_Sources_Map'Access,
          "set sources with map");
+      Ahven.Framework.Add_Test_Routine
+        (T, Write_Source'Access,
+         "log message source");
    end Initialize;
 
    -------------------------------------------------------------------------
@@ -562,7 +566,6 @@ package body Logger_Tests is
       Facility.Toggle_Write_Timestamp (State => False);
       Facility.Toggle_Write_Loglevel (State => True);
 
-      --  Call facility fd specific procedures.
       Facilities.File_Descriptor.Handle
         (Facility).Set_Logfile (Testfile);
 
@@ -698,5 +701,47 @@ package body Logger_Tests is
       Assert (Condition => Logger2.Facility_Count = 1,
               Message   => "logger2 empty");
    end Verify_Logger_Initialization;
+
+   -------------------------------------------------------------------------
+
+   procedure Write_Source is
+      Log      : Logger.Instance (Init => False);
+      Facility : constant Facilities.Handle :=
+        new Facilities.File_Descriptor.Instance;
+      Testfile : constant String := "./data/Write_Source";
+      Reffile  : constant String := "./data/Write_Source.ref";
+   begin
+      Facility.Toggle_Write_Timestamp (State => False);
+      Facility.Toggle_Write_Loglevel (State => True);
+
+      Facilities.File_Descriptor.Handle
+        (Facility).Set_Logfile (Testfile);
+
+      Log.Attach_Facility (Facility => Facility);
+
+      Assert (Condition => Log.Is_Write_Source,
+              Message   => "write source disabled");
+
+      Log.Log_Message (Level  => Warning,
+                       Msg    => "No source given");
+      Log.Log_Message (Source => "Test",
+                       Level  => Info,
+                       Msg    => "Source 'Test'");
+
+      Log.Toggle_Write_Source (State => False);
+      Assert (Condition => not Log.Is_Write_Source,
+              Message   => "write source still enabled");
+
+      Log.Log_Message (Source => "Test",
+                       Level  => Info,
+                       Msg    => "Source 'Test', source writing disabled");
+
+      Log.Clear;
+
+      Assert (Condition => Helpers.Assert_Files_Equal
+              (Filename1 => Reffile,
+               Filename2 => Testfile),
+              Message   => "Files not equal");
+   end Write_Source;
 
 end Logger_Tests;

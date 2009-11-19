@@ -166,6 +166,14 @@ package Alog.Logger is
    --  no entry for given source is found (exact match only, no wildcard
    --  lookup).
 
+   procedure Toggle_Write_Source
+     (Logger : in out Instance;
+      State  :        Boolean);
+   --  Enable/disable whether the source of the message is logged.
+
+   function Is_Write_Source (Logger : Instance) return Boolean;
+   --  Returns True if writing of log message sources is enabled.
+
    procedure Free is new Ada.Unchecked_Deallocation
      (Object => Facilities.Class,
       Name   => Facilities.Handle);
@@ -217,17 +225,20 @@ private
 
    type Instance (Init : Boolean) is new
      Ada.Finalization.Limited_Controlled with record
-      Facilities : MOFP.Map;
+      Facilities   : MOFP.Map;
       --  Attached facilities.
 
-      Transforms : MOTP.Map;
+      Transforms   : MOTP.Map;
       --  Attached transforms.
 
-      Sources    : Maps.Wildcard_Level_Map;
+      Sources      : Maps.Wildcard_Level_Map;
       --  Wildcard aware map of source loglevels.
 
-      Loglevel   : Log_Level := Debug;
+      Loglevel     : Log_Level := Debug;
       --  Loglevel of logger.
+
+      Write_Source : Boolean := True;
+      --  If True, the source of a log message is prepended to the message.
    end record;
 
 end Alog.Logger;

@@ -203,6 +203,13 @@ package body Alog.Logger is
 
    -------------------------------------------------------------------------
 
+   function Is_Write_Source (Logger : Instance) return Boolean is
+   begin
+      return Logger.Write_Source;
+   end Is_Write_Source;
+
+   -------------------------------------------------------------------------
+
    procedure Iterate
      (Logger  : Instance;
       Process : not null access
@@ -234,6 +241,7 @@ package body Alog.Logger is
       use type Alog.Maps.Cursor;
 
       Out_Msg : String := Msg;
+      Prefix  : Unbounded_String;
 
       procedure Do_Log (Facility_Handle : Facilities.Handle);
       --  Log message for each facility.
@@ -241,8 +249,9 @@ package body Alog.Logger is
       procedure Do_Log (Facility_Handle : Facilities.Handle)
       is
       begin
-         Facility_Handle.Log_Message (Level => Level,
-                                      Msg   => Out_Msg);
+         Facility_Handle.Log_Message
+           (Level => Level,
+            Msg   => To_String (Prefix) & Out_Msg);
       end Do_Log;
 
       procedure Do_Transform (Transform_Handle : Transforms.Handle);
@@ -267,6 +276,10 @@ package body Alog.Logger is
          if Level < Logger.Loglevel then
             return;
          end if;
+      end if;
+
+      if Source'Length > 0 and then Logger.Write_Source then
+         Prefix := To_Unbounded_String (Source) & ": ";
       end if;
 
       Logger.Iterate (Process => Do_Transform'Access);
@@ -304,6 +317,16 @@ package body Alog.Logger is
    begin
       Logger.Sources := Sources;
    end Set_Source_Loglevel;
+
+   -------------------------------------------------------------------------
+
+   procedure Toggle_Write_Source
+     (Logger : in out Instance;
+      State  :        Boolean)
+   is
+   begin
+      Logger.Write_Source := State;
+   end Toggle_Write_Source;
 
    -------------------------------------------------------------------------
 
