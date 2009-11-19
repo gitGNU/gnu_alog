@@ -161,7 +161,7 @@ package body Alog.Helpers is
                              & Value & "'";
                      end;
 
-                     if Key = "Default" then
+                     if Key = "Default" or Key = "default" then
                         Default_Level := Loglevel;
                      else
                         Sources.Insert (Key  => Key,

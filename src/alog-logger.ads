@@ -144,7 +144,7 @@ package Alog.Logger is
       Source :        String;
       Level  :        Log_Level);
    --  Set given loglevel for specified source. If source is already present the
-   --  loglevel is updated.
+   --  loglevel is updated. Source strings are case-sensitive.
    --
    --  Use wildcards to specify a wider scope for a range of log-sources. Source
    --  hierarchies are separated by dots, the wildcard is '*'. The following
