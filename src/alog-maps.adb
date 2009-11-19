@@ -21,7 +21,7 @@
 --  MA  02110-1301  USA
 --
 
-with Alog.Helpers;
+with Ada.Strings.Fixed;
 
 package body Alog.Maps is
 
@@ -95,19 +95,21 @@ package body Alog.Maps is
 
       Find_Closest_Match :
       declare
-         Lookup_Key : Unbounded_String := To_Unbounded_String (Key);
+         Substr_Index : Integer := Key'Last;
       begin
-         while Lookup_Key /= "" loop
+         while Substr_Index > 0 loop
             Position := Map.Find
-              (Key => To_String
-                 (Lookup_Key) & "." & Wildcard);
+              (Key => Key (Key'First .. Substr_Index) & "." & Wildcard);
 
             if Position /= No_Element then
                return Position;
             end if;
 
-            Lookup_Key := To_Unbounded_String
-              (Helpers.Dot_Strip (Input => To_String (Lookup_Key)));
+            Substr_Index := Ada.Strings.Fixed.Index
+              (Source  => Key,
+               Pattern => ".",
+               From    => Substr_Index,
+               Going   => Ada.Strings.Backward) - 1;
          end loop;
       end Find_Closest_Match;
 

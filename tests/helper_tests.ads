@@ -34,9 +34,6 @@ package Helper_Tests is
    procedure Compare_Files;
    --  Verify Assert_Files_Equal helper function.
 
-   procedure Dot_Stripping;
-   --  Verify dot strip function.
-
    procedure Read_Config;
    --  Verify configuration file loading.
 

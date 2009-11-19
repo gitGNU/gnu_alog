@@ -35,15 +35,6 @@ package Alog.Helpers is
    --  Compare two files byte-wise. Returns True if both files are equal.
    --  The two files are closed but not removed after comparison.
 
-   function Dot_Strip (Input : String) return String;
-   --  This function searches for the right-most '.' (dot) in the input string
-   --  and strips the part after the dot. If the input contains no dots an empty
-   --  string is returned.
-   --
-   --  Examples:
-   --     "Foo.Bar.Foo" -> "Foo.Bar"
-   --     "Foo"         -> ""
-
    procedure Read_Loglevels
      (Filename      :        String;
       Default_Level : in out Log_Level;

@@ -74,27 +74,6 @@ package body Alog.Helpers is
 
    -------------------------------------------------------------------------
 
-   function Dot_Strip (Input : String) return String is
-      Dot_Pos : constant Natural := Ada.Strings.Fixed.Index
-        (Source  => Input,
-         Pattern => ".",
-         Going   => Ada.Strings.Backward);
-   begin
-      if Dot_Pos = 0 then
-         return "";
-      end if;
-
-      declare
-         End_Pos : constant Positive := Dot_Pos - 1;
-         Result  : String (Input'First .. End_Pos);
-      begin
-         Result := Input (Input'First .. End_Pos);
-         return Result;
-      end;
-   end Dot_Strip;
-
-   -------------------------------------------------------------------------
-
    procedure Read_Loglevels
      (Filename      :        String;
       Default_Level : in out Log_Level;
