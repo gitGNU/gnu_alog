@@ -28,21 +28,21 @@ with Ada.Strings.Unbounded;
 --  hold all relevant information of a log request.
 package Alog.Log_Request is
 
+   use Ada.Task_Identification;
+
    type Instance is tagged private;
    --  A log request contains all related information to log asynchronously
    --  (Caller identification, loglevel and message).
 
    function Create
-     (ID      : Ada.Task_Identification.Task_Id;
+     (ID      : Task_Id   := Current_Task;
       Source  : String    := "";
       Level   : Log_Level := Debug;
       Message : String)
       return Instance;
    --  Create a log request object from the specified parameters.
 
-   function Get_Caller_ID
-     (Request : Instance)
-      return Ada.Task_Identification.Task_Id;
+   function Get_Caller_ID (Request : Instance) return Task_Id;
    --  Return the caller ID of the request object.
 
    function Get_Source (Request : Instance) return String;
@@ -57,10 +57,9 @@ package Alog.Log_Request is
 private
 
    type Instance is tagged record
-      Caller_ID : Ada.Task_Identification.Task_Id :=
-        Ada.Task_Identification.Null_Task_Id;
+      Caller_ID : Task_Id   := Null_Task_Id;
       Source    : Ada.Strings.Unbounded.Unbounded_String;
-      Level     : Log_Level                       := Info;
+      Level     : Log_Level := Info;
       Message   : Ada.Strings.Unbounded.Unbounded_String;
    end record;
 

@@ -28,7 +28,7 @@ package body Alog.Log_Request is
    -------------------------------------------------------------------------
 
    function Create
-     (ID      : Ada.Task_Identification.Task_Id;
+     (ID      : Task_Id   := Current_Task;
       Source  : String    := "";
       Level   : Log_Level := Debug;
       Message : String)
@@ -43,10 +43,7 @@ package body Alog.Log_Request is
 
    -------------------------------------------------------------------------
 
-   function Get_Caller_ID
-     (Request : Instance)
-      return Ada.Task_Identification.Task_Id
-   is
+   function Get_Caller_ID (Request : Instance) return Task_Id is
    begin
       return Request.Caller_ID;
    end Get_Caller_ID;
