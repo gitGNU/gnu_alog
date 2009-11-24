@@ -42,17 +42,20 @@ package body Alog.Policy_DB is
       if Source'Length > 0 then
          Position := Src_Levels.Lookup (Key => Source);
 
-         if Position /= Maps.No_Element
-           and then Level < Maps.Element (Position => Position) then
-            return False;
+         if Position /= Maps.No_Element then
+            if Level >= Maps.Element (Position => Position) then
+               return True;
+            else
+               return False;
+            end if;
          end if;
       end if;
 
-      if Level < Current_Default_Loglevel then
-         return False;
+      if Level >= Current_Default_Loglevel then
+         return True;
       end if;
 
-      return True;
+      return False;
    end Accept_Src;
 
    -------------------------------------------------------------------------

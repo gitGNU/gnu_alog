@@ -169,6 +169,13 @@ package body Policy_Tests is
               (Source => "Bar",
                Level  => Info),
               Message   => "Src bar not accepted");
+
+      DB.Set_Src_Loglevel (Source => "Foobar.*",
+                           Level  => Debug);
+      Assert (Condition => DB.Accept_Src
+              (Source => "Foobar",
+               Level  => Debug),
+              Message   => "Src foobar not accepted");
    end Verify_Accept_Src;
 
 end Policy_Tests;

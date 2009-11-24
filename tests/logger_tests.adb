@@ -333,7 +333,7 @@ package body Logger_Tests is
          "default facility handling");
       Ahven.Framework.Add_Test_Routine
         (T, Source_Based_Logging'Access,
-         "per-source loglevel handling");
+         "source based logging");
       Ahven.Framework.Add_Test_Routine
         (T, Loglevel_Handling'Access,
          "loglevel handling");
@@ -517,6 +517,7 @@ package body Logger_Tests is
 
       Log.Attach_Facility (Facility => Facility);
 
+      Policy_DB.Set_Default_Loglevel (Level => Debug);
       Policy_DB.Set_Src_Loglevel (Source => "Test",
                                   Level  => Info);
 
