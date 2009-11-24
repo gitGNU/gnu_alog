@@ -111,6 +111,9 @@ package Alog.Active_Logger is
    --  This procedure is *safe* to call from protected actions (e.g. from an
    --  entry call statement or rendezvous).
 
+   function Get_Queue_Length (Logger : Instance) return Natural;
+   --  Returns the number of currently queued log messages.
+
    procedure Shutdown
      (Logger : in out Instance;
       Flush  :        Boolean := True);

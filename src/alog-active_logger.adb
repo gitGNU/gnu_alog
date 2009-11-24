@@ -137,6 +137,13 @@ package body Alog.Active_Logger is
 
    -------------------------------------------------------------------------
 
+   function Get_Queue_Length (Logger : Instance) return Natural is
+   begin
+      return Logger.Message_Queue.Length;
+   end Get_Queue_Length;
+
+   -------------------------------------------------------------------------
+
    function Is_Terminated (Logger : Instance) return Boolean is
    begin
       return Logger.Backend'Terminated
