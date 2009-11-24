@@ -77,17 +77,11 @@ package Logger_Tests is
    procedure Default_Facility_Handling;
    --  Test attaching/detaching of default facility.
 
-   procedure Log_Source_Handling;
-   --  Test setting/getting of log source loglevels.
-
    procedure Source_Based_Logging;
    --  Test per-source loglevel handling.
 
    procedure Loglevel_Handling;
    --  Test loglevel handling.
-
-   procedure Set_Sources_Map;
-   --  Test setting of source loglevels with map.
 
    procedure Write_Source;
    --  Test logging of log message sources.

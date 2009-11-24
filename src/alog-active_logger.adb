@@ -136,31 +136,6 @@ package body Alog.Active_Logger is
 
    -------------------------------------------------------------------------
 
-   function Get_Loglevel (Logger : Instance) return Log_Level is
-      Backend_Loglevel : Log_Level;
-   begin
-      Logger.Backend.Get_Loglevel (Level => Backend_Loglevel);
-      return Backend_Loglevel;
-   end Get_Loglevel;
-
-   -------------------------------------------------------------------------
-
-   function Get_Source_Loglevel
-     (Logger : Instance;
-      Source : String)
-      return Log_Level
-   is
-      Backend_Source_Level : Log_Level;
-   begin
-      Logger.Backend.Get_Source_Loglevel
-        (Source => Source,
-         Level  => Backend_Source_Level);
-
-      return Backend_Source_Level;
-   end Get_Source_Loglevel;
-
-   -------------------------------------------------------------------------
-
    function Is_Terminated (Logger : Instance) return Boolean is
    begin
       return Logger.Backend'Terminated
@@ -196,39 +171,6 @@ package body Alog.Active_Logger is
    begin
       Logger.Message_Queue.Put (Element => New_Request);
    end Log_Message;
-
-   -------------------------------------------------------------------------
-
-   procedure Set_Loglevel
-     (Logger : in out Instance;
-      Level  :        Log_Level)
-   is
-   begin
-      Logger.Backend.Set_Loglevel (Level => Level);
-   end Set_Loglevel;
-
-   -------------------------------------------------------------------------
-
-   procedure Set_Source_Loglevel
-     (Logger : in out Instance;
-      Source :        String;
-      Level  :        Log_Level)
-   is
-   begin
-      Logger.Backend.Set_Source_Loglevel
-        (Source => Source,
-         Level  => Level);
-   end Set_Source_Loglevel;
-
-   -------------------------------------------------------------------------
-
-   procedure Set_Source_Loglevel
-     (Logger  : in out Instance;
-      Sources :        Maps.Wildcard_Level_Map)
-   is
-   begin
-      Logger.Backend.Set_Source_Loglevel (Sources => Sources);
-   end Set_Source_Loglevel;
 
    -------------------------------------------------------------------------
 

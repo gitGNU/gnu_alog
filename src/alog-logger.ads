@@ -28,7 +28,6 @@ with Ada.Strings.Unbounded;
 with Alog.Facilities;
 with Alog.Transforms;
 with Alog.Controlled_Map;
-with Alog.Maps;
 
 --  Logger instance. Facilities can be attached to a logger instance in order to
 --  log to different targets simultaneously. A logger provides different helper
@@ -121,50 +120,8 @@ package Alog.Logger is
    --  is called. Depending on the Log-Threshold set, the message is logged to
    --  different targets (depending on the facilites) automatically.
    --
-   --  If source is specified the logger checks if there is an existing loglevel
-   --  entry for this source in the sources map. If an associated loglevel is
-   --  found the message is processed only if the specified loglevel 'Level' is
-   --  greater or equal than the one in the map.
-   --  If no entry is found the message is only processed if the specified
-   --  loglevel 'Level' is greater or equal than the logger's loglevel.
-   --
-   --  Lookups for source loglevels take wildcards into account, see the
-   --  Set_Source_Loglevel procedure comment for further details.
-
-   procedure Set_Loglevel
-     (Logger : in out Instance;
-      Level  :        Log_Level);
-   --  Set given loglevel for logger.
-
-   function Get_Loglevel (Logger : Instance) return Log_Level;
-   --  Return current logger loglevel.
-
-   procedure Set_Source_Loglevel
-     (Logger : in out Instance;
-      Source :        String;
-      Level  :        Log_Level);
-   --  Set given loglevel for specified source. If source is already present the
-   --  loglevel is updated. Source strings are case-sensitive.
-   --
-   --  Use wildcards to specify a wider scope for a range of log-sources. Source
-   --  hierarchies are separated by dots, the wildcard is '*'. The following
-   --  example sets a Debug loglevel for all log-sources below Foo.Bar.
-   --
-   --  Example:
-   --     Foo.Bar.* -> Debug
-
-   procedure Set_Source_Loglevel
-     (Logger  : in out Instance;
-      Sources :        Maps.Wildcard_Level_Map);
-   --  Apply source loglevels stored in map.
-
-   function Get_Source_Loglevel
-     (Logger : Instance;
-      Source : String)
-      return Log_Level;
-   --  Return loglevel for given source. Raises No_Source_Loglevel exception if
-   --  no entry for given source is found (exact match only, no wildcard
-   --  lookup).
+   --  Prior to actually processing the given log message the policy database is
+   --  inquired if the log message with given source and level should be logged.
 
    procedure Toggle_Write_Source
      (Logger : in out Instance;
@@ -191,9 +148,7 @@ package Alog.Logger is
    Transform_Not_Found       : exception;
    --  Will be raised if a requested transform is not found.
    Transform_Already_Present : exception;
-   --  Will be raised if a facility is already present.
-   No_Source_Loglevel        : exception;
-   --  Will be raised if loglevel is not found for a requested source.
+   --  Will be raised if a facility is already present. .
 
    Default_Facility_Name : constant String := "__Default_Facility";
 
@@ -230,12 +185,6 @@ private
 
       Transforms   : MOTP.Map;
       --  Attached transforms.
-
-      Sources      : Maps.Wildcard_Level_Map;
-      --  Wildcard aware map of source loglevels.
-
-      Loglevel     : Log_Level := Debug;
-      --  Loglevel of logger.
 
       Write_Source : Boolean := True;
       --  If True, the source of a log message is prepended to the message.

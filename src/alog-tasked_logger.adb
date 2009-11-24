@@ -238,55 +238,6 @@ package body Alog.Tasked_Logger is
 
                -------------------------------------------------------------
 
-               accept Set_Loglevel (Level : Log_Level) do
-                  Logsink.Set_Loglevel (Level => Level);
-               end Set_Loglevel;
-
-            or
-
-               -------------------------------------------------------------
-
-               accept Get_Loglevel (Level : out Log_Level) do
-                  Level := Logsink.Get_Loglevel;
-               end Get_Loglevel;
-
-            or
-
-               -------------------------------------------------------------
-
-               accept Set_Source_Loglevel
-                 (Source : String;
-                  Level  : Log_Level)
-               do
-                  Logsink.Set_Source_Loglevel (Source => Source,
-                                               Level  => Level);
-               end Set_Source_Loglevel;
-
-            or
-
-               -------------------------------------------------------------
-
-               accept Set_Source_Loglevel
-                 (Sources : Maps.Wildcard_Level_Map)
-               do
-                  Logsink.Set_Source_Loglevel (Sources => Sources);
-               end Set_Source_Loglevel;
-
-            or
-
-               -------------------------------------------------------------
-
-               accept Get_Source_Loglevel
-                 (Source :     String;
-                  Level  : out Log_Level)
-               do
-                  Level := Logsink.Get_Source_Loglevel (Source => Source);
-               end Get_Source_Loglevel;
-
-            or
-
-               -------------------------------------------------------------
-
                accept Shutdown;
                exit Main_Loop;
 

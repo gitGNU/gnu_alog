@@ -278,9 +278,6 @@ package body Tasked_Logger_Tests is
       Ahven.Framework.Add_Test_Routine
         (T, Iterate_Facilities_Exceptions'Access,
          "tasked iterate facilities (exceptions)");
-      Ahven.Framework.Add_Test_Routine
-        (T, Loglevel_Handling'Access,
-         "loglevel handling");
    end Initialize;
 
    -------------------------------------------------------------------------
@@ -432,44 +429,6 @@ package body Tasked_Logger_Tests is
         (Condition => Is_Null_Occurrence (X => EO),
          Message   => "Exception not reset");
    end Logger_Exception_Handling;
-
-   -------------------------------------------------------------------------
-
-   procedure Loglevel_Handling is
-      Log : Tasked_Logger.Instance;
-   begin
-      Log.Set_Loglevel (Level => Emergency);
-      declare
-         My_Level : Log_Level;
-      begin
-         Log.Get_Loglevel (Level => My_Level);
-         Assert (Condition => My_Level = Emergency,
-                 Message   => "Loglevel mismatch");
-      end;
-
-      Log.Set_Source_Loglevel (Source => "Foo",
-                               Level  => Info);
-      declare
-         Source_Level : Log_Level;
-      begin
-         Log.Get_Source_Loglevel (Source => "Foo",
-                                  Level  => Source_Level);
-         Assert (Condition => Source_Level = Info,
-                 Message   => "Source loglevel mismatch");
-      end;
-
-      declare
-         Source_Level : Log_Level;
-      begin
-         Log.Get_Source_Loglevel (Source => "Bar",
-                                  Level  => Source_Level);
-         Fail (Message => "Expected No_Source_Loglevel");
-
-      exception
-         when Logger.No_Source_Loglevel =>
-            null;
-      end;
-   end Loglevel_Handling;
 
    -------------------------------------------------------------------------
 

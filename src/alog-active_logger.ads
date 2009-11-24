@@ -24,7 +24,6 @@
 with Ada.Exceptions;
 with Ada.Finalization;
 
-with Alog.Maps;
 with Alog.Facilities;
 with Alog.Transforms;
 with Alog.Tasked_Logger;
@@ -128,33 +127,6 @@ package Alog.Active_Logger is
       Occurrence :    out Ada.Exceptions.Exception_Occurrence);
    --  Return last known Exception_Occurrence for caller. If no exception
    --  occured Null_Occurrence is returned.
-
-   procedure Set_Loglevel
-     (Logger : in out Instance;
-      Level  :        Log_Level);
-   --  Set given loglevel for active logger.
-
-   function Get_Loglevel (Logger : Instance) return Log_Level;
-   --  Return current active logger loglevel.
-
-   procedure Set_Source_Loglevel
-     (Logger : in out Instance;
-      Source :        String;
-      Level  :        Log_Level);
-   --  Set given loglevel for specified source. If source is already present the
-   --  loglevel is updated.
-
-   procedure Set_Source_Loglevel
-     (Logger  : in out Instance;
-      Sources :        Maps.Wildcard_Level_Map);
-   --  Apply source loglevels stored in map.
-
-   function Get_Source_Loglevel
-     (Logger : Instance;
-      Source : String)
-      return Log_Level;
-   --  Return loglevel for given source. Raises No_Source_Loglevel exception if
-   --  no entry for given source is found.
 
    type Shutdown_Helper (Logger : not null access Instance) is private;
    --  This helper will call Shutdown on the logger given as discriminant when

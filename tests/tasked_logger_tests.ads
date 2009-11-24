@@ -69,7 +69,4 @@ package Tasked_Logger_Tests is
    procedure Iterate_Facilities_Exceptions;
    --  Test tasked logger facility iteration with exceptions.
 
-   procedure Loglevel_Handling;
-   --  Test tasked logger loglevel handling.
-
 end Tasked_Logger_Tests;

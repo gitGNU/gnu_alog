@@ -24,7 +24,6 @@
 with Ada.Exceptions;
 with Ada.Task_Identification;
 
-with Alog.Maps;
 with Alog.Facilities;
 with Alog.Transforms;
 
@@ -90,12 +89,9 @@ package Alog.Tasked_Logger is
       --  Since Log_Message'Caller can not be used as default parameter the
       --  entry checks if the variable is set to 'Null_Task_Id' in the body.
       --
-      --  If source is specified the logger checks if there is an existing
-      --  loglevel entry for this source in the sources map. If an associated
-      --  loglevel is found the message is processed only if the specified
-      --  loglevel 'Level' is greater or equal than the one in the map.
-      --  If no entry is found the message is only processed if the specified
-      --  loglevel 'Level' is greater or equal than the logger's loglevel.
+      --  Prior to actually processing the given log message the policy database
+      --  is inquired if the log message with given source and level should be
+      --  logged.
 
       entry Clear;
       --  Clear tasked logger instance. Detach and teardown all attached
@@ -110,28 +106,6 @@ package Alog.Tasked_Logger is
       --  If caller is not specified the executing task's ID is used instead.
       --  Since Get_Last_Exception'Caller can not be used as default parameter
       --  the entry checks if the variable is set to 'Null_Task_Id' in the body.
-
-      entry Set_Loglevel (Level : Log_Level);
-      --  Set given loglevel for logger.
-
-      entry Get_Loglevel (Level : out Log_Level);
-      --  Return current logger loglevel.
-
-      entry Set_Source_Loglevel
-        (Source : String;
-         Level  : Log_Level);
-      --  Set given loglevel for specified source. If source is already present
-      --  the loglevel is updated.
-
-      entry Set_Source_Loglevel
-        (Sources : Maps.Wildcard_Level_Map);
-      --  Apply source loglevels stored in map.
-
-      entry Get_Source_Loglevel
-        (Source :     String;
-         Level  : out Log_Level);
-      --  Return loglevel for given source. Raises No_Source_Loglevel exception
-      --  if no entry for given source is found.
 
       entry Shutdown;
       --  Explicitly shutdown tasked logger.

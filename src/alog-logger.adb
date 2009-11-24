@@ -21,6 +21,7 @@
 --  MA  02110-1301  USA
 --
 
+with Alog.Policy_DB;
 with Alog.Facilities.File_Descriptor;
 
 package body Alog.Logger is
@@ -171,29 +172,6 @@ package body Alog.Logger is
 
    -------------------------------------------------------------------------
 
-   function Get_Loglevel (Logger : Instance) return Log_Level is
-   begin
-      return Logger.Loglevel;
-   end Get_Loglevel;
-
-   -------------------------------------------------------------------------
-
-   function Get_Source_Loglevel
-     (Logger : Instance;
-      Source : String)
-      return Log_Level
-   is
-   begin
-      return Logger.Sources.Element (Key => Source);
-
-   exception
-      when Constraint_Error =>
-         raise No_Source_Loglevel with
-           "No loglevel for source '" & Source & "'";
-   end Get_Source_Loglevel;
-
-   -------------------------------------------------------------------------
-
    procedure Initialize (Logger : in out Instance) is
    begin
       if Logger.Init then
@@ -238,8 +216,6 @@ package body Alog.Logger is
       Level  : Log_Level;
       Msg    : String)
    is
-      use type Alog.Maps.Cursor;
-
       Out_Msg : String := Msg;
       Prefix  : Unbounded_String;
 
@@ -263,19 +239,12 @@ package body Alog.Logger is
            (Level => Level,
             Msg   => Out_Msg);
       end Do_Transform;
-
-      Position : Maps.Cursor;
    begin
-      Position := Logger.Sources.Lookup (Key => Source);
-
-      if Position /= Maps.No_Element then
-         if Level < Maps.Element (Position => Position) then
-            return;
-         end if;
-      else
-         if Level < Logger.Loglevel then
-            return;
-         end if;
+      if not Policy_DB.Accept_Src
+        (Source => Source,
+         Level  => Level)
+      then
+         return;
       end if;
 
       if Source'Length > 0 and then Logger.Write_Source then
@@ -285,38 +254,6 @@ package body Alog.Logger is
       Logger.Iterate (Process => Do_Transform'Access);
       Logger.Iterate (Process => Do_Log'Access);
    end Log_Message;
-
-   -------------------------------------------------------------------------
-
-   procedure Set_Loglevel
-     (Logger : in out Instance;
-      Level  :        Log_Level)
-   is
-   begin
-      Logger.Loglevel := Level;
-   end Set_Loglevel;
-
-   -------------------------------------------------------------------------
-
-   procedure Set_Source_Loglevel
-     (Logger : in out Instance;
-      Source :        String;
-      Level  :        Log_Level)
-   is
-   begin
-      Logger.Sources.Insert (Key  => Source,
-                             Item => Level);
-   end Set_Source_Loglevel;
-
-   -------------------------------------------------------------------------
-
-   procedure Set_Source_Loglevel
-     (Logger  : in out Instance;
-      Sources :        Maps.Wildcard_Level_Map)
-   is
-   begin
-      Logger.Sources := Sources;
-   end Set_Source_Loglevel;
 
    -------------------------------------------------------------------------
 

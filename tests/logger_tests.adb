@@ -30,7 +30,7 @@ with Alog.Logger;
 with Alog.Facilities.File_Descriptor;
 with Alog.Facilities.Syslog;
 with Alog.Transforms.Casing;
-with Alog.Maps;
+with Alog.Policy_DB;
 
 package body Logger_Tests is
 
@@ -332,20 +332,14 @@ package body Logger_Tests is
         (T, Default_Facility_Handling'Access,
          "default facility handling");
       Ahven.Framework.Add_Test_Routine
-        (T, Log_Source_Handling'Access,
-         "source logging setup");
-      Ahven.Framework.Add_Test_Routine
         (T, Source_Based_Logging'Access,
          "per-source loglevel handling");
       Ahven.Framework.Add_Test_Routine
         (T, Loglevel_Handling'Access,
          "loglevel handling");
       Ahven.Framework.Add_Test_Routine
-        (T, Set_Sources_Map'Access,
-         "set sources with map");
-      Ahven.Framework.Add_Test_Routine
         (T, Write_Source'Access,
-         "log message source");
+         "write message source");
    end Initialize;
 
    -------------------------------------------------------------------------
@@ -469,36 +463,6 @@ package body Logger_Tests is
 
    -------------------------------------------------------------------------
 
-   procedure Log_Source_Handling is
-      Log : Logger.Instance (Init => False);
-   begin
-      Log.Set_Source_Loglevel (Source => "Foo",
-                               Level  => Info);
-      Assert (Condition => Log.Get_Source_Loglevel
-              (Source => "Foo") = Info,
-              Message   => "Source loglevel mismatch");
-
-      Log.Set_Source_Loglevel (Source => "Foo",
-                               Level  => Error);
-      Assert (Condition => Log.Get_Source_Loglevel
-              (Source => "Foo") = Error,
-              Message   => "Unable to update source loglevel");
-
-      declare
-         Level : Log_Level;
-         pragma Unreferenced (Level);
-      begin
-         Level := Log.Get_Source_Loglevel (Source => "Bar");
-         Fail (Message => "Expected No_Source_Loglevel");
-
-      exception
-         when Logger.No_Source_Loglevel =>
-            null;
-      end;
-   end Log_Source_Handling;
-
-   -------------------------------------------------------------------------
-
    procedure Loglevel_Handling is
       Log      : Logger.Instance (Init => False);
       Facility : constant Facilities.Handle :=
@@ -515,12 +479,12 @@ package body Logger_Tests is
 
       Log.Attach_Facility (Facility => Facility);
 
-      Assert (Condition => Log.Get_Loglevel = Debug,
-              Message   => "Default loglevel mismatch");
+      Assert (Condition => Policy_DB.Get_Default_Loglevel = Debug,
+              Message   => "Unexpected default loglevel");
 
       Log.Log_Message (Level  => Debug,
                        Msg    => "Debug message (logged)");
-      Log.Set_Loglevel (Level => Notice);
+      Policy_DB.Set_Default_Loglevel (Level => Notice);
 
       Log.Log_Message (Level  => Debug,
                        Msg    => "Debug message (discard)");
@@ -528,31 +492,13 @@ package body Logger_Tests is
                        Msg    => "Notice message (logged)");
 
       Log.Clear;
+      Policy_DB.Reset;
 
       Assert (Condition => Helpers.Assert_Files_Equal
               (Filename1 => Reffile,
                Filename2 => Testfile),
               Message   => "Files not equal");
    end Loglevel_Handling;
-
-   -------------------------------------------------------------------------
-
-   procedure Set_Sources_Map is
-      Log : Logger.Instance (Init => False);
-      Map : Maps.Wildcard_Level_Map;
-   begin
-      Map.Insert (Key  => "Foo",
-                  Item => Notice);
-      Map.Insert (Key  => "Bar",
-                  Item => Warning);
-
-      Log.Set_Source_Loglevel (Sources => Map);
-
-      Assert (Condition => Log.Get_Source_Loglevel (Source => "Foo") = Notice,
-              Message   => "Foo source loglevel mismatch");
-      Assert (Condition => Log.Get_Source_Loglevel (Source => "Bar") = Warning,
-              Message   => "Bar source loglevel mismatch");
-   end Set_Sources_Map;
 
    -------------------------------------------------------------------------
 
@@ -571,8 +517,8 @@ package body Logger_Tests is
 
       Log.Attach_Facility (Facility => Facility);
 
-      Log.Set_Source_Loglevel (Source => "Test",
-                               Level  => Info);
+      Policy_DB.Set_Src_Loglevel (Source => "Test",
+                                  Level  => Info);
 
       Log.Log_Message (Source => "Test",
                        Level  => Debug,
@@ -587,6 +533,7 @@ package body Logger_Tests is
                        Msg    => "Unknown source (logged)");
 
       Log.Clear;
+      Policy_DB.Reset;
 
       Assert (Condition => Helpers.Assert_Files_Equal
               (Filename1 => Reffile,

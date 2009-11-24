@@ -81,9 +81,6 @@ package Active_Logger_Tests is
    procedure Verify_Iterate_Facilities;
    --  Test iterate for facilities of active logger.
 
-   procedure Loglevel_Handling;
-   --  Test active logger loglevel handling.
-
    procedure Task_Termination;
    --  Test active logger task termination.
 

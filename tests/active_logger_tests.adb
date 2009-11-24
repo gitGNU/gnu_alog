@@ -351,9 +351,6 @@ package body Active_Logger_Tests is
         (T, Verify_Iterate_Facilities'Access,
          "verify iterate facilities");
       Ahven.Framework.Add_Test_Routine
-        (T, Loglevel_Handling'Access,
-         "loglevel handling");
-      Ahven.Framework.Add_Test_Routine
         (T, Task_Termination'Access,
          "task termination");
    end Initialize;
@@ -455,38 +452,6 @@ package body Active_Logger_Tests is
                Filename2 => Testfile2),
               Message   => "file2 not equal");
    end Log_Multiple_FD_Facilities;
-
-   -------------------------------------------------------------------------
-
-   procedure Loglevel_Handling is
-      Log : aliased Active_Logger.Instance (Init => False);
-   begin
-      declare
-         Shutdown : Active_Logger.Shutdown_Helper (Logger => Log'Access);
-         pragma Unreferenced (Shutdown);
-      begin
-         Log.Set_Loglevel (Level => Error);
-         Assert (Condition => Log.Get_Loglevel = Error,
-                 Message   => "Loglevel mismatch");
-
-         Log.Set_Source_Loglevel (Source => "Foo",
-                                  Level  => Info);
-         Assert (Condition => Log.Get_Source_Loglevel (Source => "Foo") = Info,
-                 Message   => "Source loglevel mismatch");
-
-         declare
-            Source_Level : Log_Level;
-            pragma Unreferenced (Source_Level);
-         begin
-            Source_Level := Log.Get_Source_Loglevel (Source => "Bar");
-            Fail (Message => "Expected No_Source_Loglevel");
-
-         exception
-            when Logger.No_Source_Loglevel =>
-               null;
-         end;
-      end;
-   end Loglevel_Handling;
 
    -------------------------------------------------------------------------
 
