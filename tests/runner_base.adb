@@ -33,6 +33,7 @@ with Logger_Tests;
 with Tasked_Logger_Tests;
 with Active_Logger_Tests;
 with Maps_Tests;
+with Policy_Tests;
 
 procedure Runner_Base is
    S : constant Ahven.Framework.Test_Suite_Access :=
@@ -60,6 +61,8 @@ begin
                              T     => new Tasked_Logger_Tests.Testcase);
    Ahven.Framework.Add_Test (Suite => S.all,
                              T     => new Active_Logger_Tests.Testcase);
+   Ahven.Framework.Add_Test (Suite => S.all,
+                             T     => new Policy_Tests.Testcase);
 
    Ahven.Text_Runner.Run (Suite => S);
    Ahven.Framework.Release_Suite (T => S);
