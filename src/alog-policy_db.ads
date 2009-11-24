@@ -23,7 +23,8 @@
 
 with Alog.Maps;
 
---  Logging policy database package.
+--  Logging policy database package. This DB stores logging policies. Policies
+--  in the database are used inside the framework for logging decisions.
 package Alog.Policy_DB is
 
    Alog_Default_Level : constant Log_Level := Debug;
@@ -58,6 +59,14 @@ package Alog.Policy_DB is
 
    procedure Reset;
    --  Reset the logging policy database to the initial state.
+
+   function Accept_Src
+     (Source : String := "";
+      Level  : Log_Level)
+      return Boolean;
+   --  Returns True if the given loglevel is accepted for a source string. If
+   --  no source is given, the loglevel is verified against the default
+   --  loglevel.
 
    No_Source_Loglevel : exception;
    --  Will be raised if loglevel is not found for a requested source.

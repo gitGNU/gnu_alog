@@ -31,6 +31,32 @@ package body Alog.Policy_DB is
 
    -------------------------------------------------------------------------
 
+   function Accept_Src
+     (Source : String := "";
+      Level  : Log_Level)
+      return Boolean
+   is
+      use type Alog.Maps.Cursor;
+      Position : Maps.Cursor;
+   begin
+      if Source'Length > 0 then
+         Position := Src_Levels.Lookup (Key => Source);
+
+         if Position /= Maps.No_Element
+           and then Level < Maps.Element (Position => Position) then
+            return False;
+         end if;
+      end if;
+
+      if Level < Current_Default_Loglevel then
+         return False;
+      end if;
+
+      return True;
+   end Accept_Src;
+
+   -------------------------------------------------------------------------
+
    function Get_Default_Loglevel return Log_Level is
    begin
       return Current_Default_Loglevel;

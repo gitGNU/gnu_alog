@@ -46,4 +46,7 @@ package Policy_Tests is
    procedure Set_Sources_Map;
    --  Test setting of source loglevels with wildcard map.
 
+   procedure Verify_Accept_Src;
+   --  Verify accept source behavior.
+
 end Policy_Tests;

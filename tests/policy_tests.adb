@@ -67,6 +67,8 @@ package body Policy_Tests is
                           Name    => "source loglevel handling");
       T.Add_Test_Routine (Routine => Set_Sources_Map'Access,
                           Name    => "set source map");
+      T.Add_Test_Routine (Routine => Verify_Accept_Src'Access,
+                          Name    => "accept source");
    end Initialize;
 
    -------------------------------------------------------------------------
@@ -139,5 +141,34 @@ package body Policy_Tests is
             null;
       end;
    end Src_Loglevel_Handling;
+
+   -------------------------------------------------------------------------
+
+   procedure Verify_Accept_Src is
+   begin
+      DB.Reset;
+
+      DB.Set_Default_Loglevel (Level => Info);
+
+      Assert (Condition => not DB.Accept_Src (Level => Debug),
+              Message   => "Debug accepted");
+      Assert (Condition => DB.Accept_Src (Level => Warning),
+              Message   => "Warning not accepted");
+
+      DB.Set_Src_Loglevel (Source => "Foo.*",
+                           Level  => Error);
+      Assert (Condition => not DB.Accept_Src
+              (Source => "Foo",
+               Level  => Debug),
+              Message   => "Src debug accepted");
+      Assert (Condition => DB.Accept_Src
+              (Source => "Foo",
+               Level  => Critical),
+              Message   => "Src critical not accepted");
+      Assert (Condition => DB.Accept_Src
+              (Source => "Bar",
+               Level  => Info),
+              Message   => "Src bar not accepted");
+   end Verify_Accept_Src;
 
 end Policy_Tests;
