@@ -23,6 +23,7 @@
 
 with Ada.Task_Identification;
 
+with Alog.Policy_DB;
 with Alog.Log_Request;
 
 package body Alog.Active_Logger is
@@ -162,14 +163,24 @@ package body Alog.Active_Logger is
       Level  :        Log_Level;
       Msg    :        String)
    is
-      New_Request : constant Log_Request.Instance :=
-        Log_Request.Create
-          (ID      => Ada.Task_Identification.Current_Task,
-           Source  => Source,
-           Level   => Level,
-           Message => Msg);
    begin
-      Logger.Message_Queue.Put (Element => New_Request);
+      if not Policy_DB.Accept_Src
+        (Source => Source,
+         Level  => Level)
+      then
+         return;
+      end if;
+
+      declare
+         New_Request : constant Log_Request.Instance :=
+           Log_Request.Create
+             (ID      => Ada.Task_Identification.Current_Task,
+              Source  => Source,
+              Level   => Level,
+              Message => Msg);
+      begin
+         Logger.Message_Queue.Put (Element => New_Request);
+      end;
    end Log_Message;
 
    -------------------------------------------------------------------------

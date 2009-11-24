@@ -105,6 +105,9 @@ package Alog.Active_Logger is
    --  Log the given message asynchronously. The message is put into a log
    --  request queue which is continuously consumed by a logging task.
    --
+   --  Prior to actually processing the given log message the policy database is
+   --  inquired if the log message with given source and level should be logged.
+   --
    --  This procedure is *safe* to call from protected actions (e.g. from an
    --  entry call statement or rendezvous).
 
