@@ -31,6 +31,23 @@ package body Maps_Tests is
 
    -------------------------------------------------------------------------
 
+   procedure Clear_Map is
+      Map : Maps.Wildcard_Level_Map;
+   begin
+      Map.Insert (Key  => "Foo",
+                  Item => Debug);
+      Map.Insert (Key  => "Bar",
+                  Item => Warning);
+      Assert (Condition => Map.Length = 2,
+              Message   => "Count not 2");
+
+      Map.Clear;
+      Assert (Condition => Map.Length = 0,
+              Message   => "Count not 0");
+   end Clear_Map;
+
+   -------------------------------------------------------------------------
+
    procedure Initialize (T : in out Testcase) is
    begin
       T.Set_Name (Name => "Tests for Alog maps");
@@ -55,6 +72,8 @@ package body Maps_Tests is
       Map.Insert (Key  => "Foo",
                   Item => Debug);
 
+      Assert (Condition => Map.Length = 1,
+              Message   => "Count not 1");
       Assert (Condition => Map.Element (Key => "Foo") = Debug,
               Message   => "Loglevel mismatch for key Foo");
 

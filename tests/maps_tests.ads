@@ -40,4 +40,7 @@ package Maps_Tests is
    procedure Wildcard_Lookup;
    --  Verify wildcard lookup.
 
+   procedure Clear_Map;
+   --  Clear a wildcard map.
+
 end Maps_Tests;

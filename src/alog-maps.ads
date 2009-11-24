@@ -78,6 +78,12 @@ package Alog.Maps is
    --  Insert given key/item pair into map. If given key is already present the
    --  associated item is replaced.
 
+   procedure Clear (Map : in out Wildcard_Level_Map);
+   --  Clears the wildcard map.
+
+   function Length (Map : Wildcard_Level_Map) return Natural;
+   --  Return the number of elements in the map.
+
 private
 
    use Ada.Strings.Unbounded;

@@ -27,6 +27,13 @@ package body Alog.Maps is
 
    -------------------------------------------------------------------------
 
+   procedure Clear (Map : in out Wildcard_Level_Map) is
+   begin
+      Map.Data.Clear;
+   end Clear;
+
+   -------------------------------------------------------------------------
+
    function Element
      (Map : Wildcard_Level_Map;
       Key : String)
@@ -74,6 +81,13 @@ package body Alog.Maps is
                                    New_Item => Item);
       end if;
    end Insert;
+
+   -------------------------------------------------------------------------
+
+   function Length (Map : Wildcard_Level_Map) return Natural is
+   begin
+      return Natural (Map.Data.Length);
+   end Length;
 
    -------------------------------------------------------------------------
 
