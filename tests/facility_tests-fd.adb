@@ -22,6 +22,7 @@
 --
 
 with Ada.Text_IO;
+with Ada.Directories;
 with Ada.IO_Exceptions;
 
 with Ahven; use Ahven;
@@ -37,7 +38,7 @@ package body Facility_Tests.FD is
    -------------------------------------------------------------------------
 
    procedure Disable_Write_Loglevel_Fd is
-      F : File_Descriptor.Instance;
+      F        : File_Descriptor.Instance;
       Testfile : constant String := "./data/Disable_Write_Loglevel_Fd";
       Reffile  : constant String := "./data/Disable_Write_Loglevel_Fd.ref";
    begin
@@ -53,13 +54,14 @@ package body Facility_Tests.FD is
                Filename2 => Testfile),
               Message   => "unable to disable");
 
+      Ada.Directories.Delete_File (Name => Testfile);
       F.Teardown;
    end Disable_Write_Loglevel_Fd;
 
    -------------------------------------------------------------------------
 
    procedure Disable_Write_Timestamp_Fd is
-      F : File_Descriptor.Instance;
+      F        : File_Descriptor.Instance;
       Testfile : constant String := "./data/Disable_Write_Timestamp_Fd";
       Reffile  : constant String := "./data/Disable_Write_Timestamp_Fd.ref";
    begin
@@ -74,36 +76,9 @@ package body Facility_Tests.FD is
                Filename2 => Testfile),
               Message   => "unable to disable");
 
-      --  Cleanup.
+      Ada.Directories.Delete_File (Name => Testfile);
       F.Teardown;
    end Disable_Write_Timestamp_Fd;
-
-   -------------------------------------------------------------------------
-
-   procedure Finalize (T : in out Testcase) is
-
-      use Ada.Text_IO;
-      use Ahven.Framework;
-
-      Files : constant array (Positive range <>) of BS_Path.Bounded_String :=
-        (BS_Path.To_Bounded_String ("./data/Teardown_Fd"),
-         BS_Path.To_Bounded_String ("./data/Write_Message_Fd"),
-         BS_Path.To_Bounded_String ("./data/Disable_Write_Timestamp_Fd"),
-         BS_Path.To_Bounded_String ("./data/Disable_Write_Loglevel_Fd"),
-         BS_Path.To_Bounded_String ("./data/Trim_Loglevels_Fd"),
-         BS_Path.To_Bounded_String ("./data/Set_Threshold_Fd")
-        );
-      F     : File_Type;
-   begin
-      for C in Files'Range loop
-         Open (File => F,
-               Mode => In_File,
-               Name => BS_Path.To_String (Files (C)));
-         Delete (File => F);
-      end loop;
-
-      Finalize (Test_Case (T));
-   end Finalize;
 
    -------------------------------------------------------------------------
 
@@ -146,7 +121,7 @@ package body Facility_Tests.FD is
    -------------------------------------------------------------------------
 
    procedure Set_Threshold_Fd is
-      F : File_Descriptor.Instance;
+      F        : File_Descriptor.Instance;
       Testfile : constant String := "./data/Set_Threshold_Fd";
       Reffile  : constant String := "./data/Set_Threshold_Fd.ref";
    begin
@@ -166,6 +141,7 @@ package body Facility_Tests.FD is
               (Filename1 => Reffile, Filename2 => Testfile),
               Message   => "threshold does not work");
 
+      Ada.Directories.Delete_File (Name => Testfile);
       F.Teardown;
    end Set_Threshold_Fd;
 
@@ -185,20 +161,23 @@ package body Facility_Tests.FD is
 
    procedure Teardown_Fd is
       use Ada.Text_IO;
-      F : File_Descriptor.Instance;
+      F        : File_Descriptor.Instance;
+      Testfile : constant String := "./data/Teardown_Fd";
    begin
-      F.Set_Logfile (Path => "./data/Teardown_Fd");
+      F.Set_Logfile (Path => Testfile);
       Assert (Condition => Is_Open (File => F.Get_Logfile.all),
               Message   => "could not set logfile!");
       F.Teardown;
       Assert (Condition => not Is_Open (File => F.Get_Logfile.all),
               Message   => "logfile still open!");
+
+      Ada.Directories.Delete_File (Name => Testfile);
    end Teardown_Fd;
 
    -------------------------------------------------------------------------
 
    procedure Trim_Loglevels_Fd is
-      F : File_Descriptor.Instance;
+      F        : File_Descriptor.Instance;
       Testfile : constant String := "./data/Trim_Loglevels_Fd";
       Reffile  : constant String := "./data/Trim_Loglevels_Fd.ref";
    begin
@@ -214,6 +193,8 @@ package body Facility_Tests.FD is
       Assert (Condition => Helpers.Assert_Files_Equal
               (Filename1 => Reffile, Filename2 => Testfile),
               Message   => "alignment incorrect");
+
+      Ada.Directories.Delete_File (Name => Testfile);
       F.Teardown;
    end Trim_Loglevels_Fd;
 
@@ -239,6 +220,7 @@ package body Facility_Tests.FD is
                Filename2 => Testfile),
               Message   => "files not equal");
 
+      Ada.Directories.Delete_File (Name => Testfile);
       F.Teardown;
    end Write_Message_Fd;
 

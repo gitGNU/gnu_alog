@@ -29,7 +29,7 @@ package Helper_Tests is
    type Testcase is new Ahven.Framework.Test_Case with null record;
 
    procedure Initialize (T : in out Testcase);
-   --  Initialize Test suite.
+   --  Initialize testcase.
 
    procedure Compare_Files;
    --  Verify Assert_Files_Equal helper function.

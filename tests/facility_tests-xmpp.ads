@@ -29,7 +29,7 @@ package Facility_Tests.XMPP is
    type Testcase is new Ahven.Framework.Test_Case with null record;
 
    procedure Initialize (T : in out Testcase);
-   --  Initialize Test suite.
+   --  Initialize testcase.
 
    procedure Send_No_Sender;
    --  Test sending message with no sender specified.

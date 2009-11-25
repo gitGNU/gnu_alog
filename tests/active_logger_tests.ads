@@ -1,5 +1,5 @@
 --
---  Copyright (c) 2008,
+--  Copyright (c) 2008-2009,
 --  Reto Buerki, Adrian-Ken Rueegsegger
 --  secunet SwissIT AG
 --
@@ -29,10 +29,7 @@ package Active_Logger_Tests is
    type Testcase is new Ahven.Framework.Test_Case with null record;
 
    procedure Initialize (T : in out Testcase);
-   --  Initialize Test suite.
-
-   procedure Finalize (T : in out Testcase);
-   --  Teardown Test suite.
+   --  Initialize testcase.
 
    procedure Attach_Facility;
    --  Test Facility attaching.

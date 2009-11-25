@@ -28,10 +28,7 @@ package Facility_Tests.FD is
    type Testcase is new Ahven.Framework.Test_Case with null record;
 
    procedure Initialize (T : in out Testcase);
-   --  Initialize Test suite.
-
-   procedure Finalize (T : in out Testcase);
-   --  Teardown Test suite.
+   --  Initialize testcase.
 
    procedure Set_Valid_Logfile_Fd;
    --  Set correct Fd test.

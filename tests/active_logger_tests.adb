@@ -1,5 +1,5 @@
 --
---  Copyright (c) 2008,
+--  Copyright (c) 2008-2009,
 --  Reto Buerki, Adrian-Ken Rueegsegger
 --  secunet SwissIT AG
 --
@@ -21,7 +21,7 @@
 --  MA  02110-1301  USA
 --
 
-with Ada.Text_IO;
+with Ada.Directories;
 with Ada.Exceptions.Is_Null_Occurrence;
 
 with Ahven;
@@ -277,31 +277,6 @@ package body Active_Logger_Tests is
 
    -------------------------------------------------------------------------
 
-   procedure Finalize (T : in out Testcase) is
-
-      use Ahven.Framework;
-      use Alog.Facilities;
-
-      Files : constant array (Positive range <>) of BS_Path.Bounded_String :=
-        (BS_Path.To_Bounded_String ("./data/Active_Tasked_FD_Facility"),
-         BS_Path.To_Bounded_String ("./data/Active_Multi_FD_Facilities1"),
-         BS_Path.To_Bounded_String ("./data/Active_Multi_FD_Facilities2"),
-         BS_Path.To_Bounded_String ("./data/Active_FD_Facility_Lowercase")
-        );
-      F     : Ada.Text_IO.File_Type;
-   begin
-      for C in Files'Range loop
-         Ada.Text_IO.Open (File => F,
-                           Mode => Ada.Text_IO.In_File,
-                           Name => BS_Path.To_String (Files (C)));
-         Ada.Text_IO.Delete (File => F);
-      end loop;
-
-      Finalize (Test_Case (T));
-   end Finalize;
-
-   -------------------------------------------------------------------------
-
    procedure Initialize (T : in out Testcase) is
    begin
       Set_Name (T, "Tests for Alog active Logger");
@@ -392,6 +367,8 @@ package body Active_Logger_Tests is
               (Filename1 => Reffile,
                Filename2 => Testfile),
               Message   => "files not equal");
+
+      Ada.Directories.Delete_File (Name => Testfile);
    end Log_FD_Facility_with_Transform;
 
    -------------------------------------------------------------------------
@@ -451,6 +428,9 @@ package body Active_Logger_Tests is
               (Filename1 => Reffile2,
                Filename2 => Testfile2),
               Message   => "file2 not equal");
+
+      Ada.Directories.Delete_File (Name => Testfile1);
+      Ada.Directories.Delete_File (Name => Testfile2);
    end Log_Multiple_FD_Facilities;
 
    -------------------------------------------------------------------------
@@ -543,6 +523,8 @@ package body Active_Logger_Tests is
               (Filename1 => Reffile,
                Filename2 => Testfile),
               Message   => "files not equal");
+
+      Ada.Directories.Delete_File (Name => Testfile);
    end Tasked_One_FD_Facility;
 
    -------------------------------------------------------------------------

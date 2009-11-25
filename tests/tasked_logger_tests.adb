@@ -1,5 +1,5 @@
 --
---  Copyright (c) 2008,
+--  Copyright (c) 2008-2009,
 --  Reto Buerki, Adrian-Ken Rueegsegger
 --  secunet SwissIT AG
 --
@@ -208,22 +208,6 @@ package body Tasked_Logger_Tests is
 
    -------------------------------------------------------------------------
 
-   procedure Finalize (T : in out Testcase) is
-
-      use Ahven.Framework;
-      use Alog.Facilities;
-
-      Filename : constant String := "./data/Tasked_Log_One_FD_Facility";
-   begin
-      if Ada.Directories.Exists (Name => Filename) then
-         Ada.Directories.Delete_File (Name => Filename);
-      end if;
-
-      Finalize (Test_Case (T));
-   end Finalize;
-
-   -------------------------------------------------------------------------
-
    procedure Inc_Counter (F_Handle : Facilities.Handle)
    is
       pragma Unreferenced (F_Handle);
@@ -374,6 +358,8 @@ package body Tasked_Logger_Tests is
               (Filename1 => Reffile,
                Filename2 => Testfile),
               Message   => "files not equal");
+
+      Ada.Directories.Delete_File (Name => Testfile);
    end Log_One_FD_Facility;
 
    -------------------------------------------------------------------------

@@ -28,7 +28,7 @@ package Transform_Tests.Casing is
    type Testcase is new Ahven.Framework.Test_Case with null record;
 
    procedure Initialize (T : in out Testcase);
-   --  Initialize Test suite.
+   --  Initialize testcase.
 
    procedure Transform_Message_Lowercase;
    --  Test lowercase message transformation.
