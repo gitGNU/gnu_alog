@@ -1,5 +1,5 @@
 --
---  Copyright (c) 2008,
+--  Copyright (c) 2008-2009,
 --  Reto Buerki, Adrian-Ken Rueegsegger
 --  secunet SwissIT AG
 --
@@ -30,13 +30,6 @@ package Alog.Facilities.Pgsql is
    --  PGSQL logging facility.
 
    type Handle is access all Instance;
-
-   overriding
-   procedure Write_Message
-     (Facility : Instance;
-      Level    : Log_Level := INFO;
-      Msg      : String);
-   --  Implementation of Write_Message.
 
    overriding
    procedure Setup (Facility : in out Instance);
@@ -124,6 +117,13 @@ package Alog.Facilities.Pgsql is
    --  Close open database connection.
 
 private
+
+   overriding
+   procedure Write_Message
+     (Facility : Instance;
+      Level    : Log_Level := Info;
+      Msg      : String);
+   --  Implementation of Write_Message.
 
    type Log_SQL_Table is tagged record
       Name             : Unbounded_String := To_Unbounded_String ("alog");

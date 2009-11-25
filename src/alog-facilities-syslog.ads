@@ -1,5 +1,5 @@
 --
---  Copyright (c) 2008,
+--  Copyright (c) 2008-2009,
 --  Reto Buerki, Adrian-Ken Rueegsegger
 --  secunet SwissIT AG
 --
@@ -50,14 +50,14 @@ package Alog.Facilities.Syslog is
       LOG_CRON   => 72);
    --  Facility map table.
 
+private
+
    overriding
    procedure Write_Message
      (Facility : Instance;
       Level    : Log_Level := Info;
       Msg      : String);
    --  Implementation of Write_Message.
-
-private
 
    type Instance is new Alog.Facilities.Instance with null record;
 

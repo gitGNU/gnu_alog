@@ -1,5 +1,5 @@
 --
---  Copyright (c) 2008,
+--  Copyright (c) 2008-2009,
 --  Reto Buerki, Adrian-Ken Rueegsegger
 --  secunet SwissIT AG
 --
@@ -29,13 +29,6 @@ package Alog.Facilities.XMPP is
    --  XMPP based logging facility.
 
    type Handle is access all Instance;
-
-   overriding
-   procedure Write_Message
-     (Facility : Instance;
-      Level    : Log_Level := INFO;
-      Msg      : String);
-   --  Implementation of Write_Message.
 
    procedure Set_Sender
      (Facility : in out Instance;
@@ -72,6 +65,13 @@ package Alog.Facilities.XMPP is
    --  Message could not be delivered.
 
 private
+
+   overriding
+   procedure Write_Message
+     (Facility : Instance;
+      Level    : Log_Level := INFO;
+      Msg      : String);
+   --  Implementation of Write_Message.
 
    type Sender_Account is tagged
       record

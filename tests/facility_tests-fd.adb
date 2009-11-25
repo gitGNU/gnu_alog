@@ -45,7 +45,7 @@ package body Facility_Tests.FD is
       F.Toggle_Write_Timestamp (State => False);
       F.Toggle_Write_Loglevel (State => False);
       F.Set_Logfile (Path => Testfile);
-      F.Write_Message (Msg => "This is a message without loglevel");
+      F.Log_Message (Msg => "This is a message without loglevel");
 
       F.Close_Logfile;
 
@@ -67,7 +67,7 @@ package body Facility_Tests.FD is
    begin
       F.Toggle_Write_Timestamp (State => False);
       F.Set_Logfile (Path => Testfile);
-      F.Write_Message (Msg => "This is a message without timestamp");
+      F.Log_Message (Msg => "This is a message without timestamp");
 
       F.Close_Logfile;
 
@@ -219,7 +219,7 @@ package body Facility_Tests.FD is
 
       --  Open logfile, write test message.
       F.Set_Logfile (Path => Testfile);
-      F.Write_Message (Msg => "This is a test log-message");
+      F.Log_Message (Msg => "This is a test log-message");
 
       F.Close_Logfile;
 

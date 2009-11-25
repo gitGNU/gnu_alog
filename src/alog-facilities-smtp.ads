@@ -1,5 +1,5 @@
 --
---  Copyright (c) 2008,
+--  Copyright (c) 2008-2009,
 --  Reto Buerki, Adrian-Ken Rueegsegger
 --  secunet SwissIT AG
 --
@@ -35,13 +35,6 @@ package Alog.Facilities.SMTP is
 
    type Handle is access all Instance;
 
-   overriding
-   procedure Write_Message
-     (Facility : Instance;
-      Level    : Log_Level := INFO;
-      Msg      : String);
-   --  Implementation of Write_Message.
-
    procedure Set_Recipient
      (Facility : in out Instance;
       Name     :        String;
@@ -75,6 +68,13 @@ package Alog.Facilities.SMTP is
    --  Mail could not be delivered.
 
 private
+
+   overriding
+   procedure Write_Message
+     (Facility : Instance;
+      Level    : Log_Level := INFO;
+      Msg      : String);
+   --  Implementation of Write_Message.
 
    function Format_Message
      (Facility : Instance;
