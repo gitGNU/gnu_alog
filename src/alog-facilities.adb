@@ -109,10 +109,11 @@ package body Alog.Facilities is
 
    procedure Log_Message
      (Facility : Class;
-      Level    : Log_Level := Info;
-      Msg      : String)
+      Request  : Log_Request.Instance)
    is
       Message : Unbounded_String;
+      Level   : constant Log_Level := Request.Get_Log_Level;
+      Msg     : constant String    := Request.Get_Message;
    begin
       if Level >= Facility.Get_Threshold then
          if Facility.Is_Write_Timestamp then

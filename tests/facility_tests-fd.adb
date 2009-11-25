@@ -28,11 +28,13 @@ with Ada.IO_Exceptions;
 with Ahven; use Ahven;
 
 with Alog.Helpers;
+with Alog.Log_Request;
 with Alog.Facilities.File_Descriptor;
 
 package body Facility_Tests.FD is
 
    use Alog;
+   use Alog.Log_Request;
    use Alog.Facilities;
 
    -------------------------------------------------------------------------
@@ -45,7 +47,9 @@ package body Facility_Tests.FD is
       F.Toggle_Write_Timestamp (State => False);
       F.Toggle_Write_Loglevel (State => False);
       F.Set_Logfile (Path => Testfile);
-      F.Log_Message (Msg => "This is a message without loglevel");
+      F.Log_Message
+        (Request => Create
+           (Message => "This is a message without loglevel"));
 
       F.Close_Logfile;
 
@@ -67,7 +71,9 @@ package body Facility_Tests.FD is
    begin
       F.Toggle_Write_Timestamp (State => False);
       F.Set_Logfile (Path => Testfile);
-      F.Log_Message (Msg => "This is a message without timestamp");
+      F.Log_Message
+        (Request => Create
+           (Message => "This is a message without timestamp"));
 
       F.Close_Logfile;
 
@@ -136,13 +142,19 @@ package body Facility_Tests.FD is
       F.Toggle_Write_Timestamp (State => False);
       F.Toggle_Write_Loglevel (State => True);
       F.Set_Logfile (Path => Testfile);
-      F.Log_Message (Level => Debug,
-                     Msg   => "this message should appear in log");
+      F.Log_Message
+        (Request => Create
+           (Level   => Debug,
+            Message => "this message should appear in log"));
       F.Set_Threshold (Level => Info);
-      F.Log_Message (Level => Debug,
-                     Msg   => "this message should not appear");
-      F.Log_Message (Level => Info,
-                     Msg   => "this message should appear again");
+      F.Log_Message
+        (Request => Create
+           (Level   => Debug,
+            Message => "this message should not appear"));
+      F.Log_Message
+        (Request => Create
+           (Level   => Info,
+            Message => "this message should appear again"));
 
       F.Close_Logfile;
       Assert (Condition => Helpers.Assert_Files_Equal
@@ -193,8 +205,10 @@ package body Facility_Tests.FD is
       F.Toggle_Write_Loglevel (State => True);
       F.Set_Logfile (Path => Testfile);
       for Lvl in Alog.Log_Level loop
-         F.Log_Message (Level => Lvl,
-                        Msg   => "Testmessage");
+         F.Log_Message
+           (Request => Create
+              (Level   => Lvl,
+               Message => "Testmessage"));
       end loop;
 
       F.Close_Logfile;
@@ -219,7 +233,9 @@ package body Facility_Tests.FD is
 
       --  Open logfile, write test message.
       F.Set_Logfile (Path => Testfile);
-      F.Log_Message (Msg => "This is a test log-message");
+      F.Log_Message
+        (Request => Create
+           (Message => "This is a test log-message"));
 
       F.Close_Logfile;
 

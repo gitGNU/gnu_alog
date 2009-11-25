@@ -26,6 +26,8 @@ with Ada.Strings.Unbounded;
 with Ada.Command_Line;
 with Ada.Calendar;
 
+with Alog.Log_Request;
+
 --  Alog facilities package. Provides common data and methods used by all
 --  facilities.
 package Alog.Facilities is
@@ -70,17 +72,15 @@ package Alog.Facilities is
 
    procedure Log_Message
      (Facility : Class;
-      Level    : Log_Level := Info;
-      Msg      : String);
-   --  Log a message 'Msg' with loglevel 'Level'. This procedure is intended for
-   --  facility users.
+      Request  : Log_Request.Instance);
+   --  Write a log request.
 
    procedure Write_Message
      (Facility : Instance;
       Level    : Log_Level := Info;
       Msg      : String) is abstract;
    --  Write message with specified log level. This procedure must be
-   --  implemented by all facilities and is called by Log_Message.
+   --  implemented by all facilities.
 
    procedure Toggle_Write_Timestamp
      (Facility : in out Class;

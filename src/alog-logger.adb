@@ -22,6 +22,7 @@
 --
 
 with Alog.Policy_DB;
+with Alog.Log_Request;
 with Alog.Facilities.File_Descriptor;
 
 package body Alog.Logger is
@@ -224,10 +225,13 @@ package body Alog.Logger is
 
       procedure Do_Log (Facility_Handle : Facilities.Handle)
       is
+         New_Request : constant Log_Request.Instance :=
+           Log_Request.Create
+             (Source  => Source,
+              Level   => Level,
+              Message => To_String (Prefix) & Out_Msg);
       begin
-         Facility_Handle.Log_Message
-           (Level => Level,
-            Msg   => To_String (Prefix) & Out_Msg);
+         Facility_Handle.Log_Message (Request => New_Request);
       end Do_Log;
 
       procedure Do_Transform (Transform_Handle : Transforms.Handle);
