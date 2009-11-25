@@ -59,16 +59,21 @@ package body Policy_Tests is
    procedure Initialize (T : in out Testcase) is
    begin
       T.Set_Name (Name => "Tests for the logging policy database");
-      T.Add_Test_Routine (Routine => Reset_Policy_DB'Access,
-                          Name    => "reset policy database");
-      T.Add_Test_Routine (Routine => Default_Loglevel_Handling'Access,
-                          Name    => "default loglevel handling");
-      T.Add_Test_Routine (Routine => Src_Loglevel_Handling'Access,
-                          Name    => "source loglevel handling");
-      T.Add_Test_Routine (Routine => Set_Sources_Map'Access,
-                          Name    => "set source map");
-      T.Add_Test_Routine (Routine => Verify_Accept_Src'Access,
-                          Name    => "accept source");
+      T.Add_Test_Routine
+        (Routine => Reset_Policy_DB'Access,
+         Name    => "reset policy database");
+      T.Add_Test_Routine
+        (Routine => Default_Loglevel_Handling'Access,
+         Name    => "default loglevel handling");
+      T.Add_Test_Routine
+        (Routine => Src_Loglevel_Handling'Access,
+         Name    => "source loglevel handling");
+      T.Add_Test_Routine
+        (Routine => Set_Sources_Map'Access,
+         Name    => "set source map");
+      T.Add_Test_Routine
+        (Routine => Verify_Accept_Src'Access,
+         Name    => "accept source");
    end Initialize;
 
    -------------------------------------------------------------------------

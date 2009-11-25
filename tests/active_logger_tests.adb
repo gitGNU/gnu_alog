@@ -279,55 +279,55 @@ package body Active_Logger_Tests is
 
    procedure Initialize (T : in out Testcase) is
    begin
-      Set_Name (T, "Tests for Alog active Logger");
-      Ahven.Framework.Add_Test_Routine
-        (T, Attach_Facility'Access,
-         "attach a facility");
-      Ahven.Framework.Add_Test_Routine
-        (T, Update_Facility'Access,
-         "update a facility");
-      Ahven.Framework.Add_Test_Routine
-        (T, Detach_Facility_Instance'Access,
-         "detach facility: instance");
-      Ahven.Framework.Add_Test_Routine
-        (T, Detach_Facility_Unattached'Access,
-         "detach not attached facility");
-      Ahven.Framework.Add_Test_Routine
-        (T, Attach_Transform'Access,
-         "attach a transform");
-      Ahven.Framework.Add_Test_Routine
-        (T, Detach_Transform_Instance'Access,
-         "detach transform");
-      Ahven.Framework.Add_Test_Routine
-        (T, Detach_Transform_Unattached'Access,
-         "detach not attached transform");
-      Ahven.Framework.Add_Test_Routine
-        (T, Clear_A_Logger'Access,
-         "clear logger");
-      Ahven.Framework.Add_Test_Routine
-        (T, Log_Multiple_FD_Facilities'Access,
-         "log to multiple fd facilities");
-      Ahven.Framework.Add_Test_Routine
-        (T, Log_FD_Facility_with_Transform'Access,
-         "log to fd facility with lowercase transform");
-      Ahven.Framework.Add_Test_Routine
-        (T, Verify_Logger_Initialization'Access,
-         "logger initialization behavior");
-      Ahven.Framework.Add_Test_Routine
-        (T, Verify_Logger_Exception_Handling'Access,
-         "active logger exception handling");
-      Ahven.Framework.Add_Test_Routine
-        (T, Default_Facility_Handling'Access,
-         "default facility handling");
-      Ahven.Framework.Add_Test_Routine
-        (T, Tasked_One_FD_Facility'Access,
-         "log with active logger");
-      Ahven.Framework.Add_Test_Routine
-        (T, Verify_Iterate_Facilities'Access,
-         "verify iterate facilities");
-      Ahven.Framework.Add_Test_Routine
-        (T, Task_Termination'Access,
-         "task termination");
+      T.Set_Name (Name => "Tests for Alog active Logger");
+      T.Add_Test_Routine
+        (Routine => Attach_Facility'Access,
+         Name    => "attach a facility");
+      T.Add_Test_Routine
+        (Routine => Update_Facility'Access,
+         Name    => "update a facility");
+      T.Add_Test_Routine
+        (Routine => Detach_Facility_Instance'Access,
+         Name    => "detach facility: instance");
+      T.Add_Test_Routine
+        (Routine => Detach_Facility_Unattached'Access,
+         Name    => "detach not attached facility");
+      T.Add_Test_Routine
+        (Routine => Attach_Transform'Access,
+         Name    => "attach a transform");
+      T.Add_Test_Routine
+        (Routine => Detach_Transform_Instance'Access,
+         Name    => "detach a transform");
+      T.Add_Test_Routine
+        (Routine => Detach_Transform_Unattached'Access,
+         Name    => "detach not attached transform");
+      T.Add_Test_Routine
+        (Routine => Clear_A_Logger'Access,
+         Name    => "clear logger");
+      T.Add_Test_Routine
+        (Routine => Log_Multiple_FD_Facilities'Access,
+         Name    => "log to multiple fd facilities");
+      T.Add_Test_Routine
+        (Routine => Log_FD_Facility_with_Transform'Access,
+         Name    => "log to fd facility (lowercase transform)");
+      T.Add_Test_Routine
+        (Routine => Verify_Logger_Initialization'Access,
+         Name    => "logger initialization behavior");
+      T.Add_Test_Routine
+        (Routine => Verify_Logger_Exception_Handling'Access,
+         Name    => "active logger exception handling");
+      T.Add_Test_Routine
+        (Routine => Default_Facility_Handling'Access,
+         Name    => "default facility handling");
+      T.Add_Test_Routine
+        (Routine => Tasked_One_FD_Facility'Access,
+         Name    => "log with active logger");
+      T.Add_Test_Routine
+        (Routine => Verify_Iterate_Facilities'Access,
+         Name    => "verify iterate facilities");
+      T.Add_Test_Routine
+        (Routine => Task_Termination'Access,
+         Name    => "task termination");
    end Initialize;
 
    -------------------------------------------------------------------------

@@ -1,5 +1,5 @@
 --
---  Copyright (c) 2008,
+--  Copyright (c) 2008-2009,
 --  Reto Buerki, Adrian-Ken Rueegsegger
 --  secunet SwissIT AG
 --
@@ -76,33 +76,46 @@ package body Facility_Tests.PGSQL is
 
    procedure Initialize (T : in out Testcase) is
    begin
-      Set_Name (T, "Tests for Alog Facility PGSQL");
-      Ahven.Framework.Add_Test_Routine
-        (T, Set_Host_Name'Access, "set hostname");
-      Ahven.Framework.Add_Test_Routine
-        (T, Set_Host_Address'Access, "set host address");
-      Ahven.Framework.Add_Test_Routine
-        (T, Set_Host_Port'Access, "set host port");
-      Ahven.Framework.Add_Test_Routine
-        (T, Set_DB_Name'Access, "set database name");
-      Ahven.Framework.Add_Test_Routine
-        (T, Set_Table_Name'Access, "set table name");
-      Ahven.Framework.Add_Test_Routine
-        (T, Set_Level_Column_Name'Access, "set level column name");
-      Ahven.Framework.Add_Test_Routine
-        (T, Set_Timestamp_Column_Name'Access, "set timestamp column name");
-      Ahven.Framework.Add_Test_Routine
-        (T, Set_Message_Column_Name'Access, "set message column name");
-      Ahven.Framework.Add_Test_Routine
-        (T, Set_Credentials'Access, "set credentials");
-      Ahven.Framework.Add_Test_Routine
-        (T, Enable_SQL_Trace'Access, "toggle sql trace");
-      Ahven.Framework.Add_Test_Routine
-        (T, Disable_Write_Timestamp'Access, "toggle timestamp");
-      Ahven.Framework.Add_Test_Routine
-        (T, Disable_Write_Loglevel'Access, "toggle loglevel");
---        Ahven.Framework.Add_Test_Routine
---          (T, Write_Message'Access, "log a message to PGSQL database");
+      T.Set_Name (Name => "Tests for Alog Facility PGSQL");
+      T.Add_Test_Routine
+        (Routine => Set_Host_Name'Access,
+         Name    => "set hostname");
+      T.Add_Test_Routine
+        (Routine => Set_Host_Address'Access,
+         Name    => "set host address");
+      T.Add_Test_Routine
+        (Routine => Set_Host_Port'Access,
+         Name    => "set host port");
+      T.Add_Test_Routine
+        (Routine => Set_DB_Name'Access,
+         Name    => "set database name");
+      T.Add_Test_Routine
+        (Routine => Set_Table_Name'Access,
+         Name    => "set table name");
+      T.Add_Test_Routine
+        (Routine => Set_Level_Column_Name'Access,
+         Name    => "set level column name");
+      T.Add_Test_Routine
+        (Routine => Set_Timestamp_Column_Name'Access,
+         Name    => "set timestamp column name");
+      T.Add_Test_Routine
+        (Routine => Set_Message_Column_Name'Access,
+         Name    => "set message column name");
+      T.Add_Test_Routine
+        (Routine => Set_Credentials'Access,
+         Name    => "set credentials");
+      T.Add_Test_Routine
+        (Routine => Enable_SQL_Trace'Access,
+         Name    => "toggle sql trace");
+      T.Add_Test_Routine
+        (Routine => Disable_Write_Timestamp'Access,
+         Name    => "toggle timestamp");
+      T.Add_Test_Routine
+        (Routine => Disable_Write_Loglevel'Access,
+         Name    => "toggle loglevel");
+      T.Add_Test_Routine
+        (Routine => Write_Message'Access,
+         Name    => "log a message to PGSQL database");
    end Initialize;
 
    -------------------------------------------------------------------------

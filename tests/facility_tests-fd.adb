@@ -84,23 +84,31 @@ package body Facility_Tests.FD is
 
    procedure Initialize (T : in out Testcase) is
    begin
-      Set_Name (T, "Tests for Alog Facility FD");
-      Ahven.Framework.Add_Test_Routine
-        (T, Set_Valid_Logfile_Fd'Access, "set valid logfile");
-      Ahven.Framework.Add_Test_Routine
-        (T, Set_Invalid_Logfile_Fd'Access, "set invalid logfile");
-      Ahven.Framework.Add_Test_Routine
-        (T, Write_Message_Fd'Access, "log a fd message");
-      Ahven.Framework.Add_Test_Routine
-        (T, Teardown_Fd'Access, "teardown fd facility");
-      Ahven.Framework.Add_Test_Routine
-        (T, Disable_Write_Timestamp_Fd'Access, "disable fd timestamp");
-      Ahven.Framework.Add_Test_Routine
-        (T, Disable_Write_Loglevel_Fd'Access, "disable fd loglevel");
-      Ahven.Framework.Add_Test_Routine
-        (T, Trim_Loglevels_Fd'Access, "fd loglevel align");
-      Ahven.Framework.Add_Test_Routine
-        (T, Set_Threshold_Fd'Access, "set fd threshold");
+      T.Set_Name (Name => "Tests for Alog Facility FD");
+      T.Add_Test_Routine
+        (Routine => Set_Valid_Logfile_Fd'Access,
+         Name    => "set valid logfile");
+      T.Add_Test_Routine
+        (Routine => Set_Invalid_Logfile_Fd'Access,
+         Name    => "set invalid logfile");
+      T.Add_Test_Routine
+        (Routine => Write_Message_Fd'Access,
+         Name    => "log a fd message");
+      T.Add_Test_Routine
+        (Routine => Teardown_Fd'Access,
+         Name    => "teardown fd facility");
+      T.Add_Test_Routine
+        (Routine => Disable_Write_Timestamp_Fd'Access,
+         Name    => "disable fd timestamp");
+      T.Add_Test_Routine
+        (Routine => Disable_Write_Loglevel_Fd'Access,
+         Name    => "disable fd loglevel");
+      T.Add_Test_Routine
+        (Routine => Trim_Loglevels_Fd'Access,
+         Name    => "fd loglevel align");
+      T.Add_Test_Routine
+        (Routine => Set_Threshold_Fd'Access,
+         Name    => "set fd threshold");
    end Initialize;
 
    -------------------------------------------------------------------------
