@@ -1,5 +1,5 @@
 --
---  Copyright (c) 2008,
+--  Copyright (c) 2008-2009,
 --  Reto Buerki, Adrian-Ken Rueegsegger
 --  secunet SwissIT AG
 --
@@ -36,26 +36,6 @@ package body Alog.Facilities is
    begin
       return Left.Get_Name = Right.Get_Name;
    end "=";
-
-   -------------------------------------------------------------------------
-
-   procedure Add_Transform
-     (Facility  : in out Class;
-      Transform :        Transforms.Handle)
-   is
-      T_Name : constant Unbounded_String :=
-        To_Unbounded_String (Transform.Get_Name);
-   begin
-      if Facility.Transforms.Contains (Key => T_Name) then
-         raise Transform_Already_Present with "Transform '"
-           & To_String (T_Name)
-           & "' is already present.";
-      end if;
-
-      Facility.Transforms.Insert
-        (Key      => T_Name,
-         New_Item => Transform);
-   end Add_Transform;
 
    -------------------------------------------------------------------------
 
@@ -127,34 +107,12 @@ package body Alog.Facilities is
 
    -------------------------------------------------------------------------
 
-   procedure Iterate
-     (Facility : Class;
-      Process  : not null access procedure (Transform : Transforms.Handle))
-   is
-   begin
-      Facility.Transforms.Iterate (Process => Process);
-   end Iterate;
-
-   -------------------------------------------------------------------------
-
    procedure Log_Message
      (Facility : Class;
       Level    : Log_Level := Info;
       Msg      : String)
    is
       Message : Unbounded_String;
-
-      procedure Do_Transform (Transform : Transforms.Handle);
-      --  Call 'Transform_Message' for each transform.
-
-      procedure Do_Transform (Transform : Transforms.Handle) is
-      begin
-         Message := To_Unbounded_String
-           (Transform.Transform_Message
-              (Level => Level,
-               Msg   => To_String (Message)));
-      end Do_Transform;
-
    begin
       if Level >= Facility.Get_Threshold then
          if Facility.Is_Write_Timestamp then
@@ -169,29 +127,10 @@ package body Alog.Facilities is
          Append (Source   => Message,
                  New_Item => Msg);
 
-         if Facility.Transform_Count > 0 then
-            Facility.Iterate (Process => Do_Transform'Access);
-         end if;
-
          Facility.Write_Message (Level => Level,
                                  Msg   => To_String (Message));
       end if;
    end Log_Message;
-
-   -------------------------------------------------------------------------
-
-   procedure Remove_Transform
-     (Facility : in out Class;
-      Name     :        String)
-   is
-      T_Name : constant Unbounded_String := To_Unbounded_String (Name);
-   begin
-      if not Facility.Transforms.Contains (Key => T_Name) then
-         raise Transform_Not_Found with "Transform '" & Name & "' not found.";
-      end if;
-
-      Facility.Transforms.Delete (Key => T_Name);
-   end Remove_Transform;
 
    -------------------------------------------------------------------------
 
@@ -240,35 +179,5 @@ package body Alog.Facilities is
    begin
       Facility.Write_Timestamp := State;
    end Toggle_Write_Timestamp;
-
-   -------------------------------------------------------------------------
-
-   function Transform_Count (Facility : Class) return Natural is
-   begin
-      return Natural (Facility.Transforms.Length);
-   end Transform_Count;
-
-   -------------------------------------------------------------------------
-
-   procedure Update
-     (Facility : Class;
-      Name     : String;
-      Process  : not null access
-        procedure (Transform_Handle : in out Transforms.Handle))
-   is
-      Unbounded_Name : constant Unbounded_String :=
-        To_Unbounded_String (Name);
-   begin
-      if not Facility.Transforms.Contains (Key => Unbounded_Name) then
-         raise Transform_Not_Found with "Transform '" & Name & "' not found";
-      end if;
-
-      declare
-         Handle : Transforms.Handle :=
-           Facility.Transforms.Element (Key => Unbounded_Name);
-      begin
-         Process (Transform_Handle => Handle);
-      end;
-   end Update;
 
 end Alog.Facilities;

@@ -1,5 +1,5 @@
 --
---  Copyright (c) 2008,
+--  Copyright (c) 2008-2009,
 --  Reto Buerki, Adrian-Ken Rueegsegger
 --  secunet SwissIT AG
 --
@@ -45,9 +45,6 @@ package Facility_Tests is
 
    procedure Toggle_UTC_Timestamp;
    --  Test enabling/disabling UTC timestamps.
-
-   procedure Transform_Handling;
-   --  Test attaching/detaching of transforms.
 
    procedure Timestamp_Creation;
    --  Test timestamp string creation.

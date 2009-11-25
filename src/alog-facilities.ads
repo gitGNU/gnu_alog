@@ -1,5 +1,5 @@
 --
---  Copyright (c) 2008,
+--  Copyright (c) 2008-2009,
 --  Reto Buerki, Adrian-Ken Rueegsegger
 --  secunet SwissIT AG
 --
@@ -25,9 +25,6 @@ with Ada.Strings.Bounded;
 with Ada.Strings.Unbounded;
 with Ada.Command_Line;
 with Ada.Calendar;
-
-with Alog.Transforms;
-with Alog.Controlled_Map;
 
 --  Alog facilities package. Provides common data and methods used by all
 --  facilities.
@@ -75,17 +72,15 @@ package Alog.Facilities is
      (Facility : Class;
       Level    : Log_Level := Info;
       Msg      : String);
-   --  Log a message 'Msg' with loglevel 'Level'. All attached transforms are
-   --  applied to the message before actually logging the message. This
-   --  procedure is intended for facility users.
+   --  Log a message 'Msg' with loglevel 'Level'. This procedure is intended for
+   --  facility users.
 
    procedure Write_Message
      (Facility : Instance;
       Level    : Log_Level := Info;
       Msg      : String) is abstract;
    --  Write message with specified log level. This procedure must be
-   --  implemented by all facilities and is called by Log_Message after all
-   --  transforms have been applied.
+   --  implemented by all facilities and is called by Log_Message.
 
    procedure Toggle_Write_Timestamp
      (Facility : in out Class;
@@ -121,51 +116,12 @@ package Alog.Facilities is
    --  called by Logger instances when detaching Facilities or when the logger
    --  object gets out of scope.
 
-   procedure Add_Transform
-     (Facility  : in out Class;
-      Transform :        Transforms.Handle);
-   --  Adds a Transform to the facility's transform list.
-
-   procedure Remove_Transform
-     (Facility : in out Class;
-      Name     :        String);
-   --  Removes a transform with name 'Name' from the facility's transform list.
-   --  If the transform is not found Transform_Not_Found exception is raised.
-
-   function Transform_Count (Facility : Class) return Natural;
-   --  Returns the number of transforms in the facility's transform list.
-
-   procedure Update
-     (Facility : Class;
-      Name     : String;
-      Process  : not null access
-        procedure (Transform_Handle : in out Transforms.Handle));
-   --  Update a specific Transform identified by 'Name'. Call the 'Process'
-   --  procedure to perform the update operation.
-
-   procedure Iterate
-     (Facility : Class;
-      Process  : not null access procedure (Transform : Transforms.Handle));
-   --  Call 'Process' for all attached transforms.
-
    package BS_Path is new Generic_Bounded_Length (Max_Path_Length);
    use BS_Path;
    --  Bounded string with length Max_Path_Length. Used in methods which
    --  involve filesystem operations.
 
-   Transform_Not_Found       : exception;
-   --  Will be raised if a requested transform is not found.
-   Transform_Already_Present : exception;
-   --  Will be raised if a transform is already present.
-
 private
-
-   package Map_Of_Transforms_Package is new Alog.Controlled_Map
-     (Key_Type       => Unbounded_String,
-      Element_Type   => Transforms.Class,
-      Element_Handle => Transforms.Handle);
-
-   package MOTP renames Map_Of_Transforms_Package;
 
    type Instance is abstract tagged limited record
       Name             : Unbounded_String :=
@@ -188,9 +144,6 @@ private
 
       Write_Loglevel   : Boolean := False;
       --  If True, the loglevel associated with the log message is written.
-
-      Transforms       : MOTP.Map;
-      --  Map of transforms.
    end record;
 
 end Alog.Facilities;

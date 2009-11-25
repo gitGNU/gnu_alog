@@ -1,5 +1,5 @@
 --
---  Copyright (c) 2008,
+--  Copyright (c) 2008-2009,
 --  Reto Buerki, Adrian-Ken Rueegsegger
 --  secunet SwissIT AG
 --
@@ -26,7 +26,6 @@ with Ada.Calendar.Time_Zones;
 with Ahven; use Ahven;
 
 with Alog.Facilities.File_Descriptor;
-with Alog.Transforms.Casing;
 
 package body Facility_Tests is
 
@@ -48,8 +47,6 @@ package body Facility_Tests is
         (T, Toggle_Timestamp'Access, "toggle timestamp");
       Ahven.Framework.Add_Test_Routine
         (T, Toggle_UTC_Timestamp'Access, "toggle UTC timestamp");
-      Ahven.Framework.Add_Test_Routine
-        (T, Transform_Handling'Access, "transform handling");
       Ahven.Framework.Add_Test_Routine
         (T, Timestamp_Creation'Access, "timestamp creation");
    end Initialize;
@@ -143,69 +140,5 @@ package body Facility_Tests is
       Assert (Condition => F.Is_UTC_Timestamp,
               Message   => "Expected 'True'");
    end Toggle_UTC_Timestamp;
-
-   -------------------------------------------------------------------------
-
-   procedure Transform_Handling is
-      T_Name    : constant String            := "Test_Transform";
-      F         : File_Descriptor.Instance;
-      Transform : constant Transforms.Handle :=
-        new Transforms.Casing.Instance;
-
-      procedure Check_Transform (Transform_Handle : in out Transforms.Handle);
-      --  Verify that transformy with given name is present in the logger.
-
-      procedure Check_Transform (Transform_Handle : in out Transforms.Handle)
-      is
-         use type Transforms.Handle;
-      begin
-         Assert (Condition => Transform_Handle = Transform,
-                 Message   => "transform mismatch");
-      end Check_Transform;
-
-   begin
-      Assert (Condition => F.Transform_Count = 0,
-              Message   => "Transform count not 0");
-
-      Transform.Set_Name (Name => T_Name);
-      F.Add_Transform (Transform => Transform);
-
-      Assert (Condition => F.Transform_Count = 1,
-              Message   => "Unable to add transform");
-
-      begin
-         F.Add_Transform (Transform => Transform);
-         Fail (Message => "Added existing transform");
-
-      exception
-         when Transform_Already_Present =>
-            null;
-      end;
-
-      F.Update (Name    => T_Name,
-                Process => Check_Transform'Access);
-
-      F.Remove_Transform (Name => T_Name);
-      Assert (Condition => F.Transform_Count = 0,
-              Message   => "Unable to remove transform");
-
-      begin
-         F.Remove_Transform (Name => T_Name);
-         Fail (Message => "Removed nonexistent transform");
-
-      exception
-         when Facilities.Transform_Not_Found =>
-            null;
-      end;
-
-      begin
-         F.Update (Name    => T_Name,
-                   Process => Check_Transform'Access);
-
-      exception
-         when Facilities.Transform_Not_Found =>
-            null;
-      end;
-   end Transform_Handling;
 
 end Facility_Tests;
