@@ -50,13 +50,12 @@ package Alog.Policy_DB is
    --  Example:
    --     Foo.Bar.* = Debug
    --
-   -- Direct matches take precedence over wildcard matches. In the following
-   -- example the loglevel for source 'Foo.Bar' is explicitly set to Info.
+   --  Direct matches take precedence over wildcard matches. In the following
+   --  example the loglevel for source 'Foo.Bar' is explicitly set to Info.
    --
    --  Example:
    --     Foo.Bar   = Info
    --     Foo.Bar.* = Debug
-
 
    procedure Set_Src_Loglevel (Sources : Maps.Wildcard_Level_Map);
    --  Apply source loglevels stored in map.
