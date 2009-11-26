@@ -26,7 +26,7 @@ with "apq-postgresql";
 with "ahven";
 with "alog_common";
 
-project Alog_Full is
+project Alog_Full_Tests is
 
    type Build_Type is ("tests", "coverage");
    Build : Build_Type := external ("ALOG_BUILD", "tests");
@@ -67,5 +67,5 @@ project Alog_Full is
       for Default_Switches ("ada") use ("-E");
    end Binder;
 
-end Alog_Full;
+end Alog_Full_Tests;
 
