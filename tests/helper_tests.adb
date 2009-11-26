@@ -63,7 +63,7 @@ package body Helper_Tests is
 
    procedure Initialize (T : in out Testcase) is
    begin
-      T.Set_Name (Name => "Tests for Alog helpers");
+      T.Set_Name (Name => "Tests for helpers");
       T.Add_Test_Routine
         (Routine => Compare_Files'Access,
          Name    => "test file equality helper");

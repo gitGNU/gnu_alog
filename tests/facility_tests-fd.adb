@@ -90,7 +90,7 @@ package body Facility_Tests.FD is
 
    procedure Initialize (T : in out Testcase) is
    begin
-      T.Set_Name (Name => "Tests for Alog Facility FD");
+      T.Set_Name (Name => "Tests for FD Facility");
       T.Add_Test_Routine
         (Routine => Set_Valid_Logfile_Fd'Access,
          Name    => "set valid logfile");

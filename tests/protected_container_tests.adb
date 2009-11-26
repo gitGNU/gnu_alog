@@ -128,19 +128,25 @@ package body Protected_Container_Tests is
 
    procedure Initialize (T : in out Testcase) is
    begin
-      Set_Name (T, "Tests for Alog protected containers");
-      Ahven.Framework.Add_Test_Routine
-        (T, Log_Request_List_Get_Put'Access, "Log_Request_List get/put");
-      Ahven.Framework.Add_Test_Routine
-        (T, Log_Request_List_Clear'Access, "Log_Request_List clear");
-      Ahven.Framework.Add_Test_Routine
-        (T, Log_Request_List_Done'Access, "Log_Request_List done");
-      Ahven.Framework.Add_Test_Routine
-        (T, Exception_Map_Insert_Get'Access, "Exception_Map insert/get");
-      Ahven.Framework.Add_Test_Routine
-        (T, Exception_Map_Delete'Access, "Exception_Map delete");
-      Ahven.Framework.Add_Test_Routine
-        (T, Exception_Map_Clear'Access, "Exception_Map clear");
+      T.Set_Name (Name => "Tests for protected containers");
+      T.Add_Test_Routine
+        (Routine => Log_Request_List_Get_Put'Access,
+         Name    => "log request list get/put");
+      T.Add_Test_Routine
+        (Routine => Log_Request_List_Clear'Access,
+         Name    => "log request list clear");
+      T.Add_Test_Routine
+        (Routine => Log_Request_List_Done'Access,
+         Name    => "log request list done");
+      T.Add_Test_Routine
+        (Routine => Exception_Map_Insert_Get'Access,
+         Name    => "exception map insert/get");
+      T.Add_Test_Routine
+        (Routine => Exception_Map_Delete'Access,
+         Name    => "exception map delete");
+      T.Add_Test_Routine
+        (Routine => Exception_Map_Clear'Access,
+         Name    => "exception map clear");
    end Initialize;
 
    -------------------------------------------------------------------------

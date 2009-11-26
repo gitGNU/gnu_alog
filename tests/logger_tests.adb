@@ -257,58 +257,58 @@ package body Logger_Tests is
 
    procedure Initialize (T : in out Testcase) is
    begin
-      Set_Name (T, "Tests for Alog Logger");
-      Ahven.Framework.Add_Test_Routine
-        (T, Attach_Facility'Access,
-         "attach a facility");
-      Ahven.Framework.Add_Test_Routine
-        (T, Update_Facility'Access,
-         "update a facility");
-      Ahven.Framework.Add_Test_Routine
-        (T, Detach_Facility_Instance'Access,
-         "detach facility:instance");
-      Ahven.Framework.Add_Test_Routine
-        (T, Detach_Facility_Unattached'Access,
-         "detach not attached facility");
-      Ahven.Framework.Add_Test_Routine
-        (T, Attach_Transform'Access,
-         "attach a transform");
-      Ahven.Framework.Add_Test_Routine
-        (T, Update_Transform'Access,
-         "update a transform");
-      Ahven.Framework.Add_Test_Routine
-        (T, Detach_Transform_Instance'Access,
-         "detach transform");
-      Ahven.Framework.Add_Test_Routine
-        (T, Detach_Transform_Unattached'Access,
-         "detach not attached transform");
-      Ahven.Framework.Add_Test_Routine
-        (T, Clear_A_Logger'Access,
-         "clear logger");
-      Ahven.Framework.Add_Test_Routine
-        (T, Log_One_FD_Facility'Access,
-         "log to one fd facility");
-      Ahven.Framework.Add_Test_Routine
-        (T, Log_Multiple_FD_Facilities'Access,
-         "log to multiple fd facilities");
-      Ahven.Framework.Add_Test_Routine
-        (T, Log_FD_Facility_with_Transform'Access,
-         "log to fd facility with lowercase transform");
-      Ahven.Framework.Add_Test_Routine
-        (T, Verify_Logger_Initialization'Access,
-         "logger initialization behavior");
-      Ahven.Framework.Add_Test_Routine
-        (T, Default_Facility_Handling'Access,
-         "default facility handling");
-      Ahven.Framework.Add_Test_Routine
-        (T, Source_Based_Logging'Access,
-         "source based logging");
-      Ahven.Framework.Add_Test_Routine
-        (T, Loglevel_Handling'Access,
-         "loglevel handling");
-      Ahven.Framework.Add_Test_Routine
-        (T, Write_Source'Access,
-         "write message source");
+      T.Set_Name (Name => "Tests for Logger");
+      T.Add_Test_Routine
+        (Routine => Attach_Facility'Access,
+         Name    => "attach a facility");
+      T.Add_Test_Routine
+        (Routine => Update_Facility'Access,
+         Name    => "update a facility");
+      T.Add_Test_Routine
+        (Routine => Detach_Facility_Instance'Access,
+         Name    => "detach facility");
+      T.Add_Test_Routine
+        (Routine => Detach_Facility_Unattached'Access,
+         Name    => "detach not attached facility");
+      T.Add_Test_Routine
+        (Routine => Attach_Transform'Access,
+         Name    => "attach a transform");
+      T.Add_Test_Routine
+        (Routine => Update_Transform'Access,
+         Name    => "update a transform");
+      T.Add_Test_Routine
+        (Routine => Detach_Transform_Instance'Access,
+         Name    => "detach transform");
+      T.Add_Test_Routine
+        (Routine => Detach_Transform_Unattached'Access,
+         Name    => "detach not attached transform");
+      T.Add_Test_Routine
+        (Routine => Clear_A_Logger'Access,
+         Name    => "clear logger");
+      T.Add_Test_Routine
+        (Routine => Log_One_FD_Facility'Access,
+         Name    => "log to one fd facility");
+      T.Add_Test_Routine
+        (Routine => Log_Multiple_FD_Facilities'Access,
+         Name    => "log to multiple fd facilities");
+      T.Add_Test_Routine
+        (Routine => Log_FD_Facility_with_Transform'Access,
+         Name    => "log to fd facility with lowercase transform");
+      T.Add_Test_Routine
+        (Routine => Verify_Logger_Initialization'Access,
+         Name    => "logger initialization behavior");
+      T.Add_Test_Routine
+        (Routine => Default_Facility_Handling'Access,
+         Name    => "default facility handling");
+      T.Add_Test_Routine
+        (Routine => Source_Based_Logging'Access,
+         Name    => "source based logging");
+      T.Add_Test_Routine
+        (Routine => Loglevel_Handling'Access,
+         Name    => "loglevel handling");
+      T.Add_Test_Routine
+        (Routine => Write_Source'Access,
+         Name    => "write message source");
    end Initialize;
 
    -------------------------------------------------------------------------

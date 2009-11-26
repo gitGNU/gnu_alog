@@ -50,7 +50,7 @@ package body Maps_Tests is
 
    procedure Initialize (T : in out Testcase) is
    begin
-      T.Set_Name (Name => "Tests for Alog maps");
+      T.Set_Name (Name => "Tests for maps");
       T.Add_Test_Routine
         (Routine => Insert_Elements'Access,
          Name    => "Insert elements");

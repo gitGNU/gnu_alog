@@ -33,15 +33,19 @@ package body Facility_Tests.XMPP is
 
    procedure Initialize (T : in out Testcase) is
    begin
-      Set_Name (T, "Tests for Alog Facility XMPP");
-      Ahven.Framework.Add_Test_Routine
-        (T, Send_No_Sender'Access, "send with no sender");
-      Ahven.Framework.Add_Test_Routine
-        (T, Send_No_Recipient'Access, "send with no recipient");
-      Ahven.Framework.Add_Test_Routine
-        (T, Send_No_Server'Access, "send with no server");
-      --        Ahven.Framework.Add_Test_Routine
-      --          (T, Send_XMPP_Message'Access, "send XMPP message");
+      T.Set_Name (Name => "Tests for XMPP Facility");
+      T.Add_Test_Routine
+        (Routine => Send_No_Sender'Access,
+         Name    => "send with no sender");
+      T.Add_Test_Routine
+        (Routine => Send_No_Recipient'Access,
+         Name    => "send with no recipient");
+      T.Add_Test_Routine
+        (Routine => Send_No_Server'Access,
+         Name    => "send with no server");
+--        T.Add_Test_Routine
+--          (Routine => Send_XMPP_Message'Access,
+--           Name    => "send XMPP message");
    end Initialize;
 
    -------------------------------------------------------------------------

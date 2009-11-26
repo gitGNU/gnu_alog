@@ -36,19 +36,25 @@ package body Facility_Tests is
 
    procedure Initialize (T : in out Testcase) is
    begin
-      Set_Name (T, "Tests for Alog Facilites");
-      Ahven.Framework.Add_Test_Routine
-        (T, Set_Name'Access, "set facility name");
-      Ahven.Framework.Add_Test_Routine
-        (T, Set_Threshold'Access, "set threshold");
-      Ahven.Framework.Add_Test_Routine
-        (T, Toggle_Loglevel'Access, "toggle loglevel");
-      Ahven.Framework.Add_Test_Routine
-        (T, Toggle_Timestamp'Access, "toggle timestamp");
-      Ahven.Framework.Add_Test_Routine
-        (T, Toggle_UTC_Timestamp'Access, "toggle UTC timestamp");
-      Ahven.Framework.Add_Test_Routine
-        (T, Timestamp_Creation'Access, "timestamp creation");
+      T.Set_Name (Name => "Tests for Facilites");
+      T.Add_Test_Routine
+        (Routine => Set_Name'Access,
+         Name    => "set facility name");
+      T.Add_Test_Routine
+        (Routine => Set_Threshold'Access,
+         Name    => "set threshold");
+      T.Add_Test_Routine
+        (Routine => Toggle_Loglevel'Access,
+         Name    => "toggle loglevel");
+      T.Add_Test_Routine
+        (Routine => Toggle_Timestamp'Access,
+         Name    => "toggle timestamp");
+      T.Add_Test_Routine
+        (Routine => Toggle_UTC_Timestamp'Access,
+         Name    => "toggle UTC timestamp");
+      T.Add_Test_Routine
+        (Routine => Timestamp_Creation'Access,
+         Name    => "timestamp creation");
    end Initialize;
 
    -------------------------------------------------------------------------

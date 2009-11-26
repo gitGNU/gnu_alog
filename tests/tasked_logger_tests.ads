@@ -31,6 +31,9 @@ package Tasked_Logger_Tests is
    procedure Initialize (T : in out Testcase);
    --  Initialize testcase.
 
+   procedure Attach_Facility;
+   --  Test Facility attaching to tasked logger.
+
    procedure Update_Facility;
    --  Test Facility update operation.
 

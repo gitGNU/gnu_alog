@@ -35,9 +35,10 @@ package body Log_Request_Tests is
 
    procedure Initialize (T : in out Testcase) is
    begin
-      Set_Name (T, "Tests for Alog log requests");
-      Ahven.Framework.Add_Test_Routine
-        (T, Log_Request_Getter'Access, "Log request getters");
+      T.Set_Name (Name => "Tests for log requests");
+      T.Add_Test_Routine
+        (Routine => Log_Request_Getter'Access,
+         Name    => "log request getters");
    end Initialize;
 
    -------------------------------------------------------------------------

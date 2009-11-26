@@ -56,6 +56,34 @@ package body Tasked_Logger_Tests is
 
    -------------------------------------------------------------------------
 
+   procedure Attach_Facility is
+      Log      : Tasked_Logger.Instance (Init => False);
+      Facility : constant Facilities.Handle :=
+        new Facilities.File_Descriptor.Instance;
+      Count    : Natural := Natural'Last;
+   begin
+      Log.Facility_Count (Count => Count);
+
+      Assert (Condition => Count = 0,
+              Message   => "facility count not 0");
+
+      Log.Attach_Facility (Facility => Facility);
+      Log.Facility_Count (Count => Count);
+      Assert (Condition => Count = 1,
+              Message => "could not attach facility");
+
+      begin
+         Log.Attach_Facility (Facility => Facility);
+         Fail (Message => "attached duplicate facility");
+
+      exception
+         when Logger.Facility_Already_Present =>
+            null;
+      end;
+   end Attach_Facility;
+
+   -------------------------------------------------------------------------
+
    procedure Attach_Transform is
       Log       : Tasked_Logger.Instance (Init => False);
       Transform : constant Transforms.Handle := new Transforms.Casing.Instance;
@@ -219,49 +247,43 @@ package body Tasked_Logger_Tests is
 
    procedure Initialize (T : in out Testcase) is
    begin
-      Set_Name (T, "Tests for Alog tasked Logger");
-      Ahven.Framework.Add_Test_Routine
-        (T, Update_Facility'Access,
-         "update a facility");
-      Ahven.Framework.Add_Test_Routine
-        (T, Detach_Facility_Unattached'Access,
-         "detach not attached facility");
-      Ahven.Framework.Add_Test_Routine
-        (T, Attach_Transform'Access,
-         "attach a transform");
-      Ahven.Framework.Add_Test_Routine
-        (T, Detach_Transform_Unattached'Access,
-         "detach not attached transform");
-      Ahven.Framework.Add_Test_Routine
-        (T, Log_One_FD_Facility'Access,
-         "log with tasked logger");
-      Ahven.Framework.Add_Test_Routine
-        (T, Verify_Logger_Initialization'Access,
-         "tasked logger initialization behavior");
-      Ahven.Framework.Add_Test_Routine
-        (T, Attach_Transform'Access,
-         "tasked attach a transform");
-      Ahven.Framework.Add_Test_Routine
-        (T, Detach_Facility_Unattached'Access,
-         "tasked detach not attached facility");
-      Ahven.Framework.Add_Test_Routine
-        (T, Detach_Transform'Access,
-         "tasked detach transform");
-      Ahven.Framework.Add_Test_Routine
-        (T, Detach_Transform_Unattached'Access,
-         "tasked detach not attached transform");
-      Ahven.Framework.Add_Test_Routine
-        (T, Logger_Exception_Handling'Access,
-         "tasked logger exception handling");
-      Ahven.Framework.Add_Test_Routine
-        (T, Default_Facility_Handling'Access,
-         "tasked default facility handling");
-      Ahven.Framework.Add_Test_Routine
-        (T, Iterate_Facilities'Access,
-         "tasked iterate facilities");
-      Ahven.Framework.Add_Test_Routine
-        (T, Iterate_Facilities_Exceptions'Access,
-         "tasked iterate facilities (exceptions)");
+      T.Set_Name (Name => "Tests for tasked Logger");
+      T.Add_Test_Routine
+        (Routine => Attach_Facility'Access,
+         Name    => "attach facility");
+      T.Add_Test_Routine
+        (Routine => Update_Facility'Access,
+         Name    => "update a facility");
+      T.Add_Test_Routine
+        (Routine => Detach_Facility_Unattached'Access,
+         Name    => "detach not attached facility");
+      T.Add_Test_Routine
+        (Routine => Attach_Transform'Access,
+         Name    => "attach a transform");
+      T.Add_Test_Routine
+        (Routine => Detach_Transform'Access,
+         Name    => "detach transform");
+      T.Add_Test_Routine
+        (Routine => Detach_Transform_Unattached'Access,
+         Name    => "detach not attached transform");
+      T.Add_Test_Routine
+        (Routine => Log_One_FD_Facility'Access,
+         Name    => "log with tasked logger");
+      T.Add_Test_Routine
+        (Routine => Verify_Logger_Initialization'Access,
+         Name    => "logger initialization behavior");
+      T.Add_Test_Routine
+        (Routine => Logger_Exception_Handling'Access,
+         Name    => "exception handling");
+      T.Add_Test_Routine
+        (Routine => Default_Facility_Handling'Access,
+         Name    => "default facility handling");
+      T.Add_Test_Routine
+        (Routine => Iterate_Facilities'Access,
+         Name    => "iterate over facilities");
+      T.Add_Test_Routine
+        (Routine => Iterate_Facilities_Exceptions'Access,
+         Name    => "iterate facilities exceptions");
    end Initialize;
 
    -------------------------------------------------------------------------

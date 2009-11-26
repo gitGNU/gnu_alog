@@ -34,13 +34,13 @@ package body Transform_Tests.Casing is
 
    procedure Initialize (T : in out Testcase) is
    begin
-      Set_Name (T, "Tests for Alog Transform Casing");
-      Ahven.Framework.Add_Test_Routine
-        (T, Transform_Message_Lowercase'Access,
-         "transform a message to lowercase");
-      Ahven.Framework.Add_Test_Routine
-        (T, Transform_Message_Uppercase'Access,
-         "transform a message to uppercase");
+      T.Set_Name (Name => "Tests for Casing Transform");
+      T.Add_Test_Routine
+        (Routine => Transform_Message_Lowercase'Access,
+         Name    => "transform a message to lowercase");
+      T.Add_Test_Routine
+        (Routine => Transform_Message_Uppercase'Access,
+         Name    => "transform a message to uppercase");
    end Initialize;
 
    -------------------------------------------------------------------------

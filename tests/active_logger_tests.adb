@@ -279,7 +279,7 @@ package body Active_Logger_Tests is
 
    procedure Initialize (T : in out Testcase) is
    begin
-      T.Set_Name (Name => "Tests for Alog active Logger");
+      T.Set_Name (Name => "Tests for active Logger");
       T.Add_Test_Routine
         (Routine => Attach_Facility'Access,
          Name    => "attach a facility");

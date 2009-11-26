@@ -33,15 +33,19 @@ package body Facility_Tests.SMTP is
 
    procedure Initialize (T : in out Testcase) is
    begin
-      Set_Name (T, "Tests for Alog Facility SMTP");
-      Ahven.Framework.Add_Test_Routine
-        (T, Send_No_Recipient'Access, "send with no recipient");
-      Ahven.Framework.Add_Test_Routine
-        (T, Send_No_Server'Access, "send with no server");
-      --        Ahven.Framework.Add_Test_Routine
-      --          (T, Send_Simple_Mail'Access, "send simple mail");
-      Ahven.Framework.Add_Test_Routine
-        (T, Set_Header'Access, "set message header");
+      T.Set_Name (Name => "Tests for SMTP Facility");
+      T.Add_Test_Routine
+        (Routine => Send_No_Recipient'Access,
+         Name    => "send with no recipient");
+      T.Add_Test_Routine
+        (Routine => Send_No_Server'Access,
+         Name    => "send with no server");
+      T.Add_Test_Routine
+        (Routine => Set_Header'Access,
+         Name    => "set message header");
+--        T.Add_Test_Routine
+--          (Routine => Send_Simple_Mail'Access,
+--           Name    => "send simple mail");
    end Initialize;
 
    -------------------------------------------------------------------------

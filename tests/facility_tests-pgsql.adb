@@ -76,7 +76,7 @@ package body Facility_Tests.PGSQL is
 
    procedure Initialize (T : in out Testcase) is
    begin
-      T.Set_Name (Name => "Tests for Alog Facility PGSQL");
+      T.Set_Name (Name => "Tests for PGSQL Facility");
       T.Add_Test_Routine
         (Routine => Set_Host_Name'Access,
          Name    => "set hostname");

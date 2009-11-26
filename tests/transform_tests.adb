@@ -31,9 +31,10 @@ package body Transform_Tests is
 
    procedure Initialize (T : in out Testcase) is
    begin
-      Set_Name (T, "Tests for Alog Transforms");
-      Ahven.Framework.Add_Test_Routine
-        (T, Set_Name'Access, "set transform name");
+      T.Set_Name (Name => "Tests for Transforms");
+      T.Add_Test_Routine
+        (Routine => Set_Name'Access,
+         Name    => "set transform name");
    end Initialize;
 
    -------------------------------------------------------------------------
