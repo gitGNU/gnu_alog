@@ -53,7 +53,7 @@ package Alog.Facilities.File_Descriptor is
 private
 
    overriding
-   procedure Write_Message
+   procedure Write
      (Facility : Instance;
       Level    : Log_Level := Info;
       Msg      : String);

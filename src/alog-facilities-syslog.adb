@@ -27,7 +27,7 @@ package body Alog.Facilities.Syslog is
 
    -------------------------------------------------------------------------
 
-   procedure Write_Message
+   procedure Write
      (Facility : Instance;
       Level    : Log_Level := Info;
       Msg      : String)
@@ -45,6 +45,6 @@ package body Alog.Facilities.Syslog is
 
       --  Free message memory.
       Interfaces.C.Strings.Free (Char_Ptr);
-   end Write_Message;
+   end Write;
 
 end Alog.Facilities.Syslog;

@@ -92,7 +92,7 @@ package body Alog.Facilities.File_Descriptor is
 
    -------------------------------------------------------------------------
 
-   procedure Write_Message
+   procedure Write
      (Facility : Instance;
       Level    : Log_Level := Info;
       Msg      : String)
@@ -109,6 +109,6 @@ package body Alog.Facilities.File_Descriptor is
                                Item => Msg);
          Ada.Text_IO.Flush (File => Facility.Log_File_Ptr.all);
       end if;
-   end Write_Message;
+   end Write;
 
 end Alog.Facilities.File_Descriptor;

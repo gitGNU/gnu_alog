@@ -128,8 +128,8 @@ package body Alog.Facilities is
          Append (Source   => Message,
                  New_Item => Msg);
 
-         Facility.Write_Message (Level => Level,
-                                 Msg   => To_String (Message));
+         Facility.Write (Level => Level,
+                         Msg   => To_String (Message));
       end if;
    end Process;
 

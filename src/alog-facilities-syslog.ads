@@ -53,11 +53,11 @@ package Alog.Facilities.Syslog is
 private
 
    overriding
-   procedure Write_Message
+   procedure Write
      (Facility : Instance;
       Level    : Log_Level := Info;
       Msg      : String);
-   --  Implementation of Write_Message.
+   --  Implementation of Write.
 
    type Instance is new Alog.Facilities.Instance with null record;
 

@@ -75,7 +75,7 @@ package Alog.Facilities is
       Request  : Log_Request.Instance);
    --  Process a log request.
 
-   procedure Write_Message
+   procedure Write
      (Facility : Instance;
       Level    : Log_Level := Info;
       Msg      : String) is abstract;

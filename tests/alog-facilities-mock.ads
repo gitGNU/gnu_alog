@@ -20,9 +20,8 @@
 --  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,
 --  MA  02110-1301  USA
 
---  Mock facility.
---  Logging facility used for testing.
---  Raises a Constraint_Error when Write_Message is called.
+--  Logging facility used for testing. Raises a Constraint_Error when Write()
+--  is called.
 package Alog.Facilities.Mock is
 
    type Instance is new Alog.Facilities.Instance with private;
@@ -30,18 +29,19 @@ package Alog.Facilities.Mock is
    type Handle is access all Instance;
 
    overriding
-   procedure Write_Message (Facility : Instance;
-                            Level    : Log_Level := Info;
-                            Msg      : String);
-   --  Implementation of Write_Message.
+   procedure Write
+     (Facility : Instance;
+      Level    : Log_Level := Info;
+      Msg      : String);
+   --  Implementation of Write.
 
    overriding
    procedure Setup (Facility : in out Instance) is null;
-   --  Implementation of Setup-procedure.
+   --  Implementation of Setup procedure.
 
    overriding
    procedure Teardown (Facility : in out Instance) is null;
-   --  Implementation of Teardown-procedure.
+   --  Implementation of Teardown procedure.
 
    Exception_Message : constant String := "DON'T PANIC! Test exception";
 

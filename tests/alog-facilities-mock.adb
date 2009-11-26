@@ -24,15 +24,13 @@ package body Alog.Facilities.Mock is
 
    -------------------------------------------------------------------------
 
-   procedure Write_Message (Facility : Instance;
-                            Level    : Log_Level := Info;
-                            Msg      : String)
+   procedure Write
+     (Facility : Instance;
+      Level    : Log_Level := Info;
+      Msg      : String)
    is
    begin
-
-      --  Raise Constraint_Error.
       raise Constraint_Error with Exception_Message;
-
-   end Write_Message;
+   end Write;
 
 end Alog.Facilities.Mock;
