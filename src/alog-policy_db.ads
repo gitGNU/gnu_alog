@@ -42,12 +42,21 @@ package Alog.Policy_DB is
    --  Set given loglevel for specified source string. If source is already
    --  present the loglevel is updated. Source strings are case-sensitive.
    --
-   --  Use wildcards to specify a wider scope for a range of log-sources. Source
+   --  Use wildcards to specify a loglevel for a range of log-sources. Source
    --  hierarchies are separated by dots, the wildcard is '*'. The following
-   --  example sets a Debug loglevel for all log-sources below Foo.Bar.
+   --  example sets a Debug loglevel for all log-sources in Foo.Bar
+   --  (including Foo.Bar).
    --
    --  Example:
-   --     Foo.Bar.* -> Debug
+   --     Foo.Bar.* = Debug
+   --
+   -- Direct matches take precedence over wildcard matches. In the following
+   -- example the loglevel for source 'Foo.Bar' is explicitly set to Info.
+   --
+   --  Example:
+   --     Foo.Bar   = Info
+   --     Foo.Bar.* = Debug
+
 
    procedure Set_Src_Loglevel (Sources : Maps.Wildcard_Level_Map);
    --  Apply source loglevels stored in map.
