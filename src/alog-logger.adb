@@ -231,7 +231,7 @@ package body Alog.Logger is
               Level   => Level,
               Message => To_String (Prefix) & Out_Msg);
       begin
-         Facility_Handle.Log_Message (Request => New_Request);
+         Facility_Handle.Process (Request => New_Request);
       end Do_Log;
 
       procedure Do_Transform (Transform_Handle : Transforms.Handle);

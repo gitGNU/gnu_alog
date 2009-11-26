@@ -70,10 +70,10 @@ package Alog.Facilities is
    --  Creates a timestamp and returns it as String. If no Time is given, the
    --  current time is used.
 
-   procedure Log_Message
+   procedure Process
      (Facility : Class;
       Request  : Log_Request.Instance);
-   --  Write a log request.
+   --  Process a log request.
 
    procedure Write_Message
      (Facility : Instance;

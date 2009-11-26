@@ -47,7 +47,7 @@ package body Facility_Tests.FD is
       F.Toggle_Write_Timestamp (State => False);
       F.Toggle_Write_Loglevel (State => False);
       F.Set_Logfile (Path => Testfile);
-      F.Log_Message
+      F.Process
         (Request => Create
            (Message => "This is a message without loglevel"));
 
@@ -71,7 +71,7 @@ package body Facility_Tests.FD is
    begin
       F.Toggle_Write_Timestamp (State => False);
       F.Set_Logfile (Path => Testfile);
-      F.Log_Message
+      F.Process
         (Request => Create
            (Message => "This is a message without timestamp"));
 
@@ -142,16 +142,16 @@ package body Facility_Tests.FD is
       F.Toggle_Write_Timestamp (State => False);
       F.Toggle_Write_Loglevel (State => True);
       F.Set_Logfile (Path => Testfile);
-      F.Log_Message
+      F.Process
         (Request => Create
            (Level   => Debug,
             Message => "this message should appear in log"));
       F.Set_Threshold (Level => Info);
-      F.Log_Message
+      F.Process
         (Request => Create
            (Level   => Debug,
             Message => "this message should not appear"));
-      F.Log_Message
+      F.Process
         (Request => Create
            (Level   => Info,
             Message => "this message should appear again"));
@@ -205,7 +205,7 @@ package body Facility_Tests.FD is
       F.Toggle_Write_Loglevel (State => True);
       F.Set_Logfile (Path => Testfile);
       for Lvl in Alog.Log_Level loop
-         F.Log_Message
+         F.Process
            (Request => Create
               (Level   => Lvl,
                Message => "Testmessage"));
@@ -233,7 +233,7 @@ package body Facility_Tests.FD is
 
       --  Open logfile, write test message.
       F.Set_Logfile (Path => Testfile);
-      F.Log_Message
+      F.Process
         (Request => Create
            (Message => "This is a test log-message"));
 

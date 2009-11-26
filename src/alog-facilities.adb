@@ -107,7 +107,7 @@ package body Alog.Facilities is
 
    -------------------------------------------------------------------------
 
-   procedure Log_Message
+   procedure Process
      (Facility : Class;
       Request  : Log_Request.Instance)
    is
@@ -131,7 +131,7 @@ package body Alog.Facilities is
          Facility.Write_Message (Level => Level,
                                  Msg   => To_String (Message));
       end if;
-   end Log_Message;
+   end Process;
 
    -------------------------------------------------------------------------
 
