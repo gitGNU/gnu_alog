@@ -1,5 +1,5 @@
 --
---  Copyright (c) 2008,
+--  Copyright (c) 2008-2009,
 --  Reto Buerki, Adrian-Ken Rueegsegger
 --  secunet SwissIT AG
 --
@@ -23,11 +23,13 @@
 
 with Ahven; use Ahven;
 
+with Alog.Log_Request;
 with Alog.Facilities.XMPP;
 
 package body Facility_Tests.XMPP is
 
    use Alog;
+   use Alog.Log_Request;
 
    -------------------------------------------------------------------------
 
@@ -58,10 +60,13 @@ package body Facility_Tests.XMPP is
 
       --  Try to send a log-message with no recipient specified first, should
       --  raise No_Recipient exception.
-      F.Write_Message (Level => DEBU,
-                       Msg   => "this should not work");
+      F.Process
+        (Request => Create
+           (Level   => Debug,
+            Message => "this should not work"));
 
       Fail (Message => "exception not thrown");
+
    exception
       when Alog.Facilities.XMPP.No_Recipient =>
          null;
@@ -74,10 +79,13 @@ package body Facility_Tests.XMPP is
    begin
       --  Try to send a log-message with no recipient specified first, should
       --  raise No_Recipient exception.
-      F.Write_Message (Level => DEBU,
-                       Msg   => "this should not work");
+      F.Process
+        (Request => Create
+           (Level   => Debug,
+            Message => "this should not work"));
 
       Fail (Message => "exception not thrown");
+
    exception
       when Alog.Facilities.XMPP.No_Sender =>
          null;
@@ -94,10 +102,13 @@ package body Facility_Tests.XMPP is
 
       --  Try to send a log-message with no server specified first, should
       --  raise No_Server exception.
-      F.Write_Message (Level => DEBU,
-                       Msg   => "this should not work");
+      F.Process
+        (Request => Create
+           (Level   => Debug,
+            Message => "this should not work"));
 
       Fail (Message => "exception not thrown");
+
    exception
       when Alog.Facilities.XMPP.No_Server =>
          null;
@@ -113,10 +124,13 @@ package body Facility_Tests.XMPP is
       F.Set_Recipient (JID   => "recipient@localhost");
       F.Set_Server (Name     => "localhost");
 
-      F.Write_Message (Level => DEBU,
-                       Msg   => "This is a test message from Alog!");
+      F.Process
+        (Request => Create
+           (Level   => Debug,
+            Message => "This is a test message from Alog!"));
 
       Fail (Message => "not yet implemented");
+
    exception
       when Alog.Facilities.XMPP.Delivery_Failed =>
          Fail (Message => "could not deliver msg");

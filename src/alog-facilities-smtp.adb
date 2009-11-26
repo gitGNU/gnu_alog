@@ -1,5 +1,5 @@
 --
---  Copyright (c) 2008,
+--  Copyright (c) 2008-2009,
 --  Reto Buerki, Adrian-Ken Rueegsegger
 --  secunet SwissIT AG
 --
@@ -89,9 +89,9 @@ package body Alog.Facilities.SMTP is
 
    -------------------------------------------------------------------------
 
-   procedure Write_Message
+   procedure Write
      (Facility : Instance;
-      Level    : Log_Level := INFO;
+      Level    : Log_Level := Info;
       Msg      : String)
    is
    begin
@@ -135,6 +135,6 @@ package body Alog.Facilities.SMTP is
             raise Delivery_Failed with AWS.SMTP.Status_Message (Status);
          end if;
       end;
-   end Write_Message;
+   end Write;
 
 end Alog.Facilities.SMTP;

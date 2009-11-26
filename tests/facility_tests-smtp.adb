@@ -1,5 +1,5 @@
 --
---  Copyright (c) 2008,
+--  Copyright (c) 2008-2009,
 --  Reto Buerki, Adrian-Ken Rueegsegger
 --  secunet SwissIT AG
 --
@@ -23,11 +23,13 @@
 
 with Ahven; use Ahven;
 
+with Alog.Log_Request;
 with Alog.Facilities.SMTP;
 
 package body Facility_Tests.SMTP is
 
    use Alog;
+   use Alog.Log_Request;
 
    -------------------------------------------------------------------------
 
@@ -55,10 +57,13 @@ package body Facility_Tests.SMTP is
    begin
       --  Try to send a log-message with no recipient specified first, should
       --  raise No_Recipient exception.
-      F.Write_Message (Level => DEBU,
-                       Msg   => "this should not work");
+      F.Process
+        (Request => Create
+           (Level   => Debug,
+            Message => "this should not work"));
 
       Fail (Message => "exception not thrown");
+
    exception
       when Alog.Facilities.SMTP.No_Recipient =>
          null;
@@ -73,10 +78,13 @@ package body Facility_Tests.SMTP is
                        EMail => "Testcase");
       --  Try to send a log-message with no server specified first, should
       --  raise No_Server exception.
-      F.Write_Message (Level => DEBU,
-                       Msg   => "this should not work");
+      F.Process
+        (Request => Create
+           (Level   => Debug,
+            Message => "this should not work"));
 
       Fail (Message => "exception not thrown");
+
    exception
       when Alog.Facilities.SMTP.No_Server =>
          null;
@@ -91,8 +99,11 @@ package body Facility_Tests.SMTP is
                        EMail => "test@example.ch");
       F.Set_Server (Name => "mta.example.ch");
 
-      F.Write_Message (Level => DEBU,
-                       Msg   => "Testmessage");
+      F.Process
+        (Request => Create
+           (Level   => Debug,
+            Message => "Testmessage"));
+
    exception
       when Alog.Facilities.SMTP.Delivery_Failed =>
          Fail (Message => "could not deliver msg");

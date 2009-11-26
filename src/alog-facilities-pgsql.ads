@@ -119,11 +119,11 @@ package Alog.Facilities.Pgsql is
 private
 
    overriding
-   procedure Write_Message
+   procedure Write
      (Facility : Instance;
       Level    : Log_Level := Info;
       Msg      : String);
-   --  Implementation of Write_Message.
+   --  Implementation of the Write procedure for PGSQL.
 
    type Log_SQL_Table is tagged record
       Name             : Unbounded_String := To_Unbounded_String ("alog");

@@ -1,5 +1,5 @@
 --
---  Copyright (c) 2008,
+--  Copyright (c) 2008-2009,
 --  Reto Buerki, Adrian-Ken Rueegsegger
 --  secunet SwissIT AG
 --
@@ -220,9 +220,9 @@ package body Alog.Facilities.Pgsql is
 
    -------------------------------------------------------------------------
 
-   procedure Write_Message
+   procedure Write
      (Facility : Instance;
-      Level    : Log_Level := INFO;
+      Level    : Log_Level := Info;
       Msg      : String)
    is
       use APQ.PostgreSQL.Client;
@@ -272,6 +272,6 @@ package body Alog.Facilities.Pgsql is
       end if;
 
       C.Disconnect;
-   end Write_Message;
+   end Write;
 
 end Alog.Facilities.Pgsql;

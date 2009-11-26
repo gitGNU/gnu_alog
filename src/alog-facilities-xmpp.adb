@@ -1,5 +1,5 @@
 --
---  Copyright (c) 2008,
+--  Copyright (c) 2008-2009,
 --  Reto Buerki, Adrian-Ken Rueegsegger
 --  secunet SwissIT AG
 --
@@ -63,9 +63,9 @@ package body Alog.Facilities.XMPP is
 
    -------------------------------------------------------------------------
 
-   procedure Write_Message
+   procedure Write
      (Facility : Instance;
-      Level    : Log_Level := INFO;
+      Level    : Log_Level := Info;
       Msg      : String)
    is
       use AWS.Jabber;
@@ -127,6 +127,6 @@ package body Alog.Facilities.XMPP is
             raise Delivery_Failed
               with Ada.Exceptions.Exception_Message (Error);
       end;
-   end Write_Message;
+   end Write;
 
 end Alog.Facilities.XMPP;

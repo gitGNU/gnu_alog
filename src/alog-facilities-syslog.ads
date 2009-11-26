@@ -57,7 +57,7 @@ private
      (Facility : Instance;
       Level    : Log_Level := Info;
       Msg      : String);
-   --  Implementation of Write.
+   --  Implementation of the Write procedure for syslog.
 
    type Instance is new Alog.Facilities.Instance with null record;
 

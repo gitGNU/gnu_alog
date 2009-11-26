@@ -67,11 +67,11 @@ package Alog.Facilities.XMPP is
 private
 
    overriding
-   procedure Write_Message
+   procedure Write
      (Facility : Instance;
-      Level    : Log_Level := INFO;
+      Level    : Log_Level := Info;
       Msg      : String);
-   --  Implementation of Write_Message.
+   --  Implementation of the Write procedure for XMPP.
 
    type Sender_Account is tagged
       record

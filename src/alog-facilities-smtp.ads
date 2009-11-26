@@ -70,11 +70,11 @@ package Alog.Facilities.SMTP is
 private
 
    overriding
-   procedure Write_Message
+   procedure Write
      (Facility : Instance;
-      Level    : Log_Level := INFO;
+      Level    : Log_Level := Info;
       Msg      : String);
-   --  Implementation of Write_Message.
+   --  Implementation of the Write procedure for SMTP.
 
    function Format_Message
      (Facility : Instance;

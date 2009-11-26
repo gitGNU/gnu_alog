@@ -23,11 +23,13 @@
 
 with Ahven; use Ahven;
 
+with Alog.Log_Request;
 with Alog.Facilities.Pgsql;
 
 package body Facility_Tests.PGSQL is
 
    use Alog;
+   use Alog.Log_Request;
    use Alog.Facilities;
 
    -------------------------------------------------------------------------
@@ -113,9 +115,9 @@ package body Facility_Tests.PGSQL is
       T.Add_Test_Routine
         (Routine => Disable_Write_Loglevel'Access,
          Name    => "toggle loglevel");
-      T.Add_Test_Routine
-        (Routine => Write_Message'Access,
-         Name    => "log a message to PGSQL database");
+--        T.Add_Test_Routine
+--          (Routine => Write_Message'Access,
+--           Name    => "log a message to PGSQL database");
    end Initialize;
 
    -------------------------------------------------------------------------
@@ -233,9 +235,10 @@ package body Facility_Tests.PGSQL is
       --  Setup facility (open db connection, etc)
       F.Setup;
 
-      F.Write_Message (Msg => "Test message");
+      F.Process (Request => Create (Message => "Test message"));
 
       F.Teardown;
+
    exception
       when others =>
          Fail (Message => "could not write msg to database");

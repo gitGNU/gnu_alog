@@ -57,7 +57,7 @@ private
      (Facility : Instance;
       Level    : Log_Level := Info;
       Msg      : String);
-   --  Implementation of Write_Message.
+   --  Implementation of the Write procedure for FD.
 
    type Instance is new Alog.Facilities.Instance with record
       Log_File      : aliased Ada.Text_IO.File_Type;
