@@ -36,26 +36,12 @@ package body Alog.Policy_DB is
       Level  : Log_Level)
       return Boolean
    is
-      use type Alog.Maps.Cursor;
-      Position : Maps.Cursor;
    begin
-      if Source'Length > 0 then
-         Position := Src_Levels.Lookup (Key => Source);
-
-         if Position /= Maps.No_Element then
-            if Level >= Maps.Element (Position => Position) then
-               return True;
-            else
-               return False;
-            end if;
-         end if;
-      end if;
-
-      if Level >= Current_Default_Loglevel then
+      if Level >= Lookup_Src_Loglevel (Source => Source) then
          return True;
+      else
+         return False;
       end if;
-
-      return False;
    end Accept_Src;
 
    -------------------------------------------------------------------------
