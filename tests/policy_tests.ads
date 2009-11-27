@@ -49,4 +49,7 @@ package Policy_Tests is
    procedure Verify_Accept_Src;
    --  Verify accept source behavior.
 
+   procedure Lookup_Src;
+   --  Verify source lookup behavior.
+
 end Policy_Tests;

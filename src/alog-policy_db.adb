@@ -79,6 +79,21 @@ package body Alog.Policy_DB is
 
    -------------------------------------------------------------------------
 
+   function Lookup_Src_Loglevel (Source : String) return Log_Level is
+      use type Alog.Maps.Cursor;
+      Position : Maps.Cursor;
+   begin
+      Position := Src_Levels.Lookup (Key => Source);
+
+      if Position /= Maps.No_Element then
+         return Maps.Element (Position => Position);
+      end if;
+
+      return Current_Default_Loglevel;
+   end Lookup_Src_Loglevel;
+
+   -------------------------------------------------------------------------
+
    procedure Reset is
    begin
       Current_Default_Loglevel := Alog_Default_Level;

@@ -74,7 +74,26 @@ package body Policy_Tests is
       T.Add_Test_Routine
         (Routine => Verify_Accept_Src'Access,
          Name    => "accept source");
+      T.Add_Test_Routine
+        (Routine => Lookup_Src'Access,
+         Name    => "lookup source");
    end Initialize;
+
+   -------------------------------------------------------------------------
+
+   procedure Lookup_Src is
+   begin
+      DB.Set_Default_Loglevel (Level => Error);
+      DB.Set_Src_Loglevel (Source => "Lookup.*",
+                           Level  => Warning);
+
+      Assert (Condition => DB.Lookup_Src_Loglevel
+              (Source => "Lookup") = Warning,
+              Message   => "Lookup mismatch");
+      Assert (Condition => DB.Lookup_Src_Loglevel
+              (Source => "Nonexistent") = Error,
+              Message   => "Nonexistent mismatch");
+   end Lookup_Src;
 
    -------------------------------------------------------------------------
 
