@@ -1,5 +1,5 @@
 --
---  Copyright (c) 2008,
+--  Copyright (c) 2008-2009,
 --  Reto Buerki, Adrian-Ken Rueegsegger
 --  secunet SwissIT AG
 --
@@ -21,7 +21,7 @@
 --  MA  02110-1301  USA
 --
 
-with Ada.IO_Exceptions;
+with Ada.Directories;
 
 package body Alog.Facilities.File_Descriptor is
 
@@ -55,32 +55,38 @@ package body Alog.Facilities.File_Descriptor is
 
    -------------------------------------------------------------------------
 
-   procedure Set_Logfile (Facility : in out Instance; Path : String) is
-      use Ada.IO_Exceptions;
+   procedure Set_Logfile
+     (Facility : in out Instance;
+      Path     :        String;
+      Append   :        Boolean := True)
+   is
    begin
-      --  Somehow it's not possible to use Create() with Append_File,
-      --  the file always gets truncated.
-      if not Ada.Text_IO.Is_Open (File => Facility.Log_File) then
-         Ada.Text_IO.Open (File => Facility.Log_File,
-                           Name => Path,
-                           Mode => Ada.Text_IO.Append_File);
+      if not Ada.Directories.Exists (Name => Path) then
+         Ada.Text_IO.Create (File => Facility.Log_File,
+                             Mode => Ada.Text_IO.Out_File,
+                             Name => Path);
+      else
+         declare
+            File_Mode : Ada.Text_IO.File_Mode := Ada.Text_IO.Append_File;
+         begin
+            if not Append then
+               File_Mode := Ada.Text_IO.Out_File;
+            end if;
+
+            Ada.Text_IO.Open (File => Facility.Log_File,
+                              Name => Path,
+                              Mode => File_Mode);
+         end;
       end if;
+
+      --  Set logfile name and pointer to newly created file.
 
       Facility.Log_File_Name := To_Bounded_String (Path);
 
-      --  Set logfile name and pointer to newly created file.
-      --  Unrestricted_Access is needed here since we use a pointer
-      --  which is defined externaly in the Text_IO library.
-      Facility.Log_File_Ptr  := Facility.Log_File'Unrestricted_Access;
+      --  Unchecked_Access is needed here since we use a pointer which is
+      --  defined externaly in the Text_IO library.
 
-   exception
-      when Name_Error =>
-         --  Create file and re-call Set_Logfile.
-         Ada.Text_IO.Create (File => Facility.Log_File,
-                             Mode => Ada.Text_IO.Append_File,
-                             Name => Path);
-         Facility.Set_Logfile (Path => Path);
-
+      Facility.Log_File_Ptr := Facility.Log_File'Unchecked_Access;
    end Set_Logfile;
 
    -------------------------------------------------------------------------

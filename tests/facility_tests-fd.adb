@@ -115,21 +115,22 @@ package body Facility_Tests.FD is
       T.Add_Test_Routine
         (Routine => Set_Threshold_Fd'Access,
          Name    => "set fd threshold");
+      T.Add_Test_Routine
+        (Routine => Verify_Append'Access,
+         Name    => "append logic");
    end Initialize;
 
    -------------------------------------------------------------------------
 
    procedure Set_Invalid_Logfile_Fd is
-      use Ada.IO_Exceptions;
-
       F : File_Descriptor.Instance;
    begin
-      F.Set_Logfile (Path => "/not/allowed.log");
-      Fail (Message => "no exception raised!");
+      F.Set_Logfile (Path => "/not-allowed.log");
+      Fail (Message => "expected Name_Error");
+
    exception
-      when Name_Error =>
-         Assert (Condition => True,
-                 Message   => "expected exception occured!");
+      when Ada.IO_Exceptions.Name_Error =>
+         null;
    end Set_Invalid_Logfile_Fd;
 
    -------------------------------------------------------------------------
@@ -213,12 +214,77 @@ package body Facility_Tests.FD is
 
       F.Close_Logfile;
       Assert (Condition => Helpers.Assert_Files_Equal
-              (Filename1 => Reffile, Filename2 => Testfile),
+              (Filename1 => Reffile,
+               Filename2 => Testfile),
               Message   => "alignment incorrect");
 
       Ada.Directories.Delete_File (Name => Testfile);
       F.Teardown;
    end Trim_Loglevels_Fd;
+
+   -------------------------------------------------------------------------
+
+   procedure Verify_Append is
+   begin
+      Append :
+      declare
+         F1       : File_Descriptor.Instance;
+         F2       : File_Descriptor.Instance;
+         Testfile : constant String := "./data/Log_Append_Fd";
+         Reffile  : constant String := "./data/Log_Append_Fd.ref";
+      begin
+         F1.Toggle_Write_Timestamp (State => False);
+         F1.Set_Logfile (Path => Testfile);
+         F1.Process
+           (Request => Create
+              (Message => "Facility1"));
+         F1.Close_Logfile;
+
+         F2.Toggle_Write_Timestamp (State => False);
+         F2.Set_Logfile (Path => Testfile);
+         F2.Process
+           (Request => Create
+              (Message => "Facility2"));
+         F2.Close_Logfile;
+
+         Assert (Condition => Helpers.Assert_Files_Equal
+                 (Filename1 => Testfile,
+                  Filename2 => Reffile),
+                 Message   => "append does not work");
+
+         Ada.Directories.Delete_File (Name => Testfile);
+      end Append;
+
+      Overwrite :
+      declare
+         F1       : File_Descriptor.Instance;
+         F2       : File_Descriptor.Instance;
+         Testfile : constant String := "./data/Log_Overwrite_Fd";
+         Reffile  : constant String := "./data/Log_Overwrite_Fd.ref";
+      begin
+         F1.Toggle_Write_Timestamp (State => False);
+         F1.Set_Logfile (Path => Testfile);
+         F1.Process
+           (Request => Create
+              (Message => "Facility1"));
+         F1.Close_Logfile;
+
+         F2.Toggle_Write_Timestamp (State => False);
+         F2.Set_Logfile (Path   => Testfile,
+                         Append => False);
+         F2.Process
+           (Request => Create
+              (Message => "Facility2"));
+         F2.Close_Logfile;
+
+         Assert (Condition => Helpers.Assert_Files_Equal
+                 (Filename1 => Testfile,
+                  Filename2 => Reffile),
+                 Message   => "overwrite does not work");
+
+         Ada.Directories.Delete_File (Name => Testfile);
+      end Overwrite;
+   end Verify_Append;
 
    -------------------------------------------------------------------------
 

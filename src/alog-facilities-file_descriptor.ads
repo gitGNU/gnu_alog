@@ -1,5 +1,5 @@
 --
---  Copyright (c) 2008,
+--  Copyright (c) 2008-2009,
 --  Reto Buerki, Adrian-Ken Rueegsegger
 --  secunet SwissIT AG
 --
@@ -38,9 +38,10 @@ package Alog.Facilities.File_Descriptor is
 
    procedure Set_Logfile
      (Facility : in out Instance;
-      Path     :        String);
-   --  Set logfile to use. If not set, standard output is used
-   --  for logging (e.g. stdout).
+      Path     :        String;
+      Append   :        Boolean := True);
+   --  Set logfile to use. If not set, standard output is used for logging.
+   --  Set Append to False if an existing logfile should be overwritten.
 
    function Get_Logfile (Facility : Instance) return Ada.Text_IO.File_Access;
    --  Get currently used logfile.
