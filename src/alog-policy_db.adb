@@ -31,18 +31,14 @@ package body Alog.Policy_DB is
 
    -------------------------------------------------------------------------
 
-   function Accept_Src
-     (Source : String := "";
-      Level  : Log_Level)
+   function Accept_Ident
+     (Identifier : String := "";
+      Level      : Log_Level)
       return Boolean
    is
    begin
-      if Level >= Lookup (Identifier => Source) then
-         return True;
-      else
-         return False;
-      end if;
-   end Accept_Src;
+      return Level >= Lookup (Identifier => Identifier);
+   end Accept_Ident;
 
    -------------------------------------------------------------------------
 

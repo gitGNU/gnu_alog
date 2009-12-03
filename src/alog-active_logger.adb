@@ -171,9 +171,9 @@ package body Alog.Active_Logger is
       Msg    :        String)
    is
    begin
-      if not Policy_DB.Accept_Src
-        (Source => Source,
-         Level  => Level)
+      if not Policy_DB.Accept_Ident
+        (Identifier => Source,
+         Level      => Level)
       then
          return;
       end if;

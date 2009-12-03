@@ -174,31 +174,31 @@ package body Policy_Tests is
 
       DB.Set_Default_Loglevel (Level => Info);
 
-      Assert (Condition => not DB.Accept_Src (Level => Debug),
+      Assert (Condition => not DB.Accept_Ident (Level => Debug),
               Message   => "Debug accepted");
-      Assert (Condition => DB.Accept_Src (Level => Warning),
+      Assert (Condition => DB.Accept_Ident (Level => Warning),
               Message   => "Warning not accepted");
 
       DB.Set_Loglevel (Identifier => "Foo.*",
                        Level      => Error);
-      Assert (Condition => not DB.Accept_Src
-              (Source => "Foo",
-               Level  => Debug),
+      Assert (Condition => not DB.Accept_Ident
+              (Identifier => "Foo",
+               Level      => Debug),
               Message   => "Src debug accepted");
-      Assert (Condition => DB.Accept_Src
-              (Source => "Foo",
-               Level  => Critical),
+      Assert (Condition => DB.Accept_Ident
+              (Identifier => "Foo",
+               Level      => Critical),
               Message   => "Src critical not accepted");
-      Assert (Condition => DB.Accept_Src
-              (Source => "Bar",
-               Level  => Info),
+      Assert (Condition => DB.Accept_Ident
+              (Identifier => "Bar",
+               Level      => Info),
               Message   => "Src bar not accepted");
 
       DB.Set_Loglevel (Identifier => "Foobar.*",
                        Level      => Debug);
-      Assert (Condition => DB.Accept_Src
-              (Source => "Foobar",
-               Level  => Debug),
+      Assert (Condition => DB.Accept_Ident
+              (Identifier => "Foobar",
+               Level      => Debug),
               Message   => "Src foobar not accepted");
    end Verify_Accept_Src;
 
