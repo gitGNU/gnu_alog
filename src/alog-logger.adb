@@ -182,13 +182,6 @@ package body Alog.Logger is
 
    -------------------------------------------------------------------------
 
-   function Is_Write_Source (Logger : Instance) return Boolean is
-   begin
-      return Logger.Write_Source;
-   end Is_Write_Source;
-
-   -------------------------------------------------------------------------
-
    procedure Iterate
      (Logger  : Instance;
       Process : not null access
@@ -251,23 +244,9 @@ package body Alog.Logger is
          return;
       end if;
 
-      if Source'Length > 0 and then Logger.Write_Source then
-         Prefix := To_Unbounded_String (Source) & ": ";
-      end if;
-
       Logger.Iterate (Process => Do_Transform'Access);
       Logger.Iterate (Process => Do_Log'Access);
    end Log_Message;
-
-   -------------------------------------------------------------------------
-
-   procedure Toggle_Write_Source
-     (Logger : in out Instance;
-      State  :        Boolean)
-   is
-   begin
-      Logger.Write_Source := State;
-   end Toggle_Write_Source;
 
    -------------------------------------------------------------------------
 

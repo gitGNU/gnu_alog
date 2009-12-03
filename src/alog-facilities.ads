@@ -99,6 +99,14 @@ package Alog.Facilities is
    function Is_Write_Loglevel (Facility : Class) return Boolean;
    --  Returns the current value of Write_Loglevel.
 
+   procedure Toggle_Write_Source
+     (Facility : in out Class;
+      State    :        Boolean);
+   --  Enable/disable whether the source of the message is logged.
+
+   function Is_Write_Source (Facility : Class) return Boolean;
+   --  Returns True if writing of log message sources is enabled.
+
    procedure Setup (Facility : in out Instance) is null;
    --  Each facility must provide a Setup-procedure. These procedures are called
    --  by Logger instances when attaching Facilities. All needed operations
@@ -134,6 +142,9 @@ private
 
       Write_Loglevel   : Boolean := False;
       --  If True, the loglevel associated with the log message is written.
+
+      Write_Source     : Boolean := True;
+      --  If True, the source of a log message is prepended to the message.
    end record;
 
 end Alog.Facilities;

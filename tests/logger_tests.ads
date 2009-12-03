@@ -80,7 +80,4 @@ package Logger_Tests is
    procedure Loglevel_Handling;
    --  Test loglevel handling.
 
-   procedure Write_Source;
-   --  Test logging of log message sources.
-
 end Logger_Tests;

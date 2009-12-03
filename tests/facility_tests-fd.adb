@@ -39,55 +39,6 @@ package body Facility_Tests.FD is
 
    -------------------------------------------------------------------------
 
-   procedure Disable_Write_Loglevel_Fd is
-      F        : File_Descriptor.Instance;
-      Testfile : constant String := "./data/Disable_Write_Loglevel_Fd";
-      Reffile  : constant String := "./data/Disable_Write_Loglevel_Fd.ref";
-   begin
-      F.Toggle_Write_Timestamp (State => False);
-      F.Toggle_Write_Loglevel (State => False);
-      F.Set_Logfile (Path => Testfile);
-      F.Process
-        (Request => Create
-           (Message => "This is a message without loglevel"));
-
-      F.Close_Logfile;
-
-      Assert (Condition => Helpers.Assert_Files_Equal
-              (Filename1 => Reffile,
-               Filename2 => Testfile),
-              Message   => "unable to disable");
-
-      Ada.Directories.Delete_File (Name => Testfile);
-      F.Teardown;
-   end Disable_Write_Loglevel_Fd;
-
-   -------------------------------------------------------------------------
-
-   procedure Disable_Write_Timestamp_Fd is
-      F        : File_Descriptor.Instance;
-      Testfile : constant String := "./data/Disable_Write_Timestamp_Fd";
-      Reffile  : constant String := "./data/Disable_Write_Timestamp_Fd.ref";
-   begin
-      F.Toggle_Write_Timestamp (State => False);
-      F.Set_Logfile (Path => Testfile);
-      F.Process
-        (Request => Create
-           (Message => "This is a message without timestamp"));
-
-      F.Close_Logfile;
-
-      Assert (Condition => Helpers.Assert_Files_Equal
-              (Filename1 => Reffile,
-               Filename2 => Testfile),
-              Message   => "unable to disable");
-
-      Ada.Directories.Delete_File (Name => Testfile);
-      F.Teardown;
-   end Disable_Write_Timestamp_Fd;
-
-   -------------------------------------------------------------------------
-
    procedure Initialize (T : in out Testcase) is
    begin
       T.Set_Name (Name => "Tests for FD Facility");
@@ -104,11 +55,14 @@ package body Facility_Tests.FD is
         (Routine => Teardown_Fd'Access,
          Name    => "teardown fd facility");
       T.Add_Test_Routine
-        (Routine => Disable_Write_Timestamp_Fd'Access,
-         Name    => "disable fd timestamp");
+        (Routine => Toggle_Write_Timestamp_Fd'Access,
+         Name    => "toggle fd timestamp writing");
       T.Add_Test_Routine
-        (Routine => Disable_Write_Loglevel_Fd'Access,
-         Name    => "disable fd loglevel");
+        (Routine => Toggle_Write_Loglevel_Fd'Access,
+         Name    => "toggle fd loglevel writing");
+      T.Add_Test_Routine
+        (Routine => Toggle_Write_Source_Fd'Access,
+         Name    => "toggle fd source writing");
       T.Add_Test_Routine
         (Routine => Trim_Loglevels_Fd'Access,
          Name    => "fd loglevel align");
@@ -158,6 +112,95 @@ package body Facility_Tests.FD is
 
       Ada.Directories.Delete_File (Name => Testfile);
    end Teardown_Fd;
+
+   -------------------------------------------------------------------------
+
+   procedure Toggle_Write_Loglevel_Fd is
+      F        : File_Descriptor.Instance;
+      Testfile : constant String := "./data/Toggle_Write_Loglevel_Fd";
+      Reffile  : constant String := "./data/Toggle_Write_Loglevel_Fd.ref";
+   begin
+      F.Toggle_Write_Timestamp (State => False);
+      F.Toggle_Write_Loglevel (State => False);
+      F.Set_Logfile (Path => Testfile);
+      F.Process
+        (Request => Create
+           (Message => "This is a message without loglevel"));
+
+      F.Close_Logfile;
+
+      Assert (Condition => Helpers.Assert_Files_Equal
+              (Filename1 => Reffile,
+               Filename2 => Testfile),
+              Message   => "unable to disable");
+
+      Ada.Directories.Delete_File (Name => Testfile);
+      F.Teardown;
+   end Toggle_Write_Loglevel_Fd;
+
+   -------------------------------------------------------------------------
+
+   procedure Toggle_Write_Source_Fd is
+      F        : File_Descriptor.Instance;
+      Testfile : constant String := "./data/Toggle_Write_Source_Fd";
+      Reffile  : constant String := "./data/Toggle_Write_Source_Fd.ref";
+   begin
+      F.Toggle_Write_Timestamp (State => False);
+      F.Toggle_Write_Loglevel (State => True);
+      F.Set_Logfile (Path => Testfile);
+
+      F.Process
+        (Request => Create
+           (Level   => Warning,
+            Message => "No source given"));
+      F.Process
+        (Request => Create
+           (Level   => Info,
+            Source  => "Test",
+            Message => "Source 'Test'"));
+
+      F.Toggle_Write_Source (State => False);
+
+      F.Process
+        (Request => Create
+           (Level   => Info,
+            Source  => "Test",
+            Message => "Source 'Test', source writing disabled"));
+
+      F.Close_Logfile;
+
+      Assert (Condition => Helpers.Assert_Files_Equal
+              (Filename1 => Reffile,
+               Filename2 => Testfile),
+              Message   => "file mismatch");
+
+      Ada.Directories.Delete_File (Name => Testfile);
+      F.Teardown;
+   end Toggle_Write_Source_Fd;
+
+   -------------------------------------------------------------------------
+
+   procedure Toggle_Write_Timestamp_Fd is
+      F        : File_Descriptor.Instance;
+      Testfile : constant String := "./data/Toggle_Write_Timestamp_Fd";
+      Reffile  : constant String := "./data/Toggle_Write_Timestamp_Fd.ref";
+   begin
+      F.Toggle_Write_Timestamp (State => False);
+      F.Set_Logfile (Path => Testfile);
+      F.Process
+        (Request => Create
+           (Message => "This is a message without timestamp"));
+
+      F.Close_Logfile;
+
+      Assert (Condition => Helpers.Assert_Files_Equal
+              (Filename1 => Reffile,
+               Filename2 => Testfile),
+              Message   => "unable to disable");
+
+      Ada.Directories.Delete_File (Name => Testfile);
+      F.Teardown;
+   end Toggle_Write_Timestamp_Fd;
 
    -------------------------------------------------------------------------
 

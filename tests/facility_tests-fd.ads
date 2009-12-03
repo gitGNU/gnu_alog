@@ -42,11 +42,14 @@ package Facility_Tests.FD is
    procedure Teardown_Fd;
    --  Test Facility cleanup.
 
-   procedure Disable_Write_Timestamp_Fd;
+   procedure Toggle_Write_Timestamp_Fd;
    --  Test the timestamp enable/disable functionality.
 
-   procedure Disable_Write_Loglevel_Fd;
+   procedure Toggle_Write_Loglevel_Fd;
    --  Test the loglevel enable/disable functionality.
+
+   procedure Toggle_Write_Source_Fd;
+   --  Test the source writing enable/disable functionality.
 
    procedure Trim_Loglevels_Fd;
    --  Test alignment of loglevels.

@@ -306,9 +306,6 @@ package body Logger_Tests is
       T.Add_Test_Routine
         (Routine => Loglevel_Handling'Access,
          Name    => "loglevel handling");
-      T.Add_Test_Routine
-        (Routine => Write_Source'Access,
-         Name    => "write message source");
    end Initialize;
 
    -------------------------------------------------------------------------
@@ -625,49 +622,5 @@ package body Logger_Tests is
       Assert (Condition => Logger2.Facility_Count = 1,
               Message   => "logger2 empty");
    end Verify_Logger_Initialization;
-
-   -------------------------------------------------------------------------
-
-   procedure Write_Source is
-      Log      : Logger.Instance (Init => False);
-      Facility : constant Facilities.Handle :=
-        new Facilities.File_Descriptor.Instance;
-      Testfile : constant String := "./data/Write_Source";
-      Reffile  : constant String := "./data/Write_Source.ref";
-   begin
-      Facility.Toggle_Write_Timestamp (State => False);
-      Facility.Toggle_Write_Loglevel (State => True);
-
-      Facilities.File_Descriptor.Handle
-        (Facility).Set_Logfile (Testfile);
-
-      Log.Attach_Facility (Facility => Facility);
-
-      Assert (Condition => Log.Is_Write_Source,
-              Message   => "write source disabled");
-
-      Log.Log_Message (Level  => Warning,
-                       Msg    => "No source given");
-      Log.Log_Message (Source => "Test",
-                       Level  => Info,
-                       Msg    => "Source 'Test'");
-
-      Log.Toggle_Write_Source (State => False);
-      Assert (Condition => not Log.Is_Write_Source,
-              Message   => "write source still enabled");
-
-      Log.Log_Message (Source => "Test",
-                       Level  => Info,
-                       Msg    => "Source 'Test', source writing disabled");
-
-      Log.Clear;
-
-      Assert (Condition => Helpers.Assert_Files_Equal
-              (Filename1 => Reffile,
-               Filename2 => Testfile),
-              Message   => "Files not equal");
-
-      Ada.Directories.Delete_File (Name => Testfile);
-   end Write_Source;
 
 end Logger_Tests;

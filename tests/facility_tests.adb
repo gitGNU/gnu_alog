@@ -50,6 +50,9 @@ package body Facility_Tests is
         (Routine => Toggle_UTC_Timestamp'Access,
          Name    => "toggle UTC timestamp");
       T.Add_Test_Routine
+        (Routine => Toggle_Source'Access,
+         Name    => "toggle source writing");
+      T.Add_Test_Routine
         (Routine => Timestamp_Creation'Access,
          Name    => "timestamp creation");
    end Initialize;
@@ -107,6 +110,19 @@ package body Facility_Tests is
       Assert (Condition => F.Is_Write_Loglevel,
               Message   => "Loglevel writing not 'True'");
    end Toggle_Loglevel;
+
+   -------------------------------------------------------------------------
+
+   procedure Toggle_Source is
+      F : File_Descriptor.Instance;
+   begin
+      Assert (Condition => F.Is_Write_Source,
+              Message   => "Source writing is 'False' by default");
+
+      F.Toggle_Write_Source (State => False);
+      Assert (Condition => not F.Is_Write_Source,
+              Message   => "Source writing is still 'True'");
+   end Toggle_Source;
 
    -------------------------------------------------------------------------
 

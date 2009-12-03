@@ -95,6 +95,13 @@ package body Alog.Facilities is
 
    -------------------------------------------------------------------------
 
+   function Is_Write_Source (Facility : Class) return Boolean is
+   begin
+      return Facility.Write_Source;
+   end Is_Write_Source;
+
+   -------------------------------------------------------------------------
+
    function Is_Write_Timestamp (Facility : Class) return Boolean is
    begin
       return Facility.Write_Timestamp;
@@ -109,6 +116,7 @@ package body Alog.Facilities is
       Message : Unbounded_String;
       Level   : constant Log_Level := Request.Get_Log_Level;
       Msg     : constant String    := Request.Get_Message;
+      Source  : constant String    := Request.Get_Source;
    begin
       if Policy_DB.Accept_Ident
         (Identifier => Facility.Get_Name,
@@ -118,9 +126,15 @@ package body Alog.Facilities is
             Append (Source   => Message,
                     New_Item => Facility.Get_Timestamp & " ");
          end if;
+
          if Facility.Is_Write_Loglevel then
             Append (Source   => Message,
                     New_Item => "[" & Log_Level'Image (Level) (1 .. 4) & "] ");
+         end if;
+
+         if Source'Length > 0 and then Facility.Is_Write_Source then
+            Append (Source   => Message,
+                    New_Item => Source & ": ");
          end if;
 
          Append (Source   => Message,
@@ -160,6 +174,16 @@ package body Alog.Facilities is
    begin
       Facility.Write_Loglevel := State;
    end Toggle_Write_Loglevel;
+
+   -------------------------------------------------------------------------
+
+   procedure Toggle_Write_Source
+     (Facility : in out Class;
+      State    :        Boolean)
+   is
+   begin
+      Facility.Write_Source := State;
+   end Toggle_Write_Source;
 
    -------------------------------------------------------------------------
 

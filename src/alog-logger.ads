@@ -123,14 +123,6 @@ package Alog.Logger is
    --  Prior to actually processing the given log message the policy database is
    --  inquired if the log message with given source and level should be logged.
 
-   procedure Toggle_Write_Source
-     (Logger : in out Instance;
-      State  :        Boolean);
-   --  Enable/disable whether the source of the message is logged.
-
-   function Is_Write_Source (Logger : Instance) return Boolean;
-   --  Returns True if writing of log message sources is enabled.
-
    procedure Free is new Ada.Unchecked_Deallocation
      (Object => Facilities.Class,
       Name   => Facilities.Handle);
@@ -185,9 +177,6 @@ private
 
       Transforms   : MOTP.Map;
       --  Attached transforms.
-
-      Write_Source : Boolean := True;
-      --  If True, the source of a log message is prepended to the message.
    end record;
 
 end Alog.Logger;
