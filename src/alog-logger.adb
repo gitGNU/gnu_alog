@@ -237,15 +237,13 @@ package body Alog.Logger is
             Msg   => Out_Msg);
       end Do_Transform;
    begin
-      if not Policy_DB.Accept_Ident
+      if Policy_DB.Accept_Ident
         (Identifier => Source,
          Level      => Level)
       then
-         return;
+         Logger.Iterate (Process => Do_Transform'Access);
+         Logger.Iterate (Process => Do_Log'Access);
       end if;
-
-      Logger.Iterate (Process => Do_Transform'Access);
-      Logger.Iterate (Process => Do_Log'Access);
    end Log_Message;
 
    -------------------------------------------------------------------------

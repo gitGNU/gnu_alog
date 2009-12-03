@@ -171,23 +171,21 @@ package body Alog.Active_Logger is
       Msg    :        String)
    is
    begin
-      if not Policy_DB.Accept_Ident
+      if Policy_DB.Accept_Ident
         (Identifier => Source,
          Level      => Level)
       then
-         return;
+         declare
+            New_Request : constant Log_Request.Instance :=
+              Log_Request.Create
+                (ID      => Ada.Task_Identification.Current_Task,
+                 Source  => Source,
+                 Level   => Level,
+                 Message => Msg);
+         begin
+            Logger.Message_Queue.Put (Element => New_Request);
+         end;
       end if;
-
-      declare
-         New_Request : constant Log_Request.Instance :=
-           Log_Request.Create
-             (ID      => Ada.Task_Identification.Current_Task,
-              Source  => Source,
-              Level   => Level,
-              Message => Msg);
-      begin
-         Logger.Message_Queue.Put (Element => New_Request);
-      end;
    end Log_Message;
 
    -------------------------------------------------------------------------
