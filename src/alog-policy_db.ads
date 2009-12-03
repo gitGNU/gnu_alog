@@ -37,21 +37,22 @@ package Alog.Policy_DB is
    --  Return current default loglevel.
 
    procedure Set_Loglevel
-     (Source : String;
-      Level  : Log_Level);
-   --  Set given loglevel for specified source string. If source is already
-   --  present the loglevel is updated. Source strings are case-sensitive.
+     (Identifier : String;
+      Level      : Log_Level);
+   --  Set given loglevel for specified identifier string. If the identifier is
+   --  already present the loglevel is updated. Identifier strings are
+   --  case-sensitive.
    --
-   --  Use wildcards to specify a loglevel for a range of log-sources. Source
-   --  hierarchies are separated by dots, the wildcard is '*'. The following
-   --  example sets a Debug loglevel for all log-sources in Foo.Bar
-   --  (including Foo.Bar).
+   --  Use wildcards to specify a loglevel for a range of identifiers.
+   --  Identifier hierarchies are separated by dots, the wildcard is '*'. The
+   --  following example sets a Debug loglevel for all log-identifiers in
+   --  Foo.Bar (including Foo.Bar).
    --
    --  Example:
    --     Foo.Bar.* = Debug
    --
    --  Direct matches take precedence over wildcard matches. In the following
-   --  example the loglevel for source 'Foo.Bar' is explicitly set to Info.
+   --  example the loglevel for identifier 'Foo.Bar' is explicitly set to Info.
    --
    --  Example:
    --     Foo.Bar   = Info

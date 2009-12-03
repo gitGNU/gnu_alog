@@ -84,8 +84,8 @@ package body Policy_Tests is
    procedure Lookup_Src is
    begin
       DB.Set_Default_Loglevel (Level => Error);
-      DB.Set_Loglevel (Source => "Lookup.*",
-                       Level  => Warning);
+      DB.Set_Loglevel (Identifier => "Lookup.*",
+                       Level      => Warning);
 
       Assert (Condition => DB.Lookup_Src_Loglevel
               (Source => "Lookup") = Warning,
@@ -100,8 +100,8 @@ package body Policy_Tests is
    procedure Reset_Policy_DB is
    begin
       DB.Set_Default_Loglevel (Level => Error);
-      DB.Set_Loglevel (Source => "Foo",
-                       Level  => Warning);
+      DB.Set_Loglevel (Identifier => "Foo",
+                       Level      => Warning);
 
       DB.Reset;
 
@@ -143,13 +143,13 @@ package body Policy_Tests is
 
    procedure Src_Loglevel_Handling is
    begin
-      DB.Set_Loglevel (Source => "Foo",
-                       Level  => Info);
+      DB.Set_Loglevel (Identifier => "Foo",
+                       Level      => Info);
       Assert (Condition => DB.Get_Src_Loglevel (Source => "Foo") = Info,
               Message   => "Source loglevel mismatch");
 
-      DB.Set_Loglevel (Source => "Foo",
-                       Level  => Error);
+      DB.Set_Loglevel (Identifier => "Foo",
+                       Level      => Error);
       Assert (Condition => DB.Get_Src_Loglevel (Source => "Foo") = Error,
               Message   => "Unable to update source loglevel");
 
@@ -179,8 +179,8 @@ package body Policy_Tests is
       Assert (Condition => DB.Accept_Src (Level => Warning),
               Message   => "Warning not accepted");
 
-      DB.Set_Loglevel (Source => "Foo.*",
-                       Level  => Error);
+      DB.Set_Loglevel (Identifier => "Foo.*",
+                       Level      => Error);
       Assert (Condition => not DB.Accept_Src
               (Source => "Foo",
                Level  => Debug),
@@ -194,8 +194,8 @@ package body Policy_Tests is
                Level  => Info),
               Message   => "Src bar not accepted");
 
-      DB.Set_Loglevel (Source => "Foobar.*",
-                       Level  => Debug);
+      DB.Set_Loglevel (Identifier => "Foobar.*",
+                       Level      => Debug);
       Assert (Condition => DB.Accept_Src
               (Source => "Foobar",
                Level  => Debug),

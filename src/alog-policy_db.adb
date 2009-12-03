@@ -96,11 +96,11 @@ package body Alog.Policy_DB is
    -------------------------------------------------------------------------
 
    procedure Set_Loglevel
-     (Source : String;
-      Level  : Log_Level)
+     (Identifier : String;
+      Level      : Log_Level)
    is
    begin
-      Src_Levels.Insert (Key  => Source,
+      Src_Levels.Insert (Key  => Identifier,
                          Item => Level);
    end Set_Loglevel;
 
