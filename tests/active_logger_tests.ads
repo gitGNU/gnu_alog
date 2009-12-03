@@ -75,4 +75,7 @@ package Active_Logger_Tests is
    procedure Task_Termination;
    --  Test active logger task termination.
 
+   procedure Request_Queue_Length;
+   --  Test queue length getter.
+
 end Active_Logger_Tests;

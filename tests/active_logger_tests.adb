@@ -322,7 +322,24 @@ package body Active_Logger_Tests is
       T.Add_Test_Routine
         (Routine => Task_Termination'Access,
          Name    => "task termination");
+      T.Add_Test_Routine
+        (Routine => Request_Queue_Length'Access,
+         Name    => "request queue length");
    end Initialize;
+
+   -------------------------------------------------------------------------
+
+   procedure Request_Queue_Length is
+      Log : aliased Active_Logger.Instance (Init => False);
+   begin
+      declare
+         Shutdown : Active_Logger.Shutdown_Helper (Logger => Log'Access);
+         pragma Unreferenced (Shutdown);
+      begin
+         Assert (Condition => Log.Get_Queue_Length = 0,
+                 Message   => "Queue not empty");
+      end;
+   end Request_Queue_Length;
 
    -------------------------------------------------------------------------
 
