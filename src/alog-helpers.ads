@@ -38,16 +38,16 @@ package Alog.Helpers is
    procedure Read_Loglevels
      (Filename      :        String;
       Default_Level : in out Log_Level;
-      Sources       :    out Maps.Wildcard_Level_Map);
-   --  Read default loglevels and (optional) source loglevels from file given by
-   --  filename. The format is as follows:
+      Identifiers   :    out Maps.Wildcard_Level_Map);
+   --  Read default loglevels and (optional) identifier based loglevels from
+   --  file given by filename. The format is as follows:
    --
    --  # This is a comment (ignored)
    --
    --  # Default loglevel
    --  Default = Info
    --
-   --  # Source-specific loglevels
+   --  # Identifier-specific loglevels
    --  Foo.* = Debug
    --  Foo.Bar = Info
    --

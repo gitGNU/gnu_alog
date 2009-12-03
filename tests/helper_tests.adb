@@ -83,20 +83,20 @@ package body Helper_Tests is
    procedure Read_Config is
       Config_File   : constant String := "./data/Loglevel_Config.ref";
       Default_Level : Log_Level       := Debug;
-      Source_Map    : Maps.Wildcard_Level_Map;
+      Ident_Map     : Maps.Wildcard_Level_Map;
    begin
       Read_Loglevels (Filename      => Config_File,
                       Default_Level => Default_Level,
-                      Sources       => Source_Map);
+                      Identifiers   => Ident_Map);
 
       Assert (Condition => Default_Level = Info,
               Message   => "default loglevel mismatch");
 
-      Assert (Condition => Source_Map.Element (Key => "Foo.*") = Debug,
+      Assert (Condition => Ident_Map.Element (Key => "Foo.*") = Debug,
               Message   => "Foo.* mismatch");
-      Assert (Condition => Source_Map.Element (Key => "Foo.Bar") = Alert,
+      Assert (Condition => Ident_Map.Element (Key => "Foo.Bar") = Alert,
               Message   => "Foo.Bar mismatch");
-      Assert (Condition => Source_Map.Element (Key => "Foo.Foo") = Notice,
+      Assert (Condition => Ident_Map.Element (Key => "Foo.Foo") = Notice,
               Message   => "Foo.Foo mismatch");
    end Read_Config;
 
@@ -105,11 +105,11 @@ package body Helper_Tests is
    procedure Read_Config_Invalid_Loglevel is
       Config_File   : constant String := "./data/Loglevel_Config_Invalid1.ref";
       Default_Level : Log_Level       := Debug;
-      Source_Map    : Maps.Wildcard_Level_Map;
+      Ident_Map     : Maps.Wildcard_Level_Map;
    begin
       Read_Loglevels (Filename      => Config_File,
                       Default_Level => Default_Level,
-                      Sources       => Source_Map);
+                      Identifiers   => Ident_Map);
       Fail (Message => "expected Invalid_Config");
 
    exception
@@ -122,15 +122,15 @@ package body Helper_Tests is
    procedure Read_Config_Nodefault is
       Config_File   : constant String := "./data/Loglevel_Config_Nodef.ref";
       Default_Level : Log_Level       := Debug;
-      Source_Map    : Maps.Wildcard_Level_Map;
+      Ident_Map     : Maps.Wildcard_Level_Map;
    begin
       Read_Loglevels (Filename      => Config_File,
                       Default_Level => Default_Level,
-                      Sources       => Source_Map);
+                      Identifiers   => Ident_Map);
       Assert (Condition => Default_Level = Debug,
               Message   => "default loglevel changed");
 
-      Assert (Condition => Source_Map.Element (Key => "Foo.*") = Debug,
+      Assert (Condition => Ident_Map.Element (Key => "Foo.*") = Debug,
               Message   => "Foo.* mismatch");
    end Read_Config_Nodefault;
 
