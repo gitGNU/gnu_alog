@@ -21,13 +21,11 @@
 --  MA  02110-1301  USA
 --
 
-with Ada.Directories;
 with Ada.Exceptions.Is_Null_Occurrence;
 with Ada.Task_Identification;
 
 with Ahven;
 
-with Alog.Helpers;
 with Alog.Logger;
 with Alog.Tasked_Logger;
 with Alog.Facilities.File_Descriptor;
@@ -267,9 +265,6 @@ package body Tasked_Logger_Tests is
         (Routine => Detach_Transform_Unattached'Access,
          Name    => "detach not attached transform");
       T.Add_Test_Routine
-        (Routine => Log_One_FD_Facility'Access,
-         Name    => "log with tasked logger");
-      T.Add_Test_Routine
         (Routine => Verify_Logger_Initialization'Access,
          Name    => "logger initialization behavior");
       T.Add_Test_Routine
@@ -339,50 +334,6 @@ package body Tasked_Logger_Tests is
 
       Log.Clear;
    end Iterate_Facilities_Exceptions;
-
-   -------------------------------------------------------------------------
-
-   procedure Log_One_FD_Facility is
-      Log          : Tasked_Logger.Instance;
-      F_Count      : Natural;
-      Fd_Facility1 : constant Facilities.Handle :=
-        new Facilities.File_Descriptor.Instance;
-      Fd_Facility2 : constant Facilities.Handle :=
-        new Facilities.File_Descriptor.Instance;
-
-      Testfile     : constant String := "./data/Tasked_Log_One_FD_Facility";
-      Reffile      : constant String := "./data/Log_One_FD_Facility.ref";
-   begin
-      Fd_Facility1.Set_Name (Name => "Fd_Facility1");
-      Fd_Facility1.Toggle_Write_Timestamp (State => False);
-
-      Facilities.File_Descriptor.Handle
-        (Fd_Facility1).Set_Logfile (Path => Testfile);
-
-      Log.Attach_Facility (Facility => Fd_Facility1);
-      Log.Attach_Facility (Facility => Fd_Facility2);
-
-      Log.Facility_Count (Count => F_Count);
-      Assert (Condition => F_Count = 2,
-              Message   => "facility count not 2");
-
-      Log.Detach_Facility (Name => Fd_Facility2.Get_Name);
-      Log.Facility_Count (Count => F_Count);
-      Assert (Condition => F_Count = 1,
-              Message   => "facility count not 1");
-
-      Log.Log_Message (Level => Debug,
-                       Msg   => "Logger testmessage, one fd facility");
-
-      Log.Clear;
-
-      Assert (Condition => Helpers.Assert_Files_Equal
-              (Filename1 => Reffile,
-               Filename2 => Testfile),
-              Message   => "files not equal");
-
-      Ada.Directories.Delete_File (Name => Testfile);
-   end Log_One_FD_Facility;
 
    -------------------------------------------------------------------------
 

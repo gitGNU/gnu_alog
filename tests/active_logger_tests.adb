@@ -305,12 +305,6 @@ package body Active_Logger_Tests is
         (Routine => Clear_A_Logger'Access,
          Name    => "clear logger");
       T.Add_Test_Routine
-        (Routine => Log_Multiple_FD_Facilities'Access,
-         Name    => "log to multiple fd facilities");
-      T.Add_Test_Routine
-        (Routine => Log_FD_Facility_with_Transform'Access,
-         Name    => "log to fd facility (lowercase transform)");
-      T.Add_Test_Routine
         (Routine => Verify_Logger_Initialization'Access,
          Name    => "logger initialization behavior");
       T.Add_Test_Routine
@@ -329,106 +323,6 @@ package body Active_Logger_Tests is
         (Routine => Task_Termination'Access,
          Name    => "task termination");
    end Initialize;
-
-   -------------------------------------------------------------------------
-
-   procedure Log_FD_Facility_with_Transform is
-      Log       : aliased Active_Logger.Instance (Init => False);
-      Facility  : constant Facilities.Handle :=
-        new Facilities.File_Descriptor.Instance;
-      Transform : constant Transforms.Handle :=
-        new Transforms.Casing.Instance;
-      Testfile  : constant String := "./data/Active_FD_Facility_Lowercase";
-      Reffile   : constant String := "./data/Log_FD_Facility_Lowercase.ref";
-   begin
-      declare
-         Shutdown : Active_Logger.Shutdown_Helper (Logger => Log'Access);
-         pragma Unreferenced (Shutdown);
-      begin
-         Facility.Toggle_Write_Timestamp (State => False);
-
-         --  Call facility fd specific procedures.
-         Facilities.File_Descriptor.Handle
-           (Facility).Set_Logfile (Testfile);
-
-         --  Call casing transform specific procedures.
-         Transforms.Casing.Handle
-           (Transform).Set_Name ("lowercase");
-
-         Log.Attach_Facility (Facility => Facility);
-         Log.Attach_Transform (Transform => Transform);
-
-         Log.Log_Message (Level => Debug,
-                          Msg   => "Logger Test Message, " &
-                          "FD Facility With Lowercase Transform");
-      end;
-
-      Assert (Condition => Helpers.Assert_Files_Equal
-              (Filename1 => Reffile,
-               Filename2 => Testfile),
-              Message   => "files not equal");
-
-      Ada.Directories.Delete_File (Name => Testfile);
-   end Log_FD_Facility_with_Transform;
-
-   -------------------------------------------------------------------------
-
-   procedure Log_Multiple_FD_Facilities is
-      Log       : aliased Active_Logger.Instance (Init => False);
-
-      Facility1 : constant Facilities.Handle :=
-        new Facilities.File_Descriptor.Instance;
-      Testfile1 : constant String := "./data/Active_Multi_FD_Facilities1";
-      Reffile1  : constant String := "./data/Log_Multiple_FD_Facilities1.ref";
-
-      Facility2 : constant Facilities.Handle :=
-        new Facilities.File_Descriptor.Instance;
-      Testfile2 : constant String := "./data/Active_Multi_FD_Facilities2";
-      Reffile2  : constant String := "./data/Log_Multiple_FD_Facilities2.ref";
-   begin
-      declare
-         Shutdown : Active_Logger.Shutdown_Helper (Logger => Log'Access);
-         pragma Unreferenced (Shutdown);
-      begin
-         --  Set facility parameters.
-         Facility1.Set_Name (Name => "Facility1");
-         Facility1.Toggle_Write_Timestamp (State => False);
-         Facility1.Toggle_Write_Loglevel (State => True);
-
-         Facility2.Set_Name (Name => "Facility2");
-         Facility2.Toggle_Write_Timestamp (State => False);
-         Facility2.Toggle_Write_Loglevel (State => True);
-
-         --  Call facility fd specific procedures.
-         Facilities.File_Descriptor.Handle
-           (Facility1).Set_Logfile (Testfile1);
-         Facilities.File_Descriptor.Handle
-           (Facility2).Set_Logfile (Testfile2);
-
-         --  Attach both facilities to logger instance.
-         Log.Attach_Facility (Facility => Facility1);
-         Log.Attach_Facility (Facility => Facility2);
-
-         --  Log two messages.
-         Log.Log_Message (Level => Debug,
-                          Msg   => "Logger testmessage, multiple facilities");
-         Log.Log_Message (Level => Debug,
-                          Msg   => "Logger testmessage, multiple facilities");
-      end;
-
-      Assert (Condition => Helpers.Assert_Files_Equal
-              (Filename1 => Reffile1,
-               Filename2 => Testfile1),
-              Message   => "file1 not equal");
-
-      Assert (Condition => Helpers.Assert_Files_Equal
-              (Filename1 => Reffile2,
-               Filename2 => Testfile2),
-              Message   => "file2 not equal");
-
-      Ada.Directories.Delete_File (Name => Testfile1);
-      Ada.Directories.Delete_File (Name => Testfile2);
-   end Log_Multiple_FD_Facilities;
 
    -------------------------------------------------------------------------
 

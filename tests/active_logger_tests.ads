@@ -57,12 +57,6 @@ package Active_Logger_Tests is
    procedure Clear_A_Logger;
    --  Test Logger cleanup.
 
-   procedure Log_Multiple_FD_Facilities;
-   --  Test logging to multiple fd based facilities.
-
-   procedure Log_FD_Facility_with_Transform;
-   --  Test logging to fd based facility with lowercase transform.
-
    procedure Verify_Logger_Initialization;
    --  Test active logger instance initialization behavior.
 

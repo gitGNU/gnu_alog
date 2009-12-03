@@ -51,9 +51,6 @@ package Tasked_Logger_Tests is
    --  Test Transform detaching of tasked logger with un-attached instance.
    --  Verify  that logger remains responsive after exception.
 
-   procedure Log_One_FD_Facility;
-   --  Test tasked logging to one fd based facility.
-
    procedure Verify_Logger_Initialization;
    --  Test tasked logger instance initialization behavior.
 
