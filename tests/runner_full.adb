@@ -24,48 +24,20 @@
 with Ahven.Text_Runner;
 with Ahven.Framework;
 
-with Helper_Tests;
-with Log_Request_Tests;
-with Protected_Container_Tests;
-with Facility_Tests.FD;
 with Facility_Tests.SMTP;
 with Facility_Tests.XMPP;
 with Facility_Tests.PGSQL;
-with Transform_Tests.Casing;
-with Logger_Tests;
-with Tasked_Logger_Tests;
-with Active_Logger_Tests;
 
 procedure Runner_Full is
    S : constant Ahven.Framework.Test_Suite_Access :=
      Ahven.Framework.Create_Suite (Suite_Name => "Alog full tests");
 begin
    Ahven.Framework.Add_Test (Suite => S.all,
-                             T     => new Helper_Tests.Testcase);
-   Ahven.Framework.Add_Test (Suite => S.all,
-                             T     => new Log_Request_Tests.Testcase);
-   Ahven.Framework.Add_Test (Suite => S.all,
-                             T     => new Protected_Container_Tests.Testcase);
-   Ahven.Framework.Add_Test (Suite => S.all,
-                             T     => new Facility_Tests.Testcase);
-   Ahven.Framework.Add_Test (Suite => S.all,
-                             T     => new Facility_Tests.FD.Testcase);
-   Ahven.Framework.Add_Test (Suite => S.all,
                              T     => new Facility_Tests.SMTP.Testcase);
    Ahven.Framework.Add_Test (Suite => S.all,
                              T     => new Facility_Tests.XMPP.Testcase);
    Ahven.Framework.Add_Test (Suite => S.all,
                              T     => new Facility_Tests.PGSQL.Testcase);
-   Ahven.Framework.Add_Test (Suite => S.all,
-                             T     => new Transform_Tests.Testcase);
-   Ahven.Framework.Add_Test (Suite => S.all,
-                             T     => new Transform_Tests.Casing.Testcase);
-   Ahven.Framework.Add_Test (Suite => S.all,
-                             T     => new Logger_Tests.Testcase);
-   Ahven.Framework.Add_Test (Suite => S.all,
-                             T     => new Tasked_Logger_Tests.Testcase);
-   Ahven.Framework.Add_Test (Suite => S.all,
-                             T     => new Active_Logger_Tests.Testcase);
 
    Ahven.Text_Runner.Run (Suite => S);
    Ahven.Framework.Release_Suite (T => S);
