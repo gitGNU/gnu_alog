@@ -57,4 +57,7 @@ package Facility_Tests.FD is
    procedure Verify_Append;
    --  Test set logfile append behavior.
 
+   procedure Dst_Loglevel_Handling;
+   --  Verify destination loglevel handling.
+
 end Facility_Tests.FD;

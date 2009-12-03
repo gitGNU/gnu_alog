@@ -29,6 +29,7 @@ with Ahven; use Ahven;
 
 with Alog.Helpers;
 with Alog.Log_Request;
+with Alog.Policy_DB;
 with Alog.Facilities.File_Descriptor;
 
 package body Facility_Tests.FD is
@@ -36,6 +37,43 @@ package body Facility_Tests.FD is
    use Alog;
    use Alog.Log_Request;
    use Alog.Facilities;
+
+   -------------------------------------------------------------------------
+
+   procedure Dst_Loglevel_Handling is
+      F        : File_Descriptor.Instance;
+      Testfile : constant String := "./data/Dst_Loglevel_Fd";
+      Reffile  : constant String := "./data/Dst_Loglevel_Fd.ref";
+   begin
+      F.Toggle_Write_Timestamp (State => False);
+      F.Toggle_Write_Loglevel (State => True);
+      F.Set_Logfile (Path => Testfile);
+
+      F.Set_Name (Name => "Dst_Facility");
+
+      Policy_DB.Set_Loglevel (Identifier => "Dst_Facility",
+                              Level      => Warning);
+
+      F.Process
+        (Request => Create
+           (Level   => Warning,
+            Message => "Testmessage"));
+      F.Process
+        (Request => Create
+           (Level   => Info,
+            Source  => "Test",
+            Message => "Testmessage"));
+
+      F.Close_Logfile;
+      Policy_DB.Reset;
+
+      Assert (Condition => Helpers.Assert_Files_Equal
+              (Filename1 => Reffile,
+               Filename2 => Testfile),
+              Message   => "files not equal");
+
+      Ada.Directories.Delete_File (Name => Testfile);
+   end Dst_Loglevel_Handling;
 
    -------------------------------------------------------------------------
 
@@ -69,6 +107,9 @@ package body Facility_Tests.FD is
       T.Add_Test_Routine
         (Routine => Verify_Append'Access,
          Name    => "append logic");
+      T.Add_Test_Routine
+        (Routine => Dst_Loglevel_Handling'Access,
+         Name    => "destination loglevels");
    end Initialize;
 
    -------------------------------------------------------------------------
@@ -135,7 +176,6 @@ package body Facility_Tests.FD is
               Message   => "unable to disable");
 
       Ada.Directories.Delete_File (Name => Testfile);
-      F.Teardown;
    end Toggle_Write_Loglevel_Fd;
 
    -------------------------------------------------------------------------
@@ -175,7 +215,6 @@ package body Facility_Tests.FD is
               Message   => "file mismatch");
 
       Ada.Directories.Delete_File (Name => Testfile);
-      F.Teardown;
    end Toggle_Write_Source_Fd;
 
    -------------------------------------------------------------------------
@@ -199,7 +238,6 @@ package body Facility_Tests.FD is
               Message   => "unable to disable");
 
       Ada.Directories.Delete_File (Name => Testfile);
-      F.Teardown;
    end Toggle_Write_Timestamp_Fd;
 
    -------------------------------------------------------------------------
@@ -226,7 +264,6 @@ package body Facility_Tests.FD is
               Message   => "alignment incorrect");
 
       Ada.Directories.Delete_File (Name => Testfile);
-      F.Teardown;
    end Trim_Loglevels_Fd;
 
    -------------------------------------------------------------------------
@@ -318,7 +355,6 @@ package body Facility_Tests.FD is
               Message   => "files not equal");
 
       Ada.Directories.Delete_File (Name => Testfile);
-      F.Teardown;
    end Write_Message_Fd;
 
 end Facility_Tests.FD;
