@@ -405,17 +405,14 @@ package body Active_Logger_Tests is
          Facilities.File_Descriptor.Handle
            (Facility2).Set_Logfile (Testfile2);
 
-         --  Set INFO-threshold for second facility.
-         Facility2.Set_Threshold (Level => Info);
-
          --  Attach both facilities to logger instance.
          Log.Attach_Facility (Facility => Facility1);
          Log.Attach_Facility (Facility => Facility2);
 
-         --  Log two messages with different loglevels.
+         --  Log two messages.
          Log.Log_Message (Level => Debug,
                           Msg   => "Logger testmessage, multiple facilities");
-         Log.Log_Message (Level => Info,
+         Log.Log_Message (Level => Debug,
                           Msg   => "Logger testmessage, multiple facilities");
       end;
 

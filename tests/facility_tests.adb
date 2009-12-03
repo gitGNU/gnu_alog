@@ -41,9 +41,6 @@ package body Facility_Tests is
         (Routine => Set_Name'Access,
          Name    => "set facility name");
       T.Add_Test_Routine
-        (Routine => Set_Threshold'Access,
-         Name    => "set threshold");
-      T.Add_Test_Routine
         (Routine => Toggle_Loglevel'Access,
          Name    => "toggle loglevel");
       T.Add_Test_Routine
@@ -67,17 +64,6 @@ package body Facility_Tests is
       Assert (Condition => F.Get_Name = Expected,
               Message => "name not equal");
    end Set_Name;
-
-   -------------------------------------------------------------------------
-
-   procedure Set_Threshold is
-      F        : File_Descriptor.Instance;
-      Expected : constant Log_Level := Debug;
-   begin
-      F.Set_Threshold (Level => Expected);
-      Assert (Condition => F.Get_Threshold = Expected,
-              Message => "Log_Level not equal");
-   end Set_Threshold;
 
    -------------------------------------------------------------------------
 

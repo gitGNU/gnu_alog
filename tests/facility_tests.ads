@@ -34,9 +34,6 @@ package Facility_Tests is
    procedure Set_Name;
    --  Set name of Facility test.
 
-   procedure Set_Threshold;
-   --  Test set threshold.
-
    procedure Toggle_Loglevel;
    --  Test loglevel-writing related procedures.
 

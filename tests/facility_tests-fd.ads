@@ -51,9 +51,6 @@ package Facility_Tests.FD is
    procedure Trim_Loglevels_Fd;
    --  Test alignment of loglevels.
 
-   procedure Set_Threshold_Fd;
-   --  Test Threshold-functionality with fd facility.
-
    procedure Verify_Append;
    --  Test set logfile append behavior.
 

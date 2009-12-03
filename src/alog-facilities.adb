@@ -25,6 +25,8 @@ with Ada.Calendar.Time_Zones;
 
 with GNAT.Calendar.Time_IO;
 
+with Alog.Policy_DB;
+
 package body Alog.Facilities is
 
    -------------------------------------------------------------------------
@@ -43,13 +45,6 @@ package body Alog.Facilities is
    begin
       return To_String (Facility.Name);
    end Get_Name;
-
-   -------------------------------------------------------------------------
-
-   function Get_Threshold (Facility : Class) return Log_Level is
-   begin
-      return Facility.Threshold;
-   end Get_Threshold;
 
    -------------------------------------------------------------------------
 
@@ -115,7 +110,10 @@ package body Alog.Facilities is
       Level   : constant Log_Level := Request.Get_Log_Level;
       Msg     : constant String    := Request.Get_Message;
    begin
-      if Level >= Facility.Get_Threshold then
+      if Policy_DB.Accept_Ident
+        (Identifier => Facility.Get_Name,
+         Level      => Level)
+      then
          if Facility.Is_Write_Timestamp then
             Append (Source   => Message,
                     New_Item => Facility.Get_Timestamp & " ");
@@ -142,14 +140,6 @@ package body Alog.Facilities is
    begin
       Facility.Name := To_Unbounded_String (Name);
    end Set_Name;
-
-   -------------------------------------------------------------------------
-
-   procedure Set_Threshold (Facility : in out Class;
-                            Level    :        Log_Level) is
-   begin
-      Facility.Threshold := Level;
-   end Set_Threshold;
 
    -------------------------------------------------------------------------
 

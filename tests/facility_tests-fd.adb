@@ -113,9 +113,6 @@ package body Facility_Tests.FD is
         (Routine => Trim_Loglevels_Fd'Access,
          Name    => "fd loglevel align");
       T.Add_Test_Routine
-        (Routine => Set_Threshold_Fd'Access,
-         Name    => "set fd threshold");
-      T.Add_Test_Routine
         (Routine => Verify_Append'Access,
          Name    => "append logic");
    end Initialize;
@@ -132,39 +129,6 @@ package body Facility_Tests.FD is
       when Ada.IO_Exceptions.Name_Error =>
          null;
    end Set_Invalid_Logfile_Fd;
-
-   -------------------------------------------------------------------------
-
-   procedure Set_Threshold_Fd is
-      F        : File_Descriptor.Instance;
-      Testfile : constant String := "./data/Set_Threshold_Fd";
-      Reffile  : constant String := "./data/Set_Threshold_Fd.ref";
-   begin
-      F.Toggle_Write_Timestamp (State => False);
-      F.Toggle_Write_Loglevel (State => True);
-      F.Set_Logfile (Path => Testfile);
-      F.Process
-        (Request => Create
-           (Level   => Debug,
-            Message => "this message should appear in log"));
-      F.Set_Threshold (Level => Info);
-      F.Process
-        (Request => Create
-           (Level   => Debug,
-            Message => "this message should not appear"));
-      F.Process
-        (Request => Create
-           (Level   => Info,
-            Message => "this message should appear again"));
-
-      F.Close_Logfile;
-      Assert (Condition => Helpers.Assert_Files_Equal
-              (Filename1 => Reffile, Filename2 => Testfile),
-              Message   => "threshold does not work");
-
-      Ada.Directories.Delete_File (Name => Testfile);
-      F.Teardown;
-   end Set_Threshold_Fd;
 
    -------------------------------------------------------------------------
 

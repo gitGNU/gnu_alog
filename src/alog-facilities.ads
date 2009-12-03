@@ -56,13 +56,6 @@ package Alog.Facilities is
    function Get_Name (Facility : Class) return String;
    --  Get facility name.
 
-   procedure Set_Threshold (Facility : in out Class;
-                            Level    :        Log_Level);
-   --  Set facility log level treshold.
-
-   function Get_Threshold (Facility : Class) return Log_Level;
-   --  Get facility log level treshold.
-
    function Get_Timestamp
      (Facility : Class;
       Time     : Ada.Calendar.Time := Ada.Calendar.Clock)
@@ -128,9 +121,6 @@ private
         To_Unbounded_String (Ada.Command_Line.Command_Name);
       --  Facility Name. Defaults to command-name (first argument). If multiple
       --  facilities are used, names must be set differently.
-
-      Threshold        : Log_Level := Debug;
-      --  Facility default threshold.
 
       Timestamp_Format : String (1 .. 11) := "%b %d %Y %T";
       --  Default timestamp format to use in this facility.
