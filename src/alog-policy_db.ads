@@ -66,9 +66,9 @@ package Alog.Policy_DB is
    --  exception if no entry for given identifier is found (exact match only, no
    --  wildcard lookup).
 
-   function Lookup_Src_Loglevel (Source : String) return Log_Level;
-   --  Return loglevel for given source string. Returns the closest match, if no
-   --  associated loglevel is found the default loglevel is returned.
+   function Lookup (Identifier : String) return Log_Level;
+   --  Return loglevel for given identifier string. Returns the closest match,
+   --  if no associated loglevel is found the default loglevel is returned.
 
    procedure Reset;
    --  Reset the logging policy database to the initial state.

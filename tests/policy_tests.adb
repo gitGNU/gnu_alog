@@ -87,11 +87,11 @@ package body Policy_Tests is
       DB.Set_Loglevel (Identifier => "Lookup.*",
                        Level      => Warning);
 
-      Assert (Condition => DB.Lookup_Src_Loglevel
-              (Source => "Lookup") = Warning,
+      Assert (Condition => DB.Lookup
+              (Identifier => "Lookup") = Warning,
               Message   => "Lookup mismatch");
-      Assert (Condition => DB.Lookup_Src_Loglevel
-              (Source => "Nonexistent") = Error,
+      Assert (Condition => DB.Lookup
+              (Identifier => "Nonexistent") = Error,
               Message   => "Nonexistent mismatch");
    end Lookup_Src;
 

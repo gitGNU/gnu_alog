@@ -37,7 +37,7 @@ package body Alog.Policy_DB is
       return Boolean
    is
    begin
-      if Level >= Lookup_Src_Loglevel (Source => Source) then
+      if Level >= Lookup (Identifier => Source) then
          return True;
       else
          return False;
@@ -65,18 +65,18 @@ package body Alog.Policy_DB is
 
    -------------------------------------------------------------------------
 
-   function Lookup_Src_Loglevel (Source : String) return Log_Level is
+   function Lookup (Identifier : String) return Log_Level is
       use type Alog.Maps.Cursor;
       Position : Maps.Cursor;
    begin
-      Position := Src_Levels.Lookup (Key => Source);
+      Position := Src_Levels.Lookup (Key => Identifier);
 
       if Position /= Maps.No_Element then
          return Maps.Element (Position => Position);
       end if;
 
       return Current_Default_Loglevel;
-   end Lookup_Src_Loglevel;
+   end Lookup;
 
    -------------------------------------------------------------------------
 
