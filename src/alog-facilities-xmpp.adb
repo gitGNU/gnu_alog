@@ -68,6 +68,7 @@ package body Alog.Facilities.XMPP is
       Level    : Log_Level := Info;
       Msg      : String)
    is
+      pragma Unreferenced (Level);
       use AWS.Jabber;
    begin
       --  Raise exception if no sender has been set.
@@ -83,11 +84,6 @@ package body Alog.Facilities.XMPP is
       --  Raise exception if no server has been set.
       if not Facility.Is_Server then
          raise No_Server;
-      end if;
-
-      --  Check threshold first.
-      if Level > Facility.Get_Threshold then
-         return;
       end if;
 
       declare
