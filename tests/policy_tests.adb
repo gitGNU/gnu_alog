@@ -56,6 +56,33 @@ package body Policy_Tests is
 
    -------------------------------------------------------------------------
 
+   procedure Ident_Loglevel_Handling is
+   begin
+      DB.Set_Loglevel (Identifier => "Foo",
+                       Level      => Info);
+      Assert (Condition => DB.Get_Loglevel (Identifier => "Foo") = Info,
+              Message   => "Ident loglevel mismatch");
+
+      DB.Set_Loglevel (Identifier => "Foo",
+                       Level      => Error);
+      Assert (Condition => DB.Get_Loglevel (Identifier => "Foo") = Error,
+              Message   => "Unable to update identifier loglevel");
+
+      declare
+         Level : Log_Level;
+         pragma Unreferenced (Level);
+      begin
+         Level := DB.Get_Loglevel (Identifier => "Bar");
+         Fail (Message => "Expected No_Ident_Loglevel");
+
+      exception
+         when DB.No_Ident_Loglevel =>
+            null;
+      end;
+   end Ident_Loglevel_Handling;
+
+   -------------------------------------------------------------------------
+
    procedure Initialize (T : in out Testcase) is
    begin
       T.Set_Name (Name => "Tests for the logging policy database");
@@ -66,22 +93,22 @@ package body Policy_Tests is
         (Routine => Default_Loglevel_Handling'Access,
          Name    => "default loglevel handling");
       T.Add_Test_Routine
-        (Routine => Src_Loglevel_Handling'Access,
-         Name    => "source loglevel handling");
+        (Routine => Ident_Loglevel_Handling'Access,
+         Name    => "identifier based loglevel handling");
       T.Add_Test_Routine
-        (Routine => Set_Sources_Map'Access,
-         Name    => "set source map");
+        (Routine => Set_Identifier_Map'Access,
+         Name    => "set identifier loglevel map");
       T.Add_Test_Routine
-        (Routine => Verify_Accept_Src'Access,
-         Name    => "accept source");
+        (Routine => Verify_Accept_Ident'Access,
+         Name    => "accept identifier");
       T.Add_Test_Routine
-        (Routine => Lookup_Src'Access,
-         Name    => "lookup source");
+        (Routine => Lookup_Ident'Access,
+         Name    => "lookup identifier");
    end Initialize;
 
    -------------------------------------------------------------------------
 
-   procedure Lookup_Src is
+   procedure Lookup_Ident is
    begin
       DB.Set_Default_Loglevel (Level => Error);
       DB.Set_Loglevel (Identifier => "Lookup.*",
@@ -93,7 +120,7 @@ package body Policy_Tests is
       Assert (Condition => DB.Lookup
               (Identifier => "Nonexistent") = Error,
               Message   => "Nonexistent mismatch");
-   end Lookup_Src;
+   end Lookup_Ident;
 
    -------------------------------------------------------------------------
 
@@ -123,7 +150,7 @@ package body Policy_Tests is
 
    -------------------------------------------------------------------------
 
-   procedure Set_Sources_Map is
+   procedure Set_Identifier_Map is
       Map : Maps.Wildcard_Level_Map;
    begin
       Map.Insert (Key  => "Foo",
@@ -134,41 +161,14 @@ package body Policy_Tests is
       DB.Set_Loglevel (Identifiers => Map);
 
       Assert (Condition => DB.Get_Loglevel (Identifier => "Foo") = Notice,
-              Message   => "Foo source loglevel mismatch");
+              Message   => "Foo identifier loglevel mismatch");
       Assert (Condition => DB.Get_Loglevel (Identifier => "Bar") = Warning,
-              Message   => "Bar source loglevel mismatch");
-   end Set_Sources_Map;
+              Message   => "Bar identifier loglevel mismatch");
+   end Set_Identifier_Map;
 
    -------------------------------------------------------------------------
 
-   procedure Src_Loglevel_Handling is
-   begin
-      DB.Set_Loglevel (Identifier => "Foo",
-                       Level      => Info);
-      Assert (Condition => DB.Get_Loglevel (Identifier => "Foo") = Info,
-              Message   => "Source loglevel mismatch");
-
-      DB.Set_Loglevel (Identifier => "Foo",
-                       Level      => Error);
-      Assert (Condition => DB.Get_Loglevel (Identifier => "Foo") = Error,
-              Message   => "Unable to update source loglevel");
-
-      declare
-         Level : Log_Level;
-         pragma Unreferenced (Level);
-      begin
-         Level := DB.Get_Loglevel (Identifier => "Bar");
-         Fail (Message => "Expected No_Ident_Loglevel");
-
-      exception
-         when DB.No_Ident_Loglevel =>
-            null;
-      end;
-   end Src_Loglevel_Handling;
-
-   -------------------------------------------------------------------------
-
-   procedure Verify_Accept_Src is
+   procedure Verify_Accept_Ident is
    begin
       DB.Reset;
 
@@ -200,6 +200,6 @@ package body Policy_Tests is
               (Identifier => "Foobar",
                Level      => Debug),
               Message   => "Src foobar not accepted");
-   end Verify_Accept_Src;
+   end Verify_Accept_Ident;
 
 end Policy_Tests;

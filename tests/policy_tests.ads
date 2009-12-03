@@ -40,16 +40,16 @@ package Policy_Tests is
    procedure Default_Loglevel_Handling;
    --  Test default loglevel handling.
 
-   procedure Src_Loglevel_Handling;
-   --  Test setting/getting of source loglevels.
+   procedure Ident_Loglevel_Handling;
+   --  Test setting/getting of identifier based loglevels.
 
-   procedure Set_Sources_Map;
-   --  Test setting of source loglevels with wildcard map.
+   procedure Set_Identifier_Map;
+   --  Test setting of identifier based loglevels with wildcard map.
 
-   procedure Verify_Accept_Src;
-   --  Verify accept source behavior.
+   procedure Verify_Accept_Ident;
+   --  Verify accept identifier behavior.
 
-   procedure Lookup_Src;
-   --  Verify source lookup behavior.
+   procedure Lookup_Ident;
+   --  Verify identifier lookup behavior.
 
 end Policy_Tests;
