@@ -58,8 +58,8 @@ package Alog.Policy_DB is
    --     Foo.Bar   = Info
    --     Foo.Bar.* = Debug
 
-   procedure Set_Src_Loglevel (Sources : Maps.Wildcard_Level_Map);
-   --  Apply source loglevels stored in map.
+   procedure Set_Loglevel (Identifiers : Maps.Wildcard_Level_Map);
+   --  Apply loglevels for identifiers stored in map.
 
    function Get_Src_Loglevel (Source : String) return Log_Level;
    --  Return loglevel for given source string. Raises No_Source_Loglevel

@@ -131,7 +131,7 @@ package body Policy_Tests is
       Map.Insert (Key  => "Bar",
                   Item => Warning);
 
-      DB.Set_Src_Loglevel (Sources => Map);
+      DB.Set_Loglevel (Identifiers => Map);
 
       Assert (Condition => DB.Get_Src_Loglevel (Source => "Foo") = Notice,
               Message   => "Foo source loglevel mismatch");

@@ -106,9 +106,9 @@ package body Alog.Policy_DB is
 
    -------------------------------------------------------------------------
 
-   procedure Set_Src_Loglevel (Sources : Maps.Wildcard_Level_Map) is
+   procedure Set_Loglevel (Identifiers : Maps.Wildcard_Level_Map) is
    begin
-      Src_Levels := Sources;
-   end Set_Src_Loglevel;
+      Src_Levels := Identifiers;
+   end Set_Loglevel;
 
 end Alog.Policy_DB;
