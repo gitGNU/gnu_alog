@@ -26,8 +26,8 @@ package body Alog.Policy_DB is
    Current_Default_Loglevel : Log_Level := Alog_Default_Level;
    --  Current default loglevel.
 
-   Src_Levels : Maps.Wildcard_Level_Map;
-   --  Source loglevels.
+   Ident_Levels : Maps.Wildcard_Level_Map;
+   --  Identifier based loglevels.
 
    -------------------------------------------------------------------------
 
@@ -55,7 +55,7 @@ package body Alog.Policy_DB is
 
    function Get_Loglevel (Identifier : String) return Log_Level is
    begin
-      return Src_Levels.Element (Key => Identifier);
+      return Ident_Levels.Element (Key => Identifier);
 
    exception
       when Constraint_Error =>
@@ -69,7 +69,7 @@ package body Alog.Policy_DB is
       use type Alog.Maps.Cursor;
       Position : Maps.Cursor;
    begin
-      Position := Src_Levels.Lookup (Key => Identifier);
+      Position := Ident_Levels.Lookup (Key => Identifier);
 
       if Position /= Maps.No_Element then
          return Maps.Element (Position => Position);
@@ -83,7 +83,7 @@ package body Alog.Policy_DB is
    procedure Reset is
    begin
       Current_Default_Loglevel := Alog_Default_Level;
-      Src_Levels.Clear;
+      Ident_Levels.Clear;
    end Reset;
 
    -------------------------------------------------------------------------
@@ -100,7 +100,7 @@ package body Alog.Policy_DB is
       Level      : Log_Level)
    is
    begin
-      Src_Levels.Insert (Key  => Identifier,
+      Ident_Levels.Insert (Key  => Identifier,
                          Item => Level);
    end Set_Loglevel;
 
@@ -108,7 +108,7 @@ package body Alog.Policy_DB is
 
    procedure Set_Loglevel (Identifiers : Maps.Wildcard_Level_Map) is
    begin
-      Src_Levels := Identifiers;
+      Ident_Levels := Identifiers;
    end Set_Loglevel;
 
 end Alog.Policy_DB;
