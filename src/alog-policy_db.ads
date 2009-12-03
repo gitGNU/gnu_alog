@@ -61,9 +61,9 @@ package Alog.Policy_DB is
    procedure Set_Loglevel (Identifiers : Maps.Wildcard_Level_Map);
    --  Apply loglevels for identifiers stored in map.
 
-   function Get_Src_Loglevel (Source : String) return Log_Level;
-   --  Return loglevel for given source string. Raises No_Source_Loglevel
-   --  exception if no entry for given source is found (exact match only, no
+   function Get_Loglevel (Identifier : String) return Log_Level;
+   --  Return loglevel for given identifier string. Raises No_Ident_Loglevel
+   --  exception if no entry for given identifier is found (exact match only, no
    --  wildcard lookup).
 
    function Lookup_Src_Loglevel (Source : String) return Log_Level;
@@ -81,7 +81,7 @@ package Alog.Policy_DB is
    --  no source is given, the loglevel is verified against the default
    --  loglevel.
 
-   No_Source_Loglevel : exception;
-   --  Will be raised if loglevel is not found for a requested source.
+   No_Ident_Loglevel : exception;
+   --  Will be raised if loglevel is not found for a requested identifier.
 
 end Alog.Policy_DB;

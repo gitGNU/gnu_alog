@@ -53,15 +53,15 @@ package body Alog.Policy_DB is
 
    -------------------------------------------------------------------------
 
-   function Get_Src_Loglevel (Source : String) return Log_Level is
+   function Get_Loglevel (Identifier : String) return Log_Level is
    begin
-      return Src_Levels.Element (Key => Source);
+      return Src_Levels.Element (Key => Identifier);
 
    exception
       when Constraint_Error =>
-         raise No_Source_Loglevel with
-           "No loglevel for source '" & Source & "'";
-   end Get_Src_Loglevel;
+         raise No_Ident_Loglevel with
+           "No loglevel for identifier '" & Identifier & "'";
+   end Get_Loglevel;
 
    -------------------------------------------------------------------------
 

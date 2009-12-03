@@ -112,11 +112,11 @@ package body Policy_Tests is
          Src_Level : Log_Level;
          pragma Unreferenced (Src_Level);
       begin
-         Src_Level := DB.Get_Src_Loglevel (Source => "Foo");
+         Src_Level := DB.Get_Loglevel (Identifier => "Foo");
          Fail (Message => "Src levels not reset");
 
       exception
-         when DB.No_Source_Loglevel =>
+         when DB.No_Ident_Loglevel =>
             null;
       end;
    end Reset_Policy_DB;
@@ -133,9 +133,9 @@ package body Policy_Tests is
 
       DB.Set_Loglevel (Identifiers => Map);
 
-      Assert (Condition => DB.Get_Src_Loglevel (Source => "Foo") = Notice,
+      Assert (Condition => DB.Get_Loglevel (Identifier => "Foo") = Notice,
               Message   => "Foo source loglevel mismatch");
-      Assert (Condition => DB.Get_Src_Loglevel (Source => "Bar") = Warning,
+      Assert (Condition => DB.Get_Loglevel (Identifier => "Bar") = Warning,
               Message   => "Bar source loglevel mismatch");
    end Set_Sources_Map;
 
@@ -145,23 +145,23 @@ package body Policy_Tests is
    begin
       DB.Set_Loglevel (Identifier => "Foo",
                        Level      => Info);
-      Assert (Condition => DB.Get_Src_Loglevel (Source => "Foo") = Info,
+      Assert (Condition => DB.Get_Loglevel (Identifier => "Foo") = Info,
               Message   => "Source loglevel mismatch");
 
       DB.Set_Loglevel (Identifier => "Foo",
                        Level      => Error);
-      Assert (Condition => DB.Get_Src_Loglevel (Source => "Foo") = Error,
+      Assert (Condition => DB.Get_Loglevel (Identifier => "Foo") = Error,
               Message   => "Unable to update source loglevel");
 
       declare
          Level : Log_Level;
          pragma Unreferenced (Level);
       begin
-         Level := DB.Get_Src_Loglevel (Source => "Bar");
-         Fail (Message => "Expected No_Source_Loglevel");
+         Level := DB.Get_Loglevel (Identifier => "Bar");
+         Fail (Message => "Expected No_Ident_Loglevel");
 
       exception
-         when DB.No_Source_Loglevel =>
+         when DB.No_Ident_Loglevel =>
             null;
       end;
    end Src_Loglevel_Handling;
