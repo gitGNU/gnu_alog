@@ -23,54 +23,44 @@
     <node id="n1">
       <data key="d3">
         <y:GenericNode configuration="ShinyPlateNode">
-          <y:Geometry height="97.63876288659793" width="270.07175257731967" x="261.1906776202748" y="241.19257731958763"/>
+          <y:Geometry height="97.63876288659793" width="269.08371134020615" x="258.0220178264604" y="241.19257731958763"/>
           <y:Fill color="#D1DEFA" transparent="false"/>
           <y:BorderStyle hasColor="false" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="4.0" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="4.0" x="133.03587628865984" y="46.819381443298965"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="4.0" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="4.0" x="132.54185567010308" y="46.819381443298965"/>
         </y:GenericNode>
       </data>
     </node>
     <node id="n2">
       <data key="d3">
         <y:GenericNode configuration="ShinyPlateNode2">
-          <y:Geometry height="30.0" width="100.0" x="264.3593374140893" y="262.0"/>
+          <y:Geometry height="30.0" width="255.0" x="265.0638734965635" y="262.0"/>
           <y:Fill color="#C0C0C0" transparent="false"/>
           <y:BorderStyle hasColor="false" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.962890625" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="63.0859375" x="18.45703125" y="6.0185546875">Src_Levels</y:NodeLabel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.962890625" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="75.197265625" x="89.9013671875" y="6.0185546875">Ident_Levels</y:NodeLabel>
         </y:GenericNode>
       </data>
     </node>
     <node id="n3">
       <data key="d3">
-        <y:GenericNode configuration="ShinyPlateNode2">
-          <y:Geometry height="30.0" width="100.0" x="427.10572916666666" y="262.0"/>
-          <y:Fill color="#C0C0C0" transparent="false"/>
+        <y:GenericNode configuration="BevelNode3">
+          <y:Geometry height="30.0" width="269.0837113402062" x="258.02201782646034" y="222.0"/>
+          <y:Fill color="#7796F2" transparent="false"/>
           <y:BorderStyle hasColor="false" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.962890625" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="65.16015625" x="17.419921875" y="6.0185546875">Dst_Levels</y:NodeLabel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.962890625" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="59.248046875" x="104.91783223260313" y="6.0185546875">Policy_DB</y:NodeLabel>
         </y:GenericNode>
       </data>
     </node>
     <node id="n4">
       <data key="d3">
-        <y:GenericNode configuration="BevelNode3">
-          <y:Geometry height="30.0" width="278.22845360824743" x="258.02201782646034" y="222.0"/>
-          <y:Fill color="#7796F2" transparent="false"/>
+        <y:GenericNode configuration="ShinyPlateNode2">
+          <y:Geometry height="30.0" width="255.0" x="265.0638734965634" y="302.0"/>
+          <y:Fill color="#C0C0C0" transparent="false"/>
           <y:BorderStyle hasColor="false" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.962890625" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="59.248046875" x="109.49020336662375" y="6.0185546875">Policy_DB</y:NodeLabel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.962890625" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="99.888671875" x="77.5556640625" y="6.0185546875">Default_Loglevel</y:NodeLabel>
         </y:GenericNode>
       </data>
     </node>
     <node id="n5">
-      <data key="d3">
-        <y:GenericNode configuration="ShinyPlateNode2">
-          <y:Geometry height="30.0" width="100.0" x="264.3593374140893" y="302.0"/>
-          <y:Fill color="#C0C0C0" transparent="false"/>
-          <y:BorderStyle hasColor="false" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.962890625" modelName="internal" modelPosition="c" textColor="#000000" visible="true" width="46.1171875" x="26.94140625" y="6.0185546875">Default</y:NodeLabel>
-        </y:GenericNode>
-      </data>
-    </node>
-    <node id="n6">
       <data key="d3">
         <y:GenericNode configuration="BevelNode3">
           <y:Geometry height="30.0" width="100.0" x="258.0220178264604" y="118.0"/>
@@ -80,7 +70,7 @@
         </y:GenericNode>
       </data>
     </node>
-    <node id="n7">
+    <node id="n6">
       <data key="d3">
         <y:GenericNode configuration="BevelNode3">
           <y:Geometry height="30.0" width="100.0" x="427.10572916666666" y="118.0"/>
@@ -90,7 +80,7 @@
         </y:GenericNode>
       </data>
     </node>
-    <node id="n8">
+    <node id="n7">
       <data key="d3">
         <y:GenericNode configuration="BevelNode3">
           <y:Geometry height="30.0" width="100.0" x="575.0" y="66.0"/>
@@ -100,7 +90,7 @@
         </y:GenericNode>
       </data>
     </node>
-    <node id="n9">
+    <node id="n8">
       <data key="d3">
         <y:GenericNode configuration="BevelNode3">
           <y:Geometry height="30.0" width="100.0" x="575.0" y="118.0"/>
@@ -110,7 +100,7 @@
         </y:GenericNode>
       </data>
     </node>
-    <node id="n10">
+    <node id="n9">
       <data key="d3">
         <y:GenericNode configuration="BevelNode3">
           <y:Geometry height="30.0" width="100.0" x="575.0" y="170.0"/>
@@ -120,7 +110,7 @@
         </y:GenericNode>
       </data>
     </node>
-    <node id="n11">
+    <node id="n10">
       <data key="d2"><![CDATA[8]]></data>
       <data key="d3">
         <y:ImageNode>
@@ -132,7 +122,7 @@
         </y:ImageNode>
       </data>
     </node>
-    <node id="n12">
+    <node id="n11">
       <data key="d3">
         <y:GenericNode configuration="BevelNode3">
           <y:Geometry height="30.0" width="100.0" x="575.0" y="222.0"/>
@@ -142,40 +132,42 @@
         </y:GenericNode>
       </data>
     </node>
-    <edge id="e0" source="n6" target="n7">
+    <edge id="e0" source="n5" target="n6">
       <data key="d6">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
           <y:LineStyle color="#808080" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.962890625" modelName="six_pos" modelPosition="stail" preferredPlacement="anywhere" ratio="0.5" textColor="#808080" visible="true" width="55.78515625" x="6.658966270001031" y="2.0">Process()</y:EdgeLabel>
+          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.962890625" modelName="six_pos" modelPosition="stail" preferredPlacement="anywhere" ratio="0.5" textColor="#808080" visible="true" width="47.98046875" x="10.134688724897899" y="2.0">Process</y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e1" source="n6" target="n4">
+    <edge id="e1" source="n5" target="n3">
       <data key="d6">
         <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="0.0" tx="-89.41124950514444" ty="-15.030907216494796"/>
+          <y:Path sx="0.0" sy="0.0" tx="-84.54185567010308" ty="-15.009684210526302"/>
           <y:LineStyle color="#808080" type="dashed" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.962890625" modelName="six_pos" modelPosition="ttail" preferredPlacement="anywhere" ratio="0.5" textColor="#808080" visible="true" width="74.623046875" x="1.8466783072486805" y="45.92463684082031">Accept_Src()</y:EdgeLabel>
+          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="31.92578125" modelName="six_pos" modelPosition="ttail" preferredPlacement="anywhere" ratio="0.5" textColor="#808080" visible="true" width="78.9296875" x="2.000014652632217" y="31.958175659179688">Accept_Ident
+(Src)</y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e2" source="n7" target="n4">
+    <edge id="e2" source="n6" target="n3">
       <data key="d6">
         <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="0.0" tx="78.6680278222443" ty="2.8494020618557556"/>
+          <y:Path sx="0.0" sy="0.0" tx="84.54185567010319" ty="-14.999578947368377"/>
           <y:LineStyle color="#808080" type="dashed" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.962890625" modelName="six_pos" modelPosition="ttail" preferredPlacement="anywhere" ratio="0.5" textColor="#808080" visible="true" width="76.697265625" x="1.4407673360709623" y="45.912506103515625">Accept_Dst()</y:EdgeLabel>
+          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="31.92578125" modelName="six_pos" modelPosition="ttail" preferredPlacement="anywhere" ratio="0.5" textColor="#808080" visible="true" width="78.9296875" x="1.999985758463481" y="31.956466674804688">Accept_Ident
+(Dst)</y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e3" source="n7" target="n9">
+    <edge id="e3" source="n6" target="n8">
       <data key="d6">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -185,18 +177,18 @@
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e4" source="n7" target="n8">
+    <edge id="e4" source="n6" target="n7">
       <data key="d6">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="-50.009765625" ty="0.0"/>
           <y:LineStyle color="#808080" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.962890625" modelName="six_pos" modelPosition="head" preferredPlacement="anywhere" ratio="0.5" textColor="#808080" visible="true" width="41.623046875" x="-21.66168828377363" y="-29.629600356807686">Write()</y:EdgeLabel>
+          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.962890625" modelName="six_pos" modelPosition="head" preferredPlacement="anywhere" ratio="0.5" textColor="#808080" visible="true" width="33.818359375" x="-13.857000783773628" y="-29.629600356807686">Write</y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e5" source="n7" target="n10">
+    <edge id="e5" source="n6" target="n9">
       <data key="d6">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="-50.009765625" ty="0.0"/>
@@ -206,13 +198,13 @@
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e6" source="n11" target="n6">
+    <edge id="e6" source="n10" target="n5">
       <data key="d6">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
           <y:LineStyle color="#808080" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.962890625" modelName="free" modelPosition="anywhere" preferredPlacement="anywhere" ratio="0.5" textColor="#808080" visible="true" width="89.107421875" x="-3.374967666049315" y="2.0">Log_Message()</y:EdgeLabel>
+          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.962890625" modelName="free" modelPosition="anywhere" preferredPlacement="anywhere" ratio="0.5" textColor="#808080" visible="true" width="81.302734375" x="0.5273760839506849" y="2.0">Log_Message</y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
       </data>
