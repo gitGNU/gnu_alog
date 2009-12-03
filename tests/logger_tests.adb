@@ -496,8 +496,8 @@ package body Logger_Tests is
       Log.Attach_Facility (Facility => Facility);
 
       Policy_DB.Set_Default_Loglevel (Level => Debug);
-      Policy_DB.Set_Src_Loglevel (Source => "Test",
-                                  Level  => Info);
+      Policy_DB.Set_Loglevel (Source => "Test",
+                              Level  => Info);
 
       Log.Log_Message (Source => "Test",
                        Level  => Debug,

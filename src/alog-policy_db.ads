@@ -36,7 +36,7 @@ package Alog.Policy_DB is
    function Get_Default_Loglevel return Log_Level;
    --  Return current default loglevel.
 
-   procedure Set_Src_Loglevel
+   procedure Set_Loglevel
      (Source : String;
       Level  : Log_Level);
    --  Set given loglevel for specified source string. If source is already
