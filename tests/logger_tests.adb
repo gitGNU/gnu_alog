@@ -357,12 +357,11 @@ package body Logger_Tests is
       Facility1 : constant Facilities.Handle :=
         new Facilities.File_Descriptor.Instance;
       Testfile1 : constant String := "./data/Log_Multiple_FD_Facilities1";
-      Reffile1  : constant String := "./data/Log_Multiple_FD_Facilities1.ref";
+      Reffile   : constant String := "./data/Log_Multiple_FD_Facilities.ref";
 
       Facility2 : constant Facilities.Handle :=
         new Facilities.File_Descriptor.Instance;
       Testfile2 : constant String := "./data/Log_Multiple_FD_Facilities2";
-      Reffile2  : constant String := "./data/Log_Multiple_FD_Facilities2.ref";
    begin
       --  Set facility parameters.
       Facility1.Set_Name (Name => "Facility1");
@@ -386,18 +385,18 @@ package body Logger_Tests is
       --  Log two messages.
       Log.Log_Message (Level => Debug,
                        Msg   => "Logger testmessage, multiple facilities");
-      Log.Log_Message (Level => Debug,
+      Log.Log_Message (Level => Info,
                        Msg   => "Logger testmessage, multiple facilities");
 
       Log.Clear;
 
       Assert (Condition => Helpers.Assert_Files_Equal
-              (Filename1 => Reffile1,
+              (Filename1 => Reffile,
                Filename2 => Testfile1),
               Message   => "file1 not equal");
 
       Assert (Condition => Helpers.Assert_Files_Equal
-              (Filename1 => Reffile2,
+              (Filename1 => Reffile,
                Filename2 => Testfile2),
               Message   => "file2 not equal");
 
