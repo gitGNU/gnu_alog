@@ -149,8 +149,7 @@
           <y:Path sx="0.0" sy="0.0" tx="-84.54185567010308" ty="-15.009684210526302"/>
           <y:LineStyle color="#808080" type="dashed" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="31.92578125" modelName="six_pos" modelPosition="ttail" preferredPlacement="anywhere" ratio="0.5" textColor="#808080" visible="true" width="78.9296875" x="2.000014652632217" y="31.958175659179688">Accept_Ident
-(Src)</y:EdgeLabel>
+          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.962890625" modelName="six_pos" modelPosition="ttail" preferredPlacement="anywhere" ratio="0.5" textColor="#808080" visible="true" width="66.818359375" x="2.000014652632217" y="45.92106628417969">Accept_Src</y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
       </data>
@@ -161,8 +160,7 @@
           <y:Path sx="0.0" sy="0.0" tx="84.54185567010319" ty="-14.999578947368377"/>
           <y:LineStyle color="#808080" type="dashed" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="31.92578125" modelName="six_pos" modelPosition="ttail" preferredPlacement="anywhere" ratio="0.5" textColor="#808080" visible="true" width="78.9296875" x="1.999985758463481" y="31.956466674804688">Accept_Ident
-(Dst)</y:EdgeLabel>
+          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.962890625" modelName="six_pos" modelPosition="ttail" preferredPlacement="anywhere" ratio="0.5" textColor="#808080" visible="true" width="68.892578125" x="1.999985758463481" y="45.91935729980469">Accept_Dst</y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
       </data>
