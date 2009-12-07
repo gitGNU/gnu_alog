@@ -77,9 +77,17 @@ package Alog.Policy_DB is
      (Identifier : String := "";
       Level      : Log_Level)
       return Boolean;
-   --  Returns True if the given loglevel is accepted for a source identifier
-   --  string. If no identifier is given, the loglevel is verified against the
-   --  default loglevel.
+   --  Returns True if the given loglevel is accepted for a source identifier.
+   --  If no identifier is given, the loglevel is verified against the default
+   --  loglevel.
+
+   function Accept_Dst
+     (Identifier : String;
+      Level      : Log_Level)
+      return Boolean;
+   --  Returns True if the given loglevel is accepted for a destination
+   --  identifier. If no match for the given identifier is found True is
+   --  returned.
 
    No_Ident_Loglevel : exception;
    --  Will be raised if loglevel is not found for a requested identifier.

@@ -49,6 +49,9 @@ package Policy_Tests is
    procedure Verify_Accept_Src;
    --  Verify accept src behavior.
 
+   procedure Verify_Accept_Dst;
+   --  Verify accept dst behavior.
+
    procedure Lookup_Ident;
    --  Verify identifier lookup behavior.
 

@@ -102,6 +102,9 @@ package body Policy_Tests is
         (Routine => Verify_Accept_Src'Access,
          Name    => "accept source");
       T.Add_Test_Routine
+        (Routine => Verify_Accept_Dst'Access,
+         Name    => "accept destination");
+      T.Add_Test_Routine
         (Routine => Lookup_Ident'Access,
          Name    => "lookup identifier");
    end Initialize;
@@ -165,6 +168,36 @@ package body Policy_Tests is
       Assert (Condition => DB.Get_Loglevel (Identifier => "Bar") = Warning,
               Message   => "Bar identifier loglevel mismatch");
    end Set_Identifier_Map;
+
+   -------------------------------------------------------------------------
+
+   procedure Verify_Accept_Dst is
+   begin
+      DB.Reset;
+
+      --  Default loglevel should be ignored
+
+      DB.Set_Default_Loglevel (Level => Info);
+      Assert (Condition => DB.Accept_Dst
+              (Identifier => "Foobar",
+               Level      => Debug),
+              Message   => "Debug not accepted");
+
+      DB.Set_Loglevel (Identifier => "Foo.*",
+                       Level      => Error);
+      Assert (Condition => not DB.Accept_Dst
+              (Identifier => "Foo",
+               Level      => Debug),
+              Message   => "Dst debug accepted");
+      Assert (Condition => DB.Accept_Src
+              (Identifier => "Foo",
+               Level      => Critical),
+              Message   => "Dst critical not accepted");
+      Assert (Condition => DB.Accept_Dst
+              (Identifier => "Bar",
+               Level      => Info),
+              Message   => "Dst bar not accepted");
+   end Verify_Accept_Dst;
 
    -------------------------------------------------------------------------
 

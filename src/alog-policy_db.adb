@@ -31,6 +31,25 @@ package body Alog.Policy_DB is
 
    -------------------------------------------------------------------------
 
+   function Accept_Dst
+     (Identifier : String;
+      Level      : Log_Level)
+      return Boolean
+   is
+      use type Alog.Maps.Cursor;
+      Position : Maps.Cursor;
+   begin
+      Position := Ident_Levels.Lookup (Key => Identifier);
+
+      if Position /= Maps.No_Element then
+         return Level >= Maps.Element (Position => Position);
+      end if;
+
+      return True;
+   end Accept_Dst;
+
+   -------------------------------------------------------------------------
+
    function Accept_Src
      (Identifier : String := "";
       Level      : Log_Level)
