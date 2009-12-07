@@ -171,7 +171,7 @@ package body Alog.Active_Logger is
       Msg    :        String)
    is
    begin
-      if Policy_DB.Accept_Ident
+      if Policy_DB.Accept_Src
         (Identifier => Source,
          Level      => Level)
       then

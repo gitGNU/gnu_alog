@@ -99,8 +99,8 @@ package body Policy_Tests is
         (Routine => Set_Identifier_Map'Access,
          Name    => "set identifier loglevel map");
       T.Add_Test_Routine
-        (Routine => Verify_Accept_Ident'Access,
-         Name    => "accept identifier");
+        (Routine => Verify_Accept_Src'Access,
+         Name    => "accept source");
       T.Add_Test_Routine
         (Routine => Lookup_Ident'Access,
          Name    => "lookup identifier");
@@ -168,38 +168,38 @@ package body Policy_Tests is
 
    -------------------------------------------------------------------------
 
-   procedure Verify_Accept_Ident is
+   procedure Verify_Accept_Src is
    begin
       DB.Reset;
 
       DB.Set_Default_Loglevel (Level => Info);
 
-      Assert (Condition => not DB.Accept_Ident (Level => Debug),
+      Assert (Condition => not DB.Accept_Src (Level => Debug),
               Message   => "Debug accepted");
-      Assert (Condition => DB.Accept_Ident (Level => Warning),
+      Assert (Condition => DB.Accept_Src (Level => Warning),
               Message   => "Warning not accepted");
 
       DB.Set_Loglevel (Identifier => "Foo.*",
                        Level      => Error);
-      Assert (Condition => not DB.Accept_Ident
+      Assert (Condition => not DB.Accept_Src
               (Identifier => "Foo",
                Level      => Debug),
               Message   => "Src debug accepted");
-      Assert (Condition => DB.Accept_Ident
+      Assert (Condition => DB.Accept_Src
               (Identifier => "Foo",
                Level      => Critical),
               Message   => "Src critical not accepted");
-      Assert (Condition => DB.Accept_Ident
+      Assert (Condition => DB.Accept_Src
               (Identifier => "Bar",
                Level      => Info),
               Message   => "Src bar not accepted");
 
       DB.Set_Loglevel (Identifier => "Foobar.*",
                        Level      => Debug);
-      Assert (Condition => DB.Accept_Ident
+      Assert (Condition => DB.Accept_Src
               (Identifier => "Foobar",
                Level      => Debug),
               Message   => "Src foobar not accepted");
-   end Verify_Accept_Ident;
+   end Verify_Accept_Src;
 
 end Policy_Tests;

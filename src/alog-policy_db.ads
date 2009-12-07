@@ -73,13 +73,13 @@ package Alog.Policy_DB is
    procedure Reset;
    --  Reset the logging policy database to the initial state.
 
-   function Accept_Ident
+   function Accept_Src
      (Identifier : String := "";
       Level      : Log_Level)
       return Boolean;
-   --  Returns True if the given loglevel is accepted for an identifier string.
-   --  If no identifier is given, the loglevel is verified against the default
-   --  loglevel.
+   --  Returns True if the given loglevel is accepted for a source identifier
+   --  string. If no identifier is given, the loglevel is verified against the
+   --  default loglevel.
 
    No_Ident_Loglevel : exception;
    --  Will be raised if loglevel is not found for a requested identifier.

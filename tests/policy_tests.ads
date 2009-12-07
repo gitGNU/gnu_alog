@@ -46,8 +46,8 @@ package Policy_Tests is
    procedure Set_Identifier_Map;
    --  Test setting of identifier based loglevels with wildcard map.
 
-   procedure Verify_Accept_Ident;
-   --  Verify accept identifier behavior.
+   procedure Verify_Accept_Src;
+   --  Verify accept src behavior.
 
    procedure Lookup_Ident;
    --  Verify identifier lookup behavior.

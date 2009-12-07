@@ -31,14 +31,14 @@ package body Alog.Policy_DB is
 
    -------------------------------------------------------------------------
 
-   function Accept_Ident
+   function Accept_Src
      (Identifier : String := "";
       Level      : Log_Level)
       return Boolean
    is
    begin
       return Level >= Lookup (Identifier => Identifier);
-   end Accept_Ident;
+   end Accept_Src;
 
    -------------------------------------------------------------------------
 
