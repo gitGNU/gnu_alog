@@ -118,7 +118,7 @@ package body Alog.Facilities is
       Msg     : constant String    := Request.Get_Message;
       Source  : constant String    := Request.Get_Source;
    begin
-      if Policy_DB.Accept_Src
+      if Policy_DB.Accept_Dst
         (Identifier => Facility.Get_Name,
          Level      => Level)
       then
