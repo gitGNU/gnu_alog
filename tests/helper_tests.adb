@@ -76,6 +76,9 @@ package body Helper_Tests is
       T.Add_Test_Routine
         (Routine => Read_Config_Invalid_Loglevel'Access,
          Name    => "read config with invalid loglevel");
+      T.Add_Test_Routine
+        (Routine => Read_Invalid_Config'Access,
+         Name    => "read invalid config");
    end Initialize;
 
    -------------------------------------------------------------------------
@@ -133,5 +136,22 @@ package body Helper_Tests is
       Assert (Condition => Ident_Map.Element (Key => "Foo.*") = Debug,
               Message   => "Foo.* mismatch");
    end Read_Config_Nodefault;
+
+   -------------------------------------------------------------------------
+
+   procedure Read_Invalid_Config is
+      Config_File   : constant String := "./data/Loglevel_Config_Invalid2.ref";
+      Default_Level : Log_Level       := Debug;
+      Ident_Map     : Maps.Wildcard_Level_Map;
+   begin
+      Read_Loglevels (Filename      => Config_File,
+                      Default_Level => Default_Level,
+                      Identifiers   => Ident_Map);
+      Fail (Message => "expected Invalid_Config");
+
+   exception
+      when Invalid_Config =>
+         null;
+   end Read_Invalid_Config;
 
 end Helper_Tests;

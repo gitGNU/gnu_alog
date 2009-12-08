@@ -43,4 +43,7 @@ package Helper_Tests is
    procedure Read_Config_Invalid_Loglevel;
    --  Try to read a loglevel config file with invalid loglevel.
 
+   procedure Read_Invalid_Config;
+   --  Try to read an invalid config file.
+
 end Helper_Tests;
