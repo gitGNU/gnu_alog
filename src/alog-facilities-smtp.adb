@@ -36,12 +36,12 @@ package body Alog.Facilities.SMTP is
       --  Header
         Facility.Get_Header
       --  Log-Level
-        & "( " & Log_Level'Image (Level) & " ) : "
+        & "[" & Log_Level'Image (Level) & "] : "
       --  Log-Message
         & Msg & EOL & EOL
       --  Footer
         & "Generated: " & Facility.Get_Timestamp
-        & "by " & Facility.Get_Name;
+        & " by " & Facility.Get_Name;
    begin
       return Message;
    end Format_Message;
@@ -124,8 +124,8 @@ package body Alog.Facilities.SMTP is
             To      => AWS.SMTP.E_Mail
               (To_String (Facility.Recipient.Name),
                To_String (Facility.Recipient.EMail)),
-            Subject => To_String (Facility.Subject & " (" &
-              Log_Level'Image (Level) & ")"),
+            Subject => To_String (Facility.Subject & " [" &
+              Log_Level'Image (Level) & "]"),
             Message => Facility.Format_Message (Level => Level,
                                                 Msg   => Msg),
             Status  => Status);

@@ -103,10 +103,6 @@ package body Facility_Tests.SMTP is
         (Request => Create
            (Level   => Debug,
             Message => "Testmessage"));
-
-   exception
-      when Alog.Facilities.SMTP.Delivery_Failed =>
-         Fail (Message => "could not deliver msg");
    end Send_Simple_Mail;
 
    -------------------------------------------------------------------------

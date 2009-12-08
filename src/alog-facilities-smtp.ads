@@ -117,8 +117,8 @@ private
       --  Subject of messages from Alog-System (default: Alog: Log-Message).
 
       Header       : Unbounded_String := To_Unbounded_String
-        ("This is a message from the alog-logsystem running on '"
-         & GNAT.Sockets.Host_Name & "' :" & EOL & EOL);
+        ("This is a message from the Alog-logsystem running on host "
+         & GNAT.Sockets.Host_Name & ":" & EOL & EOL);
       --  Message-Header. Can be set by calling Set_Header().
    end record;
 
