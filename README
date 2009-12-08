@@ -71,6 +71,12 @@ expected by typing the following command:
 
 You should then see a `PASSED` behind each of the tests.
 
+Limitations
+-----------
+The XMPP-Facility is considered experimental. To use this facility the AWS
+version from the Adacore subversion repository must be installed. Older
+AWS-Versions are not fully XMPP/1.0 compliant.
+
 Obtaining Alog
 --------------
 The latest Alog version and online documentation can be found at
