@@ -39,24 +39,25 @@ package body Active_Logger_Tests is
    use Ahven;
    use Alog;
 
+   Ref_Facility_Name : constant String := "Test_Facility_Name";
+
+   Counter : Natural := 0;
+
+   procedure Check_Facility (Facility_Handle : Facilities.Handle);
+   --  Verify that facility with given name is present in the logger.
+
+   procedure Inc_Counter (F_Handle : Facilities.Handle);
+   --  Increment counter.
+
    -------------------------------------------------------------------------
 
    procedure Attach_Facility is
       Log      : aliased Active_Logger.Instance (Init => False);
       Facility : constant Facilities.Handle :=
         new Facilities.File_Descriptor.Instance;
-
-      procedure Check_Facility (Facility_Handle : Facilities.Handle);
-      --  Verify that facility with given name is present in the logger.
-
-      procedure Check_Facility (Facility_Handle : Facilities.Handle) is
-         use type Facilities.Handle;
-      begin
-         Assert (Condition => Facility_Handle = Facility,
-                 Message   => "facility mismatch");
-      end Check_Facility;
-
    begin
+      Facility.Set_Name (Name => Ref_Facility_Name);
+
       declare
          Shutdown : Active_Logger.Shutdown_Helper (Logger => Log'Access);
          pragma Unreferenced (Shutdown);
@@ -121,6 +122,15 @@ package body Active_Logger_Tests is
          end;
       end;
    end Attach_Transform;
+
+   -------------------------------------------------------------------------
+
+   procedure Check_Facility (Facility_Handle : Facilities.Handle) is
+      use type Facilities.Handle;
+   begin
+      Assert (Condition => Facility_Handle.Get_Name = Ref_Facility_Name,
+              Message   => "facility name mismatch");
+   end Check_Facility;
 
    -------------------------------------------------------------------------
 
@@ -275,6 +285,18 @@ package body Active_Logger_Tests is
       end;
    end Detach_Transform_Unattached;
 
+   -------------------------------------------------------------------------
+
+   procedure Do_Nothing (Facility_Handle : Facilities.Handle) is null;
+
+   -------------------------------------------------------------------------
+
+   procedure Inc_Counter (F_Handle : Facilities.Handle)
+   is
+      pragma Unreferenced (F_Handle);
+   begin
+      Counter := Counter + 1;
+   end Inc_Counter;
    -------------------------------------------------------------------------
 
    procedure Initialize (T : in out Testcase) is
@@ -437,13 +459,17 @@ package body Active_Logger_Tests is
 
    -------------------------------------------------------------------------
 
+   procedure Toggle_Timestamp
+     (Facility_Handle : Facilities.Handle)
+   is
+   begin
+      Facility_Handle.Toggle_Write_Timestamp (State => True);
+   end Toggle_Timestamp;
+
+   -------------------------------------------------------------------------
+
    procedure Update_Facility is
       Log : aliased Active_Logger.Instance (Init => False);
-
-      procedure Do_Nothing
-        (Facility_Handle : Facilities.Handle) is null;
-      --  Just do nothing.
-
    begin
       declare
          Shutdown : Active_Logger.Shutdown_Helper (Logger => Log'Access);
@@ -464,14 +490,6 @@ package body Active_Logger_Tests is
               new Facilities.File_Descriptor.Instance;
             Facility_Name : constant String            :=
               "Test_Facility";
-
-            procedure Toggle_Timestamp
-              (Facility_Handle : Facilities.Handle)
-            is
-            begin
-               Facility_Handle.Toggle_Write_Timestamp (State => True);
-            end Toggle_Timestamp;
-
          begin
             Facility.Set_Name (Name => Facility_Name);
             Facility.Toggle_Write_Timestamp (State => False);
@@ -491,22 +509,10 @@ package body Active_Logger_Tests is
 
    procedure Verify_Iterate_Facilities is
       Log       : aliased Active_Logger.Instance (Init => False);
-      Counter   : Natural := 0;
-
       Facility1 : constant Facilities.Handle :=
         new Facilities.File_Descriptor.Instance;
       Facility2 : constant Facilities.Handle :=
         new Facilities.File_Descriptor.Instance;
-
-      procedure Inc_Counter (F_Handle : Facilities.Handle);
-      --  Increment counter.
-
-      procedure Inc_Counter (F_Handle : Facilities.Handle)
-      is
-         pragma Unreferenced (F_Handle);
-      begin
-         Counter := Counter + 1;
-      end Inc_Counter;
    begin
       declare
          Shutdown : Active_Logger.Shutdown_Helper (Logger => Log'Access);

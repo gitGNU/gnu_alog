@@ -68,15 +68,13 @@ package Alog.Active_Logger is
    procedure Update
      (Logger  : in out Instance;
       Name    :        String;
-      Process : not null access
-        procedure (Facility_Handle : Facilities.Handle));
+      Process :        Tasked_Logger.Facility_Update_Handle);
    --  Update a specific Facility identified by 'Name'. Call the 'Process'
    --  procedure to perform the update operation.
 
    procedure Iterate
      (Logger  : in out Instance;
-      Process : not null access
-        procedure (Facility_Handle : Facilities.Handle));
+      Process :        Tasked_Logger.Facility_Update_Handle);
    --  Call 'Process' for all attached facilities.
 
    procedure Attach_Transform

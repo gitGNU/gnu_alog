@@ -154,8 +154,7 @@ package body Alog.Active_Logger is
 
    procedure Iterate
      (Logger  : in out Instance;
-      Process : not null access
-        procedure (Facility_Handle : Facilities.Handle))
+      Process :        Tasked_Logger.Facility_Update_Handle)
    is
    begin
       Logger.Backend.Iterate (Process);
@@ -221,8 +220,7 @@ package body Alog.Active_Logger is
    procedure Update
      (Logger  : in out Instance;
       Name    :        String;
-      Process : not null access
-        procedure (Facility_Handle : Facilities.Handle))
+      Process :        Tasked_Logger.Facility_Update_Handle)
    is
    begin
       Logger.Backend.Update (Name    => Name,
