@@ -36,7 +36,6 @@ LIBRARY_KIND = dynamic
 SOURCEDIR = src
 OBJECTDIR = obj/$(TARGET)
 LIBDIR = lib/$(TARGET)
-APIDOCDIR = doc
 COVDIR = cov/$(TARGET)
 PERFDIR = perf/$(TARGET)
 ALI_FILES = lib/$(TARGET)/*.ali
@@ -81,10 +80,9 @@ distclean: clean
 	@rm -rf lib
 	@rm -rf cov
 	@rm -rf $(PERFDIR)
-	@rm -rf $(APIDOCDIR)
 	@rm -f $(SOURCEDIR)/alog-version.ads
 
-dist: distclean $(SOURCEDIR)/alog-version.ads docs
+dist: distclean $(SOURCEDIR)/alog-version.ads
 	@echo -n "Creating release tarball '$(ALOG)' ... "
 	@mkdir -p $(DISTDIR)
 	@cp -R * $(DISTDIR)
@@ -108,14 +106,6 @@ install_dynamic:
 	@cd $(PREFIX)/lib/alog && \
 	ln -sf $(SO_LIBRARY) libalog.so && \
 	ln -sf $(SO_LIBRARY) libalog.so.$(MAJOR)
-
-docs: prepare
-	@echo -n "Creating Alog API doc for version $(VERSION)  ... "
-	@mkdir -p $(APIDOCDIR)
-	@ls $(SOURCEDIR)/*.ads > alog.specs
-	@adabrowse -c config/adabrowse.cfg -q -p -t -i -I src/ -f@alog.specs \
-		-o $(APIDOCDIR)/
-	@echo "DONE"
 
 cov: prepare
 	@rm -f $(OBJECTDIR)/cov/*.gcda
