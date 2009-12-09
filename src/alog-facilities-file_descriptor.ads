@@ -51,6 +51,10 @@ package Alog.Facilities.File_Descriptor is
       Remove   :        Boolean := False);
    --  Close opened logfile.
 
+   Open_File_Error : exception;
+   --  This exception is raised if an error occurs while trying to open a
+   --  logfile.
+
 private
 
    overriding

@@ -22,6 +22,7 @@
 --
 
 with Ada.Directories;
+with Ada.Exceptions;
 
 package body Alog.Facilities.File_Descriptor is
 
@@ -39,7 +40,7 @@ package body Alog.Facilities.File_Descriptor is
             --  Close and delete.
             Delete (File => Facility.Log_File);
          else
-            --   Close only.
+            --  Close only.
             Close (File => Facility.Log_File);
          end if;
       end if;
@@ -87,6 +88,11 @@ package body Alog.Facilities.File_Descriptor is
       --  defined externaly in the Text_IO library.
 
       Facility.Log_File_Ptr := Facility.Log_File'Unchecked_Access;
+
+   exception
+      when E : others =>
+         raise Open_File_Error with "Unable to open logfile '" & Path
+           & "': " & Ada.Exceptions.Exception_Message (X => E);
    end Set_Logfile;
 
    -------------------------------------------------------------------------

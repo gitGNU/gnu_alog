@@ -23,7 +23,6 @@
 
 with Ada.Text_IO;
 with Ada.Directories;
-with Ada.IO_Exceptions;
 
 with Ahven; use Ahven;
 
@@ -121,7 +120,7 @@ package body Facility_Tests.FD is
       Fail (Message => "expected Name_Error");
 
    exception
-      when Ada.IO_Exceptions.Name_Error =>
+      when File_Descriptor.Open_File_Error =>
          null;
    end Set_Invalid_Logfile_Fd;
 
