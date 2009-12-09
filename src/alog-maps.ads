@@ -24,6 +24,7 @@
 with Ada.Strings.Unbounded.Hash;
 with Ada.Containers.Hashed_Maps;
 
+--  Alog maps package. Provides map data types.
 package Alog.Maps is
 
    type Wildcard_Level_Map is tagged private;

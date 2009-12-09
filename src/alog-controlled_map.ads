@@ -31,15 +31,16 @@ generic
 
    with function "<" (Left, Right : Key_Type) return Boolean is <>;
 
+--  Controlled variant of a map. The memory of an element pointed to by a
+--  previously inserted handle is freed upon calling Delete, Clear or during
+--  finalization of the controlled map. Thus control over objects inserted into
+--  this map resides with the controlled map.
 package Alog.Controlled_Map is
 
    pragma Preelaborate;
 
    type Map is new Ada.Finalization.Limited_Controlled with private;
-   --  Controlled variant of a map. The memory of an element pointed to by a
-   --  previously inserted handle is freed upon calling Delete, Clear or during
-   --  finalization of the controlled map. Thus control over objects inserted
-   --  into this map resides with the controlled map.
+   --  A controlled map container.
 
    procedure Insert
      (Container : in out Map;
