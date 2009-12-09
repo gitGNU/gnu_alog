@@ -1,0 +1,615 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html><head>
+  <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript"/>
+
+  <title>
+    Package: Alog.Active_Logger
+  </title>
+  <link rel='stylesheet' href='support/docgen.css' type='text/css'/>
+  <link rel='stylesheet' href='support/tags.css' type='text/css'/>
+  <script src='support/docgen.js' type='text/javascript' charset='utf-8'></script>
+</head>
+<body onload="onloadDoc();">
+
+<div id='leftSide'>
+  <div id='leftSideInside'>
+  <div id='header'>
+    <h2 class="button">Documentation</h2>
+    <a href='index.html'><div class="button2">Table of Contents</div></a>
+
+    <a href='tree.html'><div class="button2">Class Inheritance Tree</div></a>
+
+  </div>
+
+  <div id='navigation'>
+    <h2 class="button">Navigation</h2>
+    <a href='#Description'><div class="button2">Description</div></a>
+    <a href='#Classes'><div class="button2">Classes</div></a>
+    <a href='#Types'><div class="button2">Types</div></a>
+    <a href='#Methods'><div class="button2">Subprograms &amp; Entries</div></a>
+  </div><!-- navigation -->
+  </div>
+</div> <!-- leftSide -->
+
+<div class='default' id='rightSide'>
+ <div id='rightSideInside'>
+ <div id='Index'>
+  <h2>Index</h2>
+  <script type="text/javascript">
+    var names = new Array (
+new Array ('Instance', 'alog-active_logger.ads:37:9', 'class-spec'),
+new Array ('Handle', 'alog-active_logger.ads:43:9', 'type-spec'),
+new Array ('Shutdown_<wbr/>Helper', 'alog-active_logger.ads:135:9', 'type-spec'),
+new Array ('Attach_<wbr/>Facility', 'alog-active_logger.ads:46:14', 'subp-spec'),
+new Array ('Attach_<wbr/>Default_<wbr/>Facility', 'alog-active_logger.ads:51:14', 'subp-spec'),
+new Array ('Detach_<wbr/>Facility', 'alog-active_logger.ads:55:14', 'subp-spec'),
+new Array ('Detach_<wbr/>Default_<wbr/>Facility', 'alog-active_logger.ads:61:14', 'subp-spec'),
+new Array ('Facility_<wbr/>Count', 'alog-active_logger.ads:65:13', 'subp-spec'),
+new Array ('Update', 'alog-active_logger.ads:68:14', 'subp-spec'),
+new Array ('Iterate', 'alog-active_logger.ads:75:14', 'subp-spec'),
+new Array ('Attach_<wbr/>Transform', 'alog-active_logger.ads:80:14', 'subp-spec'),
+new Array ('Detach_<wbr/>Transform', 'alog-active_logger.ads:85:14', 'subp-spec'),
+new Array ('Transform_<wbr/>Count', 'alog-active_logger.ads:91:13', 'subp-spec'),
+new Array ('Clear', 'alog-active_logger.ads:94:14', 'subp-spec'),
+new Array ('Log_<wbr/>Message', 'alog-active_logger.ads:98:14', 'subp-spec'),
+new Array ('Get_<wbr/>Queue_<wbr/>Length', 'alog-active_logger.ads:112:13', 'subp-spec'),
+new Array ('Shutdown', 'alog-active_logger.ads:115:14', 'subp-spec'),
+new Array ('Is_<wbr/>Terminated', 'alog-active_logger.ads:122:13', 'subp-spec'),
+new Array ('All_<wbr/>Done', 'alog-active_logger.ads:125:14', 'subp-spec'),
+new Array ('Get_<wbr/>Last_<wbr/>Exception', 'alog-active_logger.ads:129:14', 'subp-spec'),
+      new Array ('dummy', '', ''));
+    printIndexList (names);
+  </script>
+  <noscript>
+    <ul>
+      <li class='class-spec'><a href="#alog-active_logger.ads:37:9">Instance</a></li>
+      <li class='type-spec'><a href="#alog-active_logger.ads:43:9">Handle</a></li>
+      <li class='type-spec'><a href="#alog-active_logger.ads:135:9">Shutdown_<wbr/>Helper</a></li>
+      <li class='subp-spec'><a href="#alog-active_logger.ads:46:14">Attach_<wbr/>Facility</a></li>
+      <li class='subp-spec'><a href="#alog-active_logger.ads:51:14">Attach_<wbr/>Default_<wbr/>Facility</a></li>
+      <li class='subp-spec'><a href="#alog-active_logger.ads:55:14">Detach_<wbr/>Facility</a></li>
+      <li class='subp-spec'><a href="#alog-active_logger.ads:61:14">Detach_<wbr/>Default_<wbr/>Facility</a></li>
+      <li class='subp-spec'><a href="#alog-active_logger.ads:65:13">Facility_<wbr/>Count</a></li>
+      <li class='subp-spec'><a href="#alog-active_logger.ads:68:14">Update</a></li>
+      <li class='subp-spec'><a href="#alog-active_logger.ads:75:14">Iterate</a></li>
+      <li class='subp-spec'><a href="#alog-active_logger.ads:80:14">Attach_<wbr/>Transform</a></li>
+      <li class='subp-spec'><a href="#alog-active_logger.ads:85:14">Detach_<wbr/>Transform</a></li>
+      <li class='subp-spec'><a href="#alog-active_logger.ads:91:13">Transform_<wbr/>Count</a></li>
+      <li class='subp-spec'><a href="#alog-active_logger.ads:94:14">Clear</a></li>
+      <li class='subp-spec'><a href="#alog-active_logger.ads:98:14">Log_<wbr/>Message</a></li>
+      <li class='subp-spec'><a href="#alog-active_logger.ads:112:13">Get_<wbr/>Queue_<wbr/>Length</a></li>
+      <li class='subp-spec'><a href="#alog-active_logger.ads:115:14">Shutdown</a></li>
+      <li class='subp-spec'><a href="#alog-active_logger.ads:122:13">Is_<wbr/>Terminated</a></li>
+      <li class='subp-spec'><a href="#alog-active_logger.ads:125:14">All_<wbr/>Done</a></li>
+      <li class='subp-spec'><a href="#alog-active_logger.ads:129:14">Get_<wbr/>Last_<wbr/>Exception</a></li>
+    </ul>
+  </noscript>
+ </div>
+ </div>
+</div>
+
+<div class='default' id='documentation'>
+  <div class='title'>
+    Package:
+<span class="droplink"><i>Alog.Active_Logger</i><ul>
+  <li><a href="src_alog-active_logger.ads.html">Goto spec source</a></li>
+</ul></span>
+  </div>
+  <div class='subprograms'>
+    <h1><a name='Description' id='Description'></a>Description</h1>
+    <div class="class">
+    <div class='details'><pre><span class="keyword">package</span> <span class="name"><b>Alog.Active_Logger</b></span> <span class="keyword">is</span></pre></div>
+    <div class='comment'>Active Logger instance. This logger is an active object and implements&#10;concurrent, asynchronous logging. It provides the same functionality as the&#10;&apos;simple&apos; logger.&#10;</div>
+    </div>
+  </div>
+
+
+  <div class='subprograms'>
+    <h1><a name='Classes' id='Classes'></a>Classes</h1>
+    <div class="class">
+      <h3><a name='alog-active_logger.ads:37:9' id='alog-active_logger.ads:37:9'></a>
+<span class="droplink">Instance<ul>
+  <li><a href="src_alog-active_logger.ads.html#l37">Goto declaration in source</a></li>
+  <li><a href="src_alog-active_logger.ads.html#l161">Goto full declaration in source</a></li>
+</ul></span>
+      </h3>
+      <div class='details'><pre><span class="keyword">type</span> <span class="name"><b>Instance</b></span> (Init : Boolean) <span class="keyword">is</span> <span class="keyword">tagged</span> <span class="keyword">limited</span> <span class="keyword">private</span>;</pre></div>
+      <div class='profile'>
+        <div>
+          <h4>Primitive operations:</h4>
+              <div><span class="droplink">All_Done<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:125:14" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.ads.html#l125" title="To spec">To spec</a></li></ul></span></div>
+              <div><span class="droplink">Attach_Default_Facility<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:51:14" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.ads.html#l51" title="To spec">To spec</a></li></ul></span></div>
+              <div><span class="droplink">Attach_Facility<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:46:14" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.ads.html#l46" title="To spec">To spec</a></li></ul></span></div>
+              <div><span class="droplink">Attach_Transform<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:80:14" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.ads.html#l80" title="To spec">To spec</a></li></ul></span></div>
+              <div>Check_Exception</div>
+              <div><span class="droplink">Clear<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:94:14" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.ads.html#l94" title="To spec">To spec</a></li></ul></span></div>
+              <div><span class="droplink">Detach_Default_Facility<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:61:14" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.ads.html#l61" title="To spec">To spec</a></li></ul></span></div>
+              <div><span class="droplink">Detach_Facility<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:55:14" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.ads.html#l55" title="To spec">To spec</a></li></ul></span></div>
+              <div><span class="droplink">Detach_Transform<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:85:14" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.ads.html#l85" title="To spec">To spec</a></li></ul></span></div>
+              <div><span class="droplink">Facility_Count<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:65:13" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.ads.html#l65" title="To spec">To spec</a></li></ul></span></div>
+              <div><span class="droplink">Get_Last_Exception<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:129:14" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.ads.html#l129" title="To spec">To spec</a></li></ul></span></div>
+              <div><span class="droplink">Get_Queue_Length<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:112:13" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.ads.html#l112" title="To spec">To spec</a></li></ul></span></div>
+              <div><span class="droplink">Is_Terminated<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:122:13" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.ads.html#l122" title="To spec">To spec</a></li></ul></span></div>
+              <div><span class="droplink">Iterate<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:75:14" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.ads.html#l75" title="To spec">To spec</a></li></ul></span></div>
+              <div><span class="droplink">Log_Message<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:98:14" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.ads.html#l98" title="To spec">To spec</a></li></ul></span></div>
+              <div><span class="droplink">Shutdown<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:115:14" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.ads.html#l115" title="To spec">To spec</a></li></ul></span></div>
+              <div><span class="droplink">Transform_Count<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:91:13" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.ads.html#l91" title="To spec">To spec</a></li></ul></span></div>
+              <div><span class="droplink">Update<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:68:14" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.ads.html#l68" title="To spec">To spec</a></li></ul></span></div>
+        </div>
+      </div>
+      <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-active_logger.ads.html#l37" title="alog-active_logger.ads:37:9">alog-active_logger.ads:37:9</a> (declaration)</i></div>
+            <div><i>alog-active_logger.adb:33:40 (reference)</i></div>
+            <div><i>alog-active_logger.adb:40:55 (reference)</i></div>
+            <div><i>alog-active_logger.adb:49:25 (reference)</i></div>
+            <div><i>alog-active_logger.adb:59:26 (reference)</i></div>
+            <div><i>alog-active_logger.adb:68:47 (reference)</i></div>
+            <div><i>alog-active_logger.adb:77:37 (reference)</i></div>
+            <div><i>alog-active_logger.adb:84:55 (reference)</i></div>
+            <div><i>alog-active_logger.adb:93:23 (reference)</i></div>
+            <div><i>alog-active_logger.adb:103:23 (reference)</i></div>
+            <div><i>alog-active_logger.adb:112:38 (reference)</i></div>
+            <div><i>alog-active_logger.adb:129:27 (reference)</i></div>
+            <div><i>alog-active_logger.adb:140:40 (reference)</i></div>
+            <div><i>alog-active_logger.adb:147:37 (reference)</i></div>
+            <div><i>alog-active_logger.adb:156:24 (reference)</i></div>
+            <div><i>alog-active_logger.adb:167:23 (reference)</i></div>
+            <div><i>alog-active_logger.adb:193:23 (reference)</i></div>
+            <div><i>alog-active_logger.adb:211:39 (reference)</i></div>
+            <div><i>alog-active_logger.adb:221:24 (reference)</i></div>
+            <div><i><a href="src_alog-active_logger.ads.html#l43" title="alog-active_logger.ads:43:30">alog-active_logger.ads:43:30</a> (reference)</i></div>
+            <div><i><a href="src_alog-active_logger.ads.html#l47" title="alog-active_logger.ads:47:25">alog-active_logger.ads:47:25</a> (reference)</i></div>
+            <div><i><a href="src_alog-active_logger.ads.html#l51" title="alog-active_logger.ads:51:55">alog-active_logger.ads:51:55</a> (reference)</i></div>
+            <div><i><a href="src_alog-active_logger.ads.html#l56" title="alog-active_logger.ads:56:23">alog-active_logger.ads:56:23</a> (reference)</i></div>
+            <div><i><a href="src_alog-active_logger.ads.html#l61" title="alog-active_logger.ads:61:55">alog-active_logger.ads:61:55</a> (reference)</i></div>
+            <div><i><a href="src_alog-active_logger.ads.html#l65" title="alog-active_logger.ads:65:38">alog-active_logger.ads:65:38</a> (reference)</i></div>
+            <div><i><a href="src_alog-active_logger.ads.html#l69" title="alog-active_logger.ads:69:24">alog-active_logger.ads:69:24</a> (reference)</i></div>
+            <div><i><a href="src_alog-active_logger.ads.html#l76" title="alog-active_logger.ads:76:24">alog-active_logger.ads:76:24</a> (reference)</i></div>
+            <div><i><a href="src_alog-active_logger.ads.html#l81" title="alog-active_logger.ads:81:26">alog-active_logger.ads:81:26</a> (reference)</i></div>
+            <div><i><a href="src_alog-active_logger.ads.html#l86" title="alog-active_logger.ads:86:23">alog-active_logger.ads:86:23</a> (reference)</i></div>
+            <div><i><a href="src_alog-active_logger.ads.html#l91" title="alog-active_logger.ads:91:39">alog-active_logger.ads:91:39</a> (reference)</i></div>
+            <div><i><a href="src_alog-active_logger.ads.html#l94" title="alog-active_logger.ads:94:37">alog-active_logger.ads:94:37</a> (reference)</i></div>
+            <div><i><a href="src_alog-active_logger.ads.html#l99" title="alog-active_logger.ads:99:23">alog-active_logger.ads:99:23</a> (reference)</i></div>
+            <div><i><a href="src_alog-active_logger.ads.html#l112" title="alog-active_logger.ads:112:40">alog-active_logger.ads:112:40</a> (reference)</i></div>
+            <div><i><a href="src_alog-active_logger.ads.html#l116" title="alog-active_logger.ads:116:23">alog-active_logger.ads:116:23</a> (reference)</i></div>
+            <div><i><a href="src_alog-active_logger.ads.html#l122" title="alog-active_logger.ads:122:37">alog-active_logger.ads:122:37</a> (reference)</i></div>
+            <div><i><a href="src_alog-active_logger.ads.html#l125" title="alog-active_logger.ads:125:40">alog-active_logger.ads:125:40</a> (reference)</i></div>
+            <div><i><a href="src_alog-active_logger.ads.html#l130" title="alog-active_logger.ads:130:27">alog-active_logger.ads:130:27</a> (reference)</i></div>
+            <div><i><a href="src_alog-active_logger.ads.html#l135" title="alog-active_logger.ads:135:51">alog-active_logger.ads:135:51</a> (reference)</i></div>
+            <div><i><a href="src_alog-active_logger.ads.html#l145" title="alog-active_logger.ads:145:47">alog-active_logger.ads:145:47</a> (reference)</i></div>
+            <div><i><a href="src_alog-active_logger.ads.html#l149" title="alog-active_logger.ads:149:53">alog-active_logger.ads:149:53</a> (reference)</i></div>
+            <div><i><a href="src_alog-active_logger.ads.html#l161" title="alog-active_logger.ads:161:9">alog-active_logger.ads:161:9</a> (full declaration)</i></div>
+            <div><i><a href="src_alog-active_logger.ads.html#l162" title="alog-active_logger.ads:162:47">alog-active_logger.ads:162:47</a> (reference)</i></div>
+            <div><i><a href="src_alog-active_logger.ads.html#l168" title="alog-active_logger.ads:168:51">alog-active_logger.ads:168:51</a> (reference)</i></div>
+      </div>
+      <div class='comment'>Active logger instance. Incoming messages (via Log_Message) are put into&#10;a request queue. This queue is consumed by a logging task. Exceptions&#10;that might be thrown while logging are saved into a map on a per-caller&#10;basis.&#10;</div>
+    </div>
+  </div>
+
+
+  <div class='subprograms'>
+    <h1><a name='Types' id='Types'></a>Types</h1>
+    <div class="class">
+      <h3>
+        <a name='alog-active_logger.ads:43:9' id='alog-active_logger.ads:43:9'></a>
+<span class="droplink">Handle<ul>
+  <li><a href="src_alog-active_logger.ads.html#l43">Goto declaration in source</a></li>
+</ul></span>
+      </h3>
+      <div class='details'><pre><span class="keyword">type</span> <span class="name"><b>Handle</b></span> <span class="keyword">is</span> <span class="keyword">access</span> <span class="keyword">all</span> <a href="alog-active_logger.ads.html#alog-active_logger.ads:37:9" title="defined at alog-active_logger.ads:37:9">Instance</a>;</pre></div>
+      <div class='profile'>
+          <h4>References:</h4>
+          <div><i><a href="src_alog-active_logger.ads.html#l43" title="alog-active_logger.ads:43:9">alog-active_logger.ads:43:9</a> (declaration)</i></div>
+      </div>
+      <div class='comment'>Handle to active logger type.&#10;</div>
+    </div>
+    <div class="class">
+      <h3>
+        <a name='alog-active_logger.ads:135:9' id='alog-active_logger.ads:135:9'></a>
+<span class="droplink">Shutdown_Helper<ul>
+  <li><a href="src_alog-active_logger.ads.html#l135">Goto declaration in source</a></li>
+  <li><a href="src_alog-active_logger.ads.html#l168">Goto full declaration in source</a></li>
+</ul></span>
+      </h3>
+      <div class='details'><pre><span class="keyword">type</span> <span class="name"><b>Shutdown_Helper</b></span> (<a href="alog-active_logger.ads.html#alog-active_logger.ads:130:7" title="defined at alog-active_logger.ads:130:7">Logger</a> : <span class="keyword">not</span> <span class="keyword">null</span> <span class="keyword">access</span> <a href="alog-active_logger.ads.html#alog-active_logger.ads:37:9" title="defined at alog-active_logger.ads:37:9">Instance</a>) <span class="keyword">is</span> <span class="keyword">private</span>;</pre></div>
+      <div class='profile'>
+          <h4>References:</h4>
+          <div><i><a href="src_alog-active_logger.ads.html#l135" title="alog-active_logger.ads:135:9">alog-active_logger.ads:135:9</a> (declaration)</i></div>
+          <div><i>alog-active_logger.adb:121:40 (reference)</i></div>
+          <div><i><a href="src_alog-active_logger.ads.html#l168" title="alog-active_logger.ads:168:9">alog-active_logger.ads:168:9</a> (full declaration)</i></div>
+          <div><i><a href="src_alog-active_logger.ads.html#l172" title="alog-active_logger.ads:172:40">alog-active_logger.ads:172:40</a> (reference)</i></div>
+      </div>
+      <div class='comment'>This helper will call Shutdown on the logger given as discriminant when&#10;it goes out of scope. This relieves the user from having to excplicitly&#10;call shutdown on an instance of Alog active logger when wanting to&#10;terminate. Users must make sure to declare any shutdown helper in a&#10;smaller scope than the active logger on which the helper supposed to&#10;work.&#10;</div>
+    </div>
+  </div>
+
+
+    <div class='subprograms'>
+      <h1><a name='Methods' id='Methods'></a>Subprograms &amp; Entries</h1>
+      <div class="class">
+        <h3>
+          <a name='alog-active_logger.ads:46:14' id='alog-active_logger.ads:46:14'></a>
+<span class="droplink">Attach_Facility<ul>
+  <li><a href="src_alog-active_logger.ads.html#l46">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">procedure</span> <span class="name"><b>Attach_Facility</b></span>     <table><tr><td>(</td><td><span class="name"><a name="alog-active_logger.ads:47:7"></a>Logger</span></td><td>: <span class="keyword">in</span> <span class="keyword">out</span> <a href="alog-active_logger.ads.html#alog-active_logger.ads:37:9" title="defined at alog-active_logger.ads:37:9">Instance</a>;</td></tr><tr><td></td><td><span class="name"><a name="alog-active_logger.ads:48:7"></a>Facility</span></td><td>:        <a href="alog-facilities.ads.html#alog-facilities.ads:44:9" title="defined at alog-facilities.ads:44:9">Facilities.Handle</a>);</td></tr></table></pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-active_logger.ads.html#l46" title="alog-active_logger.ads:46:14">alog-active_logger.ads:46:14</a> (declaration)</i></div>
+            <div><i>alog-active_logger.adb:48:14 (body)</i></div>
+            <div><i>alog-active_logger.adb:54:8 (label)</i></div>
+        </div>
+        <div class='profile'>
+          <h4>Calls:</h4>
+            <div><i><a href="alog-tasked_logger.ads.html#alog-tasked_logger.ads:41:13" title="defined at alog-tasked_logger.ads:41:13">Alog.Tasked_Logger.Instance.Attach_Facility</a> defined at <a href="src_alog-tasked_logger.ads.html#l41" title="alog-tasked_logger.ads:41:13">alog-tasked_logger.ads:41:13</a></i></div>
+            <div><i>Backend defined at <a href="src_alog-active_logger.ads.html#l163" title="alog-active_logger.ads:163:7">alog-active_logger.ads:163:7</a></i></div>
+        </div>
+        <div class='comment'>Attach a facility to logger instance.&#10;</div>
+      </div>
+      <div class="class">
+        <h3>
+          <a name='alog-active_logger.ads:51:14' id='alog-active_logger.ads:51:14'></a>
+<span class="droplink">Attach_Default_Facility<ul>
+  <li><a href="src_alog-active_logger.ads.html#l51">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">procedure</span> <span class="name"><b>Attach_Default_Facility</b></span> <table><tr><td>(</td><td><span class="name"><a name="alog-active_logger.ads:51:39"></a>Logger</span></td><td>: <span class="keyword">in</span> <span class="keyword">out</span> <a href="alog-active_logger.ads.html#alog-active_logger.ads:37:9" title="defined at alog-active_logger.ads:37:9">Instance</a>);</td></tr></table></pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-active_logger.ads.html#l51" title="alog-active_logger.ads:51:14">alog-active_logger.ads:51:14</a> (declaration)</i></div>
+            <div><i>alog-active_logger.adb:40:14 (body)</i></div>
+            <div><i>alog-active_logger.adb:44:8 (label)</i></div>
+        </div>
+        <div class='profile'>
+          <h4>Calls:</h4>
+            <div><i><a href="alog-tasked_logger.ads.html#alog-tasked_logger.ads:44:13" title="defined at alog-tasked_logger.ads:44:13">Alog.Tasked_Logger.Instance.Attach_Default_Facility</a> defined at <a href="src_alog-tasked_logger.ads.html#l44" title="alog-tasked_logger.ads:44:13">alog-tasked_logger.ads:44:13</a></i></div>
+            <div><i>Backend defined at <a href="src_alog-active_logger.ads.html#l163" title="alog-active_logger.ads:163:7">alog-active_logger.ads:163:7</a></i></div>
+        </div>
+        <div class='comment'>Attach default facility with name Default_Facility_Name to logger&#10;instance. If the default facility is already attached do nothing.&#10;</div>
+      </div>
+      <div class="class">
+        <h3>
+          <a name='alog-active_logger.ads:55:14' id='alog-active_logger.ads:55:14'></a>
+<span class="droplink">Detach_Facility<ul>
+  <li><a href="src_alog-active_logger.ads.html#l55">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">procedure</span> <span class="name"><b>Detach_Facility</b></span>     <table><tr><td>(</td><td><span class="name"><a name="alog-active_logger.ads:56:7"></a>Logger</span></td><td>: <span class="keyword">in</span> <span class="keyword">out</span> <a href="alog-active_logger.ads.html#alog-active_logger.ads:37:9" title="defined at alog-active_logger.ads:37:9">Instance</a>;</td></tr><tr><td></td><td><span class="name"><a name="alog-active_logger.ads:57:7"></a>Name</span></td><td>:        String);</td></tr></table></pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-active_logger.ads.html#l55" title="alog-active_logger.ads:55:14">alog-active_logger.ads:55:14</a> (declaration)</i></div>
+            <div><i>alog-active_logger.adb:92:14 (body)</i></div>
+            <div><i>alog-active_logger.adb:98:8 (label)</i></div>
+        </div>
+        <div class='profile'>
+          <h4>Calls:</h4>
+            <div><i><a href="alog-tasked_logger.ads.html#alog-tasked_logger.ads:47:13" title="defined at alog-tasked_logger.ads:47:13">Alog.Tasked_Logger.Instance.Detach_Facility</a> defined at <a href="src_alog-tasked_logger.ads.html#l47" title="alog-tasked_logger.ads:47:13">alog-tasked_logger.ads:47:13</a></i></div>
+            <div><i>Backend defined at <a href="src_alog-active_logger.ads.html#l163" title="alog-active_logger.ads:163:7">alog-active_logger.ads:163:7</a></i></div>
+        </div>
+        <div class='comment'>Detach a facility with name &apos;Name&apos; from logger instance. If the facility&#10;is not found a Facility_Not_Found exception is raised.&#10;</div>
+      </div>
+      <div class="class">
+        <h3>
+          <a name='alog-active_logger.ads:61:14' id='alog-active_logger.ads:61:14'></a>
+<span class="droplink">Detach_Default_Facility<ul>
+  <li><a href="src_alog-active_logger.ads.html#l61">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">procedure</span> <span class="name"><b>Detach_Default_Facility</b></span> <table><tr><td>(</td><td><span class="name"><a name="alog-active_logger.ads:61:39"></a>Logger</span></td><td>: <span class="keyword">in</span> <span class="keyword">out</span> <a href="alog-active_logger.ads.html#alog-active_logger.ads:37:9" title="defined at alog-active_logger.ads:37:9">Instance</a>);</td></tr></table></pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-active_logger.ads.html#l61" title="alog-active_logger.ads:61:14">alog-active_logger.ads:61:14</a> (declaration)</i></div>
+            <div><i>alog-active_logger.adb:84:14 (body)</i></div>
+            <div><i>alog-active_logger.adb:88:8 (label)</i></div>
+        </div>
+        <div class='profile'>
+          <h4>Calls:</h4>
+            <div><i><a href="alog-tasked_logger.ads.html#alog-tasked_logger.ads:50:13" title="defined at alog-tasked_logger.ads:50:13">Alog.Tasked_Logger.Instance.Detach_Default_Facility</a> defined at <a href="src_alog-tasked_logger.ads.html#l50" title="alog-tasked_logger.ads:50:13">alog-tasked_logger.ads:50:13</a></i></div>
+            <div><i>Backend defined at <a href="src_alog-active_logger.ads.html#l163" title="alog-active_logger.ads:163:7">alog-active_logger.ads:163:7</a></i></div>
+        </div>
+        <div class='comment'>Detach default facility with name Default_Facility_Name from logger&#10;instance. If the default facility is not attached do nothing.&#10;</div>
+      </div>
+      <div class="class">
+        <h3>
+          <a name='alog-active_logger.ads:65:13' id='alog-active_logger.ads:65:13'></a>
+<span class="droplink">Facility_Count<ul>
+  <li><a href="src_alog-active_logger.ads.html#l65">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">function</span> <span class="name"><b>Facility_Count</b></span> <table><tr><td>(</td><td><span class="name"><a name="alog-active_logger.ads:65:29"></a>Logger</span></td><td>: <a href="alog-active_logger.ads.html#alog-active_logger.ads:37:9" title="defined at alog-active_logger.ads:37:9">Instance</a>)</td></tr></table><span class="keyword">return</span> Natural;</pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-active_logger.ads.html#l65" title="alog-active_logger.ads:65:13">alog-active_logger.ads:65:13</a> (declaration)</i></div>
+            <div><i>alog-active_logger.adb:112:13 (body)</i></div>
+            <div><i>alog-active_logger.adb:117:8 (label)</i></div>
+        </div>
+        <div class='profile'>
+          <h4>Calls:</h4>
+            <div><i><a href="alog-tasked_logger.ads.html#alog-tasked_logger.ads:53:13" title="defined at alog-tasked_logger.ads:53:13">Alog.Tasked_Logger.Instance.Facility_Count</a> defined at <a href="src_alog-tasked_logger.ads.html#l53" title="alog-tasked_logger.ads:53:13">alog-tasked_logger.ads:53:13</a></i></div>
+            <div><i>Backend defined at <a href="src_alog-active_logger.ads.html#l163" title="alog-active_logger.ads:163:7">alog-active_logger.ads:163:7</a></i></div>
+        </div>
+        <div class='comment'>Return number of attached facilites.&#10;</div>
+      </div>
+      <div class="class">
+        <h3>
+          <a name='alog-active_logger.ads:68:14' id='alog-active_logger.ads:68:14'></a>
+<span class="droplink">Update<ul>
+  <li><a href="src_alog-active_logger.ads.html#l68">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">procedure</span> <span class="name"><b>Update</b></span>     <table><tr><td>(</td><td><span class="name"><a name="alog-active_logger.ads:69:7"></a>Logger</span></td><td>: <span class="keyword">in</span> <span class="keyword">out</span> <a href="alog-active_logger.ads.html#alog-active_logger.ads:37:9" title="defined at alog-active_logger.ads:37:9">Instance</a>;</td></tr><tr><td></td><td><span class="name"><a name="alog-active_logger.ads:70:7"></a>Name</span></td><td>:        String;</td></tr><tr><td></td><td><span class="name"><a name="alog-active_logger.ads:71:7"></a>Process</span></td><td>:        <a href="alog-tasked_logger.ads.html#alog-tasked_logger.ads:35:9" title="defined at alog-tasked_logger.ads:35:9">Tasked_Logger.Facility_Update_Handle</a>);</td></tr></table></pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-active_logger.ads.html#l68" title="alog-active_logger.ads:68:14">alog-active_logger.ads:68:14</a> (declaration)</i></div>
+            <div><i>alog-active_logger.adb:220:14 (body)</i></div>
+            <div><i>alog-active_logger.adb:229:8 (label)</i></div>
+        </div>
+        <div class='profile'>
+          <h4>Calls:</h4>
+            <div><i><a href="alog-tasked_logger.ads.html#alog-tasked_logger.ads:56:13" title="defined at alog-tasked_logger.ads:56:13">Alog.Tasked_Logger.Instance.Update</a> defined at <a href="src_alog-tasked_logger.ads.html#l56" title="alog-tasked_logger.ads:56:13">alog-tasked_logger.ads:56:13</a></i></div>
+            <div><i>Backend defined at <a href="src_alog-active_logger.ads.html#l163" title="alog-active_logger.ads:163:7">alog-active_logger.ads:163:7</a></i></div>
+            <div><i>Check_Exception defined at <a href="src_alog-active_logger.ads.html#l145" title="alog-active_logger.ads:145:14">alog-active_logger.ads:145:14</a></i></div>
+        </div>
+        <div class='comment'>Update a specific Facility identified by &apos;Name&apos;. Call the &apos;Process&apos;&#10;procedure to perform the update operation.&#10;</div>
+      </div>
+      <div class="class">
+        <h3>
+          <a name='alog-active_logger.ads:75:14' id='alog-active_logger.ads:75:14'></a>
+<span class="droplink">Iterate<ul>
+  <li><a href="src_alog-active_logger.ads.html#l75">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">procedure</span> <span class="name"><b>Iterate</b></span>     <table><tr><td>(</td><td><span class="name"><a name="alog-active_logger.ads:76:7"></a>Logger</span></td><td>: <span class="keyword">in</span> <span class="keyword">out</span> <a href="alog-active_logger.ads.html#alog-active_logger.ads:37:9" title="defined at alog-active_logger.ads:37:9">Instance</a>;</td></tr><tr><td></td><td><span class="name"><a name="alog-active_logger.ads:77:7"></a>Process</span></td><td>:        <a href="alog-tasked_logger.ads.html#alog-tasked_logger.ads:35:9" title="defined at alog-tasked_logger.ads:35:9">Tasked_Logger.Facility_Update_Handle</a>);</td></tr></table></pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-active_logger.ads.html#l75" title="alog-active_logger.ads:75:14">alog-active_logger.ads:75:14</a> (declaration)</i></div>
+            <div><i>alog-active_logger.adb:155:14 (body)</i></div>
+            <div><i>alog-active_logger.adb:162:8 (label)</i></div>
+        </div>
+        <div class='profile'>
+          <h4>Calls:</h4>
+            <div><i><a href="alog-tasked_logger.ads.html#alog-tasked_logger.ads:64:13" title="defined at alog-tasked_logger.ads:64:13">Alog.Tasked_Logger.Instance.Iterate</a> defined at <a href="src_alog-tasked_logger.ads.html#l64" title="alog-tasked_logger.ads:64:13">alog-tasked_logger.ads:64:13</a></i></div>
+            <div><i>Backend defined at <a href="src_alog-active_logger.ads.html#l163" title="alog-active_logger.ads:163:7">alog-active_logger.ads:163:7</a></i></div>
+            <div><i>Check_Exception defined at <a href="src_alog-active_logger.ads.html#l145" title="alog-active_logger.ads:145:14">alog-active_logger.ads:145:14</a></i></div>
+        </div>
+        <div class='comment'>Call &apos;Process&apos; for all attached facilities.&#10;</div>
+      </div>
+      <div class="class">
+        <h3>
+          <a name='alog-active_logger.ads:80:14' id='alog-active_logger.ads:80:14'></a>
+<span class="droplink">Attach_Transform<ul>
+  <li><a href="src_alog-active_logger.ads.html#l80">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">procedure</span> <span class="name"><b>Attach_Transform</b></span>     <table><tr><td>(</td><td><span class="name"><a name="alog-active_logger.ads:81:7"></a>Logger</span></td><td>: <span class="keyword">in</span> <span class="keyword">out</span> <a href="alog-active_logger.ads.html#alog-active_logger.ads:37:9" title="defined at alog-active_logger.ads:37:9">Instance</a>;</td></tr><tr><td></td><td><span class="name"><a name="alog-active_logger.ads:82:7"></a>Transform</span></td><td>:        <a href="alog-transforms.ads.html#alog-transforms.ads:37:9" title="defined at alog-transforms.ads:37:9">Transforms.Handle</a>);</td></tr></table></pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-active_logger.ads.html#l80" title="alog-active_logger.ads:80:14">alog-active_logger.ads:80:14</a> (declaration)</i></div>
+            <div><i>alog-active_logger.adb:58:14 (body)</i></div>
+            <div><i>alog-active_logger.adb:64:8 (label)</i></div>
+        </div>
+        <div class='profile'>
+          <h4>Calls:</h4>
+            <div><i><a href="alog-tasked_logger.ads.html#alog-tasked_logger.ads:67:13" title="defined at alog-tasked_logger.ads:67:13">Alog.Tasked_Logger.Instance.Attach_Transform</a> defined at <a href="src_alog-tasked_logger.ads.html#l67" title="alog-tasked_logger.ads:67:13">alog-tasked_logger.ads:67:13</a></i></div>
+            <div><i>Backend defined at <a href="src_alog-active_logger.ads.html#l163" title="alog-active_logger.ads:163:7">alog-active_logger.ads:163:7</a></i></div>
+        </div>
+        <div class='comment'>Attach a transform to logger instance.&#10;</div>
+      </div>
+      <div class="class">
+        <h3>
+          <a name='alog-active_logger.ads:85:14' id='alog-active_logger.ads:85:14'></a>
+<span class="droplink">Detach_Transform<ul>
+  <li><a href="src_alog-active_logger.ads.html#l85">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">procedure</span> <span class="name"><b>Detach_Transform</b></span>     <table><tr><td>(</td><td><span class="name"><a name="alog-active_logger.ads:86:7"></a>Logger</span></td><td>: <span class="keyword">in</span> <span class="keyword">out</span> <a href="alog-active_logger.ads.html#alog-active_logger.ads:37:9" title="defined at alog-active_logger.ads:37:9">Instance</a>;</td></tr><tr><td></td><td><span class="name"><a name="alog-active_logger.ads:87:7"></a>Name</span></td><td>:        String);</td></tr></table></pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-active_logger.ads.html#l85" title="alog-active_logger.ads:85:14">alog-active_logger.ads:85:14</a> (declaration)</i></div>
+            <div><i>alog-active_logger.adb:102:14 (body)</i></div>
+            <div><i>alog-active_logger.adb:108:8 (label)</i></div>
+        </div>
+        <div class='profile'>
+          <h4>Calls:</h4>
+            <div><i><a href="alog-tasked_logger.ads.html#alog-tasked_logger.ads:70:13" title="defined at alog-tasked_logger.ads:70:13">Alog.Tasked_Logger.Instance.Detach_Transform</a> defined at <a href="src_alog-tasked_logger.ads.html#l70" title="alog-tasked_logger.ads:70:13">alog-tasked_logger.ads:70:13</a></i></div>
+            <div><i>Backend defined at <a href="src_alog-active_logger.ads.html#l163" title="alog-active_logger.ads:163:7">alog-active_logger.ads:163:7</a></i></div>
+        </div>
+        <div class='comment'>Detach a transform with name &apos;Name&apos; from logger instance. If the&#10;transform is not found a Transform_Not_Found exception is raised.&#10;</div>
+      </div>
+      <div class="class">
+        <h3>
+          <a name='alog-active_logger.ads:91:13' id='alog-active_logger.ads:91:13'></a>
+<span class="droplink">Transform_Count<ul>
+  <li><a href="src_alog-active_logger.ads.html#l91">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">function</span> <span class="name"><b>Transform_Count</b></span> <table><tr><td>(</td><td><span class="name"><a name="alog-active_logger.ads:91:30"></a>Logger</span></td><td>: <a href="alog-active_logger.ads.html#alog-active_logger.ads:37:9" title="defined at alog-active_logger.ads:37:9">Instance</a>)</td></tr></table><span class="keyword">return</span> Natural;</pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-active_logger.ads.html#l91" title="alog-active_logger.ads:91:13">alog-active_logger.ads:91:13</a> (declaration)</i></div>
+            <div><i>alog-active_logger.adb:211:13 (body)</i></div>
+            <div><i>alog-active_logger.adb:216:8 (label)</i></div>
+        </div>
+        <div class='profile'>
+          <h4>Calls:</h4>
+            <div><i><a href="alog-tasked_logger.ads.html#alog-tasked_logger.ads:73:13" title="defined at alog-tasked_logger.ads:73:13">Alog.Tasked_Logger.Instance.Transform_Count</a> defined at <a href="src_alog-tasked_logger.ads.html#l73" title="alog-tasked_logger.ads:73:13">alog-tasked_logger.ads:73:13</a></i></div>
+            <div><i>Backend defined at <a href="src_alog-active_logger.ads.html#l163" title="alog-active_logger.ads:163:7">alog-active_logger.ads:163:7</a></i></div>
+        </div>
+        <div class='comment'>Return number of attached transforms.&#10;</div>
+      </div>
+      <div class="class">
+        <h3>
+          <a name='alog-active_logger.ads:94:14' id='alog-active_logger.ads:94:14'></a>
+<span class="droplink">Clear<ul>
+  <li><a href="src_alog-active_logger.ads.html#l94">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">procedure</span> <span class="name"><b>Clear</b></span> <table><tr><td>(</td><td><span class="name"><a name="alog-active_logger.ads:94:21"></a>Logger</span></td><td>: <span class="keyword">in</span> <span class="keyword">out</span> <a href="alog-active_logger.ads.html#alog-active_logger.ads:37:9" title="defined at alog-active_logger.ads:37:9">Instance</a>);</td></tr></table></pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-active_logger.ads.html#l94" title="alog-active_logger.ads:94:14">alog-active_logger.ads:94:14</a> (declaration)</i></div>
+            <div><i>alog-active_logger.adb:77:14 (body)</i></div>
+            <div><i>alog-active_logger.adb:80:8 (label)</i></div>
+            <div><i>alog-active_logger.adb:204:14 (reference)</i></div>
+        </div>
+        <div class='profile'>
+          <h4>Called by:</h4>
+            <div><i><a href="alog-active_logger.ads.html#alog-active_logger.ads:115:14" title="defined at alog-active_logger.ads:115:14">Shutdown</a> defined at <a href="src_alog-active_logger.ads.html#l115" title="alog-active_logger.ads:115:14">alog-active_logger.ads:115:14</a></i></div>
+        </div>
+        <div class='profile'>
+          <h4>Calls:</h4>
+            <div><i><a href="alog-tasked_logger.ads.html#alog-tasked_logger.ads:96:13" title="defined at alog-tasked_logger.ads:96:13">Alog.Tasked_Logger.Instance.Clear</a> defined at <a href="src_alog-tasked_logger.ads.html#l96" title="alog-tasked_logger.ads:96:13">alog-tasked_logger.ads:96:13</a></i></div>
+            <div><i>Backend defined at <a href="src_alog-active_logger.ads.html#l163" title="alog-active_logger.ads:163:7">alog-active_logger.ads:163:7</a></i></div>
+        </div>
+        <div class='comment'>Clear logger instance. Detach and teardown all attached facilities and&#10;transforms.&#10;</div>
+      </div>
+      <div class="class">
+        <h3>
+          <a name='alog-active_logger.ads:98:14' id='alog-active_logger.ads:98:14'></a>
+<span class="droplink">Log_Message<ul>
+  <li><a href="src_alog-active_logger.ads.html#l98">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">procedure</span> <span class="name"><b>Log_Message</b></span>     <table><tr><td>(</td><td><span class="name"><a name="alog-active_logger.ads:99:7"></a>Logger</span></td><td>: <span class="keyword">in</span> <span class="keyword">out</span> <a href="alog-active_logger.ads.html#alog-active_logger.ads:37:9" title="defined at alog-active_logger.ads:37:9">Instance</a>;</td></tr><tr><td></td><td><span class="name"><a name="alog-active_logger.ads:100:7"></a>Source</span></td><td>:        String := <span class="string">""</span>;</td></tr><tr><td></td><td><span class="name"><a name="alog-active_logger.ads:101:7"></a>Level</span></td><td>:        <a href="alog.ads.html#alog.ads:32:9" title="defined at alog.ads:32:9">Log_Level</a>;</td></tr><tr><td></td><td><span class="name"><a name="alog-active_logger.ads:102:7"></a>Msg</span></td><td>:        String);</td></tr></table></pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-active_logger.ads.html#l98" title="alog-active_logger.ads:98:14">alog-active_logger.ads:98:14</a> (declaration)</i></div>
+            <div><i>alog-active_logger.adb:166:14 (body)</i></div>
+            <div><i>alog-active_logger.adb:188:8 (label)</i></div>
+        </div>
+        <div class='profile'>
+          <h4>Calls:</h4>
+            <div><i><a href="alog-log_request.ads.html#alog-log_request.ads:37:13" title="defined at alog-log_request.ads:37:13">Alog.Log_Request.Create</a> defined at <a href="src_alog-log_request.ads.html#l37" title="alog-log_request.ads:37:13">alog-log_request.ads:37:13</a></i></div>
+            <div><i><a href="alog-policy_db.ads.html#alog-policy_db.ads:76:13" title="defined at alog-policy_db.ads:76:13">Alog.Policy_DB.Accept_Src</a> defined at <a href="src_alog-policy_db.ads.html#l76" title="alog-policy_db.ads:76:13">alog-policy_db.ads:76:13</a></i></div>
+            <div><i><a href="alog-protected_containers.ads.html#alog-protected_containers.ads:43:17" title="defined at alog-protected_containers.ads:43:17">Alog.Protected_Containers.Log_Request_List.Put</a> defined at <a href="src_alog-protected_containers.ads.html#l43" title="alog-protected_containers.ads:43:17">alog-protected_containers.ads:43:17</a></i></div>
+            <div><i>Current_Task defined at a-taside.ads:53:13</i></div>
+        </div>
+        <div class='comment'>Log the given message asynchronously. The message is put into a log&#10;request queue which is continuously consumed by a logging task.&#10;&#10;Prior to actually processing the given log message the policy database is&#10;inquired if the log message with given source and level should be logged.&#10;&#10;This procedure is *safe* to call from protected actions (e.g. from an&#10;entry call statement or rendezvous).&#10;</div>
+      </div>
+      <div class="class">
+        <h3>
+          <a name='alog-active_logger.ads:112:13' id='alog-active_logger.ads:112:13'></a>
+<span class="droplink">Get_Queue_Length<ul>
+  <li><a href="src_alog-active_logger.ads.html#l112">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">function</span> <span class="name"><b>Get_Queue_Length</b></span> <table><tr><td>(</td><td><span class="name"><a name="alog-active_logger.ads:112:31"></a>Logger</span></td><td>: <a href="alog-active_logger.ads.html#alog-active_logger.ads:37:9" title="defined at alog-active_logger.ads:37:9">Instance</a>)</td></tr></table><span class="keyword">return</span> Natural;</pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-active_logger.ads.html#l112" title="alog-active_logger.ads:112:13">alog-active_logger.ads:112:13</a> (declaration)</i></div>
+            <div><i>alog-active_logger.adb:140:13 (body)</i></div>
+            <div><i>alog-active_logger.adb:143:8 (label)</i></div>
+        </div>
+        <div class='profile'>
+          <h4>Calls:</h4>
+            <div><i><a href="alog-protected_containers.ads.html#alog-protected_containers.ads:61:16" title="defined at alog-protected_containers.ads:61:16">Alog.Protected_Containers.Log_Request_List.Length</a> defined at <a href="src_alog-protected_containers.ads.html#l61" title="alog-protected_containers.ads:61:16">alog-protected_containers.ads:61:16</a></i></div>
+        </div>
+        <div class='comment'>Returns the number of currently queued log messages.&#10;</div>
+      </div>
+      <div class="class">
+        <h3>
+          <a name='alog-active_logger.ads:115:14' id='alog-active_logger.ads:115:14'></a>
+<span class="droplink">Shutdown<ul>
+  <li><a href="src_alog-active_logger.ads.html#l115">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">procedure</span> <span class="name"><b>Shutdown</b></span>     <table><tr><td>(</td><td><span class="name"><a name="alog-active_logger.ads:116:7"></a>Logger</span></td><td>: <span class="keyword">in</span> <span class="keyword">out</span> <a href="alog-active_logger.ads.html#alog-active_logger.ads:37:9" title="defined at alog-active_logger.ads:37:9">Instance</a>;</td></tr><tr><td></td><td><span class="name"><a name="alog-active_logger.ads:117:7"></a>Flush</span></td><td>:        Boolean := True);</td></tr></table></pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-active_logger.ads.html#l115" title="alog-active_logger.ads:115:14">alog-active_logger.ads:115:14</a> (declaration)</i></div>
+            <div><i>alog-active_logger.adb:123:21 (reference)</i></div>
+            <div><i>alog-active_logger.adb:192:14 (body)</i></div>
+            <div><i>alog-active_logger.adb:207:8 (label)</i></div>
+        </div>
+        <div class='profile'>
+          <h4>Called by:</h4>
+            <div><i>Finalize defined at <a href="src_alog-active_logger.ads.html#l172" title="alog-active_logger.ads:172:14">alog-active_logger.ads:172:14</a></i></div>
+        </div>
+        <div class='profile'>
+          <h4>Calls:</h4>
+            <div><i><a href="alog-protected_containers.ads.html#alog-protected_containers.ads:52:13" title="defined at alog-protected_containers.ads:52:13">Alog.Protected_Containers.Log_Request_List.All_Done</a> defined at <a href="src_alog-protected_containers.ads.html#l52" title="alog-protected_containers.ads:52:13">alog-protected_containers.ads:52:13</a></i></div>
+            <div><i><a href="alog-tasked_logger.ads.html#alog-tasked_logger.ads:110:13" title="defined at alog-tasked_logger.ads:110:13">Alog.Tasked_Logger.Instance.Shutdown</a> defined at <a href="src_alog-tasked_logger.ads.html#l110" title="alog-tasked_logger.ads:110:13">alog-tasked_logger.ads:110:13</a></i></div>
+            <div><i>Backend defined at <a href="src_alog-active_logger.ads.html#l163" title="alog-active_logger.ads:163:7">alog-active_logger.ads:163:7</a></i></div>
+            <div><i><a href="alog-active_logger.ads.html#alog-active_logger.ads:94:14" title="defined at alog-active_logger.ads:94:14">Clear</a> defined at <a href="src_alog-active_logger.ads.html#l94" title="alog-active_logger.ads:94:14">alog-active_logger.ads:94:14</a></i></div>
+            <div><i><a href="alog-active_logger.ads.html#alog-active_logger.ads:122:13" title="defined at alog-active_logger.ads:122:13">Is_Terminated</a> defined at <a href="src_alog-active_logger.ads.html#l122" title="alog-active_logger.ads:122:13">alog-active_logger.ads:122:13</a></i></div>
+            <div><i>Shutdown defined at <a href="src_alog-active_logger.ads.html#l154" title="alog-active_logger.ads:154:17">alog-active_logger.ads:154:17</a></i></div>
+        </div>
+        <div class='comment'>Shutdown the active logger. This procedure must be called in order for&#10;the logger task to be terminated properly. If &apos;Flush&apos; is set to True the&#10;procedure will wait for all queued messages to be logged.&#10;</div>
+      </div>
+      <div class="class">
+        <h3>
+          <a name='alog-active_logger.ads:122:13' id='alog-active_logger.ads:122:13'></a>
+<span class="droplink">Is_Terminated<ul>
+  <li><a href="src_alog-active_logger.ads.html#l122">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">function</span> <span class="name"><b>Is_Terminated</b></span> <table><tr><td>(</td><td><span class="name"><a name="alog-active_logger.ads:122:28"></a>Logger</span></td><td>: <a href="alog-active_logger.ads.html#alog-active_logger.ads:37:9" title="defined at alog-active_logger.ads:37:9">Instance</a>)</td></tr></table><span class="keyword">return</span> Boolean;</pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-active_logger.ads.html#l122" title="alog-active_logger.ads:122:13">alog-active_logger.ads:122:13</a> (declaration)</i></div>
+            <div><i>alog-active_logger.adb:147:13 (body)</i></div>
+            <div><i>alog-active_logger.adb:151:8 (label)</i></div>
+            <div><i>alog-active_logger.adb:196:17 (reference)</i></div>
+        </div>
+        <div class='profile'>
+          <h4>Called by:</h4>
+            <div><i><a href="alog-active_logger.ads.html#alog-active_logger.ads:115:14" title="defined at alog-active_logger.ads:115:14">Shutdown</a> defined at <a href="src_alog-active_logger.ads.html#l115" title="alog-active_logger.ads:115:14">alog-active_logger.ads:115:14</a></i></div>
+        </div>
+        <div class='profile'>
+          <h4>Calls:</h4>
+            <div><i>Backend defined at <a href="src_alog-active_logger.ads.html#l163" title="alog-active_logger.ads:163:7">alog-active_logger.ads:163:7</a></i></div>
+            <div><i>Logger_Task defined at <a href="src_alog-active_logger.ads.html#l162" title="alog-active_logger.ads:162:7">alog-active_logger.ads:162:7</a></i></div>
+        </div>
+        <div class='comment'>Returns True if active logger shutdown sequence is complete.&#10;</div>
+      </div>
+      <div class="class">
+        <h3>
+          <a name='alog-active_logger.ads:125:14' id='alog-active_logger.ads:125:14'></a>
+<span class="droplink">All_Done<ul>
+  <li><a href="src_alog-active_logger.ads.html#l125">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">procedure</span> <span class="name"><b>All_Done</b></span> <table><tr><td>(</td><td><span class="name"><a name="alog-active_logger.ads:125:24"></a>Logger</span></td><td>: <span class="keyword">in</span> <span class="keyword">out</span> <a href="alog-active_logger.ads.html#alog-active_logger.ads:37:9" title="defined at alog-active_logger.ads:37:9">Instance</a>);</td></tr></table></pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-active_logger.ads.html#l125" title="alog-active_logger.ads:125:14">alog-active_logger.ads:125:14</a> (declaration)</i></div>
+            <div><i>alog-active_logger.adb:33:14 (body)</i></div>
+            <div><i>alog-active_logger.adb:36:8 (label)</i></div>
+        </div>
+        <div class='profile'>
+          <h4>Calls:</h4>
+            <div><i><a href="alog-protected_containers.ads.html#alog-protected_containers.ads:52:13" title="defined at alog-protected_containers.ads:52:13">Alog.Protected_Containers.Log_Request_List.All_Done</a> defined at <a href="src_alog-protected_containers.ads.html#l52" title="alog-protected_containers.ads:52:13">alog-protected_containers.ads:52:13</a></i></div>
+        </div>
+        <div class='comment'>This procedure blocks until all queued logging requests have been&#10;consumed.&#10;</div>
+      </div>
+      <div class="class">
+        <h3>
+          <a name='alog-active_logger.ads:129:14' id='alog-active_logger.ads:129:14'></a>
+<span class="droplink">Get_Last_Exception<ul>
+  <li><a href="src_alog-active_logger.ads.html#l129">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">procedure</span> <span class="name"><b>Get_Last_Exception</b></span>     <table><tr><td>(</td><td><span class="name"><a name="alog-active_logger.ads:130:7"></a>Logger</span></td><td>: <span class="keyword">in</span> <span class="keyword">out</span> <a href="alog-active_logger.ads.html#alog-active_logger.ads:37:9" title="defined at alog-active_logger.ads:37:9">Instance</a>;</td></tr><tr><td></td><td><span class="name"><a name="alog-active_logger.ads:131:7"></a>Occurrence</span></td><td>:    <span class="keyword">out</span> Ada.Exceptions.Exception_Occurrence);</td></tr></table></pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-active_logger.ads.html#l129" title="alog-active_logger.ads:129:14">alog-active_logger.ads:129:14</a> (declaration)</i></div>
+            <div><i>alog-active_logger.adb:128:14 (body)</i></div>
+            <div><i>alog-active_logger.adb:136:8 (label)</i></div>
+        </div>
+        <div class='profile'>
+          <h4>Calls:</h4>
+            <div><i><a href="alog-tasked_logger.ads.html#alog-tasked_logger.ads:100:13" title="defined at alog-tasked_logger.ads:100:13">Alog.Tasked_Logger.Instance.Get_Last_Exception</a> defined at <a href="src_alog-tasked_logger.ads.html#l100" title="alog-tasked_logger.ads:100:13">alog-tasked_logger.ads:100:13</a></i></div>
+            <div><i>Backend defined at <a href="src_alog-active_logger.ads.html#l163" title="alog-active_logger.ads:163:7">alog-active_logger.ads:163:7</a></i></div>
+            <div><i>Current_Task defined at a-taside.ads:53:13</i></div>
+        </div>
+        <div class='comment'>Return last known Exception_Occurrence for caller. If no exception&#10;occured Null_Occurrence is returned.&#10;</div>
+      </div>
+    </div>
+</div> <!-- documentation -->
+
+</body>
+</html>

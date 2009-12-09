@@ -1,0 +1,127 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html><head>
+  <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript"/>
+
+  <title>
+    File: alog-policy_db.ads
+  </title>
+  <link rel='stylesheet' href='support/docgen.css' type='text/css'/>
+  <script src='support/docgen.js' type='text/javascript' charset='utf-8'></script>
+</head>
+<body onload="onloadDoc();">
+
+<div id='leftSide'>
+  <div id='leftSideInside'>
+  <div id='header'>
+    <h2 class="button">Documentation</h2>
+    <a href='index.html'><div class="button2">Table of Contents</div></a>
+
+    <a href='tree.html'><div class="button2">Class Inheritance Tree</div></a>
+
+  </div>
+  </div>
+</div> <!-- leftSide -->
+
+<div class='subprograms'>
+  <div class='details'><ol><li id="l1"><pre><span class="comment">--</span> </pre></li>
+<li id="l2"><pre><span class="comment">--  Copyright (c) 2009,</span> </pre></li>
+<li id="l3"><pre><span class="comment">--  Reto Buerki, Adrian-Ken Rueegsegger</span> </pre></li>
+<li id="l4"><pre><span class="comment">--  secunet SwissIT AG</span> </pre></li>
+<li id="l5"><pre><span class="comment">--</span> </pre></li>
+<li id="l6"><pre><span class="comment">--  This file is part of Alog.</span> </pre></li>
+<li id="l7"><pre><span class="comment">--</span> </pre></li>
+<li id="l8"><pre><span class="comment">--  Alog is free software; you can redistribute it and/or modify</span> </pre></li>
+<li id="l9"><pre><span class="comment">--  it under the terms of the GNU Lesser General Public License as published</span> </pre></li>
+<li id="l10"><pre><span class="comment">--  by the Free Software Foundation; either version 2.1 of the License, or</span> </pre></li>
+<li id="l11"><pre><span class="comment">--  (at your option) any later version.</span> </pre></li>
+<li id="l12"><pre><span class="comment">--</span> </pre></li>
+<li id="l13"><pre><span class="comment">--  Alog is distributed in the hope that it will be useful,</span> </pre></li>
+<li id="l14"><pre><span class="comment">--  but WITHOUT ANY WARRANTY; without even the implied warranty of</span> </pre></li>
+<li id="l15"><pre><span class="comment">--  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span> </pre></li>
+<li id="l16"><pre><span class="comment">--  GNU Lesser General Public License for more details.</span> </pre></li>
+<li id="l17"><pre><span class="comment">--</span> </pre></li>
+<li id="l18"><pre><span class="comment">--  You should have received a copy of the GNU Lesser General Public License</span> </pre></li>
+<li id="l19"><pre><span class="comment">--  along with Alog; if not, write to the Free Software</span> </pre></li>
+<li id="l20"><pre><span class="comment">--  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,</span> </pre></li>
+<li id="l21"><pre><span class="comment">--  MA  02110-1301  USA</span> </pre></li>
+<li id="l22"><pre><span class="comment">--</span> </pre></li>
+<li id="l23"><pre> </pre></li>
+<li id="l24"><pre><span class="keyword">with</span> Alog.Maps; </pre></li>
+<li id="l25"><pre> </pre></li>
+<li id="l26"><pre><span class="comment">--  Logging policy database package. This DB stores logging policies. Policies</span> </pre></li>
+<li id="l27"><pre><span class="comment">--  in the database are used inside the framework for logging decisions.</span> </pre></li>
+<li id="l28"><pre><span class="keyword">package</span> <span class="droplink">Alog.Policy_DB<ul><li><a href="alog-policy_db.ads.html#alog-policy_db.ads:28:14" title="To API doc">To API doc</a></li><li><a href="src_alog-policy_db.ads.html#l28" title="To spec">To spec</a></li><li><a href="src_alog-policy_db.adb.html#l24" title="To body">To body</a></li></ul></span> <span class="keyword">is</span> </pre></li>
+<li id="l29"><pre> </pre></li>
+<li id="l30"><pre>   <a href="alog-policy_db.ads.html#alog-policy_db.ads:30:4" title="defined at alog-policy_db.ads:30:4">Alog_Default_Level</a> : <span class="keyword">constant</span> <span class="droplink">Log_Level<ul><li><a href="alog.ads.html#alog.ads:32:9" title="To API doc">To API doc</a></li><li><a href="src_alog.ads.html#l32" title="To spec">To spec</a></li></ul></span> := Debug; </pre></li>
+<li id="l31"><pre>   <span class="comment">--  Framework default loglevel.</span> </pre></li>
+<li id="l32"><pre> </pre></li>
+<li id="l33"><pre>   <span class="keyword">procedure</span> <span class="droplink">Set_Default_Loglevel<ul><li><a href="alog-policy_db.ads.html#alog-policy_db.ads:33:14" title="To API doc">To API doc</a></li><li><a href="src_alog-policy_db.adb.html#l106" title="To body">To body</a></li></ul></span> (<span class="droplink">Level<ul><li><a href="alog-policy_db.ads.html#alog-policy_db.ads:33:36" title="To API doc">To API doc</a></li><li><a href="src_alog-policy_db.adb.html#l106" title="To body">To body</a></li></ul></span> : <span class="droplink">Log_Level<ul><li><a href="alog.ads.html#alog.ads:32:9" title="To API doc">To API doc</a></li><li><a href="src_alog.ads.html#l32" title="To spec">To spec</a></li></ul></span>); </pre></li>
+<li id="l34"><pre>   <span class="comment">--  Set given loglevel as default loglevel.</span> </pre></li>
+<li id="l35"><pre> </pre></li>
+<li id="l36"><pre>   <span class="keyword">function</span> <span class="droplink">Get_Default_Loglevel<ul><li><a href="alog-policy_db.ads.html#alog-policy_db.ads:36:13" title="To API doc">To API doc</a></li><li><a href="src_alog-policy_db.adb.html#l64" title="To body">To body</a></li></ul></span> <span class="keyword">return</span> <span class="droplink">Log_Level<ul><li><a href="alog.ads.html#alog.ads:32:9" title="To API doc">To API doc</a></li><li><a href="src_alog.ads.html#l32" title="To spec">To spec</a></li></ul></span>; </pre></li>
+<li id="l37"><pre>   <span class="comment">--  Return current default loglevel.</span> </pre></li>
+<li id="l38"><pre> </pre></li>
+<li id="l39"><pre>   <span class="keyword">procedure</span> <span class="droplink">Set_Loglevel<ul><li><a href="alog-policy_db.ads.html#alog-policy_db.ads:39:14" title="To API doc">To API doc</a></li><li><a href="src_alog-policy_db.adb.html#l113" title="To body">To body</a></li></ul></span> </pre></li>
+<li id="l40"><pre>     (<a href="alog-policy_db.ads.html#alog-policy_db.ads:40:7" title="defined at alog-policy_db.ads:40:7">Identifier</a> : String; </pre></li>
+<li id="l41"><pre>      <span class="droplink">Level<ul><li><a href="alog-policy_db.ads.html#alog-policy_db.ads:41:7" title="To API doc">To API doc</a></li><li><a href="src_alog-policy_db.adb.html#l115" title="To body">To body</a></li></ul></span>      : <span class="droplink">Log_Level<ul><li><a href="alog.ads.html#alog.ads:32:9" title="To API doc">To API doc</a></li><li><a href="src_alog.ads.html#l32" title="To spec">To spec</a></li></ul></span>); </pre></li>
+<li id="l42"><pre>   <span class="comment">--  Set given loglevel for specified identifier string. If the identifier is</span> </pre></li>
+<li id="l43"><pre>   <span class="comment">--  already present the loglevel is updated. Identifier strings are</span> </pre></li>
+<li id="l44"><pre>   <span class="comment">--  case-sensitive.</span> </pre></li>
+<li id="l45"><pre>   <span class="comment">--</span> </pre></li>
+<li id="l46"><pre>   <span class="comment">--  Use wildcards to specify a loglevel for a range of identifiers.</span> </pre></li>
+<li id="l47"><pre>   <span class="comment">--  Identifier hierarchies are separated by dots, the wildcard is &apos;*&apos;. The</span> </pre></li>
+<li id="l48"><pre>   <span class="comment">--  following example sets a Debug loglevel for all log-identifiers in</span> </pre></li>
+<li id="l49"><pre>   <span class="comment">--  Foo.Bar (including Foo.Bar).</span> </pre></li>
+<li id="l50"><pre>   <span class="comment">--</span> </pre></li>
+<li id="l51"><pre>   <span class="comment">--  Example:</span> </pre></li>
+<li id="l52"><pre>   <span class="comment">--     Foo.Bar.* = Debug</span> </pre></li>
+<li id="l53"><pre>   <span class="comment">--</span> </pre></li>
+<li id="l54"><pre>   <span class="comment">--  Direct matches take precedence over wildcard matches. In the following</span> </pre></li>
+<li id="l55"><pre>   <span class="comment">--  example the loglevel for identifier &apos;Foo.Bar&apos; is explicitly set to Info.</span> </pre></li>
+<li id="l56"><pre>   <span class="comment">--</span> </pre></li>
+<li id="l57"><pre>   <span class="comment">--  Example:</span> </pre></li>
+<li id="l58"><pre>   <span class="comment">--     Foo.Bar   = Info</span> </pre></li>
+<li id="l59"><pre>   <span class="comment">--     Foo.Bar.* = Debug</span> </pre></li>
+<li id="l60"><pre> </pre></li>
+<li id="l61"><pre>   <span class="keyword">procedure</span> <span class="droplink">Set_Loglevel<ul><li><a href="alog-policy_db.ads.html#alog-policy_db.ads:61:14" title="To API doc">To API doc</a></li><li><a href="src_alog-policy_db.adb.html#l124" title="To body">To body</a></li></ul></span> (<span class="droplink">Identifiers<ul><li><a href="alog-policy_db.ads.html#alog-policy_db.ads:61:28" title="To API doc">To API doc</a></li><li><a href="src_alog-policy_db.adb.html#l124" title="To body">To body</a></li></ul></span> : Maps.Wildcard_Level_Map); </pre></li>
+<li id="l62"><pre>   <span class="comment">--  Apply loglevels for identifiers stored in map.</span> </pre></li>
+<li id="l63"><pre> </pre></li>
+<li id="l64"><pre>   <span class="keyword">function</span> <span class="droplink">Get_Loglevel<ul><li><a href="alog-policy_db.ads.html#alog-policy_db.ads:64:13" title="To API doc">To API doc</a></li><li><a href="src_alog-policy_db.adb.html#l71" title="To body">To body</a></li></ul></span> (<a href="alog-policy_db.ads.html#alog-policy_db.ads:64:27" title="defined at alog-policy_db.ads:64:27">Identifier</a> : String) <span class="keyword">return</span> <span class="droplink">Log_Level<ul><li><a href="alog.ads.html#alog.ads:32:9" title="To API doc">To API doc</a></li><li><a href="src_alog.ads.html#l32" title="To spec">To spec</a></li></ul></span>; </pre></li>
+<li id="l65"><pre>   <span class="comment">--  Return loglevel for given identifier string. Raises No_Ident_Loglevel</span> </pre></li>
+<li id="l66"><pre>   <span class="comment">--  exception if no entry for given identifier is found (exact match only, no</span> </pre></li>
+<li id="l67"><pre>   <span class="comment">--  wildcard lookup).</span> </pre></li>
+<li id="l68"><pre> </pre></li>
+<li id="l69"><pre>   <span class="keyword">function</span> <span class="droplink">Lookup<ul><li><a href="alog-policy_db.ads.html#alog-policy_db.ads:69:13" title="To API doc">To API doc</a></li><li><a href="src_alog-policy_db.adb.html#l83" title="To body">To body</a></li></ul></span> (<a href="alog-policy_db.ads.html#alog-policy_db.ads:69:21" title="defined at alog-policy_db.ads:69:21">Identifier</a> : String) <span class="keyword">return</span> <span class="droplink">Log_Level<ul><li><a href="alog.ads.html#alog.ads:32:9" title="To API doc">To API doc</a></li><li><a href="src_alog.ads.html#l32" title="To spec">To spec</a></li></ul></span>; </pre></li>
+<li id="l70"><pre>   <span class="comment">--  Return loglevel for given identifier string. Returns the closest match,</span> </pre></li>
+<li id="l71"><pre>   <span class="comment">--  if no associated loglevel is found the default loglevel is returned.</span> </pre></li>
+<li id="l72"><pre> </pre></li>
+<li id="l73"><pre>   <span class="keyword">procedure</span> <span class="droplink">Reset<ul><li><a href="alog-policy_db.ads.html#alog-policy_db.ads:73:14" title="To API doc">To API doc</a></li><li><a href="src_alog-policy_db.adb.html#l98" title="To body">To body</a></li></ul></span>; </pre></li>
+<li id="l74"><pre>   <span class="comment">--  Reset the logging policy database to the initial state.</span> </pre></li>
+<li id="l75"><pre> </pre></li>
+<li id="l76"><pre>   <span class="keyword">function</span> <span class="droplink">Accept_Src<ul><li><a href="alog-policy_db.ads.html#alog-policy_db.ads:76:13" title="To API doc">To API doc</a></li><li><a href="src_alog-policy_db.adb.html#l53" title="To body">To body</a></li></ul></span> </pre></li>
+<li id="l77"><pre>     (<a href="alog-policy_db.ads.html#alog-policy_db.ads:77:7" title="defined at alog-policy_db.ads:77:7">Identifier</a> : String := <span class="string">&quot;&quot;</span>; </pre></li>
+<li id="l78"><pre>      <span class="droplink">Level<ul><li><a href="alog-policy_db.ads.html#alog-policy_db.ads:78:7" title="To API doc">To API doc</a></li><li><a href="src_alog-policy_db.adb.html#l55" title="To body">To body</a></li></ul></span>      : <span class="droplink">Log_Level<ul><li><a href="alog.ads.html#alog.ads:32:9" title="To API doc">To API doc</a></li><li><a href="src_alog.ads.html#l32" title="To spec">To spec</a></li></ul></span>) </pre></li>
+<li id="l79"><pre>      <span class="keyword">return</span> Boolean; </pre></li>
+<li id="l80"><pre>   <span class="comment">--  Returns True if the given loglevel is accepted for a source identifier.</span> </pre></li>
+<li id="l81"><pre>   <span class="comment">--  If no identifier is given, the loglevel is verified against the default</span> </pre></li>
+<li id="l82"><pre>   <span class="comment">--  loglevel.</span> </pre></li>
+<li id="l83"><pre> </pre></li>
+<li id="l84"><pre>   <span class="keyword">function</span> <span class="droplink">Accept_Dst<ul><li><a href="alog-policy_db.ads.html#alog-policy_db.ads:84:13" title="To API doc">To API doc</a></li><li><a href="src_alog-policy_db.adb.html#l34" title="To body">To body</a></li></ul></span> </pre></li>
+<li id="l85"><pre>     (<a href="alog-policy_db.ads.html#alog-policy_db.ads:85:7" title="defined at alog-policy_db.ads:85:7">Identifier</a> : String; </pre></li>
+<li id="l86"><pre>      <span class="droplink">Level<ul><li><a href="alog-policy_db.ads.html#alog-policy_db.ads:86:7" title="To API doc">To API doc</a></li><li><a href="src_alog-policy_db.adb.html#l36" title="To body">To body</a></li></ul></span>      : <span class="droplink">Log_Level<ul><li><a href="alog.ads.html#alog.ads:32:9" title="To API doc">To API doc</a></li><li><a href="src_alog.ads.html#l32" title="To spec">To spec</a></li></ul></span>) </pre></li>
+<li id="l87"><pre>      <span class="keyword">return</span> Boolean; </pre></li>
+<li id="l88"><pre>   <span class="comment">--  Returns True if the given loglevel is accepted for a destination</span> </pre></li>
+<li id="l89"><pre>   <span class="comment">--  identifier. If no match for the given identifier is found True is</span> </pre></li>
+<li id="l90"><pre>   <span class="comment">--  returned.</span> </pre></li>
+<li id="l91"><pre> </pre></li>
+<li id="l92"><pre>   <a href="alog-policy_db.ads.html#alog-policy_db.ads:92:4" title="defined at alog-policy_db.ads:92:4">No_Ident_Loglevel</a> : <span class="keyword">exception</span>; </pre></li>
+<li id="l93"><pre>   <span class="comment">--  Will be raised if loglevel is not found for a requested identifier.</span> </pre></li>
+<li id="l94"><pre> </pre></li>
+<li id="l95"><pre><span class="keyword">end</span> <span class="droplink">Alog.Policy_DB<ul><li><a href="alog-policy_db.ads.html#alog-policy_db.ads:28:14" title="To API doc">To API doc</a></li><li><a href="src_alog-policy_db.ads.html#l28" title="To spec">To spec</a></li><li><a href="src_alog-policy_db.adb.html#l24" title="To body">To body</a></li></ul></span>; </pre></li>
+</ol></div>
+</div>
+
+</body>
+</html>

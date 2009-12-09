@@ -1,0 +1,182 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html><head>
+  <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript"/>
+
+  <title>
+    File: alog-facilities.ads
+  </title>
+  <link rel='stylesheet' href='support/docgen.css' type='text/css'/>
+  <script src='support/docgen.js' type='text/javascript' charset='utf-8'></script>
+</head>
+<body onload="onloadDoc();">
+
+<div id='leftSide'>
+  <div id='leftSideInside'>
+  <div id='header'>
+    <h2 class="button">Documentation</h2>
+    <a href='index.html'><div class="button2">Table of Contents</div></a>
+
+    <a href='tree.html'><div class="button2">Class Inheritance Tree</div></a>
+
+  </div>
+  </div>
+</div> <!-- leftSide -->
+
+<div class='subprograms'>
+  <div class='details'><ol><li id="l1"><pre><span class="comment">--</span> </pre></li>
+<li id="l2"><pre><span class="comment">--  Copyright (c) 2008-2009,</span> </pre></li>
+<li id="l3"><pre><span class="comment">--  Reto Buerki, Adrian-Ken Rueegsegger</span> </pre></li>
+<li id="l4"><pre><span class="comment">--  secunet SwissIT AG</span> </pre></li>
+<li id="l5"><pre><span class="comment">--</span> </pre></li>
+<li id="l6"><pre><span class="comment">--  This file is part of Alog.</span> </pre></li>
+<li id="l7"><pre><span class="comment">--</span> </pre></li>
+<li id="l8"><pre><span class="comment">--  Alog is free software; you can redistribute it and/or modify</span> </pre></li>
+<li id="l9"><pre><span class="comment">--  it under the terms of the GNU Lesser General Public License as published</span> </pre></li>
+<li id="l10"><pre><span class="comment">--  by the Free Software Foundation; either version 2.1 of the License, or</span> </pre></li>
+<li id="l11"><pre><span class="comment">--  (at your option) any later version.</span> </pre></li>
+<li id="l12"><pre><span class="comment">--</span> </pre></li>
+<li id="l13"><pre><span class="comment">--  Alog is distributed in the hope that it will be useful,</span> </pre></li>
+<li id="l14"><pre><span class="comment">--  but WITHOUT ANY WARRANTY; without even the implied warranty of</span> </pre></li>
+<li id="l15"><pre><span class="comment">--  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span> </pre></li>
+<li id="l16"><pre><span class="comment">--  GNU Lesser General Public License for more details.</span> </pre></li>
+<li id="l17"><pre><span class="comment">--</span> </pre></li>
+<li id="l18"><pre><span class="comment">--  You should have received a copy of the GNU Lesser General Public License</span> </pre></li>
+<li id="l19"><pre><span class="comment">--  along with Alog; if not, write to the Free Software</span> </pre></li>
+<li id="l20"><pre><span class="comment">--  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,</span> </pre></li>
+<li id="l21"><pre><span class="comment">--  MA  02110-1301  USA</span> </pre></li>
+<li id="l22"><pre><span class="comment">--</span> </pre></li>
+<li id="l23"><pre> </pre></li>
+<li id="l24"><pre><span class="keyword">with</span> Ada.Strings.Bounded; </pre></li>
+<li id="l25"><pre><span class="keyword">with</span> Ada.Strings.Unbounded; </pre></li>
+<li id="l26"><pre><span class="keyword">with</span> Ada.Command_Line; </pre></li>
+<li id="l27"><pre><span class="keyword">with</span> Ada.Calendar; </pre></li>
+<li id="l28"><pre> </pre></li>
+<li id="l29"><pre><span class="keyword">with</span> <span class="droplink">Alog.Log_Request<ul><li><a href="alog-log_request.ads.html#alog-log_request.ads:29:14" title="To API doc">To API doc</a></li><li><a href="src_alog-log_request.ads.html#l29" title="To spec">To spec</a></li><li><a href="src_alog-log_request.adb.html#l24" title="To body">To body</a></li></ul></span>; </pre></li>
+<li id="l30"><pre> </pre></li>
+<li id="l31"><pre><span class="comment">--  Alog facilities package. Provides common data and methods used by all</span> </pre></li>
+<li id="l32"><pre><span class="comment">--  facilities.</span> </pre></li>
+<li id="l33"><pre><span class="keyword">package</span> <span class="droplink">Alog.Facilities<ul><li><a href="alog-facilities.ads.html#alog-facilities.ads:33:14" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities.ads.html#l33" title="To spec">To spec</a></li><li><a href="src_alog-facilities.adb.html#l30" title="To body">To body</a></li></ul></span> <span class="keyword">is</span> </pre></li>
+<li id="l34"><pre> </pre></li>
+<li id="l35"><pre>   <span class="keyword">use</span> Ada.Strings.Bounded; </pre></li>
+<li id="l36"><pre>   <span class="keyword">use</span> Ada.Strings.Unbounded; </pre></li>
+<li id="l37"><pre> </pre></li>
+<li id="l38"><pre>   <span class="keyword">type</span> <span class="droplink">Instance<ul><li><a href="alog-facilities.ads.html#alog-facilities.ads:38:9" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities.ads.html#l127" title="To body">To body</a></li></ul></span> <span class="keyword">is</span> <span class="keyword">abstract</span> <span class="keyword">tagged</span> <span class="keyword">limited</span> <span class="keyword">private</span>; </pre></li>
+<li id="l39"><pre>   <span class="comment">--  Abstract type facility instance. All facilities in the Alog framework</span> </pre></li>
+<li id="l40"><pre>   <span class="comment">--  must implement this type.</span> </pre></li>
+<li id="l41"><pre> </pre></li>
+<li id="l42"><pre>   <span class="keyword">subtype</span> <a href="alog-facilities.ads.html#alog-facilities.ads:42:12" title="defined at alog-facilities.ads:42:12">Class</a> <span class="keyword">is</span> <span class="droplink">Instance<ul><li><a href="alog-facilities.ads.html#alog-facilities.ads:38:9" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities.ads.html#l38" title="To spec">To spec</a></li><li><a href="src_alog-facilities.ads.html#l127" title="To body">To body</a></li></ul></span>&apos;<span class="droplink">Class<ul><li><a href="alog-facilities.ads.html#alog-facilities.ads:42:12" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities.ads.html#l42" title="To spec">To spec</a></li></ul></span>; </pre></li>
+<li id="l43"><pre> </pre></li>
+<li id="l44"><pre>   <span class="keyword">type</span> <a href="alog-facilities.ads.html#alog-facilities.ads:44:9" title="defined at alog-facilities.ads:44:9">Handle</a> <span class="keyword">is</span> <span class="keyword">access</span> <span class="keyword">all</span> <span class="droplink">Class<ul><li><a href="alog-facilities.ads.html#alog-facilities.ads:42:12" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities.ads.html#l42" title="To spec">To spec</a></li></ul></span>; </pre></li>
+<li id="l45"><pre> </pre></li>
+<li id="l46"><pre>   <span class="keyword">function</span> <span class="droplink">&quot;=&quot;<ul><li><a href="alog-facilities.ads.html#alog-facilities.ads:46:13" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities.adb.html#l34" title="To body">To body</a></li></ul></span> </pre></li>
+<li id="l47"><pre>     (<a href="alog-facilities.ads.html#alog-facilities.ads:47:7" title="defined at alog-facilities.ads:47:7">Left</a>  : <span class="droplink">Handle<ul><li><a href="alog-facilities.ads.html#alog-facilities.ads:44:9" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities.ads.html#l44" title="To spec">To spec</a></li></ul></span>; </pre></li>
+<li id="l48"><pre>      <a href="alog-facilities.ads.html#alog-facilities.ads:48:7" title="defined at alog-facilities.ads:48:7">Right</a> : <span class="droplink">Handle<ul><li><a href="alog-facilities.ads.html#alog-facilities.ads:44:9" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities.ads.html#l44" title="To spec">To spec</a></li></ul></span>) <span class="keyword">return</span> Boolean; </pre></li>
+<li id="l49"><pre>   <span class="comment">--  Equal function.</span> </pre></li>
+<li id="l50"><pre> </pre></li>
+<li id="l51"><pre>   <span class="keyword">procedure</span> <span class="droplink">Set_Name<ul><li><a href="alog-facilities.ads.html#alog-facilities.ads:51:14" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities.adb.html#l150" title="To body">To body</a></li></ul></span> </pre></li>
+<li id="l52"><pre>     (<a href="alog-facilities.ads.html#alog-facilities.ads:52:7" title="defined at alog-facilities.ads:52:7">Facility</a> : <span class="keyword">in</span> <span class="keyword">out</span> <span class="droplink">Class<ul><li><a href="alog-facilities.ads.html#alog-facilities.ads:42:12" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities.ads.html#l42" title="To spec">To spec</a></li></ul></span>; </pre></li>
+<li id="l53"><pre>      <a href="alog-facilities.ads.html#alog-facilities.ads:53:7" title="defined at alog-facilities.ads:53:7">Name</a>     :        String); </pre></li>
+<li id="l54"><pre>   <span class="comment">--  Set facility name.</span> </pre></li>
+<li id="l55"><pre> </pre></li>
+<li id="l56"><pre>   <span class="keyword">function</span> <span class="droplink">Get_Name<ul><li><a href="alog-facilities.ads.html#alog-facilities.ads:56:13" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities.adb.html#l44" title="To body">To body</a></li></ul></span> (<a href="alog-facilities.ads.html#alog-facilities.ads:56:23" title="defined at alog-facilities.ads:56:23">Facility</a> : <span class="droplink">Class<ul><li><a href="alog-facilities.ads.html#alog-facilities.ads:42:12" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities.ads.html#l42" title="To spec">To spec</a></li></ul></span>) <span class="keyword">return</span> String; </pre></li>
+<li id="l57"><pre>   <span class="comment">--  Get facility name.</span> </pre></li>
+<li id="l58"><pre> </pre></li>
+<li id="l59"><pre>   <span class="keyword">function</span> <span class="droplink">Get_Timestamp<ul><li><a href="alog-facilities.ads.html#alog-facilities.ads:59:13" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities.adb.html#l51" title="To body">To body</a></li></ul></span> </pre></li>
+<li id="l60"><pre>     (<a href="alog-facilities.ads.html#alog-facilities.ads:60:7" title="defined at alog-facilities.ads:60:7">Facility</a> : <span class="droplink">Class<ul><li><a href="alog-facilities.ads.html#alog-facilities.ads:42:12" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities.ads.html#l42" title="To spec">To spec</a></li></ul></span>; </pre></li>
+<li id="l61"><pre>      <a href="alog-facilities.ads.html#alog-facilities.ads:61:7" title="defined at alog-facilities.ads:61:7">Time</a>     : Ada.Calendar.Time := Ada.Calendar.Clock) </pre></li>
+<li id="l62"><pre>      <span class="keyword">return</span> String; </pre></li>
+<li id="l63"><pre>   <span class="comment">--  Creates a timestamp and returns it as String. If no Time is given, the</span> </pre></li>
+<li id="l64"><pre>   <span class="comment">--  current time is used.</span> </pre></li>
+<li id="l65"><pre> </pre></li>
+<li id="l66"><pre>   <span class="keyword">procedure</span> <span class="droplink">Process<ul><li><a href="alog-facilities.ads.html#alog-facilities.ads:66:14" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities.adb.html#l112" title="To body">To body</a></li></ul></span> </pre></li>
+<li id="l67"><pre>     (<a href="alog-facilities.ads.html#alog-facilities.ads:67:7" title="defined at alog-facilities.ads:67:7">Facility</a> : <span class="droplink">Class<ul><li><a href="alog-facilities.ads.html#alog-facilities.ads:42:12" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities.ads.html#l42" title="To spec">To spec</a></li></ul></span>; </pre></li>
+<li id="l68"><pre>      <span class="droplink">Request<ul><li><a href="alog-facilities.ads.html#alog-facilities.ads:68:7" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities.adb.html#l114" title="To body">To body</a></li></ul></span>  : <span class="droplink">Log_Request.Instance<ul><li><a href="alog-log_request.ads.html#alog-log_request.ads:33:9" title="To API doc">To API doc</a></li><li><a href="src_alog-log_request.ads.html#l33" title="To spec">To spec</a></li><li><a href="src_alog-log_request.ads.html#l59" title="To body">To body</a></li></ul></span>); </pre></li>
+<li id="l69"><pre>   <span class="comment">--  Process a log request.</span> </pre></li>
+<li id="l70"><pre> </pre></li>
+<li id="l71"><pre>   <span class="keyword">procedure</span> <a href="alog-facilities.ads.html#alog-facilities.ads:71:14" title="defined at alog-facilities.ads:71:14">Write</a> </pre></li>
+<li id="l72"><pre>     (<a href="alog-facilities.ads.html#alog-facilities.ads:72:7" title="defined at alog-facilities.ads:72:7">Facility</a> : <span class="droplink">Instance<ul><li><a href="alog-facilities.ads.html#alog-facilities.ads:38:9" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities.ads.html#l38" title="To spec">To spec</a></li><li><a href="src_alog-facilities.ads.html#l127" title="To body">To body</a></li></ul></span>; </pre></li>
+<li id="l73"><pre>      <a href="alog-facilities.ads.html#alog-facilities.ads:73:7" title="defined at alog-facilities.ads:73:7">Level</a>    : <span class="droplink">Log_Level<ul><li><a href="alog.ads.html#alog.ads:32:9" title="To API doc">To API doc</a></li><li><a href="src_alog.ads.html#l32" title="To spec">To spec</a></li></ul></span> := Info; </pre></li>
+<li id="l74"><pre>      <a href="alog-facilities.ads.html#alog-facilities.ads:74:7" title="defined at alog-facilities.ads:74:7">Msg</a>      : String) <span class="keyword">is</span> <span class="keyword">abstract</span>; </pre></li>
+<li id="l75"><pre>   <span class="comment">--  Write message with specified log level. This procedure must be</span> </pre></li>
+<li id="l76"><pre>   <span class="comment">--  implemented by all facilities.</span> </pre></li>
+<li id="l77"><pre> </pre></li>
+<li id="l78"><pre>   <span class="keyword">procedure</span> <span class="droplink">Toggle_Write_Timestamp<ul><li><a href="alog-facilities.ads.html#alog-facilities.ads:78:14" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities.adb.html#l190" title="To body">To body</a></li></ul></span> </pre></li>
+<li id="l79"><pre>     (<a href="alog-facilities.ads.html#alog-facilities.ads:79:7" title="defined at alog-facilities.ads:79:7">Facility</a> : <span class="keyword">in</span> <span class="keyword">out</span> <span class="droplink">Class<ul><li><a href="alog-facilities.ads.html#alog-facilities.ads:42:12" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities.ads.html#l42" title="To spec">To spec</a></li></ul></span>; </pre></li>
+<li id="l80"><pre>      <a href="alog-facilities.ads.html#alog-facilities.ads:80:7" title="defined at alog-facilities.ads:80:7">State</a>    :        Boolean); </pre></li>
+<li id="l81"><pre>   <span class="comment">--  Enable/disable whether a timestamp is written for log messages.</span> </pre></li>
+<li id="l82"><pre> </pre></li>
+<li id="l83"><pre>   <span class="keyword">procedure</span> <span class="droplink">Toggle_UTC_Timestamp<ul><li><a href="alog-facilities.ads.html#alog-facilities.ads:83:14" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities.adb.html#l160" title="To body">To body</a></li></ul></span> </pre></li>
+<li id="l84"><pre>     (<a href="alog-facilities.ads.html#alog-facilities.ads:84:7" title="defined at alog-facilities.ads:84:7">Facility</a> : <span class="keyword">in</span> <span class="keyword">out</span> <span class="droplink">Class<ul><li><a href="alog-facilities.ads.html#alog-facilities.ads:42:12" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities.ads.html#l42" title="To spec">To spec</a></li></ul></span>; </pre></li>
+<li id="l85"><pre>      <a href="alog-facilities.ads.html#alog-facilities.ads:85:7" title="defined at alog-facilities.ads:85:7">State</a>    :        Boolean); </pre></li>
+<li id="l86"><pre>   <span class="comment">--  Enable/disable UTC timestamps for log messages.</span> </pre></li>
+<li id="l87"><pre> </pre></li>
+<li id="l88"><pre>   <span class="keyword">function</span> <span class="droplink">Is_Write_Timestamp<ul><li><a href="alog-facilities.ads.html#alog-facilities.ads:88:13" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities.adb.html#l105" title="To body">To body</a></li></ul></span> (<a href="alog-facilities.ads.html#alog-facilities.ads:88:33" title="defined at alog-facilities.ads:88:33">Facility</a> : <span class="droplink">Class<ul><li><a href="alog-facilities.ads.html#alog-facilities.ads:42:12" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities.ads.html#l42" title="To spec">To spec</a></li></ul></span>) <span class="keyword">return</span> Boolean; </pre></li>
+<li id="l89"><pre>   <span class="comment">--  Returns the current value of Write_Timestamp.</span> </pre></li>
+<li id="l90"><pre> </pre></li>
+<li id="l91"><pre>   <span class="keyword">function</span> <span class="droplink">Is_UTC_Timestamp<ul><li><a href="alog-facilities.ads.html#alog-facilities.ads:91:13" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities.adb.html#l84" title="To body">To body</a></li></ul></span> (<a href="alog-facilities.ads.html#alog-facilities.ads:91:31" title="defined at alog-facilities.ads:91:31">Facility</a> : <span class="droplink">Class<ul><li><a href="alog-facilities.ads.html#alog-facilities.ads:42:12" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities.ads.html#l42" title="To spec">To spec</a></li></ul></span>) <span class="keyword">return</span> Boolean; </pre></li>
+<li id="l92"><pre>   <span class="comment">--  Returns True if the timestamp of the facility is written in UTC time.</span> </pre></li>
+<li id="l93"><pre> </pre></li>
+<li id="l94"><pre>   <span class="keyword">procedure</span> <span class="droplink">Toggle_Write_Loglevel<ul><li><a href="alog-facilities.ads.html#alog-facilities.ads:94:14" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities.adb.html#l170" title="To body">To body</a></li></ul></span> </pre></li>
+<li id="l95"><pre>     (<a href="alog-facilities.ads.html#alog-facilities.ads:95:7" title="defined at alog-facilities.ads:95:7">Facility</a> : <span class="keyword">in</span> <span class="keyword">out</span> <span class="droplink">Class<ul><li><a href="alog-facilities.ads.html#alog-facilities.ads:42:12" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities.ads.html#l42" title="To spec">To spec</a></li></ul></span>; </pre></li>
+<li id="l96"><pre>      <a href="alog-facilities.ads.html#alog-facilities.ads:96:7" title="defined at alog-facilities.ads:96:7">State</a>    :        Boolean); </pre></li>
+<li id="l97"><pre>   <span class="comment">--  Enable/disable whether the loglevel is written for log messages.</span> </pre></li>
+<li id="l98"><pre> </pre></li>
+<li id="l99"><pre>   <span class="keyword">function</span> <span class="droplink">Is_Write_Loglevel<ul><li><a href="alog-facilities.ads.html#alog-facilities.ads:99:13" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities.adb.html#l91" title="To body">To body</a></li></ul></span> (<a href="alog-facilities.ads.html#alog-facilities.ads:99:32" title="defined at alog-facilities.ads:99:32">Facility</a> : <span class="droplink">Class<ul><li><a href="alog-facilities.ads.html#alog-facilities.ads:42:12" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities.ads.html#l42" title="To spec">To spec</a></li></ul></span>) <span class="keyword">return</span> Boolean; </pre></li>
+<li id="l100"><pre>   <span class="comment">--  Returns the current value of Write_Loglevel.</span> </pre></li>
+<li id="l101"><pre> </pre></li>
+<li id="l102"><pre>   <span class="keyword">procedure</span> <span class="droplink">Toggle_Write_Source<ul><li><a href="alog-facilities.ads.html#alog-facilities.ads:102:14" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities.adb.html#l180" title="To body">To body</a></li></ul></span> </pre></li>
+<li id="l103"><pre>     (<a href="alog-facilities.ads.html#alog-facilities.ads:103:7" title="defined at alog-facilities.ads:103:7">Facility</a> : <span class="keyword">in</span> <span class="keyword">out</span> <span class="droplink">Class<ul><li><a href="alog-facilities.ads.html#alog-facilities.ads:42:12" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities.ads.html#l42" title="To spec">To spec</a></li></ul></span>; </pre></li>
+<li id="l104"><pre>      <a href="alog-facilities.ads.html#alog-facilities.ads:104:7" title="defined at alog-facilities.ads:104:7">State</a>    :        Boolean); </pre></li>
+<li id="l105"><pre>   <span class="comment">--  Enable/disable whether the source of the message is logged.</span> </pre></li>
+<li id="l106"><pre> </pre></li>
+<li id="l107"><pre>   <span class="keyword">function</span> <span class="droplink">Is_Write_Source<ul><li><a href="alog-facilities.ads.html#alog-facilities.ads:107:13" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities.adb.html#l98" title="To body">To body</a></li></ul></span> (<a href="alog-facilities.ads.html#alog-facilities.ads:107:30" title="defined at alog-facilities.ads:107:30">Facility</a> : <span class="droplink">Class<ul><li><a href="alog-facilities.ads.html#alog-facilities.ads:42:12" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities.ads.html#l42" title="To spec">To spec</a></li></ul></span>) <span class="keyword">return</span> Boolean; </pre></li>
+<li id="l108"><pre>   <span class="comment">--  Returns True if writing of log message sources is enabled.</span> </pre></li>
+<li id="l109"><pre> </pre></li>
+<li id="l110"><pre>   <span class="keyword">procedure</span> <a href="alog-facilities.ads.html#alog-facilities.ads:110:14" title="defined at alog-facilities.ads:110:14">Setup</a> (<a href="alog-facilities.ads.html#alog-facilities.ads:110:21" title="defined at alog-facilities.ads:110:21">Facility</a> : <span class="keyword">in</span> <span class="keyword">out</span> <span class="droplink">Instance<ul><li><a href="alog-facilities.ads.html#alog-facilities.ads:38:9" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities.ads.html#l38" title="To spec">To spec</a></li><li><a href="src_alog-facilities.ads.html#l127" title="To body">To body</a></li></ul></span>) <span class="keyword">is</span> <span class="keyword">null</span>; </pre></li>
+<li id="l111"><pre>   <span class="comment">--  Each facility must provide a Setup-procedure. These procedures are called</span> </pre></li>
+<li id="l112"><pre>   <span class="comment">--  by Logger instances when attaching Facilities. All needed operations</span> </pre></li>
+<li id="l113"><pre>   <span class="comment">--  prior to writing log messages should be done here.</span> </pre></li>
+<li id="l114"><pre> </pre></li>
+<li id="l115"><pre>   <span class="keyword">procedure</span> <a href="alog-facilities.ads.html#alog-facilities.ads:115:14" title="defined at alog-facilities.ads:115:14">Teardown</a> (<a href="alog-facilities.ads.html#alog-facilities.ads:115:24" title="defined at alog-facilities.ads:115:24">Facility</a> : <span class="keyword">in</span> <span class="keyword">out</span> <span class="droplink">Instance<ul><li><a href="alog-facilities.ads.html#alog-facilities.ads:38:9" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities.ads.html#l38" title="To spec">To spec</a></li><li><a href="src_alog-facilities.ads.html#l127" title="To body">To body</a></li></ul></span>) <span class="keyword">is</span> <span class="keyword">null</span>; </pre></li>
+<li id="l116"><pre>   <span class="comment">--  Each facility must provide a Teardown-procedure. These procedures are</span> </pre></li>
+<li id="l117"><pre>   <span class="comment">--  called by Logger instances when detaching Facilities or when the logger</span> </pre></li>
+<li id="l118"><pre>   <span class="comment">--  object gets out of scope.</span> </pre></li>
+<li id="l119"><pre> </pre></li>
+<li id="l120"><pre>   <span class="keyword">package</span> <a href="alog-facilities.ads.html#alog-facilities.ads:120:12" title="defined at alog-facilities.ads:120:12">BS_Path</a> <span class="keyword">is</span> <span class="keyword">new</span> Generic_Bounded_Length (<span class="droplink">Max_Path_Length<ul><li><a href="alog.ads.html#alog.ads:44:4" title="To API doc">To API doc</a></li><li><a href="src_alog.ads.html#l44" title="To spec">To spec</a></li></ul></span>); </pre></li>
+<li id="l121"><pre>   <span class="keyword">use</span> <span class="droplink">BS_Path<ul><li><a href="alog-facilities.ads.html#alog-facilities.ads:120:12" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities.ads.html#l120" title="To spec">To spec</a></li></ul></span>; </pre></li>
+<li id="l122"><pre>   <span class="comment">--  Bounded string with length Max_Path_Length. Used in methods which</span> </pre></li>
+<li id="l123"><pre>   <span class="comment">--  involve filesystem operations.</span> </pre></li>
+<li id="l124"><pre> </pre></li>
+<li id="l125"><pre><span class="keyword">private</span> </pre></li>
+<li id="l126"><pre> </pre></li>
+<li id="l127"><pre>   <span class="keyword">type</span> <span class="droplink">Instance<ul><li><a href="alog-facilities.ads.html#alog-facilities.ads:38:9" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities.ads.html#l38" title="To spec">To spec</a></li></ul></span> <span class="keyword">is</span> <span class="keyword">abstract</span> <span class="keyword">tagged</span> <span class="keyword">limited</span> <span class="keyword">record</span> </pre></li>
+<li id="l128"><pre>      Name             : Unbounded_String := </pre></li>
+<li id="l129"><pre>        To_Unbounded_String (Ada.Command_Line.Command_Name); </pre></li>
+<li id="l130"><pre>      <span class="comment">--  Facility Name. Defaults to command-name (first argument). If multiple</span> </pre></li>
+<li id="l131"><pre>      <span class="comment">--  facilities are used, names must be set differently.</span> </pre></li>
+<li id="l132"><pre> </pre></li>
+<li id="l133"><pre>      Timestamp_Format : String (1 .. 11) := <span class="string">&quot;%b %d %Y %T&quot;</span>; </pre></li>
+<li id="l134"><pre>      <span class="comment">--  Default timestamp format to use in this facility.</span> </pre></li>
+<li id="l135"><pre> </pre></li>
+<li id="l136"><pre>      Write_Timestamp  : Boolean := True; </pre></li>
+<li id="l137"><pre>      <span class="comment">--  If True, a timestamp is written with the log message.</span> </pre></li>
+<li id="l138"><pre> </pre></li>
+<li id="l139"><pre>      UTC_Timestamp    : Boolean := False; </pre></li>
+<li id="l140"><pre>      <span class="comment">--  If True, the timestamp is written in UTC time.</span> </pre></li>
+<li id="l141"><pre>      <span class="comment">--  (log message timestamps are written timezone-dependent).</span> </pre></li>
+<li id="l142"><pre> </pre></li>
+<li id="l143"><pre>      Write_Loglevel   : Boolean := False; </pre></li>
+<li id="l144"><pre>      <span class="comment">--  If True, the loglevel associated with the log message is written.</span> </pre></li>
+<li id="l145"><pre> </pre></li>
+<li id="l146"><pre>      Write_Source     : Boolean := True; </pre></li>
+<li id="l147"><pre>      <span class="comment">--  If True, the source of a log message is prepended to the message.</span> </pre></li>
+<li id="l148"><pre>   <span class="keyword">end</span> <span class="keyword">record</span>; </pre></li>
+<li id="l149"><pre> </pre></li>
+<li id="l150"><pre><span class="keyword">end</span> <span class="droplink">Alog.Facilities<ul><li><a href="alog-facilities.ads.html#alog-facilities.ads:33:14" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities.ads.html#l33" title="To spec">To spec</a></li><li><a href="src_alog-facilities.adb.html#l30" title="To body">To body</a></li></ul></span>; </pre></li>
+</ol></div>
+</div>
+
+</body>
+</html>

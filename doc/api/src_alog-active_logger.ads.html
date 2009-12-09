@@ -1,0 +1,207 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html><head>
+  <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript"/>
+
+  <title>
+    File: alog-active_logger.ads
+  </title>
+  <link rel='stylesheet' href='support/docgen.css' type='text/css'/>
+  <script src='support/docgen.js' type='text/javascript' charset='utf-8'></script>
+</head>
+<body onload="onloadDoc();">
+
+<div id='leftSide'>
+  <div id='leftSideInside'>
+  <div id='header'>
+    <h2 class="button">Documentation</h2>
+    <a href='index.html'><div class="button2">Table of Contents</div></a>
+
+    <a href='tree.html'><div class="button2">Class Inheritance Tree</div></a>
+
+  </div>
+  </div>
+</div> <!-- leftSide -->
+
+<div class='subprograms'>
+  <div class='details'><ol><li id="l1"><pre><span class="comment">--</span> </pre></li>
+<li id="l2"><pre><span class="comment">--  Copyright (c) 2009,</span> </pre></li>
+<li id="l3"><pre><span class="comment">--  Reto Buerki, Adrian-Ken Rueegsegger</span> </pre></li>
+<li id="l4"><pre><span class="comment">--  secunet SwissIT AG</span> </pre></li>
+<li id="l5"><pre><span class="comment">--</span> </pre></li>
+<li id="l6"><pre><span class="comment">--  This file is part of Alog.</span> </pre></li>
+<li id="l7"><pre><span class="comment">--</span> </pre></li>
+<li id="l8"><pre><span class="comment">--  Alog is free software; you can redistribute it and/or modify</span> </pre></li>
+<li id="l9"><pre><span class="comment">--  it under the terms of the GNU Lesser General Public License as published</span> </pre></li>
+<li id="l10"><pre><span class="comment">--  by the Free Software Foundation; either version 2.1 of the License, or</span> </pre></li>
+<li id="l11"><pre><span class="comment">--  (at your option) any later version.</span> </pre></li>
+<li id="l12"><pre><span class="comment">--</span> </pre></li>
+<li id="l13"><pre><span class="comment">--  Alog is distributed in the hope that it will be useful,</span> </pre></li>
+<li id="l14"><pre><span class="comment">--  but WITHOUT ANY WARRANTY; without even the implied warranty of</span> </pre></li>
+<li id="l15"><pre><span class="comment">--  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span> </pre></li>
+<li id="l16"><pre><span class="comment">--  GNU Lesser General Public License for more details.</span> </pre></li>
+<li id="l17"><pre><span class="comment">--</span> </pre></li>
+<li id="l18"><pre><span class="comment">--  You should have received a copy of the GNU Lesser General Public License</span> </pre></li>
+<li id="l19"><pre><span class="comment">--  along with Alog; if not, write to the Free Software</span> </pre></li>
+<li id="l20"><pre><span class="comment">--  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,</span> </pre></li>
+<li id="l21"><pre><span class="comment">--  MA  02110-1301  USA</span> </pre></li>
+<li id="l22"><pre><span class="comment">--</span> </pre></li>
+<li id="l23"><pre> </pre></li>
+<li id="l24"><pre><span class="keyword">with</span> Ada.Exceptions; </pre></li>
+<li id="l25"><pre><span class="keyword">with</span> Ada.Finalization; </pre></li>
+<li id="l26"><pre> </pre></li>
+<li id="l27"><pre><span class="keyword">with</span> <span class="droplink">Alog.Facilities<ul><li><a href="alog-facilities.ads.html#alog-facilities.ads:33:14" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities.ads.html#l33" title="To spec">To spec</a></li><li><a href="src_alog-facilities.adb.html#l30" title="To body">To body</a></li></ul></span>; </pre></li>
+<li id="l28"><pre><span class="keyword">with</span> <span class="droplink">Alog.Transforms<ul><li><a href="alog-transforms.ads.html#alog-transforms.ads:27:14" title="To API doc">To API doc</a></li><li><a href="src_alog-transforms.ads.html#l27" title="To spec">To spec</a></li><li><a href="src_alog-transforms.adb.html#l24" title="To body">To body</a></li></ul></span>; </pre></li>
+<li id="l29"><pre><span class="keyword">with</span> <span class="droplink">Alog.Tasked_Logger<ul><li><a href="alog-tasked_logger.ads.html#alog-tasked_logger.ads:33:14" title="To API doc">To API doc</a></li><li><a href="src_alog-tasked_logger.ads.html#l33" title="To spec">To spec</a></li><li><a href="src_alog-tasked_logger.adb.html#l29" title="To body">To body</a></li></ul></span>; </pre></li>
+<li id="l30"><pre><span class="keyword">with</span> <span class="droplink">Alog.Protected_Containers<ul><li><a href="alog-protected_containers.ads.html#alog-protected_containers.ads:33:14" title="To API doc">To API doc</a></li><li><a href="src_alog-protected_containers.ads.html#l33" title="To spec">To spec</a></li><li><a href="src_alog-protected_containers.adb.html#l24" title="To body">To body</a></li></ul></span>; </pre></li>
+<li id="l31"><pre> </pre></li>
+<li id="l32"><pre><span class="comment">--  Active Logger instance. This logger is an active object and implements</span> </pre></li>
+<li id="l33"><pre><span class="comment">--  concurrent, asynchronous logging. It provides the same functionality as the</span> </pre></li>
+<li id="l34"><pre><span class="comment">--  &apos;simple&apos; logger.</span> </pre></li>
+<li id="l35"><pre><span class="keyword">package</span> <span class="droplink">Alog.Active_Logger<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:35:14" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.ads.html#l35" title="To spec">To spec</a></li><li><a href="src_alog-active_logger.adb.html#l29" title="To body">To body</a></li></ul></span> <span class="keyword">is</span> </pre></li>
+<li id="l36"><pre> </pre></li>
+<li id="l37"><pre>   <span class="keyword">type</span> <span class="droplink">Instance<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:37:9" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.ads.html#l161" title="To body">To body</a></li></ul></span> (Init : Boolean) <span class="keyword">is</span> <span class="keyword">tagged</span> <span class="keyword">limited</span> <span class="keyword">private</span>; </pre></li>
+<li id="l38"><pre>   <span class="comment">--  Active logger instance. Incoming messages (via Log_Message) are put into</span> </pre></li>
+<li id="l39"><pre>   <span class="comment">--  a request queue. This queue is consumed by a logging task. Exceptions</span> </pre></li>
+<li id="l40"><pre>   <span class="comment">--  that might be thrown while logging are saved into a map on a per-caller</span> </pre></li>
+<li id="l41"><pre>   <span class="comment">--  basis.</span> </pre></li>
+<li id="l42"><pre> </pre></li>
+<li id="l43"><pre>   <span class="keyword">type</span> <a href="alog-active_logger.ads.html#alog-active_logger.ads:43:9" title="defined at alog-active_logger.ads:43:9">Handle</a> <span class="keyword">is</span> <span class="keyword">access</span> <span class="keyword">all</span> <span class="droplink">Instance<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:37:9" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.ads.html#l37" title="To spec">To spec</a></li><li><a href="src_alog-active_logger.ads.html#l161" title="To body">To body</a></li></ul></span>; </pre></li>
+<li id="l44"><pre>   <span class="comment">--  Handle to active logger type.</span> </pre></li>
+<li id="l45"><pre> </pre></li>
+<li id="l46"><pre>   <span class="keyword">procedure</span> <span class="droplink">Attach_Facility<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:46:14" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.adb.html#l48" title="To body">To body</a></li></ul></span> </pre></li>
+<li id="l47"><pre>     (<span class="droplink">Logger<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:47:7" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.adb.html#l49" title="To body">To body</a></li></ul></span>   : <span class="keyword">in</span> <span class="keyword">out</span> <span class="droplink">Instance<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:37:9" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.ads.html#l37" title="To spec">To spec</a></li><li><a href="src_alog-active_logger.ads.html#l161" title="To body">To body</a></li></ul></span>; </pre></li>
+<li id="l48"><pre>      <a href="alog-active_logger.ads.html#alog-active_logger.ads:48:7" title="defined at alog-active_logger.ads:48:7">Facility</a> :        <span class="droplink">Facilities.Handle<ul><li><a href="alog-facilities.ads.html#alog-facilities.ads:44:9" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities.ads.html#l44" title="To spec">To spec</a></li></ul></span>); </pre></li>
+<li id="l49"><pre>   <span class="comment">--  Attach a facility to logger instance.</span> </pre></li>
+<li id="l50"><pre> </pre></li>
+<li id="l51"><pre>   <span class="keyword">procedure</span> <span class="droplink">Attach_Default_Facility<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:51:14" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.adb.html#l40" title="To body">To body</a></li></ul></span> (<span class="droplink">Logger<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:51:39" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.adb.html#l40" title="To body">To body</a></li></ul></span> : <span class="keyword">in</span> <span class="keyword">out</span> <span class="droplink">Instance<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:37:9" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.ads.html#l37" title="To spec">To spec</a></li><li><a href="src_alog-active_logger.ads.html#l161" title="To body">To body</a></li></ul></span>); </pre></li>
+<li id="l52"><pre>   <span class="comment">--  Attach default facility with name Default_Facility_Name to logger</span> </pre></li>
+<li id="l53"><pre>   <span class="comment">--  instance. If the default facility is already attached do nothing.</span> </pre></li>
+<li id="l54"><pre> </pre></li>
+<li id="l55"><pre>   <span class="keyword">procedure</span> <span class="droplink">Detach_Facility<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:55:14" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.adb.html#l92" title="To body">To body</a></li></ul></span> </pre></li>
+<li id="l56"><pre>     (<span class="droplink">Logger<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:56:7" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.adb.html#l93" title="To body">To body</a></li></ul></span> : <span class="keyword">in</span> <span class="keyword">out</span> <span class="droplink">Instance<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:37:9" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.ads.html#l37" title="To spec">To spec</a></li><li><a href="src_alog-active_logger.ads.html#l161" title="To body">To body</a></li></ul></span>; </pre></li>
+<li id="l57"><pre>      <a href="alog-active_logger.ads.html#alog-active_logger.ads:57:7" title="defined at alog-active_logger.ads:57:7">Name</a>   :        String); </pre></li>
+<li id="l58"><pre>   <span class="comment">--  Detach a facility with name &apos;Name&apos; from logger instance. If the facility</span> </pre></li>
+<li id="l59"><pre>   <span class="comment">--  is not found a Facility_Not_Found exception is raised.</span> </pre></li>
+<li id="l60"><pre> </pre></li>
+<li id="l61"><pre>   <span class="keyword">procedure</span> <span class="droplink">Detach_Default_Facility<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:61:14" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.adb.html#l84" title="To body">To body</a></li></ul></span> (<span class="droplink">Logger<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:61:39" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.adb.html#l84" title="To body">To body</a></li></ul></span> : <span class="keyword">in</span> <span class="keyword">out</span> <span class="droplink">Instance<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:37:9" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.ads.html#l37" title="To spec">To spec</a></li><li><a href="src_alog-active_logger.ads.html#l161" title="To body">To body</a></li></ul></span>); </pre></li>
+<li id="l62"><pre>   <span class="comment">--  Detach default facility with name Default_Facility_Name from logger</span> </pre></li>
+<li id="l63"><pre>   <span class="comment">--  instance. If the default facility is not attached do nothing.</span> </pre></li>
+<li id="l64"><pre> </pre></li>
+<li id="l65"><pre>   <span class="keyword">function</span> <span class="droplink">Facility_Count<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:65:13" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.adb.html#l112" title="To body">To body</a></li></ul></span> (<span class="droplink">Logger<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:65:29" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.adb.html#l112" title="To body">To body</a></li></ul></span> : <span class="droplink">Instance<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:37:9" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.ads.html#l37" title="To spec">To spec</a></li><li><a href="src_alog-active_logger.ads.html#l161" title="To body">To body</a></li></ul></span>) <span class="keyword">return</span> Natural; </pre></li>
+<li id="l66"><pre>   <span class="comment">--  Return number of attached facilites.</span> </pre></li>
+<li id="l67"><pre> </pre></li>
+<li id="l68"><pre>   <span class="keyword">procedure</span> <span class="droplink">Update<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:68:14" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.adb.html#l220" title="To body">To body</a></li></ul></span> </pre></li>
+<li id="l69"><pre>     (<span class="droplink">Logger<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:69:7" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.adb.html#l221" title="To body">To body</a></li></ul></span>  : <span class="keyword">in</span> <span class="keyword">out</span> <span class="droplink">Instance<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:37:9" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.ads.html#l37" title="To spec">To spec</a></li><li><a href="src_alog-active_logger.ads.html#l161" title="To body">To body</a></li></ul></span>; </pre></li>
+<li id="l70"><pre>      <a href="alog-active_logger.ads.html#alog-active_logger.ads:70:7" title="defined at alog-active_logger.ads:70:7">Name</a>    :        String; </pre></li>
+<li id="l71"><pre>      <a href="alog-active_logger.ads.html#alog-active_logger.ads:71:7" title="defined at alog-active_logger.ads:71:7">Process</a> :        <span class="droplink">Tasked_Logger.Facility_Update_Handle<ul><li><a href="alog-tasked_logger.ads.html#alog-tasked_logger.ads:35:9" title="To API doc">To API doc</a></li><li><a href="src_alog-tasked_logger.ads.html#l35" title="To spec">To spec</a></li></ul></span>); </pre></li>
+<li id="l72"><pre>   <span class="comment">--  Update a specific Facility identified by &apos;Name&apos;. Call the &apos;Process&apos;</span> </pre></li>
+<li id="l73"><pre>   <span class="comment">--  procedure to perform the update operation.</span> </pre></li>
+<li id="l74"><pre> </pre></li>
+<li id="l75"><pre>   <span class="keyword">procedure</span> <span class="droplink">Iterate<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:75:14" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.adb.html#l155" title="To body">To body</a></li></ul></span> </pre></li>
+<li id="l76"><pre>     (<span class="droplink">Logger<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:76:7" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.adb.html#l156" title="To body">To body</a></li></ul></span>  : <span class="keyword">in</span> <span class="keyword">out</span> <span class="droplink">Instance<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:37:9" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.ads.html#l37" title="To spec">To spec</a></li><li><a href="src_alog-active_logger.ads.html#l161" title="To body">To body</a></li></ul></span>; </pre></li>
+<li id="l77"><pre>      <a href="alog-active_logger.ads.html#alog-active_logger.ads:77:7" title="defined at alog-active_logger.ads:77:7">Process</a> :        <span class="droplink">Tasked_Logger.Facility_Update_Handle<ul><li><a href="alog-tasked_logger.ads.html#alog-tasked_logger.ads:35:9" title="To API doc">To API doc</a></li><li><a href="src_alog-tasked_logger.ads.html#l35" title="To spec">To spec</a></li></ul></span>); </pre></li>
+<li id="l78"><pre>   <span class="comment">--  Call &apos;Process&apos; for all attached facilities.</span> </pre></li>
+<li id="l79"><pre> </pre></li>
+<li id="l80"><pre>   <span class="keyword">procedure</span> <span class="droplink">Attach_Transform<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:80:14" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.adb.html#l58" title="To body">To body</a></li></ul></span> </pre></li>
+<li id="l81"><pre>     (<span class="droplink">Logger<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:81:7" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.adb.html#l59" title="To body">To body</a></li></ul></span>    : <span class="keyword">in</span> <span class="keyword">out</span> <span class="droplink">Instance<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:37:9" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.ads.html#l37" title="To spec">To spec</a></li><li><a href="src_alog-active_logger.ads.html#l161" title="To body">To body</a></li></ul></span>; </pre></li>
+<li id="l82"><pre>      <a href="alog-active_logger.ads.html#alog-active_logger.ads:82:7" title="defined at alog-active_logger.ads:82:7">Transform</a> :        <span class="droplink">Transforms.Handle<ul><li><a href="alog-transforms.ads.html#alog-transforms.ads:37:9" title="To API doc">To API doc</a></li><li><a href="src_alog-transforms.ads.html#l37" title="To spec">To spec</a></li></ul></span>); </pre></li>
+<li id="l83"><pre>   <span class="comment">--  Attach a transform to logger instance.</span> </pre></li>
+<li id="l84"><pre> </pre></li>
+<li id="l85"><pre>   <span class="keyword">procedure</span> <span class="droplink">Detach_Transform<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:85:14" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.adb.html#l102" title="To body">To body</a></li></ul></span> </pre></li>
+<li id="l86"><pre>     (<span class="droplink">Logger<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:86:7" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.adb.html#l103" title="To body">To body</a></li></ul></span> : <span class="keyword">in</span> <span class="keyword">out</span> <span class="droplink">Instance<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:37:9" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.ads.html#l37" title="To spec">To spec</a></li><li><a href="src_alog-active_logger.ads.html#l161" title="To body">To body</a></li></ul></span>; </pre></li>
+<li id="l87"><pre>      <a href="alog-active_logger.ads.html#alog-active_logger.ads:87:7" title="defined at alog-active_logger.ads:87:7">Name</a>   :        String); </pre></li>
+<li id="l88"><pre>   <span class="comment">--  Detach a transform with name &apos;Name&apos; from logger instance. If the</span> </pre></li>
+<li id="l89"><pre>   <span class="comment">--  transform is not found a Transform_Not_Found exception is raised.</span> </pre></li>
+<li id="l90"><pre> </pre></li>
+<li id="l91"><pre>   <span class="keyword">function</span> <span class="droplink">Transform_Count<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:91:13" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.adb.html#l211" title="To body">To body</a></li></ul></span> (<span class="droplink">Logger<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:91:30" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.adb.html#l211" title="To body">To body</a></li></ul></span> : <span class="droplink">Instance<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:37:9" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.ads.html#l37" title="To spec">To spec</a></li><li><a href="src_alog-active_logger.ads.html#l161" title="To body">To body</a></li></ul></span>) <span class="keyword">return</span> Natural; </pre></li>
+<li id="l92"><pre>   <span class="comment">--  Return number of attached transforms.</span> </pre></li>
+<li id="l93"><pre> </pre></li>
+<li id="l94"><pre>   <span class="keyword">procedure</span> <span class="droplink">Clear<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:94:14" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.adb.html#l77" title="To body">To body</a></li></ul></span> (<span class="droplink">Logger<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:94:21" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.adb.html#l77" title="To body">To body</a></li></ul></span> : <span class="keyword">in</span> <span class="keyword">out</span> <span class="droplink">Instance<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:37:9" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.ads.html#l37" title="To spec">To spec</a></li><li><a href="src_alog-active_logger.ads.html#l161" title="To body">To body</a></li></ul></span>); </pre></li>
+<li id="l95"><pre>   <span class="comment">--  Clear logger instance. Detach and teardown all attached facilities and</span> </pre></li>
+<li id="l96"><pre>   <span class="comment">--  transforms.</span> </pre></li>
+<li id="l97"><pre> </pre></li>
+<li id="l98"><pre>   <span class="keyword">procedure</span> <span class="droplink">Log_Message<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:98:14" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.adb.html#l166" title="To body">To body</a></li></ul></span> </pre></li>
+<li id="l99"><pre>     (<span class="droplink">Logger<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:99:7" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.adb.html#l167" title="To body">To body</a></li></ul></span> : <span class="keyword">in</span> <span class="keyword">out</span> <span class="droplink">Instance<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:37:9" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.ads.html#l37" title="To spec">To spec</a></li><li><a href="src_alog-active_logger.ads.html#l161" title="To body">To body</a></li></ul></span>; </pre></li>
+<li id="l100"><pre>      <a href="alog-active_logger.ads.html#alog-active_logger.ads:100:7" title="defined at alog-active_logger.ads:100:7">Source</a> :        String := <span class="string">&quot;&quot;</span>; </pre></li>
+<li id="l101"><pre>      <span class="droplink">Level<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:101:7" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.adb.html#l169" title="To body">To body</a></li></ul></span>  :        <span class="droplink">Log_Level<ul><li><a href="alog.ads.html#alog.ads:32:9" title="To API doc">To API doc</a></li><li><a href="src_alog.ads.html#l32" title="To spec">To spec</a></li></ul></span>; </pre></li>
+<li id="l102"><pre>      <a href="alog-active_logger.ads.html#alog-active_logger.ads:102:7" title="defined at alog-active_logger.ads:102:7">Msg</a>    :        String); </pre></li>
+<li id="l103"><pre>   <span class="comment">--  Log the given message asynchronously. The message is put into a log</span> </pre></li>
+<li id="l104"><pre>   <span class="comment">--  request queue which is continuously consumed by a logging task.</span> </pre></li>
+<li id="l105"><pre>   <span class="comment">--</span> </pre></li>
+<li id="l106"><pre>   <span class="comment">--  Prior to actually processing the given log message the policy database is</span> </pre></li>
+<li id="l107"><pre>   <span class="comment">--  inquired if the log message with given source and level should be logged.</span> </pre></li>
+<li id="l108"><pre>   <span class="comment">--</span> </pre></li>
+<li id="l109"><pre>   <span class="comment">--  This procedure is *safe* to call from protected actions (e.g. from an</span> </pre></li>
+<li id="l110"><pre>   <span class="comment">--  entry call statement or rendezvous).</span> </pre></li>
+<li id="l111"><pre> </pre></li>
+<li id="l112"><pre>   <span class="keyword">function</span> <span class="droplink">Get_Queue_Length<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:112:13" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.adb.html#l140" title="To body">To body</a></li></ul></span> (<span class="droplink">Logger<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:112:31" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.adb.html#l140" title="To body">To body</a></li></ul></span> : <span class="droplink">Instance<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:37:9" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.ads.html#l37" title="To spec">To spec</a></li><li><a href="src_alog-active_logger.ads.html#l161" title="To body">To body</a></li></ul></span>) <span class="keyword">return</span> Natural; </pre></li>
+<li id="l113"><pre>   <span class="comment">--  Returns the number of currently queued log messages.</span> </pre></li>
+<li id="l114"><pre> </pre></li>
+<li id="l115"><pre>   <span class="keyword">procedure</span> <span class="droplink">Shutdown<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:115:14" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.adb.html#l192" title="To body">To body</a></li></ul></span> </pre></li>
+<li id="l116"><pre>     (<span class="droplink">Logger<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:116:7" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.adb.html#l193" title="To body">To body</a></li></ul></span> : <span class="keyword">in</span> <span class="keyword">out</span> <span class="droplink">Instance<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:37:9" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.ads.html#l37" title="To spec">To spec</a></li><li><a href="src_alog-active_logger.ads.html#l161" title="To body">To body</a></li></ul></span>; </pre></li>
+<li id="l117"><pre>      <a href="alog-active_logger.ads.html#alog-active_logger.ads:117:7" title="defined at alog-active_logger.ads:117:7">Flush</a>  :        Boolean := True); </pre></li>
+<li id="l118"><pre>   <span class="comment">--  Shutdown the active logger. This procedure must be called in order for</span> </pre></li>
+<li id="l119"><pre>   <span class="comment">--  the logger task to be terminated properly. If &apos;Flush&apos; is set to True the</span> </pre></li>
+<li id="l120"><pre>   <span class="comment">--  procedure will wait for all queued messages to be logged.</span> </pre></li>
+<li id="l121"><pre> </pre></li>
+<li id="l122"><pre>   <span class="keyword">function</span> <span class="droplink">Is_Terminated<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:122:13" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.adb.html#l147" title="To body">To body</a></li></ul></span> (<span class="droplink">Logger<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:122:28" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.adb.html#l147" title="To body">To body</a></li></ul></span> : <span class="droplink">Instance<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:37:9" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.ads.html#l37" title="To spec">To spec</a></li><li><a href="src_alog-active_logger.ads.html#l161" title="To body">To body</a></li></ul></span>) <span class="keyword">return</span> Boolean; </pre></li>
+<li id="l123"><pre>   <span class="comment">--  Returns True if active logger shutdown sequence is complete.</span> </pre></li>
+<li id="l124"><pre> </pre></li>
+<li id="l125"><pre>   <span class="keyword">procedure</span> <span class="droplink">All_Done<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:125:14" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.adb.html#l33" title="To body">To body</a></li></ul></span> (<span class="droplink">Logger<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:125:24" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.adb.html#l33" title="To body">To body</a></li></ul></span> : <span class="keyword">in</span> <span class="keyword">out</span> <span class="droplink">Instance<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:37:9" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.ads.html#l37" title="To spec">To spec</a></li><li><a href="src_alog-active_logger.ads.html#l161" title="To body">To body</a></li></ul></span>); </pre></li>
+<li id="l126"><pre>   <span class="comment">--  This procedure blocks until all queued logging requests have been</span> </pre></li>
+<li id="l127"><pre>   <span class="comment">--  consumed.</span> </pre></li>
+<li id="l128"><pre> </pre></li>
+<li id="l129"><pre>   <span class="keyword">procedure</span> <span class="droplink">Get_Last_Exception<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:129:14" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.adb.html#l128" title="To body">To body</a></li></ul></span> </pre></li>
+<li id="l130"><pre>     (<span class="droplink">Logger<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:130:7" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.adb.html#l129" title="To body">To body</a></li></ul></span>     : <span class="keyword">in</span> <span class="keyword">out</span> <span class="droplink">Instance<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:37:9" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.ads.html#l37" title="To spec">To spec</a></li><li><a href="src_alog-active_logger.ads.html#l161" title="To body">To body</a></li></ul></span>; </pre></li>
+<li id="l131"><pre>      <span class="droplink">Occurrence<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:131:7" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.adb.html#l130" title="To body">To body</a></li></ul></span> :    <span class="keyword">out</span> Ada.Exceptions.Exception_Occurrence); </pre></li>
+<li id="l132"><pre>   <span class="comment">--  Return last known Exception_Occurrence for caller. If no exception</span> </pre></li>
+<li id="l133"><pre>   <span class="comment">--  occured Null_Occurrence is returned.</span> </pre></li>
+<li id="l134"><pre> </pre></li>
+<li id="l135"><pre>   <span class="keyword">type</span> <span class="droplink">Shutdown_Helper<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:135:9" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.ads.html#l168" title="To body">To body</a></li></ul></span> (<span class="droplink">Logger<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:130:7" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.ads.html#l130" title="To spec">To spec</a></li><li><a href="src_alog-active_logger.adb.html#l129" title="To body">To body</a></li></ul></span> : <span class="keyword">not</span> <span class="keyword">null</span> <span class="keyword">access</span> <span class="droplink">Instance<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:37:9" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.ads.html#l37" title="To spec">To spec</a></li><li><a href="src_alog-active_logger.ads.html#l161" title="To body">To body</a></li></ul></span>) <span class="keyword">is</span> <span class="keyword">private</span>; </pre></li>
+<li id="l136"><pre>   <span class="comment">--  This helper will call Shutdown on the logger given as discriminant when</span> </pre></li>
+<li id="l137"><pre>   <span class="comment">--  it goes out of scope. This relieves the user from having to excplicitly</span> </pre></li>
+<li id="l138"><pre>   <span class="comment">--  call shutdown on an instance of Alog active logger when wanting to</span> </pre></li>
+<li id="l139"><pre>   <span class="comment">--  terminate. Users must make sure to declare any shutdown helper in a</span> </pre></li>
+<li id="l140"><pre>   <span class="comment">--  smaller scope than the active logger on which the helper supposed to</span> </pre></li>
+<li id="l141"><pre>   <span class="comment">--  work.</span> </pre></li>
+<li id="l142"><pre> </pre></li>
+<li id="l143"><pre><span class="keyword">private</span> </pre></li>
+<li id="l144"><pre> </pre></li>
+<li id="l145"><pre>   <span class="keyword">procedure</span> Check_Exception (Logger : <span class="keyword">in</span> <span class="keyword">out</span> <span class="droplink">Instance<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:37:9" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.ads.html#l37" title="To spec">To spec</a></li><li><a href="src_alog-active_logger.ads.html#l161" title="To body">To body</a></li></ul></span>); </pre></li>
+<li id="l146"><pre>   <span class="comment">--  Check if call to backend raised an exception. Explicitly reraise if an</span> </pre></li>
+<li id="l147"><pre>   <span class="comment">--  exception occured; do nothing otherwise.</span> </pre></li>
+<li id="l148"><pre> </pre></li>
+<li id="l149"><pre>   <span class="keyword">task</span> <span class="keyword">type</span> Logging_Task (Parent : <span class="keyword">not</span> <span class="keyword">null</span> <span class="keyword">access</span> <span class="droplink">Instance<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:37:9" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.ads.html#l37" title="To spec">To spec</a></li><li><a href="src_alog-active_logger.ads.html#l161" title="To body">To body</a></li></ul></span>); </pre></li>
+<li id="l150"><pre>   <span class="comment">--  This task takes logging requests from the parent&apos;s message queue and</span> </pre></li>
+<li id="l151"><pre>   <span class="comment">--  logs them using the parent&apos;s backend logger.</span> </pre></li>
+<li id="l152"><pre> </pre></li>
+<li id="l153"><pre>   <span class="keyword">protected</span> <span class="keyword">type</span> Trigger_Type <span class="keyword">is</span> </pre></li>
+<li id="l154"><pre>      <span class="keyword">procedure</span> Shutdown; </pre></li>
+<li id="l155"><pre>      <span class="keyword">entry</span> Stop; </pre></li>
+<li id="l156"><pre>   <span class="keyword">private</span> </pre></li>
+<li id="l157"><pre>      Shutdown_Requested : Boolean := False; </pre></li>
+<li id="l158"><pre>   <span class="keyword">end</span> Trigger_Type; </pre></li>
+<li id="l159"><pre>   <span class="comment">--  This trigger is used to terminate the logger task by means of ATC.</span> </pre></li>
+<li id="l160"><pre> </pre></li>
+<li id="l161"><pre>   <span class="keyword">type</span> <span class="droplink">Instance<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:37:9" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.ads.html#l37" title="To spec">To spec</a></li></ul></span> (Init : Boolean) <span class="keyword">is</span> <span class="keyword">tagged</span> <span class="keyword">limited</span> <span class="keyword">record</span> </pre></li>
+<li id="l162"><pre>      Logger_Task   : Logging_Task (Parent =&gt; <span class="droplink">Instance<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:37:9" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.ads.html#l37" title="To spec">To spec</a></li><li><a href="src_alog-active_logger.ads.html#l161" title="To body">To body</a></li></ul></span>&apos;Access); </pre></li>
+<li id="l163"><pre>      Backend       : <span class="droplink">Tasked_Logger.Instance<ul><li><a href="alog-tasked_logger.ads.html#alog-tasked_logger.ads:39:14" title="To API doc">To API doc</a></li><li><a href="src_alog-tasked_logger.ads.html#l39" title="To spec">To spec</a></li><li><a href="src_alog-tasked_logger.adb.html#l41" title="To body">To body</a></li></ul></span> (Init); </pre></li>
+<li id="l164"><pre>      Message_Queue : <span class="droplink">Protected_Containers.Log_Request_List<ul><li><a href="alog-protected_containers.ads.html#alog-protected_containers.ads:41:19" title="To API doc">To API doc</a></li><li><a href="src_alog-protected_containers.ads.html#l41" title="To spec">To spec</a></li></ul></span>; </pre></li>
+<li id="l165"><pre>      Trigger       : Trigger_Type; </pre></li>
+<li id="l166"><pre>   <span class="keyword">end</span> <span class="keyword">record</span>; </pre></li>
+<li id="l167"><pre> </pre></li>
+<li id="l168"><pre>   <span class="keyword">type</span> <span class="droplink">Shutdown_Helper<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:135:9" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.ads.html#l135" title="To spec">To spec</a></li></ul></span> (Logger : <span class="keyword">not</span> <span class="keyword">null</span> <span class="keyword">access</span> <span class="droplink">Instance<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:37:9" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.ads.html#l37" title="To spec">To spec</a></li><li><a href="src_alog-active_logger.ads.html#l161" title="To body">To body</a></li></ul></span>) <span class="keyword">is</span> </pre></li>
+<li id="l169"><pre>     <span class="keyword">new</span> Ada.Finalization.Controlled <span class="keyword">with</span> <span class="keyword">null</span> <span class="keyword">record</span>; </pre></li>
+<li id="l170"><pre> </pre></li>
+<li id="l171"><pre>   <span class="keyword">overriding</span> </pre></li>
+<li id="l172"><pre>   <span class="keyword">procedure</span> Finalize (Helper : <span class="keyword">in</span> <span class="keyword">out</span> <span class="droplink">Shutdown_Helper<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:135:9" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.ads.html#l135" title="To spec">To spec</a></li><li><a href="src_alog-active_logger.ads.html#l168" title="To body">To body</a></li></ul></span>); </pre></li>
+<li id="l173"><pre>   <span class="comment">--  Call shutdown on the active logger instance specified as discriminat.</span> </pre></li>
+<li id="l174"><pre> </pre></li>
+<li id="l175"><pre><span class="keyword">end</span> <span class="droplink">Alog.Active_Logger<ul><li><a href="alog-active_logger.ads.html#alog-active_logger.ads:35:14" title="To API doc">To API doc</a></li><li><a href="src_alog-active_logger.ads.html#l35" title="To spec">To spec</a></li><li><a href="src_alog-active_logger.adb.html#l29" title="To body">To body</a></li></ul></span>; </pre></li>
+</ol></div>
+</div>
+
+</body>
+</html>

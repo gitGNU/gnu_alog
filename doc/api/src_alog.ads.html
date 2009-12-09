@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html><head>
+  <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript"/>
+
+  <title>
+    File: alog.ads
+  </title>
+  <link rel='stylesheet' href='support/docgen.css' type='text/css'/>
+  <script src='support/docgen.js' type='text/javascript' charset='utf-8'></script>
+</head>
+<body onload="onloadDoc();">
+
+<div id='leftSide'>
+  <div id='leftSideInside'>
+  <div id='header'>
+    <h2 class="button">Documentation</h2>
+    <a href='index.html'><div class="button2">Table of Contents</div></a>
+
+    <a href='tree.html'><div class="button2">Class Inheritance Tree</div></a>
+
+  </div>
+  </div>
+</div> <!-- leftSide -->
+
+<div class='subprograms'>
+  <div class='details'><ol><li id="l1"><pre><span class="comment">--</span> </pre></li>
+<li id="l2"><pre><span class="comment">--  Copyright (c) 2008,</span> </pre></li>
+<li id="l3"><pre><span class="comment">--  Reto Buerki, Adrian-Ken Rueegsegger</span> </pre></li>
+<li id="l4"><pre><span class="comment">--  secunet SwissIT AG</span> </pre></li>
+<li id="l5"><pre><span class="comment">--</span> </pre></li>
+<li id="l6"><pre><span class="comment">--  This file is part of Alog.</span> </pre></li>
+<li id="l7"><pre><span class="comment">--</span> </pre></li>
+<li id="l8"><pre><span class="comment">--  Alog is free software; you can redistribute it and/or modify</span> </pre></li>
+<li id="l9"><pre><span class="comment">--  it under the terms of the GNU Lesser General Public License as published</span> </pre></li>
+<li id="l10"><pre><span class="comment">--  by the Free Software Foundation; either version 2.1 of the License, or</span> </pre></li>
+<li id="l11"><pre><span class="comment">--  (at your option) any later version.</span> </pre></li>
+<li id="l12"><pre><span class="comment">--</span> </pre></li>
+<li id="l13"><pre><span class="comment">--  Alog is distributed in the hope that it will be useful,</span> </pre></li>
+<li id="l14"><pre><span class="comment">--  but WITHOUT ANY WARRANTY; without even the implied warranty of</span> </pre></li>
+<li id="l15"><pre><span class="comment">--  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span> </pre></li>
+<li id="l16"><pre><span class="comment">--  GNU Lesser General Public License for more details.</span> </pre></li>
+<li id="l17"><pre><span class="comment">--</span> </pre></li>
+<li id="l18"><pre><span class="comment">--  You should have received a copy of the GNU Lesser General Public License</span> </pre></li>
+<li id="l19"><pre><span class="comment">--  along with Alog; if not, write to the Free Software</span> </pre></li>
+<li id="l20"><pre><span class="comment">--  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,</span> </pre></li>
+<li id="l21"><pre><span class="comment">--  MA  02110-1301  USA</span> </pre></li>
+<li id="l22"><pre><span class="comment">--</span> </pre></li>
+<li id="l23"><pre> </pre></li>
+<li id="l24"><pre><span class="keyword">pragma</span> Detect_Blocking; </pre></li>
+<li id="l25"><pre> </pre></li>
+<li id="l26"><pre><span class="comment">--  Alog: Ada Logging Components. Provides easy to use API for different logging</span> </pre></li>
+<li id="l27"><pre><span class="comment">--  facilities and log message transforms.</span> </pre></li>
+<li id="l28"><pre><span class="keyword">package</span> <a href="alog.ads.html#alog.ads:28:9" title="defined at alog.ads:28:9">Alog</a> <span class="keyword">is</span> </pre></li>
+<li id="l29"><pre> </pre></li>
+<li id="l30"><pre>   <span class="keyword">pragma</span> Preelaborate; </pre></li>
+<li id="l31"><pre> </pre></li>
+<li id="l32"><pre>   <span class="keyword">type</span> <a href="alog.ads.html#alog.ads:32:9" title="defined at alog.ads:32:9">Log_Level</a> <span class="keyword">is</span> </pre></li>
+<li id="l33"><pre>     (Debug, </pre></li>
+<li id="l34"><pre>      Info, </pre></li>
+<li id="l35"><pre>      Notice, </pre></li>
+<li id="l36"><pre>      Warning, </pre></li>
+<li id="l37"><pre>      Error, </pre></li>
+<li id="l38"><pre>      Critical, </pre></li>
+<li id="l39"><pre>      Alert, </pre></li>
+<li id="l40"><pre>      Emergency); </pre></li>
+<li id="l41"><pre>   <span class="comment">--  Provided log levels. These log levels can be used to categorize log</span> </pre></li>
+<li id="l42"><pre>   <span class="comment">--  messages.</span> </pre></li>
+<li id="l43"><pre> </pre></li>
+<li id="l44"><pre>   <a href="alog.ads.html#alog.ads:44:4" title="defined at alog.ads:44:4">Max_Path_Length</a> : <span class="keyword">constant</span> Natural := 128; </pre></li>
+<li id="l45"><pre>   <span class="comment">--  Maximal length of path names.</span> </pre></li>
+<li id="l46"><pre> </pre></li>
+<li id="l47"><pre>   <a href="alog.ads.html#alog.ads:47:4" title="defined at alog.ads:47:4">Max_Facilities</a> : <span class="keyword">constant</span> Natural := 15; </pre></li>
+<li id="l48"><pre>   <span class="comment">--  Maximum number of facilities a single logger instance</span> </pre></li>
+<li id="l49"><pre>   <span class="comment">--  can manage.</span> </pre></li>
+<li id="l50"><pre> </pre></li>
+<li id="l51"><pre><span class="keyword">end</span> <span class="droplink">Alog<ul><li><a href="alog.ads.html#alog.ads:28:9" title="To API doc">To API doc</a></li><li><a href="src_alog.ads.html#l28" title="To spec">To spec</a></li></ul></span>; </pre></li>
+</ol></div>
+</div>
+
+</body>
+</html>

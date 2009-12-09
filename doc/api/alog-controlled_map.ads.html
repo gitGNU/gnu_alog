@@ -1,0 +1,352 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html><head>
+  <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript"/>
+
+  <title>
+    Package: Alog.Controlled_Map (generic)
+  </title>
+  <link rel='stylesheet' href='support/docgen.css' type='text/css'/>
+  <link rel='stylesheet' href='support/tags.css' type='text/css'/>
+  <script src='support/docgen.js' type='text/javascript' charset='utf-8'></script>
+</head>
+<body onload="onloadDoc();">
+
+<div id='leftSide'>
+  <div id='leftSideInside'>
+  <div id='header'>
+    <h2 class="button">Documentation</h2>
+    <a href='index.html'><div class="button2">Table of Contents</div></a>
+
+    <a href='tree.html'><div class="button2">Class Inheritance Tree</div></a>
+
+  </div>
+
+  <div id='navigation'>
+    <h2 class="button">Navigation</h2>
+    <a href='#Description'><div class="button2">Description</div></a>
+    <a href='#Classes'><div class="button2">Classes</div></a>
+    <a href='#Methods'><div class="button2">Subprograms &amp; Entries</div></a>
+  </div><!-- navigation -->
+  </div>
+</div> <!-- leftSide -->
+
+<div class='default' id='rightSide'>
+ <div id='rightSideInside'>
+ <div id='Index'>
+  <h2>Index</h2>
+  <script type="text/javascript">
+    var names = new Array (
+new Array ('Map', 'alog-controlled_map.ads:42:9', 'class-spec'),
+new Array ('Insert', 'alog-controlled_map.ads:45:14', 'subp-spec'),
+new Array ('Element', 'alog-controlled_map.ads:51:13', 'subp-spec'),
+new Array ('Delete', 'alog-controlled_map.ads:57:14', 'subp-spec'),
+new Array ('Contains', 'alog-controlled_map.ads:63:13', 'subp-spec'),
+new Array ('Is_<wbr/>Empty', 'alog-controlled_map.ads:69:13', 'subp-spec'),
+new Array ('Clear', 'alog-controlled_map.ads:72:14', 'subp-spec'),
+new Array ('Length', 'alog-controlled_map.ads:75:13', 'subp-spec'),
+new Array ('Iterate', 'alog-controlled_map.ads:78:14', 'subp-spec'),
+      new Array ('dummy', '', ''));
+    printIndexList (names);
+  </script>
+  <noscript>
+    <ul>
+      <li class='class-spec'><a href="#alog-controlled_map.ads:42:9">Map</a></li>
+      <li class='subp-spec'><a href="#alog-controlled_map.ads:45:14">Insert</a></li>
+      <li class='subp-spec'><a href="#alog-controlled_map.ads:51:13">Element</a></li>
+      <li class='subp-spec'><a href="#alog-controlled_map.ads:57:14">Delete</a></li>
+      <li class='subp-spec'><a href="#alog-controlled_map.ads:63:13">Contains</a></li>
+      <li class='subp-spec'><a href="#alog-controlled_map.ads:69:13">Is_<wbr/>Empty</a></li>
+      <li class='subp-spec'><a href="#alog-controlled_map.ads:72:14">Clear</a></li>
+      <li class='subp-spec'><a href="#alog-controlled_map.ads:75:13">Length</a></li>
+      <li class='subp-spec'><a href="#alog-controlled_map.ads:78:14">Iterate</a></li>
+    </ul>
+  </noscript>
+ </div>
+ </div>
+</div>
+
+<div class='default' id='documentation'>
+  <div class='title'>
+    Package:
+<span class="droplink"><i>Alog.Controlled_Map (generic)</i><ul>
+  <li><a href="src_alog-controlled_map.ads.html">Goto spec source</a></li>
+</ul></span>
+  </div>
+  <div class='subprograms'>
+    <h1><a name='Description' id='Description'></a>Description</h1>
+    <div class="class">
+    <div class='details'><pre><span class="keyword">generic</span>
+   <span class="keyword">type</span> <span class="name"><a name="alog-controlled_map.ads:28:9"></a>Key_Type</span> (<>) <span class="keyword">is</span> <span class="keyword">private</span>;
+   <span class="keyword">type</span> <span class="name"><a name="alog-controlled_map.ads:29:9"></a>Element_Type</span> (<>) <span class="keyword">is</span> <span class="keyword">limited</span> <span class="keyword">private</span>;
+   <span class="keyword">type</span> <span class="name"><a name="alog-controlled_map.ads:30:9"></a>Element_Handle</span> <span class="keyword">is</span> <span class="keyword">access</span> <a href="alog-controlled_map.ads.html#alog-controlled_map.ads:29:9" title="defined at alog-controlled_map.ads:29:9">Element_Type</a>;
+
+   <span class="keyword">with</span> <span class="keyword">function</span> <span class="string">"<"</span> (Left, Right : <a href="alog-controlled_map.ads.html#alog-controlled_map.ads:28:9" title="defined at alog-controlled_map.ads:28:9">Key_Type</a>) <span class="keyword">return</span> Boolean <span class="keyword">is</span> <>;
+
+<span class="comment">--  Controlled variant of a map. The memory of an element pointed to by a
+</span><span class="comment">--  previously inserted handle is freed upon calling Delete, Clear or during
+</span><span class="comment">--  finalization of the controlled map. Thus control over objects inserted into
+</span><span class="comment">--  this map resides with the controlled map.
+</span><span class="keyword">package</span> <span class="name"><b>Alog.Controlled_Map</b></span> <span class="keyword">is</span></pre></div>
+    <div class='comment'>Controlled variant of a map. The memory of an element pointed to by a&#10;previously inserted handle is freed upon calling Delete, Clear or during&#10;finalization of the controlled map. Thus control over objects inserted into&#10;this map resides with the controlled map.&#10;</div>
+    </div>
+  </div>
+
+
+  <div class='subprograms'>
+    <h1><a name='Classes' id='Classes'></a>Classes</h1>
+    <div class="class">
+      <h3><a name='alog-controlled_map.ads:42:9' id='alog-controlled_map.ads:42:9'></a>
+<span class="droplink">Map<ul>
+  <li><a href="src_alog-controlled_map.ads.html#l42">Goto declaration in source</a></li>
+  <li><a href="src_alog-controlled_map.ads.html#l97">Goto full declaration in source</a></li>
+</ul></span>
+      </h3>
+      <div class='details'><pre><span class="keyword">type</span> <span class="name"><b>Map</b></span> <span class="keyword">is</span> <span class="keyword">new</span> Ada.Finalization.Limited_Controlled <span class="keyword">with</span> <span class="keyword">private</span>;</pre></div>
+      <div class='profile'>
+        <div>
+          <h4>Ancestors:</h4>
+            <div>Limited_Controlled</div>
+        </div>
+        <div>
+          <h4>Primitive operations:</h4>
+              <div>Adjust</div>
+              <div><span class="droplink">Clear<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:72:14" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.ads.html#l72" title="To spec">To spec</a></li></ul></span></div>
+              <div>Clear</div>
+              <div><span class="droplink">Contains<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:63:13" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.ads.html#l63" title="To spec">To spec</a></li></ul></span></div>
+              <div>Contains</div>
+              <div>Delete</div>
+              <div><span class="droplink">Delete<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:57:14" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.ads.html#l57" title="To spec">To spec</a></li></ul></span></div>
+              <div><span class="droplink">Element<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:51:13" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.ads.html#l51" title="To spec">To spec</a></li></ul></span></div>
+              <div>Element</div>
+              <div>Finalize <i>(overriding Finalize)</i></div>
+              <div>Finalize</div>
+              <div>Initialize</div>
+              <div><span class="droplink">Insert<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:45:14" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.ads.html#l45" title="To spec">To spec</a></li></ul></span></div>
+              <div>Insert</div>
+              <div><span class="droplink">Is_Empty<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:69:13" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.ads.html#l69" title="To spec">To spec</a></li></ul></span></div>
+              <div>Is_Empty</div>
+              <div><span class="droplink">Iterate<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:78:14" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.ads.html#l78" title="To spec">To spec</a></li></ul></span></div>
+              <div>Iterate</div>
+              <div>Length</div>
+              <div><span class="droplink">Length<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:75:13" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.ads.html#l75" title="To spec">To spec</a></li></ul></span></div>
+        </div>
+      </div>
+      <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-controlled_map.ads.html#l42" title="alog-controlled_map.ads:42:9">alog-controlled_map.ads:42:9</a> (declaration)</i></div>
+            <div><i>alog-controlled_map.adb:35:40 (reference)</i></div>
+            <div><i>alog-controlled_map.adb:55:19 (reference)</i></div>
+            <div><i>alog-controlled_map.adb:66:26 (reference)</i></div>
+            <div><i>alog-controlled_map.adb:79:19 (reference)</i></div>
+            <div><i>alog-controlled_map.adb:89:43 (reference)</i></div>
+            <div><i>alog-controlled_map.adb:97:26 (reference)</i></div>
+            <div><i>alog-controlled_map.adb:108:35 (reference)</i></div>
+            <div><i>alog-controlled_map.adb:116:19 (reference)</i></div>
+            <div><i>alog-controlled_map.adb:134:33 (reference)</i></div>
+            <div><i><a href="src_alog-controlled_map.ads.html#l45" title="alog-controlled_map.ads:45:26">alog-controlled_map.ads:45:26</a> (reference)</i></div>
+            <div><i><a href="src_alog-controlled_map.ads.html#l46" title="alog-controlled_map.ads:46:26">alog-controlled_map.ads:46:26</a> (reference)</i></div>
+            <div><i><a href="src_alog-controlled_map.ads.html#l49" title="alog-controlled_map.ads:49:26">alog-controlled_map.ads:49:26</a> (reference)</i></div>
+            <div><i><a href="src_alog-controlled_map.ads.html#l51" title="alog-controlled_map.ads:51:19">alog-controlled_map.ads:51:19</a> (reference)</i></div>
+            <div><i><a href="src_alog-controlled_map.ads.html#l52" title="alog-controlled_map.ads:52:19">alog-controlled_map.ads:52:19</a> (reference)</i></div>
+            <div><i><a href="src_alog-controlled_map.ads.html#l55" title="alog-controlled_map.ads:55:19">alog-controlled_map.ads:55:19</a> (reference)</i></div>
+            <div><i><a href="src_alog-controlled_map.ads.html#l57" title="alog-controlled_map.ads:57:26">alog-controlled_map.ads:57:26</a> (reference)</i></div>
+            <div><i><a href="src_alog-controlled_map.ads.html#l58" title="alog-controlled_map.ads:58:26">alog-controlled_map.ads:58:26</a> (reference)</i></div>
+            <div><i><a href="src_alog-controlled_map.ads.html#l61" title="alog-controlled_map.ads:61:26">alog-controlled_map.ads:61:26</a> (reference)</i></div>
+            <div><i><a href="src_alog-controlled_map.ads.html#l63" title="alog-controlled_map.ads:63:19">alog-controlled_map.ads:63:19</a> (reference)</i></div>
+            <div><i><a href="src_alog-controlled_map.ads.html#l64" title="alog-controlled_map.ads:64:19">alog-controlled_map.ads:64:19</a> (reference)</i></div>
+            <div><i><a href="src_alog-controlled_map.ads.html#l67" title="alog-controlled_map.ads:67:19">alog-controlled_map.ads:67:19</a> (reference)</i></div>
+            <div><i><a href="src_alog-controlled_map.ads.html#l68" title="alog-controlled_map.ads:68:35">alog-controlled_map.ads:68:35</a> (reference)</i></div>
+            <div><i><a href="src_alog-controlled_map.ads.html#l69" title="alog-controlled_map.ads:69:35">alog-controlled_map.ads:69:35</a> (reference)</i></div>
+            <div><i><a href="src_alog-controlled_map.ads.html#l71" title="alog-controlled_map.ads:71:40">alog-controlled_map.ads:71:40</a> (reference)</i></div>
+            <div><i><a href="src_alog-controlled_map.ads.html#l72" title="alog-controlled_map.ads:72:35">alog-controlled_map.ads:72:35</a> (reference)</i></div>
+            <div><i><a href="src_alog-controlled_map.ads.html#l72" title="alog-controlled_map.ads:72:40">alog-controlled_map.ads:72:40</a> (reference)</i></div>
+            <div><i><a href="src_alog-controlled_map.ads.html#l74" title="alog-controlled_map.ads:74:33">alog-controlled_map.ads:74:33</a> (reference)</i></div>
+            <div><i><a href="src_alog-controlled_map.ads.html#l75" title="alog-controlled_map.ads:75:33">alog-controlled_map.ads:75:33</a> (reference)</i></div>
+            <div><i><a href="src_alog-controlled_map.ads.html#l75" title="alog-controlled_map.ads:75:40">alog-controlled_map.ads:75:40</a> (reference)</i></div>
+            <div><i><a href="src_alog-controlled_map.ads.html#l78" title="alog-controlled_map.ads:78:19">alog-controlled_map.ads:78:19</a> (reference)</i></div>
+            <div><i><a href="src_alog-controlled_map.ads.html#l78" title="alog-controlled_map.ads:78:33">alog-controlled_map.ads:78:33</a> (reference)</i></div>
+            <div><i><a href="src_alog-controlled_map.ads.html#l79" title="alog-controlled_map.ads:79:19">alog-controlled_map.ads:79:19</a> (reference)</i></div>
+            <div><i><a href="src_alog-controlled_map.ads.html#l82" title="alog-controlled_map.ads:82:19">alog-controlled_map.ads:82:19</a> (reference)</i></div>
+            <div><i><a href="src_alog-controlled_map.ads.html#l86" title="alog-controlled_map.ads:86:43">alog-controlled_map.ads:86:43</a> (reference)</i></div>
+            <div><i><a href="src_alog-controlled_map.ads.html#l87" title="alog-controlled_map.ads:87:43">alog-controlled_map.ads:87:43</a> (reference)</i></div>
+            <div><i><a href="src_alog-controlled_map.ads.html#l90" title="alog-controlled_map.ads:90:43">alog-controlled_map.ads:90:43</a> (reference)</i></div>
+            <div><i><a href="src_alog-controlled_map.ads.html#l97" title="alog-controlled_map.ads:97:9">alog-controlled_map.ads:97:9</a> (full declaration)</i></div>
+            <div><i><a href="src_alog-controlled_map.ads.html#l98" title="alog-controlled_map.ads:98:9">alog-controlled_map.ads:98:9</a> (full declaration)</i></div>
+            <div><i><a href="src_alog-controlled_map.ads.html#l101" title="alog-controlled_map.ads:101:9">alog-controlled_map.ads:101:9</a> (full declaration)</i></div>
+            <div><i><a href="src_alog-logger.ads.html#l175" title="alog-logger.ads:175:27">alog-logger.ads:175:27</a> (reference)</i></div>
+            <div><i><a href="src_alog-logger.ads.html#l178" title="alog-logger.ads:178:27">alog-logger.ads:178:27</a> (reference)</i></div>
+            <div><i><a href="src_alog-protected_containers.ads.html#l145" title="alog-protected_containers.ads:145:47">alog-protected_containers.ads:145:47</a> (reference)</i></div>
+      </div>
+      <div class='comment'>A controlled map container.&#10;</div>
+    </div>
+  </div>
+
+
+
+
+    <div class='subprograms'>
+      <h1><a name='Methods' id='Methods'></a>Subprograms &amp; Entries</h1>
+      <div class="class">
+        <h3>
+          <a name='alog-controlled_map.ads:45:14' id='alog-controlled_map.ads:45:14'></a>
+<span class="droplink">Insert<ul>
+  <li><a href="src_alog-controlled_map.ads.html#l45">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">procedure</span> <span class="name"><b>Insert</b></span>     <table><tr><td>(</td><td><span class="name"><a name="alog-controlled_map.ads:46:7"></a>Container</span></td><td>: <span class="keyword">in</span> <span class="keyword">out</span> <a href="alog-controlled_map.ads.html#alog-controlled_map.ads:42:9" title="defined at alog-controlled_map.ads:42:9">Map</a>;</td></tr><tr><td></td><td><span class="name"><a name="alog-controlled_map.ads:47:7"></a>Key</span></td><td>:        <a href="alog-controlled_map.ads.html#alog-controlled_map.ads:28:9" title="defined at alog-controlled_map.ads:28:9">Key_Type</a>;</td></tr><tr><td></td><td><span class="name"><a name="alog-controlled_map.ads:48:7"></a>New_Item</span></td><td>:        <a href="alog-controlled_map.ads.html#alog-controlled_map.ads:30:9" title="defined at alog-controlled_map.ads:30:9">Element_Handle</a>);</td></tr></table></pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-controlled_map.ads.html#l45" title="alog-controlled_map.ads:45:14">alog-controlled_map.ads:45:14</a> (declaration)</i></div>
+            <div><i>alog-controlled_map.adb:96:14 (body)</i></div>
+            <div><i>alog-controlled_map.adb:104:8 (label)</i></div>
+            <div><i>alog-logger.adb:64:25 (reference)</i></div>
+            <div><i>alog-logger.adb:84:25 (reference)</i></div>
+            <div><i>alog-protected_containers.adb:158:15 (reference)</i></div>
+        </div>
+        <div class='comment'>Insert a new element handle with &apos;Key&apos; into the controlled map.&#10;</div>
+      </div>
+      <div class="class">
+        <h3>
+          <a name='alog-controlled_map.ads:51:13' id='alog-controlled_map.ads:51:13'></a>
+<span class="droplink">Element<ul>
+  <li><a href="src_alog-controlled_map.ads.html#l51">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">function</span> <span class="name"><b>Element</b></span>     <table><tr><td>(</td><td><span class="name"><a name="alog-controlled_map.ads:52:7"></a>Container</span></td><td>: <a href="alog-controlled_map.ads.html#alog-controlled_map.ads:42:9" title="defined at alog-controlled_map.ads:42:9">Map</a>;</td></tr><tr><td></td><td><span class="name"><a name="alog-controlled_map.ads:53:7"></a>Key</span></td><td>: <a href="alog-controlled_map.ads.html#alog-controlled_map.ads:28:9" title="defined at alog-controlled_map.ads:28:9">Key_Type</a>)</td></tr></table><span class="keyword">return</span> <a href="alog-controlled_map.ads.html#alog-controlled_map.ads:30:9" title="defined at alog-controlled_map.ads:30:9">Element_Handle</a>;</pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-controlled_map.ads.html#l51" title="alog-controlled_map.ads:51:13">alog-controlled_map.ads:51:13</a> (declaration)</i></div>
+            <div><i>alog-controlled_map.adb:78:13 (body)</i></div>
+            <div><i>alog-controlled_map.adb:85:8 (label)</i></div>
+            <div><i>alog-logger.adb:272:30 (reference)</i></div>
+            <div><i>alog-logger.adb:294:30 (reference)</i></div>
+            <div><i>alog-protected_containers.adb:143:31 (reference)</i></div>
+        </div>
+        <div class='comment'>Return a handle to an element identified by &apos;Key&apos;.&#10;</div>
+      </div>
+      <div class="class">
+        <h3>
+          <a name='alog-controlled_map.ads:57:14' id='alog-controlled_map.ads:57:14'></a>
+<span class="droplink">Delete<ul>
+  <li><a href="src_alog-controlled_map.ads.html#l57">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">procedure</span> <span class="name"><b>Delete</b></span>     <table><tr><td>(</td><td><span class="name"><a name="alog-controlled_map.ads:58:7"></a>Container</span></td><td>: <span class="keyword">in</span> <span class="keyword">out</span> <a href="alog-controlled_map.ads.html#alog-controlled_map.ads:42:9" title="defined at alog-controlled_map.ads:42:9">Map</a>;</td></tr><tr><td></td><td><span class="name"><a name="alog-controlled_map.ads:59:7"></a>Key</span></td><td>:        <a href="alog-controlled_map.ads.html#alog-controlled_map.ads:28:9" title="defined at alog-controlled_map.ads:28:9">Key_Type</a>);</td></tr></table></pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-controlled_map.ads.html#l57" title="alog-controlled_map.ads:57:14">alog-controlled_map.ads:57:14</a> (declaration)</i></div>
+            <div><i>alog-controlled_map.adb:65:14 (body)</i></div>
+            <div><i>alog-controlled_map.adb:74:8 (label)</i></div>
+            <div><i>alog-logger.adb:141:25 (reference)</i></div>
+            <div><i>alog-logger.adb:157:25 (reference)</i></div>
+            <div><i>alog-protected_containers.adb:130:15 (reference)</i></div>
+        </div>
+        <div class='comment'>Delete the element with key &apos;Key&apos; from the map. Memory of the element is&#10;freed.&#10;</div>
+      </div>
+      <div class="class">
+        <h3>
+          <a name='alog-controlled_map.ads:63:13' id='alog-controlled_map.ads:63:13'></a>
+<span class="droplink">Contains<ul>
+  <li><a href="src_alog-controlled_map.ads.html#l63">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">function</span> <span class="name"><b>Contains</b></span>     <table><tr><td>(</td><td><span class="name"><a name="alog-controlled_map.ads:64:7"></a>Container</span></td><td>: <a href="alog-controlled_map.ads.html#alog-controlled_map.ads:42:9" title="defined at alog-controlled_map.ads:42:9">Map</a>;</td></tr><tr><td></td><td><span class="name"><a name="alog-controlled_map.ads:65:7"></a>Key</span></td><td>: <a href="alog-controlled_map.ads.html#alog-controlled_map.ads:28:9" title="defined at alog-controlled_map.ads:28:9">Key_Type</a>)</td></tr></table><span class="keyword">return</span> Boolean;</pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-controlled_map.ads.html#l63" title="alog-controlled_map.ads:63:13">alog-controlled_map.ads:63:13</a> (declaration)</i></div>
+            <div><i>alog-controlled_map.adb:54:13 (body)</i></div>
+            <div><i>alog-controlled_map.adb:61:8 (label)</i></div>
+            <div><i>alog-logger.adb:35:32 (reference)</i></div>
+            <div><i>alog-logger.adb:58:28 (reference)</i></div>
+            <div><i>alog-logger.adb:78:28 (reference)</i></div>
+            <div><i>alog-logger.adb:122:28 (reference)</i></div>
+            <div><i>alog-logger.adb:136:32 (reference)</i></div>
+            <div><i>alog-logger.adb:152:32 (reference)</i></div>
+            <div><i>alog-logger.adb:266:32 (reference)</i></div>
+            <div><i>alog-logger.adb:288:32 (reference)</i></div>
+            <div><i>alog-protected_containers.adb:123:22 (reference)</i></div>
+        </div>
+        <div class='comment'>Returns True if an element with key &apos;Key&apos; is in the map.&#10;</div>
+      </div>
+      <div class="class">
+        <h3>
+          <a name='alog-controlled_map.ads:69:13' id='alog-controlled_map.ads:69:13'></a>
+<span class="droplink">Is_Empty<ul>
+  <li><a href="src_alog-controlled_map.ads.html#l69">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">function</span> <span class="name"><b>Is_Empty</b></span> <table><tr><td>(</td><td><span class="name"><a name="alog-controlled_map.ads:69:23"></a>Container</span></td><td>: <a href="alog-controlled_map.ads.html#alog-controlled_map.ads:42:9" title="defined at alog-controlled_map.ads:42:9">Map</a>)</td></tr></table><span class="keyword">return</span> Boolean;</pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-controlled_map.ads.html#l69" title="alog-controlled_map.ads:69:13">alog-controlled_map.ads:69:13</a> (declaration)</i></div>
+            <div><i>alog-controlled_map.adb:108:13 (body)</i></div>
+            <div><i>alog-controlled_map.adb:111:8 (label)</i></div>
+            <div><i>alog-protected_containers.adb:166:22 (reference)</i></div>
+        </div>
+        <div class='comment'>Returns True if the map is empty.&#10;</div>
+      </div>
+      <div class="class">
+        <h3>
+          <a name='alog-controlled_map.ads:72:14' id='alog-controlled_map.ads:72:14'></a>
+<span class="droplink">Clear<ul>
+  <li><a href="src_alog-controlled_map.ads.html#l72">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">procedure</span> <span class="name"><b>Clear</b></span> <table><tr><td>(</td><td><span class="name"><a name="alog-controlled_map.ads:72:21"></a>Container</span></td><td>: <span class="keyword">in</span> <span class="keyword">out</span> <a href="alog-controlled_map.ads.html#alog-controlled_map.ads:42:9" title="defined at alog-controlled_map.ads:42:9">Map</a>);</td></tr></table></pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-controlled_map.ads.html#l72" title="alog-controlled_map.ads:72:14">alog-controlled_map.ads:72:14</a> (declaration)</i></div>
+            <div><i>alog-controlled_map.adb:35:14 (body)</i></div>
+            <div><i>alog-controlled_map.adb:50:8 (label)</i></div>
+            <div><i>alog-controlled_map.adb:91:17 (reference)</i></div>
+            <div><i>alog-logger.adb:111:20 (reference)</i></div>
+            <div><i>alog-logger.adb:114:20 (reference)</i></div>
+            <div><i>alog-protected_containers.adb:113:15 (reference)</i></div>
+        </div>
+        <div class='comment'>Remove all elements in the map. Memory of the elements is freed.&#10;</div>
+      </div>
+      <div class="class">
+        <h3>
+          <a name='alog-controlled_map.ads:75:13' id='alog-controlled_map.ads:75:13'></a>
+<span class="droplink">Length<ul>
+  <li><a href="src_alog-controlled_map.ads.html#l75">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">function</span> <span class="name"><b>Length</b></span> <table><tr><td>(</td><td><span class="name"><a name="alog-controlled_map.ads:75:21"></a>Container</span></td><td>: <a href="alog-controlled_map.ads.html#alog-controlled_map.ads:42:9" title="defined at alog-controlled_map.ads:42:9">Map</a>)</td></tr></table><span class="keyword">return</span> Natural;</pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-controlled_map.ads.html#l75" title="alog-controlled_map.ads:75:13">alog-controlled_map.ads:75:13</a> (declaration)</i></div>
+            <div><i>alog-controlled_map.adb:134:13 (body)</i></div>
+            <div><i>alog-controlled_map.adb:137:8 (label)</i></div>
+            <div><i>alog-logger.adb:164:41 (reference)</i></div>
+            <div><i>alog-logger.adb:253:41 (reference)</i></div>
+        </div>
+        <div class='comment'>Return the current element count.&#10;</div>
+      </div>
+      <div class="class">
+        <h3>
+          <a name='alog-controlled_map.ads:78:14' id='alog-controlled_map.ads:78:14'></a>
+<span class="droplink">Iterate<ul>
+  <li><a href="src_alog-controlled_map.ads.html#l78">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">procedure</span> <span class="name"><b>Iterate</b></span>     <table><tr><td>(</td><td><span class="name"><a name="alog-controlled_map.ads:79:7"></a>Container</span></td><td>: <a href="alog-controlled_map.ads.html#alog-controlled_map.ads:42:9" title="defined at alog-controlled_map.ads:42:9">Map</a>;</td></tr><tr><td></td><td><span class="name"><a name="alog-controlled_map.ads:80:7"></a>Process</span></td><td>: <span class="keyword">not</span> <span class="keyword">null</span> <span class="keyword">access</span> <span class="keyword">procedure</span> (Handle : <a href="alog-controlled_map.ads.html#alog-controlled_map.ads:30:9" title="defined at alog-controlled_map.ads:30:9">Element_Handle</a>)</td></tr></table>);</pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-controlled_map.ads.html#l78" title="alog-controlled_map.ads:78:14">alog-controlled_map.ads:78:14</a> (declaration)</i></div>
+            <div><i>alog-controlled_map.adb:115:14 (body)</i></div>
+            <div><i>alog-controlled_map.adb:130:8 (label)</i></div>
+            <div><i>alog-logger.adb:110:20 (reference)</i></div>
+            <div><i>alog-logger.adb:113:20 (reference)</i></div>
+            <div><i>alog-logger.adb:191:25 (reference)</i></div>
+            <div><i>alog-logger.adb:202:25 (reference)</i></div>
+        </div>
+        <div class='comment'>Iterate over all elements in the map and call the &apos;Process&apos; procedure for&#10;each handle.&#10;</div>
+      </div>
+    </div>
+</div> <!-- documentation -->
+
+</body>
+</html>

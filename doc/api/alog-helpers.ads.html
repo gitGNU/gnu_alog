@@ -1,0 +1,152 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html><head>
+  <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript"/>
+
+  <title>
+    Package: Alog.Helpers
+  </title>
+  <link rel='stylesheet' href='support/docgen.css' type='text/css'/>
+  <link rel='stylesheet' href='support/tags.css' type='text/css'/>
+  <script src='support/docgen.js' type='text/javascript' charset='utf-8'></script>
+</head>
+<body onload="onloadDoc();">
+
+<div id='leftSide'>
+  <div id='leftSideInside'>
+  <div id='header'>
+    <h2 class="button">Documentation</h2>
+    <a href='index.html'><div class="button2">Table of Contents</div></a>
+
+    <a href='tree.html'><div class="button2">Class Inheritance Tree</div></a>
+
+  </div>
+
+  <div id='navigation'>
+    <h2 class="button">Navigation</h2>
+    <a href='#Description'><div class="button2">Description</div></a>
+    <a href='#Constants'><div class="button2">Constants &amp; Global variables</div></a>
+    <a href='#Methods'><div class="button2">Subprograms &amp; Entries</div></a>
+  </div><!-- navigation -->
+  </div>
+</div> <!-- leftSide -->
+
+<div class='default' id='rightSide'>
+ <div id='rightSideInside'>
+ <div id='Index'>
+  <h2>Index</h2>
+  <script type="text/javascript">
+    var names = new Array (
+new Array ('Invalid_<wbr/>Config', 'alog-helpers.ads:57:4', 'var-spec'),
+new Array ('Assert_<wbr/>Files_<wbr/>Equal', 'alog-helpers.ads:31:13', 'subp-spec'),
+new Array ('Read_<wbr/>Loglevels', 'alog-helpers.ads:38:14', 'subp-spec'),
+      new Array ('dummy', '', ''));
+    printIndexList (names);
+  </script>
+  <noscript>
+    <ul>
+      <li class='var-spec'><a href="#alog-helpers.ads:57:4">Invalid_<wbr/>Config</a></li>
+      <li class='subp-spec'><a href="#alog-helpers.ads:31:13">Assert_<wbr/>Files_<wbr/>Equal</a></li>
+      <li class='subp-spec'><a href="#alog-helpers.ads:38:14">Read_<wbr/>Loglevels</a></li>
+    </ul>
+  </noscript>
+ </div>
+ </div>
+</div>
+
+<div class='default' id='documentation'>
+  <div class='title'>
+    Package:
+<span class="droplink"><i>Alog.Helpers</i><ul>
+  <li><a href="src_alog-helpers.ads.html">Goto spec source</a></li>
+</ul></span>
+  </div>
+  <div class='subprograms'>
+    <h1><a name='Description' id='Description'></a>Description</h1>
+    <div class="class">
+    <div class='details'><pre><span class="keyword">package</span> <span class="name"><b>Alog.Helpers</b></span> <span class="keyword">is</span></pre></div>
+    <div class='comment'>Alog helper functions/procedures.&#10;</div>
+    </div>
+  </div>
+
+
+
+
+
+  <div class='subprograms'>
+    <h1><a name='Constants' id='Constants'></a>Constants &amp; Global variables</h1>
+    <div class="class">
+      <h3><a name='alog-helpers.ads:57:4' id='alog-helpers.ads:57:4'></a>
+<span class="droplink">Invalid_Config<ul>
+  <li><a href="src_alog-helpers.ads.html#l57">Goto declaration in source</a></li>
+</ul></span>
+      </h3>
+      <div class='details'><pre><span class="name"><b>Invalid_Config</b></span> : <span class="keyword">exception</span>;</pre></div>
+      <div class='profile'>
+        <h4>References:</h4>
+          <div><i><a href="src_alog-helpers.ads.html#l57" title="alog-helpers.ads:57:4">alog-helpers.ads:57:4</a> (declaration)</i></div>
+          <div><i>alog-helpers.adb:114:28 (reference)</i></div>
+          <div><i>alog-helpers.adb:137:34 (reference)</i></div>
+      </div>
+      <div class='comment'>Exception is raised if a loglevel config file is invalid.&#10;</div>
+    </div>
+  </div>
+
+    <div class='subprograms'>
+      <h1><a name='Methods' id='Methods'></a>Subprograms &amp; Entries</h1>
+      <div class="class">
+        <h3>
+          <a name='alog-helpers.ads:31:13' id='alog-helpers.ads:31:13'></a>
+<span class="droplink">Assert_Files_Equal<ul>
+  <li><a href="src_alog-helpers.ads.html#l31">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">function</span> <span class="name"><b>Assert_Files_Equal</b></span>     <table><tr><td>(</td><td><span class="name"><a name="alog-helpers.ads:32:7"></a>Filename1</span></td><td>: String;</td></tr><tr><td></td><td><span class="name"><a name="alog-helpers.ads:33:7"></a>Filename2</span></td><td>: String)</td></tr></table><span class="keyword">return</span> Boolean;</pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-helpers.ads.html#l31" title="alog-helpers.ads:31:13">alog-helpers.ads:31:13</a> (declaration)</i></div>
+            <div><i>alog-helpers.adb:31:13 (body)</i></div>
+            <div><i>alog-helpers.adb:73:8 (label)</i></div>
+        </div>
+        <div class='profile'>
+          <h4>Calls:</h4>
+            <div><i>Close defined at a-direio.ads:86:14</i></div>
+            <div><i>End_Of_File defined at a-direio.ads:124:13</i></div>
+            <div><i>Open defined at a-direio.ads:80:14</i></div>
+            <div><i>Read defined at a-direio.ads:106:14</i></div>
+            <div><i>Size defined at a-direio.ads:122:13</i></div>
+        </div>
+        <div class='comment'>Compare two files byte-wise. Returns True if both files are equal.&#10;The two files are closed but not removed after comparison.&#10;</div>
+      </div>
+      <div class="class">
+        <h3>
+          <a name='alog-helpers.ads:38:14' id='alog-helpers.ads:38:14'></a>
+<span class="droplink">Read_Loglevels<ul>
+  <li><a href="src_alog-helpers.ads.html#l38">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">procedure</span> <span class="name"><b>Read_Loglevels</b></span>     <table><tr><td>(</td><td><span class="name"><a name="alog-helpers.ads:39:7"></a>Filename</span></td><td>:        String;</td></tr><tr><td></td><td><span class="name"><a name="alog-helpers.ads:40:7"></a>Default_Level</span></td><td>: <span class="keyword">in</span> <span class="keyword">out</span> <a href="alog.ads.html#alog.ads:32:9" title="defined at alog.ads:32:9">Log_Level</a>;</td></tr><tr><td></td><td><span class="name"><a name="alog-helpers.ads:41:7"></a>Identifiers</span></td><td>:    <span class="keyword">out</span> Maps.Wildcard_Level_Map);</td></tr></table></pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-helpers.ads.html#l38" title="alog-helpers.ads:38:14">alog-helpers.ads:38:14</a> (declaration)</i></div>
+            <div><i>alog-helpers.adb:77:14 (body)</i></div>
+            <div><i>alog-helpers.adb:156:8 (label)</i></div>
+        </div>
+        <div class='profile'>
+          <h4>Calls:</h4>
+            <div><i>Alog.Maps.Insert defined at <a href="src_alog-maps.ads.html#l74" title="alog-maps.ads:74:14">alog-maps.ads:74:14</a></i></div>
+            <div><i>Close defined at a-textio.ads:98:14</i></div>
+            <div><i>End_Of_File defined at a-textio.ads:183:13</i></div>
+            <div><i>Get_Line defined at a-textio.ads:244:14</i></div>
+            <div><i>Index defined at a-strfix.ads:36:13</i></div>
+            <div><i>Open defined at a-textio.ads:92:14</i></div>
+            <div><i>Trim defined at a-strfix.ads:186:13</i></div>
+        </div>
+        <div class='comment'>Read default loglevels and (optional) identifier based loglevels from&#10;file given by filename. The format is as follows:&#10;&#10;# This is a comment (ignored)&#10;&#10;# Default loglevel&#10;Default = Info&#10;&#10;# Identifier-specific loglevels&#10;Foo.* = Debug&#10;Foo.Bar = Info&#10;&#10;If no default loglevel setting is found in the file, the loglevel passed&#10;as Default_Level parameter is returned unchanged.&#10;</div>
+      </div>
+    </div>
+</div> <!-- documentation -->
+
+</body>
+</html>

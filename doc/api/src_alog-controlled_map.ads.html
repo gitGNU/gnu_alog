@@ -1,0 +1,134 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html><head>
+  <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript"/>
+
+  <title>
+    File: alog-controlled_map.ads
+  </title>
+  <link rel='stylesheet' href='support/docgen.css' type='text/css'/>
+  <script src='support/docgen.js' type='text/javascript' charset='utf-8'></script>
+</head>
+<body onload="onloadDoc();">
+
+<div id='leftSide'>
+  <div id='leftSideInside'>
+  <div id='header'>
+    <h2 class="button">Documentation</h2>
+    <a href='index.html'><div class="button2">Table of Contents</div></a>
+
+    <a href='tree.html'><div class="button2">Class Inheritance Tree</div></a>
+
+  </div>
+  </div>
+</div> <!-- leftSide -->
+
+<div class='subprograms'>
+  <div class='details'><ol><li id="l1"><pre><span class="comment">--</span> </pre></li>
+<li id="l2"><pre><span class="comment">--  Copyright (c) 2009,</span> </pre></li>
+<li id="l3"><pre><span class="comment">--  Reto Buerki, Adrian-Ken Rueegsegger</span> </pre></li>
+<li id="l4"><pre><span class="comment">--  secunet SwissIT AG</span> </pre></li>
+<li id="l5"><pre><span class="comment">--</span> </pre></li>
+<li id="l6"><pre><span class="comment">--  This file is part of Alog.</span> </pre></li>
+<li id="l7"><pre><span class="comment">--</span> </pre></li>
+<li id="l8"><pre><span class="comment">--  Alog is free software; you can redistribute it and/or modify</span> </pre></li>
+<li id="l9"><pre><span class="comment">--  it under the terms of the GNU Lesser General Public License as published</span> </pre></li>
+<li id="l10"><pre><span class="comment">--  by the Free Software Foundation; either version 2.1 of the License, or</span> </pre></li>
+<li id="l11"><pre><span class="comment">--  (at your option) any later version.</span> </pre></li>
+<li id="l12"><pre><span class="comment">--</span> </pre></li>
+<li id="l13"><pre><span class="comment">--  Alog is distributed in the hope that it will be useful,</span> </pre></li>
+<li id="l14"><pre><span class="comment">--  but WITHOUT ANY WARRANTY; without even the implied warranty of</span> </pre></li>
+<li id="l15"><pre><span class="comment">--  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span> </pre></li>
+<li id="l16"><pre><span class="comment">--  GNU Lesser General Public License for more details.</span> </pre></li>
+<li id="l17"><pre><span class="comment">--</span> </pre></li>
+<li id="l18"><pre><span class="comment">--  You should have received a copy of the GNU Lesser General Public License</span> </pre></li>
+<li id="l19"><pre><span class="comment">--  along with Alog; if not, write to the Free Software</span> </pre></li>
+<li id="l20"><pre><span class="comment">--  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,</span> </pre></li>
+<li id="l21"><pre><span class="comment">--  MA  02110-1301  USA</span> </pre></li>
+<li id="l22"><pre><span class="comment">--</span> </pre></li>
+<li id="l23"><pre> </pre></li>
+<li id="l24"><pre><span class="keyword">with</span> Ada.Finalization; </pre></li>
+<li id="l25"><pre><span class="keyword">with</span> Ada.Containers.Indefinite_Ordered_Maps; </pre></li>
+<li id="l26"><pre> </pre></li>
+<li id="l27"><pre><span class="keyword">generic</span> </pre></li>
+<li id="l28"><pre>   <span class="keyword">type</span> <a href="alog-controlled_map.ads.html#alog-controlled_map.ads:28:9" title="defined at alog-controlled_map.ads:28:9">Key_Type</a> (&lt;&gt;) <span class="keyword">is</span> <span class="keyword">private</span>; </pre></li>
+<li id="l29"><pre>   <span class="keyword">type</span> <a href="alog-controlled_map.ads.html#alog-controlled_map.ads:29:9" title="defined at alog-controlled_map.ads:29:9">Element_Type</a> (&lt;&gt;) <span class="keyword">is</span> <span class="keyword">limited</span> <span class="keyword">private</span>; </pre></li>
+<li id="l30"><pre>   <span class="keyword">type</span> <a href="alog-controlled_map.ads.html#alog-controlled_map.ads:30:9" title="defined at alog-controlled_map.ads:30:9">Element_Handle</a> <span class="keyword">is</span> <span class="keyword">access</span> <span class="droplink">Element_Type<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:29:9" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.ads.html#l29" title="To spec">To spec</a></li></ul></span>; </pre></li>
+<li id="l31"><pre> </pre></li>
+<li id="l32"><pre>   <span class="keyword">with</span> <span class="keyword">function</span> <span class="string">&quot;&lt;&quot;</span> (Left, Right : <span class="droplink">Key_Type<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:28:9" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.ads.html#l28" title="To spec">To spec</a></li></ul></span>) <span class="keyword">return</span> Boolean <span class="keyword">is</span> &lt;&gt;; </pre></li>
+<li id="l33"><pre> </pre></li>
+<li id="l34"><pre><span class="comment">--  Controlled variant of a map. The memory of an element pointed to by a</span> </pre></li>
+<li id="l35"><pre><span class="comment">--  previously inserted handle is freed upon calling Delete, Clear or during</span> </pre></li>
+<li id="l36"><pre><span class="comment">--  finalization of the controlled map. Thus control over objects inserted into</span> </pre></li>
+<li id="l37"><pre><span class="comment">--  this map resides with the controlled map.</span> </pre></li>
+<li id="l38"><pre><span class="keyword">package</span> <span class="droplink">Alog.Controlled_Map<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:38:14" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.ads.html#l38" title="To spec">To spec</a></li><li><a href="src_alog-controlled_map.adb.html#l26" title="To body">To body</a></li></ul></span> <span class="keyword">is</span> </pre></li>
+<li id="l39"><pre> </pre></li>
+<li id="l40"><pre>   <span class="keyword">pragma</span> Preelaborate; </pre></li>
+<li id="l41"><pre> </pre></li>
+<li id="l42"><pre>   <span class="keyword">type</span> <span class="droplink">Map<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:42:9" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.ads.html#l97" title="To body">To body</a></li></ul></span> <span class="keyword">is</span> <span class="keyword">new</span> Ada.Finalization.Limited_Controlled <span class="keyword">with</span> <span class="keyword">private</span>; </pre></li>
+<li id="l43"><pre>   <span class="comment">--  A controlled map container.</span> </pre></li>
+<li id="l44"><pre> </pre></li>
+<li id="l45"><pre>   <span class="keyword">procedure</span> <span class="droplink">Insert<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:45:14" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.adb.html#l96" title="To body">To body</a></li></ul></span> </pre></li>
+<li id="l46"><pre>     (<span class="droplink">Container<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:46:7" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.adb.html#l97" title="To body">To body</a></li></ul></span> : <span class="keyword">in</span> <span class="keyword">out</span> <span class="droplink">Map<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:42:9" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.ads.html#l42" title="To spec">To spec</a></li><li><a href="src_alog-controlled_map.ads.html#l97" title="To body">To body</a></li></ul></span>; </pre></li>
+<li id="l47"><pre>      <span class="droplink">Key<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:47:7" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.adb.html#l98" title="To body">To body</a></li></ul></span>       :        <span class="droplink">Key_Type<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:28:9" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.ads.html#l28" title="To spec">To spec</a></li></ul></span>; </pre></li>
+<li id="l48"><pre>      <a href="alog-controlled_map.ads.html#alog-controlled_map.ads:48:7" title="defined at alog-controlled_map.ads:48:7">New_Item</a>  :        <span class="droplink">Element_Handle<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:30:9" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.ads.html#l30" title="To spec">To spec</a></li></ul></span>); </pre></li>
+<li id="l49"><pre>   <span class="comment">--  Insert a new element handle with &apos;Key&apos; into the controlled map.</span> </pre></li>
+<li id="l50"><pre> </pre></li>
+<li id="l51"><pre>   <span class="keyword">function</span> <span class="droplink">Element<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:51:13" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.adb.html#l78" title="To body">To body</a></li></ul></span> </pre></li>
+<li id="l52"><pre>     (<span class="droplink">Container<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:52:7" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.adb.html#l79" title="To body">To body</a></li></ul></span> : <span class="droplink">Map<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:42:9" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.ads.html#l42" title="To spec">To spec</a></li><li><a href="src_alog-controlled_map.ads.html#l97" title="To body">To body</a></li></ul></span>; </pre></li>
+<li id="l53"><pre>      <span class="droplink">Key<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:53:7" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.adb.html#l80" title="To body">To body</a></li></ul></span>       : <span class="droplink">Key_Type<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:28:9" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.ads.html#l28" title="To spec">To spec</a></li></ul></span>) </pre></li>
+<li id="l54"><pre>      <span class="keyword">return</span> <span class="droplink">Element_Handle<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:30:9" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.ads.html#l30" title="To spec">To spec</a></li></ul></span>; </pre></li>
+<li id="l55"><pre>   <span class="comment">--  Return a handle to an element identified by &apos;Key&apos;.</span> </pre></li>
+<li id="l56"><pre> </pre></li>
+<li id="l57"><pre>   <span class="keyword">procedure</span> <span class="droplink">Delete<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:57:14" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.adb.html#l65" title="To body">To body</a></li></ul></span> </pre></li>
+<li id="l58"><pre>     (<span class="droplink">Container<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:58:7" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.adb.html#l66" title="To body">To body</a></li></ul></span> : <span class="keyword">in</span> <span class="keyword">out</span> <span class="droplink">Map<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:42:9" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.ads.html#l42" title="To spec">To spec</a></li><li><a href="src_alog-controlled_map.ads.html#l97" title="To body">To body</a></li></ul></span>; </pre></li>
+<li id="l59"><pre>      <span class="droplink">Key<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:59:7" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.adb.html#l67" title="To body">To body</a></li></ul></span>       :        <span class="droplink">Key_Type<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:28:9" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.ads.html#l28" title="To spec">To spec</a></li></ul></span>); </pre></li>
+<li id="l60"><pre>   <span class="comment">--  Delete the element with key &apos;Key&apos; from the map. Memory of the element is</span> </pre></li>
+<li id="l61"><pre>   <span class="comment">--  freed.</span> </pre></li>
+<li id="l62"><pre> </pre></li>
+<li id="l63"><pre>   <span class="keyword">function</span> <span class="droplink">Contains<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:63:13" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.adb.html#l54" title="To body">To body</a></li></ul></span> </pre></li>
+<li id="l64"><pre>     (<span class="droplink">Container<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:64:7" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.adb.html#l55" title="To body">To body</a></li></ul></span> : <span class="droplink">Map<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:42:9" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.ads.html#l42" title="To spec">To spec</a></li><li><a href="src_alog-controlled_map.ads.html#l97" title="To body">To body</a></li></ul></span>; </pre></li>
+<li id="l65"><pre>      <span class="droplink">Key<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:65:7" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.adb.html#l56" title="To body">To body</a></li></ul></span>       : <span class="droplink">Key_Type<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:28:9" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.ads.html#l28" title="To spec">To spec</a></li></ul></span>) </pre></li>
+<li id="l66"><pre>      <span class="keyword">return</span> Boolean; </pre></li>
+<li id="l67"><pre>   <span class="comment">--  Returns True if an element with key &apos;Key&apos; is in the map.</span> </pre></li>
+<li id="l68"><pre> </pre></li>
+<li id="l69"><pre>   <span class="keyword">function</span> <span class="droplink">Is_Empty<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:69:13" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.adb.html#l108" title="To body">To body</a></li></ul></span> (<span class="droplink">Container<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:69:23" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.adb.html#l108" title="To body">To body</a></li></ul></span> : <span class="droplink">Map<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:42:9" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.ads.html#l42" title="To spec">To spec</a></li><li><a href="src_alog-controlled_map.ads.html#l97" title="To body">To body</a></li></ul></span>) <span class="keyword">return</span> Boolean; </pre></li>
+<li id="l70"><pre>   <span class="comment">--  Returns True if the map is empty.</span> </pre></li>
+<li id="l71"><pre> </pre></li>
+<li id="l72"><pre>   <span class="keyword">procedure</span> <span class="droplink">Clear<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:72:14" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.adb.html#l35" title="To body">To body</a></li></ul></span> (<span class="droplink">Container<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:72:21" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.adb.html#l35" title="To body">To body</a></li></ul></span> : <span class="keyword">in</span> <span class="keyword">out</span> <span class="droplink">Map<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:42:9" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.ads.html#l42" title="To spec">To spec</a></li><li><a href="src_alog-controlled_map.ads.html#l97" title="To body">To body</a></li></ul></span>); </pre></li>
+<li id="l73"><pre>   <span class="comment">--  Remove all elements in the map. Memory of the elements is freed.</span> </pre></li>
+<li id="l74"><pre> </pre></li>
+<li id="l75"><pre>   <span class="keyword">function</span> <span class="droplink">Length<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:75:13" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.adb.html#l134" title="To body">To body</a></li></ul></span> (<span class="droplink">Container<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:75:21" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.adb.html#l35" title="To body">To body</a></li></ul></span> : <span class="droplink">Map<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:42:9" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.ads.html#l42" title="To spec">To spec</a></li><li><a href="src_alog-controlled_map.ads.html#l97" title="To body">To body</a></li></ul></span>) <span class="keyword">return</span> Natural; </pre></li>
+<li id="l76"><pre>   <span class="comment">--  Return the current element count.</span> </pre></li>
+<li id="l77"><pre> </pre></li>
+<li id="l78"><pre>   <span class="keyword">procedure</span> <span class="droplink">Iterate<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:78:14" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.adb.html#l115" title="To body">To body</a></li></ul></span> </pre></li>
+<li id="l79"><pre>     (<span class="droplink">Container<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:79:7" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.adb.html#l116" title="To body">To body</a></li></ul></span> : <span class="droplink">Map<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:42:9" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.ads.html#l42" title="To spec">To spec</a></li><li><a href="src_alog-controlled_map.ads.html#l97" title="To body">To body</a></li></ul></span>; </pre></li>
+<li id="l80"><pre>      <a href="alog-controlled_map.ads.html#alog-controlled_map.ads:80:7" title="defined at alog-controlled_map.ads:80:7">Process</a>   : <span class="keyword">not</span> <span class="keyword">null</span> <span class="keyword">access</span> <span class="keyword">procedure</span> (Handle : <span class="droplink">Element_Handle<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:30:9" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.ads.html#l30" title="To spec">To spec</a></li></ul></span>)); </pre></li>
+<li id="l81"><pre>   <span class="comment">--  Iterate over all elements in the map and call the &apos;Process&apos; procedure for</span> </pre></li>
+<li id="l82"><pre>   <span class="comment">--  each handle.</span> </pre></li>
+<li id="l83"><pre> </pre></li>
+<li id="l84"><pre><span class="keyword">private</span> </pre></li>
+<li id="l85"><pre> </pre></li>
+<li id="l86"><pre>   <span class="keyword">overriding</span> </pre></li>
+<li id="l87"><pre>   <span class="keyword">procedure</span> Finalize (Container : <span class="keyword">in</span> <span class="keyword">out</span> <span class="droplink">Map<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:42:9" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.ads.html#l42" title="To spec">To spec</a></li><li><a href="src_alog-controlled_map.ads.html#l97" title="To body">To body</a></li></ul></span>); </pre></li>
+<li id="l88"><pre>   <span class="comment">--  Clean up the the controlled map. This will Free all the memory occupied</span> </pre></li>
+<li id="l89"><pre>   <span class="comment">--  by the elements in the map.</span> </pre></li>
+<li id="l90"><pre> </pre></li>
+<li id="l91"><pre>   <span class="keyword">package</span> Map_Of_Elements_Package <span class="keyword">is</span> <span class="keyword">new</span> </pre></li>
+<li id="l92"><pre>     Ada.Containers.Indefinite_Ordered_Maps </pre></li>
+<li id="l93"><pre>       (Key_Type     =&gt; <span class="droplink">Key_Type<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:28:9" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.ads.html#l28" title="To spec">To spec</a></li></ul></span>, </pre></li>
+<li id="l94"><pre>        Element_Type =&gt; <span class="droplink">Element_Handle<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:30:9" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.ads.html#l30" title="To spec">To spec</a></li></ul></span>); </pre></li>
+<li id="l95"><pre> </pre></li>
+<li id="l96"><pre>   <span class="keyword">package</span> MOEP <span class="keyword">renames</span> Map_Of_Elements_Package; </pre></li>
+<li id="l97"><pre> </pre></li>
+<li id="l98"><pre>   <span class="keyword">type</span> <span class="droplink">Map<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:42:9" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.ads.html#l42" title="To spec">To spec</a></li><li><a href="src_alog-controlled_map.ads.html#l97" title="To body">To body</a></li></ul></span> <span class="keyword">is</span> <span class="keyword">new</span> Ada.Finalization.Limited_Controlled <span class="keyword">with</span> <span class="keyword">record</span> </pre></li>
+<li id="l99"><pre>      Data : MOEP.Map; </pre></li>
+<li id="l100"><pre>   <span class="keyword">end</span> <span class="keyword">record</span>; </pre></li>
+<li id="l101"><pre> </pre></li>
+<li id="l102"><pre><span class="keyword">end</span> Alog.Controlled_Map; </pre></li>
+</ol></div>
+</div>
+
+</body>
+</html>

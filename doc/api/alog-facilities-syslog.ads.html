@@ -1,0 +1,151 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html><head>
+  <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript"/>
+
+  <title>
+    Package: Alog.Facilities.Syslog
+  </title>
+  <link rel='stylesheet' href='support/docgen.css' type='text/css'/>
+  <link rel='stylesheet' href='support/tags.css' type='text/css'/>
+  <script src='support/docgen.js' type='text/javascript' charset='utf-8'></script>
+</head>
+<body onload="onloadDoc();">
+
+<div id='leftSide'>
+  <div id='leftSideInside'>
+  <div id='header'>
+    <h2 class="button">Documentation</h2>
+    <a href='index.html'><div class="button2">Table of Contents</div></a>
+
+    <a href='tree.html'><div class="button2">Class Inheritance Tree</div></a>
+
+  </div>
+
+  <div id='navigation'>
+    <h2 class="button">Navigation</h2>
+    <a href='#Description'><div class="button2">Description</div></a>
+    <a href='#Classes'><div class="button2">Classes</div></a>
+    <a href='#Types'><div class="button2">Types</div></a>
+  </div><!-- navigation -->
+  </div>
+</div> <!-- leftSide -->
+
+<div class='default' id='rightSide'>
+ <div id='rightSideInside'>
+ <div id='Index'>
+  <h2>Index</h2>
+  <script type="text/javascript">
+    var names = new Array (
+new Array ('Instance', 'alog-facilities-syslog.ads:29:9', 'class-spec'),
+new Array ('Handle', 'alog-facilities-syslog.ads:32:9', 'type-spec'),
+new Array ('S_<wbr/>Facility', 'alog-facilities-syslog.ads:34:9', 'type-spec'),
+      new Array ('dummy', '', ''));
+    printIndexList (names);
+  </script>
+  <noscript>
+    <ul>
+      <li class='class-spec'><a href="#alog-facilities-syslog.ads:29:9">Instance</a></li>
+      <li class='type-spec'><a href="#alog-facilities-syslog.ads:32:9">Handle</a></li>
+      <li class='type-spec'><a href="#alog-facilities-syslog.ads:34:9">S_<wbr/>Facility</a></li>
+    </ul>
+  </noscript>
+ </div>
+ </div>
+</div>
+
+<div class='default' id='documentation'>
+  <div class='title'>
+    Package:
+<span class="droplink"><i>Alog.Facilities.Syslog</i><ul>
+  <li><a href="src_alog-facilities-syslog.ads.html">Goto spec source</a></li>
+</ul></span>
+  </div>
+  <div class='subprograms'>
+    <h1><a name='Description' id='Description'></a>Description</h1>
+    <div class="class">
+    <div class='details'><pre><span class="keyword">package</span> <span class="name"><b>Alog.Facilities.Syslog</b></span> <span class="keyword">is</span></pre></div>
+    <div class='comment'>Syslog facility. Used to log to systems syslog. At the moment, this facility&#10;is a thin binding to syslog function calls. The implementation attempts to&#10;resemble the native libc-functions of your system, so that anyone being&#10;familiar with syslog.h should be able to use this module right away.&#10;</div>
+    </div>
+  </div>
+
+
+  <div class='subprograms'>
+    <h1><a name='Classes' id='Classes'></a>Classes</h1>
+    <div class="class">
+      <h3><a name='alog-facilities-syslog.ads:29:9' id='alog-facilities-syslog.ads:29:9'></a>
+<span class="droplink">Instance<ul>
+  <li><a href="src_alog-facilities-syslog.ads.html#l29">Goto declaration in source</a></li>
+  <li><a href="src_alog-facilities-syslog.ads.html#l62">Goto full declaration in source</a></li>
+</ul></span>
+      </h3>
+      <div class='details'><pre><span class="keyword">type</span> <span class="name"><b>Instance</b></span> <span class="keyword">is</span> <span class="keyword">new</span> <a href="alog-facilities.ads.html#alog-facilities.ads:38:9" title="defined at alog-facilities.ads:38:9">Alog.Facilities.Instance</a> <span class="keyword">with</span> <span class="keyword">private</span>;</pre></div>
+      <div class='profile'>
+        <div>
+          <h4>Ancestors:</h4>
+            <div><a href="alog-facilities.ads.html#alog-facilities.ads:38:9" title="defined at alog-facilities.ads:38:9">Alog.Facilities.Instance</a></div>
+        </div>
+        <div>
+          <h4>Primitive operations:</h4>
+              <div><i><span class="droplink">Alog.Facilities.Setup<ul><li><a href="alog-facilities.ads.html#alog-facilities.ads:110:14" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities.ads.html#l110" title="To spec">To spec</a></li></ul></span> (Inherited)</i></div>
+              <div><i><span class="droplink">Alog.Facilities.Teardown<ul><li><a href="alog-facilities.ads.html#alog-facilities.ads:115:14" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities.ads.html#l115" title="To spec">To spec</a></li></ul></span> (Inherited)</i></div>
+              <div>Write <i>(overriding <a href="alog-facilities.ads.html#alog-facilities.ads:71:14" title="defined at alog-facilities.ads:71:14">Alog.Facilities.Write</a>)</i></div>
+        </div>
+      </div>
+      <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-facilities-syslog.ads.html#l29" title="alog-facilities-syslog.ads:29:9">alog-facilities-syslog.ads:29:9</a> (declaration)</i></div>
+            <div><i>alog-facilities-syslog.adb:31:18 (reference)</i></div>
+            <div><i><a href="src_alog-facilities-syslog.ads.html#l32" title="alog-facilities-syslog.ads:32:30">alog-facilities-syslog.ads:32:30</a> (reference)</i></div>
+            <div><i><a href="src_alog-facilities-syslog.ads.html#l57" title="alog-facilities-syslog.ads:57:18">alog-facilities-syslog.ads:57:18</a> (reference)</i></div>
+            <div><i><a href="src_alog-facilities-syslog.ads.html#l62" title="alog-facilities-syslog.ads:62:9">alog-facilities-syslog.ads:62:9</a> (full declaration)</i></div>
+      </div>
+      <div class='comment'>Syslog based logging facility.&#10;</div>
+    </div>
+  </div>
+
+
+  <div class='subprograms'>
+    <h1><a name='Types' id='Types'></a>Types</h1>
+    <div class="class">
+      <h3>
+        <a name='alog-facilities-syslog.ads:32:9' id='alog-facilities-syslog.ads:32:9'></a>
+<span class="droplink">Handle<ul>
+  <li><a href="src_alog-facilities-syslog.ads.html#l32">Goto declaration in source</a></li>
+</ul></span>
+      </h3>
+      <div class='details'><pre><span class="keyword">type</span> <span class="name"><b>Handle</b></span> <span class="keyword">is</span> <span class="keyword">access</span> <span class="keyword">all</span> <a href="alog-facilities-syslog.ads.html#alog-facilities-syslog.ads:29:9" title="defined at alog-facilities-syslog.ads:29:9">Instance</a>;</pre></div>
+      <div class='profile'>
+          <h4>References:</h4>
+          <div><i><a href="src_alog-facilities-syslog.ads.html#l32" title="alog-facilities-syslog.ads:32:9">alog-facilities-syslog.ads:32:9</a> (declaration)</i></div>
+      </div>
+    </div>
+    <div class="class">
+      <h3>
+        <a name='alog-facilities-syslog.ads:34:9' id='alog-facilities-syslog.ads:34:9'></a>
+<span class="droplink">S_Facility<ul>
+  <li><a href="src_alog-facilities-syslog.ads.html#l34">Goto declaration in source</a></li>
+</ul></span>
+      </h3>
+      <div class='details'><pre><span class="keyword">type</span> <span class="name"><b>S_Facility</b></span> <span class="keyword">is</span>
+     (LOG_AUTH,
+      LOG_USER,
+      LOG_MAIL,
+      LOG_DAEMON,
+      LOG_SYSLOG,
+      LOG_CRON);</pre></div>
+      <div class='profile'>
+          <h4>References:</h4>
+          <div><i><a href="src_alog-facilities-syslog.ads.html#l34" title="alog-facilities-syslog.ads:34:9">alog-facilities-syslog.ads:34:9</a> (declaration)</i></div>
+          <div><i><a href="src_alog-facilities-syslog.ads.html#l44" title="alog-facilities-syslog.ads:44:8">alog-facilities-syslog.ads:44:8</a> (reference)</i></div>
+      </div>
+      <div class='comment'>Corresponding Ada-Implementation of syslogs &quot;facility&quot; parameter.&#10;Only the important/usable facilities are mapped.&#10;</div>
+    </div>
+  </div>
+
+
+</div> <!-- documentation -->
+
+</body>
+</html>

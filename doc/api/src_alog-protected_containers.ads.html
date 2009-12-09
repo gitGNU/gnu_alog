@@ -1,0 +1,179 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html><head>
+  <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript"/>
+
+  <title>
+    File: alog-protected_containers.ads
+  </title>
+  <link rel='stylesheet' href='support/docgen.css' type='text/css'/>
+  <script src='support/docgen.js' type='text/javascript' charset='utf-8'></script>
+</head>
+<body onload="onloadDoc();">
+
+<div id='leftSide'>
+  <div id='leftSideInside'>
+  <div id='header'>
+    <h2 class="button">Documentation</h2>
+    <a href='index.html'><div class="button2">Table of Contents</div></a>
+
+    <a href='tree.html'><div class="button2">Class Inheritance Tree</div></a>
+
+  </div>
+  </div>
+</div> <!-- leftSide -->
+
+<div class='subprograms'>
+  <div class='details'><ol><li id="l1"><pre><span class="comment">--</span> </pre></li>
+<li id="l2"><pre><span class="comment">--  Copyright (c) 2009,</span> </pre></li>
+<li id="l3"><pre><span class="comment">--  Reto Buerki, Adrian-Ken Rueegsegger</span> </pre></li>
+<li id="l4"><pre><span class="comment">--  secunet SwissIT AG</span> </pre></li>
+<li id="l5"><pre><span class="comment">--</span> </pre></li>
+<li id="l6"><pre><span class="comment">--  This file is part of Alog.</span> </pre></li>
+<li id="l7"><pre><span class="comment">--</span> </pre></li>
+<li id="l8"><pre><span class="comment">--  Alog is free software; you can redistribute it and/or modify</span> </pre></li>
+<li id="l9"><pre><span class="comment">--  it under the terms of the GNU Lesser General Public License as published</span> </pre></li>
+<li id="l10"><pre><span class="comment">--  by the Free Software Foundation; either version 2.1 of the License, or</span> </pre></li>
+<li id="l11"><pre><span class="comment">--  (at your option) any later version.</span> </pre></li>
+<li id="l12"><pre><span class="comment">--</span> </pre></li>
+<li id="l13"><pre><span class="comment">--  Alog is distributed in the hope that it will be useful,</span> </pre></li>
+<li id="l14"><pre><span class="comment">--  but WITHOUT ANY WARRANTY; without even the implied warranty of</span> </pre></li>
+<li id="l15"><pre><span class="comment">--  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span> </pre></li>
+<li id="l16"><pre><span class="comment">--  GNU Lesser General Public License for more details.</span> </pre></li>
+<li id="l17"><pre><span class="comment">--</span> </pre></li>
+<li id="l18"><pre><span class="comment">--  You should have received a copy of the GNU Lesser General Public License</span> </pre></li>
+<li id="l19"><pre><span class="comment">--  along with Alog; if not, write to the Free Software</span> </pre></li>
+<li id="l20"><pre><span class="comment">--  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,</span> </pre></li>
+<li id="l21"><pre><span class="comment">--  MA  02110-1301  USA</span> </pre></li>
+<li id="l22"><pre><span class="comment">--</span> </pre></li>
+<li id="l23"><pre> </pre></li>
+<li id="l24"><pre><span class="keyword">with</span> Ada.Exceptions; </pre></li>
+<li id="l25"><pre><span class="keyword">with</span> Ada.Task_Identification; </pre></li>
+<li id="l26"><pre><span class="keyword">with</span> Ada.Containers.Doubly_Linked_Lists; </pre></li>
+<li id="l27"><pre> </pre></li>
+<li id="l28"><pre><span class="keyword">with</span> <span class="droplink">Alog.Log_Request<ul><li><a href="alog-log_request.ads.html#alog-log_request.ads:29:14" title="To API doc">To API doc</a></li><li><a href="src_alog-log_request.ads.html#l29" title="To spec">To spec</a></li><li><a href="src_alog-log_request.adb.html#l24" title="To body">To body</a></li></ul></span>; </pre></li>
+<li id="l29"><pre><span class="keyword">with</span> Alog.Controlled_Map; </pre></li>
+<li id="l30"><pre> </pre></li>
+<li id="l31"><pre><span class="comment">--  Alog Protected Containers. This package provides protected containers which</span> </pre></li>
+<li id="l32"><pre><span class="comment">--  are safe for concurrent access.</span> </pre></li>
+<li id="l33"><pre><span class="keyword">package</span> <span class="droplink">Alog.Protected_Containers<ul><li><a href="alog-protected_containers.ads.html#alog-protected_containers.ads:33:14" title="To API doc">To API doc</a></li><li><a href="src_alog-protected_containers.ads.html#l33" title="To spec">To spec</a></li><li><a href="src_alog-protected_containers.adb.html#l24" title="To body">To body</a></li></ul></span> <span class="keyword">is</span> </pre></li>
+<li id="l34"><pre> </pre></li>
+<li id="l35"><pre>   <span class="comment">----------------------</span> </pre></li>
+<li id="l36"><pre>   <span class="comment">-- Log_Request_List --</span> </pre></li>
+<li id="l37"><pre>   <span class="comment">----------------------</span> </pre></li>
+<li id="l38"><pre> </pre></li>
+<li id="l39"><pre>   <span class="keyword">type</span> <span class="droplink">Log_Request_Storage<ul><li><a href="alog-protected_containers.ads.html#alog-protected_containers.ads:39:9" title="To API doc">To API doc</a></li><li><a href="src_alog-protected_containers.ads.html#l133" title="To body">To body</a></li></ul></span> <span class="keyword">is</span> <span class="keyword">private</span>; </pre></li>
+<li id="l40"><pre> </pre></li>
+<li id="l41"><pre>   <span class="keyword">protected</span> <span class="keyword">type</span> <a href="alog-protected_containers.ads.html#alog-protected_containers.ads:41:19" title="defined at alog-protected_containers.ads:41:19">Log_Request_List</a> <span class="keyword">is</span> </pre></li>
+<li id="l42"><pre> </pre></li>
+<li id="l43"><pre>      <span class="keyword">procedure</span> <span class="droplink">Put<ul><li><a href="alog-protected_containers.ads.html#alog-protected_containers.ads:43:17" title="To API doc">To API doc</a></li><li><a href="src_alog-protected_containers.adb.html#l96" title="To body">To body</a></li></ul></span> (<span class="droplink">Element<ul><li><a href="alog-protected_containers.ads.html#alog-protected_containers.ads:43:22" title="To API doc">To API doc</a></li><li><a href="src_alog-protected_containers.adb.html#l96" title="To body">To body</a></li></ul></span> : <span class="droplink">Log_Request.Instance<ul><li><a href="alog-log_request.ads.html#alog-log_request.ads:33:9" title="To API doc">To API doc</a></li><li><a href="src_alog-log_request.ads.html#l33" title="To spec">To spec</a></li><li><a href="src_alog-log_request.ads.html#l59" title="To body">To body</a></li></ul></span>); </pre></li>
+<li id="l44"><pre>      <span class="comment">--  Put an element at the end of the request list.</span> </pre></li>
+<li id="l45"><pre> </pre></li>
+<li id="l46"><pre>      <span class="keyword">entry</span> <span class="droplink">Get<ul><li><a href="alog-protected_containers.ads.html#alog-protected_containers.ads:46:13" title="To API doc">To API doc</a></li><li><a href="src_alog-protected_containers.adb.html#l68" title="To body">To body</a></li></ul></span> (<a href="alog-protected_containers.ads.html#alog-protected_containers.ads:46:18" title="defined at alog-protected_containers.ads:46:18">Element</a> : <span class="keyword">out</span> <span class="droplink">Log_Request.Instance<ul><li><a href="alog-log_request.ads.html#alog-log_request.ads:33:9" title="To API doc">To API doc</a></li><li><a href="src_alog-log_request.ads.html#l33" title="To spec">To spec</a></li><li><a href="src_alog-log_request.ads.html#l59" title="To body">To body</a></li></ul></span>); </pre></li>
+<li id="l47"><pre>      <span class="comment">--  Get the first element from the list (and delete it).</span> </pre></li>
+<li id="l48"><pre> </pre></li>
+<li id="l49"><pre>      <span class="keyword">procedure</span> <span class="droplink">Done<ul><li><a href="alog-protected_containers.ads.html#alog-protected_containers.ads:49:17" title="To API doc">To API doc</a></li><li><a href="src_alog-protected_containers.adb.html#l58" title="To body">To body</a></li></ul></span>; </pre></li>
+<li id="l50"><pre>      <span class="comment">--  Signal successfull processing of request previously gotten from list.</span> </pre></li>
+<li id="l51"><pre> </pre></li>
+<li id="l52"><pre>      <span class="keyword">entry</span> <span class="droplink">All_Done<ul><li><a href="alog-protected_containers.ads.html#alog-protected_containers.ads:52:13" title="To API doc">To API doc</a></li><li><a href="src_alog-protected_containers.adb.html#l41" title="To body">To body</a></li></ul></span>; </pre></li>
+<li id="l53"><pre>      <span class="comment">--  This procedure blocks until the list is empty and there are no pending</span> </pre></li>
+<li id="l54"><pre>      <span class="comment">--  requests. A requests is pending when it is taken off the list via Get</span> </pre></li>
+<li id="l55"><pre>      <span class="comment">--  but it&apos;s successfull processing has not been signaled back via the</span> </pre></li>
+<li id="l56"><pre>      <span class="comment">--  procedure Done.</span> </pre></li>
+<li id="l57"><pre> </pre></li>
+<li id="l58"><pre>      <span class="keyword">procedure</span> <span class="droplink">Clear<ul><li><a href="alog-protected_containers.ads.html#alog-protected_containers.ads:58:17" title="To API doc">To API doc</a></li><li><a href="src_alog-protected_containers.adb.html#l50" title="To body">To body</a></li></ul></span>; </pre></li>
+<li id="l59"><pre>      <span class="comment">--  Clear the request list by deleting all log requests.</span> </pre></li>
+<li id="l60"><pre> </pre></li>
+<li id="l61"><pre>      <span class="keyword">function</span> <span class="droplink">Length<ul><li><a href="alog-protected_containers.ads.html#alog-protected_containers.ads:61:16" title="To API doc">To API doc</a></li><li><a href="src_alog-protected_containers.adb.html#l82" title="To body">To body</a></li></ul></span> <span class="keyword">return</span> Natural; </pre></li>
+<li id="l62"><pre>      <span class="comment">--  Return the number of elements in the list.</span> </pre></li>
+<li id="l63"><pre> </pre></li>
+<li id="l64"><pre>      <span class="keyword">function</span> <span class="droplink">Pending<ul><li><a href="alog-protected_containers.ads.html#alog-protected_containers.ads:64:16" title="To API doc">To API doc</a></li><li><a href="src_alog-protected_containers.adb.html#l89" title="To body">To body</a></li></ul></span> <span class="keyword">return</span> Natural; </pre></li>
+<li id="l65"><pre>      <span class="comment">--  Return the number of pending requests.</span> </pre></li>
+<li id="l66"><pre> </pre></li>
+<li id="l67"><pre>   <span class="keyword">private</span> </pre></li>
+<li id="l68"><pre> </pre></li>
+<li id="l69"><pre>      Requests           : <span class="droplink">Log_Request_Storage<ul><li><a href="alog-protected_containers.ads.html#alog-protected_containers.ads:39:9" title="To API doc">To API doc</a></li><li><a href="src_alog-protected_containers.ads.html#l39" title="To spec">To spec</a></li><li><a href="src_alog-protected_containers.ads.html#l133" title="To body">To body</a></li></ul></span>; </pre></li>
+<li id="l70"><pre>      Requests_Available : Boolean := False; </pre></li>
+<li id="l71"><pre>      Pending_Counter    : Natural := 0; </pre></li>
+<li id="l72"><pre> </pre></li>
+<li id="l73"><pre>   <span class="keyword">end</span> <span class="droplink">Log_Request_List<ul><li><a href="alog-protected_containers.ads.html#alog-protected_containers.ads:41:19" title="To API doc">To API doc</a></li><li><a href="src_alog-protected_containers.ads.html#l41" title="To spec">To spec</a></li></ul></span>; </pre></li>
+<li id="l74"><pre>   <span class="comment">--  Protected variant of a log request list. This list holds log request</span> </pre></li>
+<li id="l75"><pre>   <span class="comment">--  objects and is safe for concurrent access. It operates in FIFO-Mode.</span> </pre></li>
+<li id="l76"><pre> </pre></li>
+<li id="l77"><pre>   <span class="comment">-----------------------------</span> </pre></li>
+<li id="l78"><pre>   <span class="comment">-- Protected_Exception_Map --</span> </pre></li>
+<li id="l79"><pre>   <span class="comment">-----------------------------</span> </pre></li>
+<li id="l80"><pre> </pre></li>
+<li id="l81"><pre>   <span class="keyword">type</span> <span class="droplink">Exception_Storage<ul><li><a href="alog-protected_containers.ads.html#alog-protected_containers.ads:81:9" title="To API doc">To API doc</a></li><li><a href="src_alog-protected_containers.ads.html#l145" title="To body">To body</a></li></ul></span> <span class="keyword">is</span> <span class="keyword">limited</span> <span class="keyword">private</span>; </pre></li>
+<li id="l82"><pre> </pre></li>
+<li id="l83"><pre>   <span class="keyword">protected</span> <span class="keyword">type</span> <a href="alog-protected_containers.ads.html#alog-protected_containers.ads:83:19" title="defined at alog-protected_containers.ads:83:19">Protected_Exception_Map</a> <span class="keyword">is</span> </pre></li>
+<li id="l84"><pre> </pre></li>
+<li id="l85"><pre>      <span class="keyword">procedure</span> <span class="droplink">Insert<ul><li><a href="alog-protected_containers.ads.html#alog-protected_containers.ads:85:17" title="To API doc">To API doc</a></li><li><a href="src_alog-protected_containers.adb.html#l153" title="To body">To body</a></li></ul></span> </pre></li>
+<li id="l86"><pre>        (<a href="alog-protected_containers.ads.html#alog-protected_containers.ads:86:10" title="defined at alog-protected_containers.ads:86:10">Key</a>  : Ada.Task_Identification.Task_Id; </pre></li>
+<li id="l87"><pre>         <a href="alog-protected_containers.ads.html#alog-protected_containers.ads:87:10" title="defined at alog-protected_containers.ads:87:10">Item</a> : Ada.Exceptions.Exception_Occurrence_Access); </pre></li>
+<li id="l88"><pre>      <span class="comment">--  Insert the given Exception_Occurrence &apos;Element&apos; with key &apos;Key&apos; into</span> </pre></li>
+<li id="l89"><pre>      <span class="comment">--  the map.</span> </pre></li>
+<li id="l90"><pre> </pre></li>
+<li id="l91"><pre>      <span class="keyword">procedure</span> <span class="droplink">Get<ul><li><a href="alog-protected_containers.ads.html#alog-protected_containers.ads:91:17" title="To API doc">To API doc</a></li><li><a href="src_alog-protected_containers.adb.html#l135" title="To body">To body</a></li></ul></span> </pre></li>
+<li id="l92"><pre>        (<a href="alog-protected_containers.ads.html#alog-protected_containers.ads:92:10" title="defined at alog-protected_containers.ads:92:10">Key</a>     :     Ada.Task_Identification.Task_Id; </pre></li>
+<li id="l93"><pre>         <span class="droplink">Element<ul><li><a href="alog-protected_containers.ads.html#alog-protected_containers.ads:93:10" title="To API doc">To API doc</a></li><li><a href="src_alog-protected_containers.adb.html#l137" title="To body">To body</a></li></ul></span> : <span class="keyword">out</span> Ada.Exceptions.Exception_Occurrence); </pre></li>
+<li id="l94"><pre>      <span class="comment">--  Get the Exception_Occurrence with key &apos;Key&apos; from the map. If the key</span> </pre></li>
+<li id="l95"><pre>      <span class="comment">--  is not found in the map Null_Occurrence is stored in element.</span> </pre></li>
+<li id="l96"><pre> </pre></li>
+<li id="l97"><pre>      <span class="keyword">procedure</span> <span class="droplink">Delete<ul><li><a href="alog-protected_containers.ads.html#alog-protected_containers.ads:97:17" title="To API doc">To API doc</a></li><li><a href="src_alog-protected_containers.adb.html#l128" title="To body">To body</a></li></ul></span> (<a href="alog-protected_containers.ads.html#alog-protected_containers.ads:97:25" title="defined at alog-protected_containers.ads:97:25">Key</a> : Ada.Task_Identification.Task_Id); </pre></li>
+<li id="l98"><pre>      <span class="comment">--  Delete the Exception_Occurrence with key &apos;Key&apos; from the map. Memory</span> </pre></li>
+<li id="l99"><pre>      <span class="comment">--  of the exception occurrence is freed. The user must make sure to not</span> </pre></li>
+<li id="l100"><pre>      <span class="comment">--  access deleted elements.</span> </pre></li>
+<li id="l101"><pre> </pre></li>
+<li id="l102"><pre>      <span class="keyword">function</span> <span class="droplink">Contains<ul><li><a href="alog-protected_containers.ads.html#alog-protected_containers.ads:102:16" title="To API doc">To API doc</a></li><li><a href="src_alog-protected_containers.adb.html#l118" title="To body">To body</a></li></ul></span> (<a href="alog-protected_containers.ads.html#alog-protected_containers.ads:102:26" title="defined at alog-protected_containers.ads:102:26">Key</a> : Ada.Task_Identification.Task_Id) <span class="keyword">return</span> Boolean; </pre></li>
+<li id="l103"><pre>      <span class="comment">--  Returns True if an element with key &apos;Key&apos; is in the map.</span> </pre></li>
+<li id="l104"><pre> </pre></li>
+<li id="l105"><pre>      <span class="keyword">function</span> <span class="droplink">Is_Empty<ul><li><a href="alog-protected_containers.ads.html#alog-protected_containers.ads:105:16" title="To API doc">To API doc</a></li><li><a href="src_alog-protected_containers.adb.html#l164" title="To body">To body</a></li></ul></span> <span class="keyword">return</span> Boolean; </pre></li>
+<li id="l106"><pre>      <span class="comment">--  Return True if the map is empty.</span> </pre></li>
+<li id="l107"><pre> </pre></li>
+<li id="l108"><pre>      <span class="keyword">procedure</span> <span class="droplink">Clear<ul><li><a href="alog-protected_containers.ads.html#alog-protected_containers.ads:108:17" title="To API doc">To API doc</a></li><li><a href="src_alog-protected_containers.adb.html#l110" title="To body">To body</a></li></ul></span>; </pre></li>
+<li id="l109"><pre>      <span class="comment">--  Remove all Exception_Occurrences in the map. Memory of the exception</span> </pre></li>
+<li id="l110"><pre>      <span class="comment">--  occurrences is freed.</span> </pre></li>
+<li id="l111"><pre> </pre></li>
+<li id="l112"><pre>   <span class="keyword">private</span> </pre></li>
+<li id="l113"><pre> </pre></li>
+<li id="l114"><pre>      Data : <span class="droplink">Exception_Storage<ul><li><a href="alog-protected_containers.ads.html#alog-protected_containers.ads:81:9" title="To API doc">To API doc</a></li><li><a href="src_alog-protected_containers.ads.html#l81" title="To spec">To spec</a></li><li><a href="src_alog-protected_containers.ads.html#l145" title="To body">To body</a></li></ul></span>; </pre></li>
+<li id="l115"><pre> </pre></li>
+<li id="l116"><pre>   <span class="keyword">end</span> <span class="droplink">Protected_Exception_Map<ul><li><a href="alog-protected_containers.ads.html#alog-protected_containers.ads:83:19" title="To API doc">To API doc</a></li><li><a href="src_alog-protected_containers.ads.html#l83" title="To spec">To spec</a></li></ul></span>; </pre></li>
+<li id="l117"><pre>   <span class="comment">--  Protected map of exceptions. To make memory management more robust only</span> </pre></li>
+<li id="l118"><pre>   <span class="comment">--  copies of Excpetion_Occurrences and not handles are returned by the map.</span> </pre></li>
+<li id="l119"><pre>   <span class="comment">--  The memory of an occurrence pointed to by a previously inserted handle is</span> </pre></li>
+<li id="l120"><pre>   <span class="comment">--  freed upon calling Delete, Clear or during finalization of the protected</span> </pre></li>
+<li id="l121"><pre>   <span class="comment">--  type.</span> </pre></li>
+<li id="l122"><pre> </pre></li>
+<li id="l123"><pre><span class="keyword">private</span> </pre></li>
+<li id="l124"><pre> </pre></li>
+<li id="l125"><pre>   <span class="keyword">use</span> <span class="keyword">type</span> <span class="droplink">Alog.Log_Request.Instance<ul><li><a href="alog-log_request.ads.html#alog-log_request.ads:33:9" title="To API doc">To API doc</a></li><li><a href="src_alog-log_request.ads.html#l33" title="To spec">To spec</a></li><li><a href="src_alog-log_request.ads.html#l59" title="To body">To body</a></li></ul></span>; </pre></li>
+<li id="l126"><pre> </pre></li>
+<li id="l127"><pre>   <span class="keyword">package</span> List_Of_Log_Requests_Package <span class="keyword">is</span> </pre></li>
+<li id="l128"><pre>     <span class="keyword">new</span> Ada.Containers.Doubly_Linked_Lists </pre></li>
+<li id="l129"><pre>       (Element_Type =&gt; <span class="droplink">Log_Request.Instance<ul><li><a href="alog-log_request.ads.html#alog-log_request.ads:33:9" title="To API doc">To API doc</a></li><li><a href="src_alog-log_request.ads.html#l33" title="To spec">To spec</a></li><li><a href="src_alog-log_request.ads.html#l59" title="To body">To body</a></li></ul></span>); </pre></li>
+<li id="l130"><pre> </pre></li>
+<li id="l131"><pre>   <span class="keyword">package</span> LOLRP <span class="keyword">renames</span> List_Of_Log_Requests_Package; </pre></li>
+<li id="l132"><pre> </pre></li>
+<li id="l133"><pre>   <span class="keyword">type</span> <span class="droplink">Log_Request_Storage<ul><li><a href="alog-protected_containers.ads.html#alog-protected_containers.ads:39:9" title="To API doc">To API doc</a></li><li><a href="src_alog-protected_containers.ads.html#l39" title="To spec">To spec</a></li></ul></span> <span class="keyword">is</span> <span class="keyword">new</span> LOLRP.List <span class="keyword">with</span> <span class="keyword">null</span> <span class="keyword">record</span>; </pre></li>
+<li id="l134"><pre> </pre></li>
+<li id="l135"><pre>   <span class="keyword">function</span> &quot;&lt;&quot; (Left, Right : Ada.Task_Identification.Task_Id) <span class="keyword">return</span> Boolean; </pre></li>
+<li id="l136"><pre>   <span class="comment">--  Smaller-than function for Task_Id. Needed to use Task_Id as Key_Type.</span> </pre></li>
+<li id="l137"><pre> </pre></li>
+<li id="l138"><pre>   <span class="keyword">package</span> Map_Of_Exceptions_Package <span class="keyword">is</span> <span class="keyword">new</span> Alog.Controlled_Map </pre></li>
+<li id="l139"><pre>     (<span class="droplink">Key_Type<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:28:9" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.ads.html#l28" title="To spec">To spec</a></li></ul></span>       =&gt; Ada.Task_Identification.Task_Id, </pre></li>
+<li id="l140"><pre>      <span class="droplink">Element_Type<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:29:9" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.ads.html#l29" title="To spec">To spec</a></li></ul></span>   =&gt; Ada.Exceptions.Exception_Occurrence, </pre></li>
+<li id="l141"><pre>      <span class="droplink">Element_Handle<ul><li><a href="alog-controlled_map.ads.html#alog-controlled_map.ads:30:9" title="To API doc">To API doc</a></li><li><a href="src_alog-controlled_map.ads.html#l30" title="To spec">To spec</a></li></ul></span> =&gt; Ada.Exceptions.Exception_Occurrence_Access); </pre></li>
+<li id="l142"><pre> </pre></li>
+<li id="l143"><pre>   <span class="keyword">package</span> MOEP <span class="keyword">renames</span> Map_Of_Exceptions_Package; </pre></li>
+<li id="l144"><pre> </pre></li>
+<li id="l145"><pre>   <span class="keyword">type</span> <span class="droplink">Exception_Storage<ul><li><a href="alog-protected_containers.ads.html#alog-protected_containers.ads:81:9" title="To API doc">To API doc</a></li><li><a href="src_alog-protected_containers.ads.html#l81" title="To spec">To spec</a></li></ul></span> <span class="keyword">is</span> <span class="keyword">limited</span> <span class="keyword">new</span> MOEP.Map <span class="keyword">with</span> <span class="keyword">null</span> <span class="keyword">record</span>; </pre></li>
+<li id="l146"><pre> </pre></li>
+<li id="l147"><pre><span class="keyword">end</span> <span class="droplink">Alog.Protected_Containers<ul><li><a href="alog-protected_containers.ads.html#alog-protected_containers.ads:33:14" title="To API doc">To API doc</a></li><li><a href="src_alog-protected_containers.ads.html#l33" title="To spec">To spec</a></li><li><a href="src_alog-protected_containers.adb.html#l24" title="To body">To body</a></li></ul></span>; </pre></li>
+</ol></div>
+</div>
+
+</body>
+</html>

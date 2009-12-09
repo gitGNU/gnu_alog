@@ -1,0 +1,203 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html><head>
+  <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript"/>
+
+  <title>
+    Package: Alog
+  </title>
+  <link rel='stylesheet' href='support/docgen.css' type='text/css'/>
+  <link rel='stylesheet' href='support/tags.css' type='text/css'/>
+  <script src='support/docgen.js' type='text/javascript' charset='utf-8'></script>
+</head>
+<body onload="onloadDoc();">
+
+<div id='leftSide'>
+  <div id='leftSideInside'>
+  <div id='header'>
+    <h2 class="button">Documentation</h2>
+    <a href='index.html'><div class="button2">Table of Contents</div></a>
+
+    <a href='tree.html'><div class="button2">Class Inheritance Tree</div></a>
+
+  </div>
+
+  <div id='navigation'>
+    <h2 class="button">Navigation</h2>
+    <a href='#Description'><div class="button2">Description</div></a>
+    <a href='#Types'><div class="button2">Types</div></a>
+    <a href='#Constants'><div class="button2">Constants &amp; Global variables</div></a>
+  </div><!-- navigation -->
+  </div>
+</div> <!-- leftSide -->
+
+<div class='default' id='rightSide'>
+ <div id='rightSideInside'>
+ <div id='Index'>
+  <h2>Index</h2>
+  <script type="text/javascript">
+    var names = new Array (
+new Array ('Log_<wbr/>Level', 'alog.ads:32:9', 'type-spec'),
+new Array ('Max_<wbr/>Path_<wbr/>Length', 'alog.ads:44:4', 'var-spec'),
+new Array ('Max_<wbr/>Facilities', 'alog.ads:47:4', 'var-spec'),
+      new Array ('dummy', '', ''));
+    printIndexList (names);
+  </script>
+  <noscript>
+    <ul>
+      <li class='type-spec'><a href="#alog.ads:32:9">Log_<wbr/>Level</a></li>
+      <li class='var-spec'><a href="#alog.ads:44:4">Max_<wbr/>Path_<wbr/>Length</a></li>
+      <li class='var-spec'><a href="#alog.ads:47:4">Max_<wbr/>Facilities</a></li>
+    </ul>
+  </noscript>
+ </div>
+ </div>
+</div>
+
+<div class='default' id='documentation'>
+  <div class='title'>
+    Package:
+<span class="droplink"><i>Alog</i><ul>
+  <li><a href="src_alog.ads.html">Goto spec source</a></li>
+</ul></span>
+  </div>
+  <div class='subprograms'>
+    <h1><a name='Description' id='Description'></a>Description</h1>
+    <div class="class">
+    <div class='details'><pre><span class="keyword">package</span> <span class="name"><b>Alog</b></span> <span class="keyword">is</span></pre></div>
+    <div class='comment'>Alog: Ada Logging Components. Provides easy to use API for different logging&#10;facilities and log message transforms.&#10;</div>
+    </div>
+  </div>
+
+
+
+
+  <div class='subprograms'>
+    <h1><a name='Types' id='Types'></a>Types</h1>
+    <div class="class">
+      <h3>
+        <a name='alog.ads:32:9' id='alog.ads:32:9'></a>
+<span class="droplink">Log_Level<ul>
+  <li><a href="src_alog.ads.html#l32">Goto declaration in source</a></li>
+</ul></span>
+      </h3>
+      <div class='details'><pre><span class="keyword">type</span> <span class="name"><b>Log_Level</b></span> <span class="keyword">is</span>
+     (Debug,
+      Info,
+      Notice,
+      Warning,
+      Error,
+      Critical,
+      Alert,
+      Emergency);</pre></div>
+      <div class='profile'>
+          <h4>References:</h4>
+          <div><i><a href="src_alog.ads.html#l32" title="alog.ads:32:9">alog.ads:32:9</a> (declaration)</i></div>
+          <div><i>alog-active_logger.adb:169:23 (reference)</i></div>
+          <div><i><a href="src_alog-active_logger.ads.html#l101" title="alog-active_logger.ads:101:23">alog-active_logger.ads:101:23</a> (reference)</i></div>
+          <div><i>alog-facilities-file_descriptor.adb:103:18 (reference)</i></div>
+          <div><i><a href="src_alog-facilities-file_descriptor.ads.html#l59" title="alog-facilities-file_descriptor.ads:59:18">alog-facilities-file_descriptor.ads:59:18</a> (reference)</i></div>
+          <div><i>alog-facilities-pgsql.adb:225:18 (reference)</i></div>
+          <div><i>alog-facilities-pgsql.adb:257:32 (reference)</i></div>
+          <div><i><a href="src_alog-facilities-pgsql.ads.html#l124" title="alog-facilities-pgsql.ads:124:18">alog-facilities-pgsql.ads:124:18</a> (reference)</i></div>
+          <div><i>alog-facilities-smtp.adb:31:18 (reference)</i></div>
+          <div><i>alog-facilities-smtp.adb:39:17 (reference)</i></div>
+          <div><i>alog-facilities-smtp.adb:94:18 (reference)</i></div>
+          <div><i>alog-facilities-smtp.adb:128:15 (reference)</i></div>
+          <div><i><a href="src_alog-facilities-smtp.ads.html#l75" title="alog-facilities-smtp.ads:75:18">alog-facilities-smtp.ads:75:18</a> (reference)</i></div>
+          <div><i><a href="src_alog-facilities-smtp.ads.html#l81" title="alog-facilities-smtp.ads:81:18">alog-facilities-smtp.ads:81:18</a> (reference)</i></div>
+          <div><i>alog-facilities-syslog.adb:32:18 (reference)</i></div>
+          <div><i>alog-facilities-syslog.adb:43:25 (reference)</i></div>
+          <div><i><a href="src_alog-facilities-syslog.ads.html#l58" title="alog-facilities-syslog.ads:58:18">alog-facilities-syslog.ads:58:18</a> (reference)</i></div>
+          <div><i>alog-facilities-xmpp.adb:68:18 (reference)</i></div>
+          <div><i><a href="src_alog-facilities-xmpp.ads.html#l72" title="alog-facilities-xmpp.ads:72:18">alog-facilities-xmpp.ads:72:18</a> (reference)</i></div>
+          <div><i>alog-facilities.adb:117:26 (reference)</i></div>
+          <div><i>alog-facilities.adb:132:39 (reference)</i></div>
+          <div><i><a href="src_alog-facilities.ads.html#l73" title="alog-facilities.ads:73:18">alog-facilities.ads:73:18</a> (reference)</i></div>
+          <div><i>alog-helpers.adb:79:30 (reference)</i></div>
+          <div><i>alog-helpers.adb:129:33 (reference)</i></div>
+          <div><i>alog-helpers.adb:132:37 (reference)</i></div>
+          <div><i><a href="src_alog-helpers.ads.html#l40" title="alog-helpers.ads:40:30">alog-helpers.ads:40:30</a> (reference)</i></div>
+          <div><i>alog-log_request.adb:33:17 (reference)</i></div>
+          <div><i>alog-log_request.adb:53:55 (reference)</i></div>
+          <div><i><a href="src_alog-log_request.ads.html#l40" title="alog-log_request.ads:40:17">alog-log_request.ads:40:17</a> (reference)</i></div>
+          <div><i><a href="src_alog-log_request.ads.html#l51" title="alog-log_request.ads:51:55">alog-log_request.ads:51:55</a> (reference)</i></div>
+          <div><i><a href="src_alog-log_request.ads.html#l62" title="alog-log_request.ads:62:19">alog-log_request.ads:62:19</a> (reference)</i></div>
+          <div><i>alog-logger.adb:210:16 (reference)</i></div>
+          <div><i><a href="src_alog-logger.ads.html#l117" title="alog-logger.ads:117:16">alog-logger.ads:117:16</a> (reference)</i></div>
+          <div><i>alog-maps.adb:40:14 (reference)</i></div>
+          <div><i>alog-maps.adb:48:48 (reference)</i></div>
+          <div><i>alog-maps.adb:69:21 (reference)</i></div>
+          <div><i><a href="src_alog-maps.ads.html#l43" title="alog-maps.ads:43:14">alog-maps.ads:43:14</a> (reference)</i></div>
+          <div><i><a href="src_alog-maps.ads.html#l44" title="alog-maps.ads:44:14">alog-maps.ads:44:14</a> (reference)</i></div>
+          <div><i><a href="src_alog-maps.ads.html#l46" title="alog-maps.ads:46:48">alog-maps.ads:46:48</a> (reference)</i></div>
+          <div><i><a href="src_alog-maps.ads.html#l47" title="alog-maps.ads:47:48">alog-maps.ads:47:48</a> (reference)</i></div>
+          <div><i><a href="src_alog-maps.ads.html#l77" title="alog-maps.ads:77:21">alog-maps.ads:77:21</a> (reference)</i></div>
+          <div><i><a href="src_alog-maps.ads.html#l78" title="alog-maps.ads:78:21">alog-maps.ads:78:21</a> (reference)</i></div>
+          <div><i><a href="src_alog-maps.ads.html#l93" title="alog-maps.ads:93:26">alog-maps.ads:93:26</a> (reference)</i></div>
+          <div><i><a href="src_alog-maps.ads.html#l94" title="alog-maps.ads:94:26">alog-maps.ads:94:26</a> (reference)</i></div>
+          <div><i>alog-policy_db.adb:26:31 (reference)</i></div>
+          <div><i>alog-policy_db.adb:36:20 (reference)</i></div>
+          <div><i>alog-policy_db.adb:55:20 (reference)</i></div>
+          <div><i>alog-policy_db.adb:64:41 (reference)</i></div>
+          <div><i>alog-policy_db.adb:71:55 (reference)</i></div>
+          <div><i>alog-policy_db.adb:83:49 (reference)</i></div>
+          <div><i>alog-policy_db.adb:106:44 (reference)</i></div>
+          <div><i>alog-policy_db.adb:115:20 (reference)</i></div>
+          <div><i><a href="src_alog-policy_db.ads.html#l30" title="alog-policy_db.ads:30:34">alog-policy_db.ads:30:34</a> (reference)</i></div>
+          <div><i><a href="src_alog-policy_db.ads.html#l33" title="alog-policy_db.ads:33:44">alog-policy_db.ads:33:44</a> (reference)</i></div>
+          <div><i><a href="src_alog-policy_db.ads.html#l36" title="alog-policy_db.ads:36:41">alog-policy_db.ads:36:41</a> (reference)</i></div>
+          <div><i><a href="src_alog-policy_db.ads.html#l41" title="alog-policy_db.ads:41:20">alog-policy_db.ads:41:20</a> (reference)</i></div>
+          <div><i><a href="src_alog-policy_db.ads.html#l64" title="alog-policy_db.ads:64:55">alog-policy_db.ads:64:55</a> (reference)</i></div>
+          <div><i><a href="src_alog-policy_db.ads.html#l69" title="alog-policy_db.ads:69:49">alog-policy_db.ads:69:49</a> (reference)</i></div>
+          <div><i><a href="src_alog-policy_db.ads.html#l78" title="alog-policy_db.ads:78:20">alog-policy_db.ads:78:20</a> (reference)</i></div>
+          <div><i><a href="src_alog-policy_db.ads.html#l86" title="alog-policy_db.ads:86:20">alog-policy_db.ads:86:20</a> (reference)</i></div>
+          <div><i>alog-tasked_logger.adb:46:31 (reference)</i></div>
+          <div><i>alog-tasked_logger.adb:200:28 (reference)</i></div>
+          <div><i><a href="src_alog-tasked_logger.ads.html#l78" title="alog-tasked_logger.ads:78:19">alog-tasked_logger.ads:78:19</a> (reference)</i></div>
+          <div><i>alog-transforms-casing.adb:42:19 (reference)</i></div>
+          <div><i><a href="src_alog-transforms-casing.ads.html#l37" title="alog-transforms-casing.ads:37:19">alog-transforms-casing.ads:37:19</a> (reference)</i></div>
+          <div><i><a href="src_alog-transforms.ads.html#l55" title="alog-transforms.ads:55:19">alog-transforms.ads:55:19</a> (reference)</i></div>
+      </div>
+      <div class='comment'>Provided log levels. These log levels can be used to categorize log&#10;messages.&#10;</div>
+    </div>
+  </div>
+
+  <div class='subprograms'>
+    <h1><a name='Constants' id='Constants'></a>Constants &amp; Global variables</h1>
+    <div class="class">
+      <h3><a name='alog.ads:44:4' id='alog.ads:44:4'></a>
+<span class="droplink">Max_Path_Length<ul>
+  <li><a href="src_alog.ads.html#l44">Goto declaration in source</a></li>
+</ul></span>
+        <span class="type">(natural)</span>
+      </h3>
+      <div class='details'><pre><span class="name"><b>Max_Path_Length</b></span> : <span class="keyword">constant</span> Natural := 128;</pre></div>
+      <div class='profile'>
+        <h4>References:</h4>
+          <div><i><a href="src_alog.ads.html#l44" title="alog.ads:44:4">alog.ads:44:4</a> (declaration)</i></div>
+          <div><i><a href="src_alog-facilities.ads.html#l120" title="alog-facilities.ads:120:51">alog-facilities.ads:120:51</a> (reference)</i></div>
+      </div>
+      <div class='comment'>Maximal length of path names.&#10;</div>
+    </div>
+    <div class="class">
+      <h3><a name='alog.ads:47:4' id='alog.ads:47:4'></a>
+<span class="droplink">Max_Facilities<ul>
+  <li><a href="src_alog.ads.html#l47">Goto declaration in source</a></li>
+</ul></span>
+        <span class="type">(natural)</span>
+      </h3>
+      <div class='details'><pre><span class="name"><b>Max_Facilities</b></span> : <span class="keyword">constant</span> Natural := 15;</pre></div>
+      <div class='profile'>
+        <h4>References:</h4>
+          <div><i><a href="src_alog.ads.html#l47" title="alog.ads:47:4">alog.ads:47:4</a> (declaration)</i></div>
+      </div>
+      <div class='comment'>Maximum number of facilities a single logger instance&#10;can manage.&#10;</div>
+    </div>
+  </div>
+
+</div> <!-- documentation -->
+
+</body>
+</html>

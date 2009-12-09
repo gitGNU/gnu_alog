@@ -1,0 +1,109 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html><head>
+  <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript"/>
+
+  <title>
+    File: alog-transforms.ads
+  </title>
+  <link rel='stylesheet' href='support/docgen.css' type='text/css'/>
+  <script src='support/docgen.js' type='text/javascript' charset='utf-8'></script>
+</head>
+<body onload="onloadDoc();">
+
+<div id='leftSide'>
+  <div id='leftSideInside'>
+  <div id='header'>
+    <h2 class="button">Documentation</h2>
+    <a href='index.html'><div class="button2">Table of Contents</div></a>
+
+    <a href='tree.html'><div class="button2">Class Inheritance Tree</div></a>
+
+  </div>
+  </div>
+</div> <!-- leftSide -->
+
+<div class='subprograms'>
+  <div class='details'><ol><li id="l1"><pre><span class="comment">--</span> </pre></li>
+<li id="l2"><pre><span class="comment">--  Copyright (c) 2008,</span> </pre></li>
+<li id="l3"><pre><span class="comment">--  Reto Buerki, Adrian-Ken Rueegsegger</span> </pre></li>
+<li id="l4"><pre><span class="comment">--  secunet SwissIT AG</span> </pre></li>
+<li id="l5"><pre><span class="comment">--</span> </pre></li>
+<li id="l6"><pre><span class="comment">--  This file is part of Alog.</span> </pre></li>
+<li id="l7"><pre><span class="comment">--</span> </pre></li>
+<li id="l8"><pre><span class="comment">--  Alog is free software; you can redistribute it and/or modify</span> </pre></li>
+<li id="l9"><pre><span class="comment">--  it under the terms of the GNU Lesser General Public License as published</span> </pre></li>
+<li id="l10"><pre><span class="comment">--  by the Free Software Foundation; either version 2.1 of the License, or</span> </pre></li>
+<li id="l11"><pre><span class="comment">--  (at your option) any later version.</span> </pre></li>
+<li id="l12"><pre><span class="comment">--</span> </pre></li>
+<li id="l13"><pre><span class="comment">--  Alog is distributed in the hope that it will be useful,</span> </pre></li>
+<li id="l14"><pre><span class="comment">--  but WITHOUT ANY WARRANTY; without even the implied warranty of</span> </pre></li>
+<li id="l15"><pre><span class="comment">--  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span> </pre></li>
+<li id="l16"><pre><span class="comment">--  GNU Lesser General Public License for more details.</span> </pre></li>
+<li id="l17"><pre><span class="comment">--</span> </pre></li>
+<li id="l18"><pre><span class="comment">--  You should have received a copy of the GNU Lesser General Public License</span> </pre></li>
+<li id="l19"><pre><span class="comment">--  along with Alog; if not, write to the Free Software</span> </pre></li>
+<li id="l20"><pre><span class="comment">--  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,</span> </pre></li>
+<li id="l21"><pre><span class="comment">--  MA  02110-1301  USA</span> </pre></li>
+<li id="l22"><pre><span class="comment">--</span> </pre></li>
+<li id="l23"><pre> </pre></li>
+<li id="l24"><pre><span class="keyword">with</span> Ada.Strings.Unbounded; </pre></li>
+<li id="l25"><pre> </pre></li>
+<li id="l26"><pre><span class="comment">--  Abstract package Transforms. Provides methods used by all Alog transforms.</span> </pre></li>
+<li id="l27"><pre><span class="keyword">package</span> <span class="droplink">Alog.Transforms<ul><li><a href="alog-transforms.ads.html#alog-transforms.ads:27:14" title="To API doc">To API doc</a></li><li><a href="src_alog-transforms.ads.html#l27" title="To spec">To spec</a></li><li><a href="src_alog-transforms.adb.html#l24" title="To body">To body</a></li></ul></span> <span class="keyword">is</span> </pre></li>
+<li id="l28"><pre> </pre></li>
+<li id="l29"><pre>   <span class="keyword">use</span> Ada.Strings.Unbounded; </pre></li>
+<li id="l30"><pre> </pre></li>
+<li id="l31"><pre>   <span class="keyword">type</span> <span class="droplink">Instance<ul><li><a href="alog-transforms.ads.html#alog-transforms.ads:31:9" title="To API doc">To API doc</a></li><li><a href="src_alog-transforms.ads.html#l72" title="To body">To body</a></li></ul></span> <span class="keyword">is</span> <span class="keyword">abstract</span> <span class="keyword">tagged</span> <span class="keyword">limited</span> <span class="keyword">private</span>; </pre></li>
+<li id="l32"><pre>   <span class="comment">--  Abstract type transform instance. All tranforms in the Alog framework</span> </pre></li>
+<li id="l33"><pre>   <span class="comment">--  must implement this type.</span> </pre></li>
+<li id="l34"><pre> </pre></li>
+<li id="l35"><pre>   <span class="keyword">subtype</span> <a href="alog-transforms.ads.html#alog-transforms.ads:35:12" title="defined at alog-transforms.ads:35:12">Class</a> <span class="keyword">is</span> <span class="droplink">Instance<ul><li><a href="alog-transforms.ads.html#alog-transforms.ads:31:9" title="To API doc">To API doc</a></li><li><a href="src_alog-transforms.ads.html#l31" title="To spec">To spec</a></li><li><a href="src_alog-transforms.ads.html#l72" title="To body">To body</a></li></ul></span>&apos;<span class="droplink">Class<ul><li><a href="alog-transforms.ads.html#alog-transforms.ads:35:12" title="To API doc">To API doc</a></li><li><a href="src_alog-transforms.ads.html#l35" title="To spec">To spec</a></li></ul></span>; </pre></li>
+<li id="l36"><pre> </pre></li>
+<li id="l37"><pre>   <span class="keyword">type</span> <a href="alog-transforms.ads.html#alog-transforms.ads:37:9" title="defined at alog-transforms.ads:37:9">Handle</a> <span class="keyword">is</span> <span class="keyword">access</span> <span class="droplink">Class<ul><li><a href="alog-transforms.ads.html#alog-transforms.ads:35:12" title="To API doc">To API doc</a></li><li><a href="src_alog-transforms.ads.html#l35" title="To spec">To spec</a></li></ul></span>; </pre></li>
+<li id="l38"><pre> </pre></li>
+<li id="l39"><pre>   <span class="keyword">function</span> <span class="droplink">&quot;=&quot;<ul><li><a href="alog-transforms.ads.html#alog-transforms.ads:39:13" title="To API doc">To API doc</a></li><li><a href="src_alog-transforms.adb.html#l28" title="To body">To body</a></li></ul></span> </pre></li>
+<li id="l40"><pre>     (<a href="alog-transforms.ads.html#alog-transforms.ads:40:7" title="defined at alog-transforms.ads:40:7">Left</a>  : <span class="droplink">Handle<ul><li><a href="alog-transforms.ads.html#alog-transforms.ads:37:9" title="To API doc">To API doc</a></li><li><a href="src_alog-transforms.ads.html#l37" title="To spec">To spec</a></li></ul></span>; </pre></li>
+<li id="l41"><pre>      <a href="alog-transforms.ads.html#alog-transforms.ads:41:7" title="defined at alog-transforms.ads:41:7">Right</a> : <span class="droplink">Handle<ul><li><a href="alog-transforms.ads.html#alog-transforms.ads:37:9" title="To API doc">To API doc</a></li><li><a href="src_alog-transforms.ads.html#l37" title="To spec">To spec</a></li></ul></span>) </pre></li>
+<li id="l42"><pre>      <span class="keyword">return</span> Boolean; </pre></li>
+<li id="l43"><pre>   <span class="comment">--  Equal function.</span> </pre></li>
+<li id="l44"><pre> </pre></li>
+<li id="l45"><pre>   <span class="keyword">procedure</span> <span class="droplink">Set_Name<ul><li><a href="alog-transforms.ads.html#alog-transforms.ads:45:14" title="To API doc">To API doc</a></li><li><a href="src_alog-transforms.adb.html#l45" title="To body">To body</a></li></ul></span> </pre></li>
+<li id="l46"><pre>     (<a href="alog-transforms.ads.html#alog-transforms.ads:46:7" title="defined at alog-transforms.ads:46:7">Transform</a> : <span class="keyword">in</span> <span class="keyword">out</span> <span class="droplink">Class<ul><li><a href="alog-transforms.ads.html#alog-transforms.ads:35:12" title="To API doc">To API doc</a></li><li><a href="src_alog-transforms.ads.html#l35" title="To spec">To spec</a></li></ul></span>; </pre></li>
+<li id="l47"><pre>      <a href="alog-transforms.ads.html#alog-transforms.ads:47:7" title="defined at alog-transforms.ads:47:7">Name</a>      :        String); </pre></li>
+<li id="l48"><pre>   <span class="comment">--  Set transform name.</span> </pre></li>
+<li id="l49"><pre> </pre></li>
+<li id="l50"><pre>   <span class="keyword">function</span> <span class="droplink">Get_Name<ul><li><a href="alog-transforms.ads.html#alog-transforms.ads:50:13" title="To API doc">To API doc</a></li><li><a href="src_alog-transforms.adb.html#l38" title="To body">To body</a></li></ul></span> (<a href="alog-transforms.ads.html#alog-transforms.ads:50:23" title="defined at alog-transforms.ads:50:23">Transform</a> : <span class="droplink">Class<ul><li><a href="alog-transforms.ads.html#alog-transforms.ads:35:12" title="To API doc">To API doc</a></li><li><a href="src_alog-transforms.ads.html#l35" title="To spec">To spec</a></li></ul></span>) <span class="keyword">return</span> String; </pre></li>
+<li id="l51"><pre>   <span class="comment">--  Get transform name.</span> </pre></li>
+<li id="l52"><pre> </pre></li>
+<li id="l53"><pre>   <span class="keyword">function</span> <a href="alog-transforms.ads.html#alog-transforms.ads:53:13" title="defined at alog-transforms.ads:53:13">Transform_Message</a> </pre></li>
+<li id="l54"><pre>     (<a href="alog-transforms.ads.html#alog-transforms.ads:54:7" title="defined at alog-transforms.ads:54:7">Transform</a> : <span class="droplink">Instance<ul><li><a href="alog-transforms.ads.html#alog-transforms.ads:31:9" title="To API doc">To API doc</a></li><li><a href="src_alog-transforms.ads.html#l31" title="To spec">To spec</a></li><li><a href="src_alog-transforms.ads.html#l72" title="To body">To body</a></li></ul></span>; </pre></li>
+<li id="l55"><pre>      <a href="alog-transforms.ads.html#alog-transforms.ads:55:7" title="defined at alog-transforms.ads:55:7">Level</a>     : <span class="droplink">Log_Level<ul><li><a href="alog.ads.html#alog.ads:32:9" title="To API doc">To API doc</a></li><li><a href="src_alog.ads.html#l32" title="To spec">To spec</a></li></ul></span>; </pre></li>
+<li id="l56"><pre>      <a href="alog-transforms.ads.html#alog-transforms.ads:56:7" title="defined at alog-transforms.ads:56:7">Msg</a>       : String) </pre></li>
+<li id="l57"><pre>      <span class="keyword">return</span> String <span class="keyword">is</span> <span class="keyword">abstract</span>; </pre></li>
+<li id="l58"><pre>   <span class="comment">--  Transform message with specified log level.</span> </pre></li>
+<li id="l59"><pre> </pre></li>
+<li id="l60"><pre>   <span class="keyword">procedure</span> <a href="alog-transforms.ads.html#alog-transforms.ads:60:14" title="defined at alog-transforms.ads:60:14">Setup</a> (<a href="alog-transforms.ads.html#alog-transforms.ads:60:21" title="defined at alog-transforms.ads:60:21">Transform</a> : <span class="keyword">in</span> <span class="keyword">out</span> <span class="droplink">Instance<ul><li><a href="alog-transforms.ads.html#alog-transforms.ads:31:9" title="To API doc">To API doc</a></li><li><a href="src_alog-transforms.ads.html#l31" title="To spec">To spec</a></li><li><a href="src_alog-transforms.ads.html#l72" title="To body">To body</a></li></ul></span>) <span class="keyword">is</span> <span class="keyword">null</span>; </pre></li>
+<li id="l61"><pre>   <span class="comment">--  Each transform must provide a Setup-procedure. These procedures are</span> </pre></li>
+<li id="l62"><pre>   <span class="comment">--  called by logger instances when attaching Transforms. All needed</span> </pre></li>
+<li id="l63"><pre>   <span class="comment">--  operations prior to transforming log messages should be done here.</span> </pre></li>
+<li id="l64"><pre> </pre></li>
+<li id="l65"><pre>   <span class="keyword">procedure</span> <a href="alog-transforms.ads.html#alog-transforms.ads:65:14" title="defined at alog-transforms.ads:65:14">Teardown</a> (<a href="alog-transforms.ads.html#alog-transforms.ads:65:24" title="defined at alog-transforms.ads:65:24">Transform</a> : <span class="keyword">in</span> <span class="keyword">out</span> <span class="droplink">Instance<ul><li><a href="alog-transforms.ads.html#alog-transforms.ads:31:9" title="To API doc">To API doc</a></li><li><a href="src_alog-transforms.ads.html#l31" title="To spec">To spec</a></li><li><a href="src_alog-transforms.ads.html#l72" title="To body">To body</a></li></ul></span>) <span class="keyword">is</span> <span class="keyword">null</span>; </pre></li>
+<li id="l66"><pre>   <span class="comment">--  Each transform must provide a Teardown-procedure. These procedures are</span> </pre></li>
+<li id="l67"><pre>   <span class="comment">--  called by logger instances when detaching Transforms or when the logger</span> </pre></li>
+<li id="l68"><pre>   <span class="comment">--  object gets out of scope.</span> </pre></li>
+<li id="l69"><pre> </pre></li>
+<li id="l70"><pre><span class="keyword">private</span> </pre></li>
+<li id="l71"><pre> </pre></li>
+<li id="l72"><pre>   <span class="keyword">type</span> <span class="droplink">Instance<ul><li><a href="alog-transforms.ads.html#alog-transforms.ads:31:9" title="To API doc">To API doc</a></li><li><a href="src_alog-transforms.ads.html#l31" title="To spec">To spec</a></li></ul></span> <span class="keyword">is</span> <span class="keyword">abstract</span> <span class="keyword">tagged</span> <span class="keyword">limited</span> <span class="keyword">record</span> </pre></li>
+<li id="l73"><pre>      Name : Unbounded_String := To_Unbounded_String (<span class="string">&quot;sample-transform&quot;</span>); </pre></li>
+<li id="l74"><pre>      <span class="comment">--  Transform Name. Names must be unique.</span> </pre></li>
+<li id="l75"><pre>   <span class="keyword">end</span> <span class="keyword">record</span>; </pre></li>
+<li id="l76"><pre> </pre></li>
+<li id="l77"><pre><span class="keyword">end</span> <span class="droplink">Alog.Transforms<ul><li><a href="alog-transforms.ads.html#alog-transforms.ads:27:14" title="To API doc">To API doc</a></li><li><a href="src_alog-transforms.ads.html#l27" title="To spec">To spec</a></li><li><a href="src_alog-transforms.adb.html#l24" title="To body">To body</a></li></ul></span>; </pre></li>
+</ol></div>
+</div>
+
+</body>
+</html>

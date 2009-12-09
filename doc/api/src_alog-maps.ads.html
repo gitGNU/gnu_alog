@@ -1,0 +1,140 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html><head>
+  <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript"/>
+
+  <title>
+    File: alog-maps.ads
+  </title>
+  <link rel='stylesheet' href='support/docgen.css' type='text/css'/>
+  <script src='support/docgen.js' type='text/javascript' charset='utf-8'></script>
+</head>
+<body onload="onloadDoc();">
+
+<div id='leftSide'>
+  <div id='leftSideInside'>
+  <div id='header'>
+    <h2 class="button">Documentation</h2>
+    <a href='index.html'><div class="button2">Table of Contents</div></a>
+
+    <a href='tree.html'><div class="button2">Class Inheritance Tree</div></a>
+
+  </div>
+  </div>
+</div> <!-- leftSide -->
+
+<div class='subprograms'>
+  <div class='details'><ol><li id="l1"><pre><span class="comment">--</span> </pre></li>
+<li id="l2"><pre><span class="comment">--  Copyright (c) 2009,</span> </pre></li>
+<li id="l3"><pre><span class="comment">--  Reto Buerki, Adrian-Ken Rueegsegger</span> </pre></li>
+<li id="l4"><pre><span class="comment">--  secunet SwissIT AG</span> </pre></li>
+<li id="l5"><pre><span class="comment">--</span> </pre></li>
+<li id="l6"><pre><span class="comment">--  This file is part of Alog.</span> </pre></li>
+<li id="l7"><pre><span class="comment">--</span> </pre></li>
+<li id="l8"><pre><span class="comment">--  Alog is free software; you can redistribute it and/or modify</span> </pre></li>
+<li id="l9"><pre><span class="comment">--  it under the terms of the GNU Lesser General Public License as published</span> </pre></li>
+<li id="l10"><pre><span class="comment">--  by the Free Software Foundation; either version 2.1 of the License, or</span> </pre></li>
+<li id="l11"><pre><span class="comment">--  (at your option) any later version.</span> </pre></li>
+<li id="l12"><pre><span class="comment">--</span> </pre></li>
+<li id="l13"><pre><span class="comment">--  Alog is distributed in the hope that it will be useful,</span> </pre></li>
+<li id="l14"><pre><span class="comment">--  but WITHOUT ANY WARRANTY; without even the implied warranty of</span> </pre></li>
+<li id="l15"><pre><span class="comment">--  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span> </pre></li>
+<li id="l16"><pre><span class="comment">--  GNU Lesser General Public License for more details.</span> </pre></li>
+<li id="l17"><pre><span class="comment">--</span> </pre></li>
+<li id="l18"><pre><span class="comment">--  You should have received a copy of the GNU Lesser General Public License</span> </pre></li>
+<li id="l19"><pre><span class="comment">--  along with Alog; if not, write to the Free Software</span> </pre></li>
+<li id="l20"><pre><span class="comment">--  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,</span> </pre></li>
+<li id="l21"><pre><span class="comment">--  MA  02110-1301  USA</span> </pre></li>
+<li id="l22"><pre><span class="comment">--</span> </pre></li>
+<li id="l23"><pre> </pre></li>
+<li id="l24"><pre><span class="keyword">with</span> Ada.Strings.Unbounded.Hash; </pre></li>
+<li id="l25"><pre><span class="keyword">with</span> Ada.Containers.Hashed_Maps; </pre></li>
+<li id="l26"><pre> </pre></li>
+<li id="l27"><pre><span class="comment">--  Alog maps package. Provides map data types.</span> </pre></li>
+<li id="l28"><pre><span class="keyword">package</span> <span class="droplink">Alog.Maps<ul><li><a href="alog-maps.ads.html#alog-maps.ads:28:14" title="To API doc">To API doc</a></li><li><a href="src_alog-maps.ads.html#l28" title="To spec">To spec</a></li><li><a href="src_alog-maps.adb.html#l26" title="To body">To body</a></li></ul></span> <span class="keyword">is</span> </pre></li>
+<li id="l29"><pre> </pre></li>
+<li id="l30"><pre>   <span class="keyword">type</span> <span class="droplink">Wildcard_Level_Map<ul><li><a href="alog-maps.ads.html#alog-maps.ads:30:9" title="To API doc">To API doc</a></li><li><a href="src_alog-maps.ads.html#l100" title="To body">To body</a></li></ul></span> <span class="keyword">is</span> <span class="keyword">tagged</span> <span class="keyword">private</span>; </pre></li>
+<li id="l31"><pre>   <span class="comment">--  A map of loglevels with string as key type.</span> </pre></li>
+<li id="l32"><pre> </pre></li>
+<li id="l33"><pre>   <span class="keyword">type</span> <span class="droplink">Cursor<ul><li><a href="alog-maps.ads.html#alog-maps.ads:33:9" title="To API doc">To API doc</a></li><li><a href="src_alog-maps.ads.html#l104" title="To body">To body</a></li></ul></span> <span class="keyword">is</span> <span class="keyword">private</span>; </pre></li>
+<li id="l34"><pre>   <span class="comment">--  Index for a map element.</span> </pre></li>
+<li id="l35"><pre> </pre></li>
+<li id="l36"><pre>   <span class="droplink">No_Element<ul><li><a href="alog-maps.ads.html#alog-maps.ads:36:4" title="To API doc">To API doc</a></li><li><a href="src_alog-maps.ads.html#l106" title="To body">To body</a></li></ul></span> : <span class="keyword">constant</span> <span class="droplink">Cursor<ul><li><a href="alog-maps.ads.html#alog-maps.ads:33:9" title="To API doc">To API doc</a></li><li><a href="src_alog-maps.ads.html#l33" title="To spec">To spec</a></li><li><a href="src_alog-maps.ads.html#l104" title="To body">To body</a></li></ul></span>; </pre></li>
+<li id="l37"><pre> </pre></li>
+<li id="l38"><pre>   <a href="alog-maps.ads.html#alog-maps.ads:38:4" title="defined at alog-maps.ads:38:4">Wildcard</a>   : <span class="keyword">constant</span> Character := <span class="string">&apos;*&apos;</span>; </pre></li>
+<li id="l39"><pre>   <span class="comment">--  Character used as wildcard indicator in lookups.</span> </pre></li>
+<li id="l40"><pre> </pre></li>
+<li id="l41"><pre>   <span class="keyword">function</span> <span class="droplink">Element<ul><li><a href="alog-maps.ads.html#alog-maps.ads:41:13" title="To API doc">To API doc</a></li><li><a href="src_alog-maps.adb.html#l37" title="To body">To body</a></li></ul></span> </pre></li>
+<li id="l42"><pre>     (<span class="droplink">Map<ul><li><a href="alog-maps.ads.html#alog-maps.ads:42:7" title="To API doc">To API doc</a></li><li><a href="src_alog-maps.adb.html#l38" title="To body">To body</a></li></ul></span> : <span class="droplink">Wildcard_Level_Map<ul><li><a href="alog-maps.ads.html#alog-maps.ads:30:9" title="To API doc">To API doc</a></li><li><a href="src_alog-maps.ads.html#l30" title="To spec">To spec</a></li><li><a href="src_alog-maps.ads.html#l100" title="To body">To body</a></li></ul></span>; </pre></li>
+<li id="l43"><pre>      <a href="alog-maps.ads.html#alog-maps.ads:43:7" title="defined at alog-maps.ads:43:7">Key</a> : String) </pre></li>
+<li id="l44"><pre>      <span class="keyword">return</span> <span class="droplink">Log_Level<ul><li><a href="alog.ads.html#alog.ads:32:9" title="To API doc">To API doc</a></li><li><a href="src_alog.ads.html#l32" title="To spec">To spec</a></li></ul></span>; </pre></li>
+<li id="l45"><pre>   <span class="comment">--  Returns the loglevel element for given key.</span> </pre></li>
+<li id="l46"><pre> </pre></li>
+<li id="l47"><pre>   <span class="keyword">function</span> <span class="droplink">Element<ul><li><a href="alog-maps.ads.html#alog-maps.ads:47:13" title="To API doc">To API doc</a></li><li><a href="src_alog-maps.adb.html#l48" title="To body">To body</a></li></ul></span> (<span class="droplink">Position<ul><li><a href="alog-maps.ads.html#alog-maps.ads:47:22" title="To API doc">To API doc</a></li><li><a href="src_alog-maps.adb.html#l48" title="To body">To body</a></li></ul></span> : <span class="droplink">Cursor<ul><li><a href="alog-maps.ads.html#alog-maps.ads:33:9" title="To API doc">To API doc</a></li><li><a href="src_alog-maps.ads.html#l33" title="To spec">To spec</a></li><li><a href="src_alog-maps.ads.html#l104" title="To body">To body</a></li></ul></span>) <span class="keyword">return</span> <span class="droplink">Log_Level<ul><li><a href="alog.ads.html#alog.ads:32:9" title="To API doc">To API doc</a></li><li><a href="src_alog.ads.html#l32" title="To spec">To spec</a></li></ul></span>; </pre></li>
+<li id="l48"><pre>   <span class="comment">--  Returns the loglevel element at given position.</span> </pre></li>
+<li id="l49"><pre> </pre></li>
+<li id="l50"><pre>   <span class="keyword">function</span> <span class="droplink">Find<ul><li><a href="alog-maps.ads.html#alog-maps.ads:50:13" title="To API doc">To API doc</a></li><li><a href="src_alog-maps.adb.html#l55" title="To body">To body</a></li></ul></span> </pre></li>
+<li id="l51"><pre>     (<span class="droplink">Map<ul><li><a href="alog-maps.ads.html#alog-maps.ads:51:7" title="To API doc">To API doc</a></li><li><a href="src_alog-maps.adb.html#l56" title="To body">To body</a></li></ul></span> : <span class="droplink">Wildcard_Level_Map<ul><li><a href="alog-maps.ads.html#alog-maps.ads:30:9" title="To API doc">To API doc</a></li><li><a href="src_alog-maps.ads.html#l30" title="To spec">To spec</a></li><li><a href="src_alog-maps.ads.html#l100" title="To body">To body</a></li></ul></span>; </pre></li>
+<li id="l52"><pre>      <a href="alog-maps.ads.html#alog-maps.ads:52:7" title="defined at alog-maps.ads:52:7">Key</a> : String) </pre></li>
+<li id="l53"><pre>      <span class="keyword">return</span> <span class="droplink">Cursor<ul><li><a href="alog-maps.ads.html#alog-maps.ads:33:9" title="To API doc">To API doc</a></li><li><a href="src_alog-maps.ads.html#l33" title="To spec">To spec</a></li><li><a href="src_alog-maps.ads.html#l104" title="To body">To body</a></li></ul></span>; </pre></li>
+<li id="l54"><pre>   <span class="comment">--  Returns the position for an element with specified key. If no element is</span> </pre></li>
+<li id="l55"><pre>   <span class="comment">--  found No_Element is returned.</span> </pre></li>
+<li id="l56"><pre> </pre></li>
+<li id="l57"><pre>   <span class="keyword">function</span> <span class="droplink">Lookup<ul><li><a href="alog-maps.ads.html#alog-maps.ads:57:13" title="To API doc">To API doc</a></li><li><a href="src_alog-maps.adb.html#l94" title="To body">To body</a></li></ul></span> </pre></li>
+<li id="l58"><pre>     (<span class="droplink">Map<ul><li><a href="alog-maps.ads.html#alog-maps.ads:58:7" title="To API doc">To API doc</a></li><li><a href="src_alog-maps.adb.html#l95" title="To body">To body</a></li></ul></span> : <span class="droplink">Wildcard_Level_Map<ul><li><a href="alog-maps.ads.html#alog-maps.ads:30:9" title="To API doc">To API doc</a></li><li><a href="src_alog-maps.ads.html#l30" title="To spec">To spec</a></li><li><a href="src_alog-maps.ads.html#l100" title="To body">To body</a></li></ul></span>; </pre></li>
+<li id="l59"><pre>      <a href="alog-maps.ads.html#alog-maps.ads:59:7" title="defined at alog-maps.ads:59:7">Key</a> : String) </pre></li>
+<li id="l60"><pre>      <span class="keyword">return</span> <span class="droplink">Cursor<ul><li><a href="alog-maps.ads.html#alog-maps.ads:33:9" title="To API doc">To API doc</a></li><li><a href="src_alog-maps.ads.html#l33" title="To spec">To spec</a></li><li><a href="src_alog-maps.ads.html#l104" title="To body">To body</a></li></ul></span>; </pre></li>
+<li id="l61"><pre>   <span class="comment">--  Returns the position of the element with the closest match to given key.</span> </pre></li>
+<li id="l62"><pre>   <span class="comment">--  This function considers wildcards when searching for an element.</span> </pre></li>
+<li id="l63"><pre>   <span class="comment">--</span> </pre></li>
+<li id="l64"><pre>   <span class="comment">--  Example:      Key   | Element</span> </pre></li>
+<li id="l65"><pre>   <span class="comment">--             -------------------</span> </pre></li>
+<li id="l66"><pre>   <span class="comment">--              Foo.*   |  Debug</span> </pre></li>
+<li id="l67"><pre>   <span class="comment">--              Foo.Bar |  Alert</span> </pre></li>
+<li id="l68"><pre>   <span class="comment">--</span> </pre></li>
+<li id="l69"><pre>   <span class="comment">--  A lookup for &quot;Foo.Foo&quot; has no exact match. The next closest match is</span> </pre></li>
+<li id="l70"><pre>   <span class="comment">--  &quot;Foo.*&quot; which will return the Debug element. Looking for &quot;Foo&quot; will</span> </pre></li>
+<li id="l71"><pre>   <span class="comment">--  return Debug since it matches the wildcard &quot;Foo.*&quot;.</span> </pre></li>
+<li id="l72"><pre>   <span class="comment">--</span> </pre></li>
+<li id="l73"><pre>   <span class="comment">--  If no exact and wildcard match is found No_Element is returned.</span> </pre></li>
+<li id="l74"><pre> </pre></li>
+<li id="l75"><pre>   <span class="keyword">procedure</span> <span class="droplink">Insert<ul><li><a href="alog-maps.ads.html#alog-maps.ads:75:14" title="To API doc">To API doc</a></li><li><a href="src_alog-maps.adb.html#l66" title="To body">To body</a></li></ul></span> </pre></li>
+<li id="l76"><pre>     (<span class="droplink">Map<ul><li><a href="alog-maps.ads.html#alog-maps.ads:76:7" title="To API doc">To API doc</a></li><li><a href="src_alog-maps.adb.html#l67" title="To body">To body</a></li></ul></span>  : <span class="keyword">in</span> <span class="keyword">out</span> <span class="droplink">Wildcard_Level_Map<ul><li><a href="alog-maps.ads.html#alog-maps.ads:30:9" title="To API doc">To API doc</a></li><li><a href="src_alog-maps.ads.html#l30" title="To spec">To spec</a></li><li><a href="src_alog-maps.ads.html#l100" title="To body">To body</a></li></ul></span>; </pre></li>
+<li id="l77"><pre>      <a href="alog-maps.ads.html#alog-maps.ads:77:7" title="defined at alog-maps.ads:77:7">Key</a>  :        String; </pre></li>
+<li id="l78"><pre>      <span class="droplink">Item<ul><li><a href="alog-maps.ads.html#alog-maps.ads:78:7" title="To API doc">To API doc</a></li><li><a href="src_alog-maps.adb.html#l69" title="To body">To body</a></li></ul></span> :        <span class="droplink">Log_Level<ul><li><a href="alog.ads.html#alog.ads:32:9" title="To API doc">To API doc</a></li><li><a href="src_alog.ads.html#l32" title="To spec">To spec</a></li></ul></span>); </pre></li>
+<li id="l79"><pre>   <span class="comment">--  Insert given key/item pair into map. If given key is already present the</span> </pre></li>
+<li id="l80"><pre>   <span class="comment">--  associated item is replaced.</span> </pre></li>
+<li id="l81"><pre> </pre></li>
+<li id="l82"><pre>   <span class="keyword">procedure</span> <span class="droplink">Clear<ul><li><a href="alog-maps.ads.html#alog-maps.ads:82:14" title="To API doc">To API doc</a></li><li><a href="src_alog-maps.adb.html#l30" title="To body">To body</a></li></ul></span> (<span class="droplink">Map<ul><li><a href="alog-maps.ads.html#alog-maps.ads:82:21" title="To API doc">To API doc</a></li><li><a href="src_alog-maps.adb.html#l30" title="To body">To body</a></li></ul></span> : <span class="keyword">in</span> <span class="keyword">out</span> <span class="droplink">Wildcard_Level_Map<ul><li><a href="alog-maps.ads.html#alog-maps.ads:30:9" title="To API doc">To API doc</a></li><li><a href="src_alog-maps.ads.html#l30" title="To spec">To spec</a></li><li><a href="src_alog-maps.ads.html#l100" title="To body">To body</a></li></ul></span>); </pre></li>
+<li id="l83"><pre>   <span class="comment">--  Clears the wildcard map.</span> </pre></li>
+<li id="l84"><pre> </pre></li>
+<li id="l85"><pre>   <span class="keyword">function</span> <span class="droplink">Length<ul><li><a href="alog-maps.ads.html#alog-maps.ads:85:13" title="To API doc">To API doc</a></li><li><a href="src_alog-maps.adb.html#l87" title="To body">To body</a></li></ul></span> (<span class="droplink">Map<ul><li><a href="alog-maps.ads.html#alog-maps.ads:85:21" title="To API doc">To API doc</a></li><li><a href="src_alog-maps.adb.html#l87" title="To body">To body</a></li></ul></span> : <span class="droplink">Wildcard_Level_Map<ul><li><a href="alog-maps.ads.html#alog-maps.ads:30:9" title="To API doc">To API doc</a></li><li><a href="src_alog-maps.ads.html#l30" title="To spec">To spec</a></li><li><a href="src_alog-maps.ads.html#l100" title="To body">To body</a></li></ul></span>) <span class="keyword">return</span> Natural; </pre></li>
+<li id="l86"><pre>   <span class="comment">--  Return the number of elements in the map.</span> </pre></li>
+<li id="l87"><pre> </pre></li>
+<li id="l88"><pre><span class="keyword">private</span> </pre></li>
+<li id="l89"><pre> </pre></li>
+<li id="l90"><pre>   <span class="keyword">use</span> Ada.Strings.Unbounded; </pre></li>
+<li id="l91"><pre> </pre></li>
+<li id="l92"><pre>   <span class="keyword">package</span> Map_Of_Loglevels_Package <span class="keyword">is</span> <span class="keyword">new</span> Ada.Containers.Hashed_Maps </pre></li>
+<li id="l93"><pre>     (Key_Type        =&gt; Unbounded_String, </pre></li>
+<li id="l94"><pre>      Element_Type    =&gt; <span class="droplink">Log_Level<ul><li><a href="alog.ads.html#alog.ads:32:9" title="To API doc">To API doc</a></li><li><a href="src_alog.ads.html#l32" title="To spec">To spec</a></li></ul></span>, </pre></li>
+<li id="l95"><pre>      Hash            =&gt; Hash, </pre></li>
+<li id="l96"><pre>      Equivalent_Keys =&gt; <span class="string">&quot;=&quot;</span>); </pre></li>
+<li id="l97"><pre> </pre></li>
+<li id="l98"><pre>   <span class="keyword">package</span> MOLP <span class="keyword">renames</span> Map_Of_Loglevels_Package; </pre></li>
+<li id="l99"><pre> </pre></li>
+<li id="l100"><pre>   <span class="keyword">type</span> <span class="droplink">Wildcard_Level_Map<ul><li><a href="alog-maps.ads.html#alog-maps.ads:30:9" title="To API doc">To API doc</a></li><li><a href="src_alog-maps.ads.html#l30" title="To spec">To spec</a></li></ul></span> <span class="keyword">is</span> <span class="keyword">tagged</span> <span class="keyword">record</span> </pre></li>
+<li id="l101"><pre>      Data : MOLP.Map; </pre></li>
+<li id="l102"><pre>   <span class="keyword">end</span> <span class="keyword">record</span>; </pre></li>
+<li id="l103"><pre> </pre></li>
+<li id="l104"><pre>   <span class="keyword">type</span> <span class="droplink">Cursor<ul><li><a href="alog-maps.ads.html#alog-maps.ads:33:9" title="To API doc">To API doc</a></li><li><a href="src_alog-maps.ads.html#l33" title="To spec">To spec</a></li></ul></span> <span class="keyword">is</span> <span class="keyword">new</span> MOLP.Cursor; </pre></li>
+<li id="l105"><pre> </pre></li>
+<li id="l106"><pre>   <span class="droplink">No_Element<ul><li><a href="alog-maps.ads.html#alog-maps.ads:36:4" title="To API doc">To API doc</a></li><li><a href="src_alog-maps.ads.html#l36" title="To spec">To spec</a></li></ul></span> : <span class="keyword">constant</span> <span class="droplink">Cursor<ul><li><a href="alog-maps.ads.html#alog-maps.ads:33:9" title="To API doc">To API doc</a></li><li><a href="src_alog-maps.ads.html#l33" title="To spec">To spec</a></li><li><a href="src_alog-maps.ads.html#l104" title="To body">To body</a></li></ul></span> := <span class="droplink">Cursor<ul><li><a href="alog-maps.ads.html#alog-maps.ads:33:9" title="To API doc">To API doc</a></li><li><a href="src_alog-maps.ads.html#l33" title="To spec">To spec</a></li><li><a href="src_alog-maps.ads.html#l104" title="To body">To body</a></li></ul></span> (MOLP.No_Element); </pre></li>
+<li id="l107"><pre> </pre></li>
+<li id="l108"><pre><span class="keyword">end</span> <span class="droplink">Alog.Maps<ul><li><a href="alog-maps.ads.html#alog-maps.ads:28:14" title="To API doc">To API doc</a></li><li><a href="src_alog-maps.ads.html#l28" title="To spec">To spec</a></li><li><a href="src_alog-maps.adb.html#l26" title="To body">To body</a></li></ul></span>; </pre></li>
+</ol></div>
+</div>
+
+</body>
+</html>

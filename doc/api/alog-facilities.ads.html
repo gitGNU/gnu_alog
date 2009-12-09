@@ -1,0 +1,605 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html><head>
+  <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript"/>
+
+  <title>
+    Package: Alog.Facilities
+  </title>
+  <link rel='stylesheet' href='support/docgen.css' type='text/css'/>
+  <link rel='stylesheet' href='support/tags.css' type='text/css'/>
+  <script src='support/docgen.js' type='text/javascript' charset='utf-8'></script>
+</head>
+<body onload="onloadDoc();">
+
+<div id='leftSide'>
+  <div id='leftSideInside'>
+  <div id='header'>
+    <h2 class="button">Documentation</h2>
+    <a href='index.html'><div class="button2">Table of Contents</div></a>
+
+    <a href='tree.html'><div class="button2">Class Inheritance Tree</div></a>
+
+  </div>
+
+  <div id='navigation'>
+    <h2 class="button">Navigation</h2>
+    <a href='#Description'><div class="button2">Description</div></a>
+    <a href='#Packages'><div class="button2">Packages</div></a>
+    <a href='#Classes'><div class="button2">Classes</div></a>
+    <a href='#Types'><div class="button2">Types</div></a>
+    <a href='#Methods'><div class="button2">Subprograms &amp; Entries</div></a>
+  </div><!-- navigation -->
+  </div>
+</div> <!-- leftSide -->
+
+<div class='default' id='rightSide'>
+ <div id='rightSideInside'>
+ <div id='Index'>
+  <h2>Index</h2>
+  <script type="text/javascript">
+    var names = new Array (
+new Array ('BS_<wbr/>Path', 'alog-facilities.ads:120:12', 'package-spec'),
+new Array ('Instance (abstract)', 'alog-facilities.ads:38:9', 'class-spec'),
+new Array ('Class', 'alog-facilities.ads:42:12', 'type-spec'),
+new Array ('Handle', 'alog-facilities.ads:44:9', 'type-spec'),
+new Array ('=', 'alog-facilities.ads:46:13', 'subp-spec'),
+new Array ('Set_<wbr/>Name', 'alog-facilities.ads:51:14', 'subp-spec'),
+new Array ('Get_<wbr/>Name', 'alog-facilities.ads:56:13', 'subp-spec'),
+new Array ('Get_<wbr/>Timestamp', 'alog-facilities.ads:59:13', 'subp-spec'),
+new Array ('Process', 'alog-facilities.ads:66:14', 'subp-spec'),
+new Array ('Write (abstract)', 'alog-facilities.ads:71:14', 'subp-spec'),
+new Array ('Toggle_<wbr/>Write_<wbr/>Timestamp', 'alog-facilities.ads:78:14', 'subp-spec'),
+new Array ('Toggle_<wbr/>UTC_<wbr/>Timestamp', 'alog-facilities.ads:83:14', 'subp-spec'),
+new Array ('Is_<wbr/>Write_<wbr/>Timestamp', 'alog-facilities.ads:88:13', 'subp-spec'),
+new Array ('Is_<wbr/>UTC_<wbr/>Timestamp', 'alog-facilities.ads:91:13', 'subp-spec'),
+new Array ('Toggle_<wbr/>Write_<wbr/>Loglevel', 'alog-facilities.ads:94:14', 'subp-spec'),
+new Array ('Is_<wbr/>Write_<wbr/>Loglevel', 'alog-facilities.ads:99:13', 'subp-spec'),
+new Array ('Toggle_<wbr/>Write_<wbr/>Source', 'alog-facilities.ads:102:14', 'subp-spec'),
+new Array ('Is_<wbr/>Write_<wbr/>Source', 'alog-facilities.ads:107:13', 'subp-spec'),
+new Array ('Setup', 'alog-facilities.ads:110:14', 'subp-spec'),
+new Array ('Teardown', 'alog-facilities.ads:115:14', 'subp-spec'),
+      new Array ('dummy', '', ''));
+    printIndexList (names);
+  </script>
+  <noscript>
+    <ul>
+      <li class='package-spec'><a href="#alog-facilities.ads:120:12">BS_<wbr/>Path</a></li>
+      <li class='class-spec'><a href="#alog-facilities.ads:38:9">Instance (abstract)</a></li>
+      <li class='type-spec'><a href="#alog-facilities.ads:42:12">Class</a></li>
+      <li class='type-spec'><a href="#alog-facilities.ads:44:9">Handle</a></li>
+      <li class='subp-spec'><a href="#alog-facilities.ads:46:13">=</a></li>
+      <li class='subp-spec'><a href="#alog-facilities.ads:51:14">Set_<wbr/>Name</a></li>
+      <li class='subp-spec'><a href="#alog-facilities.ads:56:13">Get_<wbr/>Name</a></li>
+      <li class='subp-spec'><a href="#alog-facilities.ads:59:13">Get_<wbr/>Timestamp</a></li>
+      <li class='subp-spec'><a href="#alog-facilities.ads:66:14">Process</a></li>
+      <li class='subp-spec'><a href="#alog-facilities.ads:71:14">Write (abstract)</a></li>
+      <li class='subp-spec'><a href="#alog-facilities.ads:78:14">Toggle_<wbr/>Write_<wbr/>Timestamp</a></li>
+      <li class='subp-spec'><a href="#alog-facilities.ads:83:14">Toggle_<wbr/>UTC_<wbr/>Timestamp</a></li>
+      <li class='subp-spec'><a href="#alog-facilities.ads:88:13">Is_<wbr/>Write_<wbr/>Timestamp</a></li>
+      <li class='subp-spec'><a href="#alog-facilities.ads:91:13">Is_<wbr/>UTC_<wbr/>Timestamp</a></li>
+      <li class='subp-spec'><a href="#alog-facilities.ads:94:14">Toggle_<wbr/>Write_<wbr/>Loglevel</a></li>
+      <li class='subp-spec'><a href="#alog-facilities.ads:99:13">Is_<wbr/>Write_<wbr/>Loglevel</a></li>
+      <li class='subp-spec'><a href="#alog-facilities.ads:102:14">Toggle_<wbr/>Write_<wbr/>Source</a></li>
+      <li class='subp-spec'><a href="#alog-facilities.ads:107:13">Is_<wbr/>Write_<wbr/>Source</a></li>
+      <li class='subp-spec'><a href="#alog-facilities.ads:110:14">Setup</a></li>
+      <li class='subp-spec'><a href="#alog-facilities.ads:115:14">Teardown</a></li>
+    </ul>
+  </noscript>
+ </div>
+ </div>
+</div>
+
+<div class='default' id='documentation'>
+  <div class='title'>
+    Package:
+<span class="droplink"><i>Alog.Facilities</i><ul>
+  <li><a href="src_alog-facilities.ads.html">Goto spec source</a></li>
+</ul></span>
+  </div>
+  <div class='subprograms'>
+    <h1><a name='Description' id='Description'></a>Description</h1>
+    <div class="class">
+    <div class='details'><pre><span class="keyword">package</span> <span class="name"><b>Alog.Facilities</b></span> <span class="keyword">is</span></pre></div>
+    <div class='comment'>Alog facilities package. Provides common data and methods used by all&#10;facilities.&#10;</div>
+    </div>
+  </div>
+
+  <div class='subprograms'>
+    <h1><a name='Packages' id='Packages'></a>Packages</h1>
+    <div class="class">
+      <h3>
+        <a name='alog-facilities.ads:120:12' id='alog-facilities.ads:120:12'></a>
+        BS_Path
+        <span class='type'>(new Generic_Bounded_Length)</span>
+      </h3>
+        <div class='details'><pre><span class="keyword">package</span> <span class="name"><b>BS_Path</b></span> <span class="keyword">is</span> <span class="keyword">new</span> Generic_Bounded_Length (<a href="alog.ads.html#alog.ads:44:4" title="defined at alog.ads:44:4">Max_Path_Length</a>);</pre></div>
+    </div>
+  </div>
+
+  <div class='subprograms'>
+    <h1><a name='Classes' id='Classes'></a>Classes</h1>
+    <div class="class">
+      <h3><a name='alog-facilities.ads:38:9' id='alog-facilities.ads:38:9'></a>
+<span class="droplink">Instance (abstract)<ul>
+  <li><a href="src_alog-facilities.ads.html#l38">Goto declaration in source</a></li>
+  <li><a href="src_alog-facilities.ads.html#l127">Goto full declaration in source</a></li>
+</ul></span>
+      </h3>
+      <div class='details'><pre><span class="keyword">type</span> <span class="name"><b>Instance</b></span> <span class="keyword">is</span> <span class="keyword">abstract</span> <span class="keyword">tagged</span> <span class="keyword">limited</span> <span class="keyword">private</span>;</pre></div>
+      <div class='profile'>
+        <div>
+          <h4>Immediate Children:</h4>
+            <div><a href="alog-facilities.ads.html#alog-facilities.ads:42:12" title="defined at alog-facilities.ads:42:12">Alog.Facilities.Class</a></div>
+            <div><a href="alog-facilities-file_descriptor.ads.html#alog-facilities-file_descriptor.ads:30:9" title="defined at alog-facilities-file_descriptor.ads:30:9">Alog.Facilities.File_Descriptor.Instance</a></div>
+            <div><a href="alog-facilities-pgsql.ads.html#alog-facilities-pgsql.ads:29:9" title="defined at alog-facilities-pgsql.ads:29:9">Alog.Facilities.Pgsql.Instance</a></div>
+            <div><a href="alog-facilities-smtp.ads.html#alog-facilities-smtp.ads:33:9" title="defined at alog-facilities-smtp.ads:33:9">Alog.Facilities.SMTP.Instance</a></div>
+            <div><a href="alog-facilities-syslog.ads.html#alog-facilities-syslog.ads:29:9" title="defined at alog-facilities-syslog.ads:29:9">Alog.Facilities.Syslog.Instance</a></div>
+            <div><a href="alog-facilities-xmpp.ads.html#alog-facilities-xmpp.ads:28:9" title="defined at alog-facilities-xmpp.ads:28:9">Alog.Facilities.XMPP.Instance</a></div>
+        </div>
+        <div>
+          <h4>Primitive operations:</h4>
+              <div><span class="droplink">Setup<ul><li><a href="alog-facilities.ads.html#alog-facilities.ads:110:14" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities.ads.html#l110" title="To spec">To spec</a></li></ul></span></div>
+              <div><span class="droplink">Teardown<ul><li><a href="alog-facilities.ads.html#alog-facilities.ads:115:14" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities.ads.html#l115" title="To spec">To spec</a></li></ul></span></div>
+              <div><span class="droplink">Write<ul><li><a href="alog-facilities.ads.html#alog-facilities.ads:71:14" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities.ads.html#l71" title="To spec">To spec</a></li></ul></span></div>
+        </div>
+      </div>
+      <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-facilities.ads.html#l38" title="alog-facilities.ads:38:9">alog-facilities.ads:38:9</a> (declaration)</i></div>
+            <div><i><a href="src_alog-facilities-file_descriptor.ads.html#l30" title="alog-facilities-file_descriptor.ads:30:41">alog-facilities-file_descriptor.ads:30:41</a> (reference)</i></div>
+            <div><i><a href="src_alog-facilities-file_descriptor.ads.html#l63" title="alog-facilities-file_descriptor.ads:63:41">alog-facilities-file_descriptor.ads:63:41</a> (reference)</i></div>
+            <div><i><a href="src_alog-facilities-pgsql.ads.html#l29" title="alog-facilities-pgsql.ads:29:41">alog-facilities-pgsql.ads:29:41</a> (reference)</i></div>
+            <div><i><a href="src_alog-facilities-pgsql.ads.html#l136" title="alog-facilities-pgsql.ads:136:41">alog-facilities-pgsql.ads:136:41</a> (reference)</i></div>
+            <div><i><a href="src_alog-facilities-smtp.ads.html#l33" title="alog-facilities-smtp.ads:33:41">alog-facilities-smtp.ads:33:41</a> (reference)</i></div>
+            <div><i><a href="src_alog-facilities-smtp.ads.html#l95" title="alog-facilities-smtp.ads:95:41">alog-facilities-smtp.ads:95:41</a> (reference)</i></div>
+            <div><i><a href="src_alog-facilities-syslog.ads.html#l29" title="alog-facilities-syslog.ads:29:41">alog-facilities-syslog.ads:29:41</a> (reference)</i></div>
+            <div><i><a href="src_alog-facilities-syslog.ads.html#l62" title="alog-facilities-syslog.ads:62:41">alog-facilities-syslog.ads:62:41</a> (reference)</i></div>
+            <div><i><a href="src_alog-facilities-xmpp.ads.html#l28" title="alog-facilities-xmpp.ads:28:41">alog-facilities-xmpp.ads:28:41</a> (reference)</i></div>
+            <div><i><a href="src_alog-facilities-xmpp.ads.html#l83" title="alog-facilities-xmpp.ads:83:41">alog-facilities-xmpp.ads:83:41</a> (reference)</i></div>
+            <div><i><a href="src_alog-facilities.ads.html#l42" title="alog-facilities.ads:42:21">alog-facilities.ads:42:21</a> (reference)</i></div>
+            <div><i><a href="src_alog-facilities.ads.html#l72" title="alog-facilities.ads:72:18">alog-facilities.ads:72:18</a> (reference)</i></div>
+            <div><i><a href="src_alog-facilities.ads.html#l110" title="alog-facilities.ads:110:39">alog-facilities.ads:110:39</a> (reference)</i></div>
+            <div><i><a href="src_alog-facilities.ads.html#l115" title="alog-facilities.ads:115:42">alog-facilities.ads:115:42</a> (reference)</i></div>
+            <div><i><a href="src_alog-facilities.ads.html#l127" title="alog-facilities.ads:127:9">alog-facilities.ads:127:9</a> (full declaration)</i></div>
+      </div>
+      <div class='comment'>Abstract type facility instance. All facilities in the Alog framework&#10;must implement this type.&#10;</div>
+    </div>
+  </div>
+
+
+  <div class='subprograms'>
+    <h1><a name='Types' id='Types'></a>Types</h1>
+    <div class="class">
+      <h3>
+        <a name='alog-facilities.ads:42:12' id='alog-facilities.ads:42:12'></a>
+<span class="droplink">Class<ul>
+  <li><a href="src_alog-facilities.ads.html#l42">Goto declaration in source</a></li>
+</ul></span>
+      </h3>
+      <div class='details'><pre><span class="keyword">subtype</span> <span class="name"><b>Class</b></span> <span class="keyword">is</span> <a href="alog-facilities.ads.html#alog-facilities.ads:38:9" title="defined at alog-facilities.ads:38:9">Instance</a>'<a href="alog-facilities.ads.html#alog-facilities.ads:42:12" title="defined at alog-facilities.ads:42:12">Class</a>;</pre></div>
+      <div class='profile'>
+          <h4>References:</h4>
+          <div><i><a href="src_alog-facilities.ads.html#l42" title="alog-facilities.ads:42:12">alog-facilities.ads:42:12</a> (declaration)</i></div>
+          <div><i>alog-facilities.adb:44:34 (reference)</i></div>
+          <div><i>alog-facilities.adb:52:18 (reference)</i></div>
+          <div><i>alog-facilities.adb:84:42 (reference)</i></div>
+          <div><i>alog-facilities.adb:91:43 (reference)</i></div>
+          <div><i>alog-facilities.adb:98:41 (reference)</i></div>
+          <div><i>alog-facilities.adb:105:44 (reference)</i></div>
+          <div><i>alog-facilities.adb:113:18 (reference)</i></div>
+          <div><i>alog-facilities.adb:151:25 (reference)</i></div>
+          <div><i>alog-facilities.adb:161:25 (reference)</i></div>
+          <div><i>alog-facilities.adb:171:25 (reference)</i></div>
+          <div><i>alog-facilities.adb:181:25 (reference)</i></div>
+          <div><i>alog-facilities.adb:191:25 (reference)</i></div>
+          <div><i><a href="src_alog-facilities.ads.html#l44" title="alog-facilities.ads:44:30">alog-facilities.ads:44:30</a> (reference)</i></div>
+          <div><i><a href="src_alog-facilities.ads.html#l52" title="alog-facilities.ads:52:25">alog-facilities.ads:52:25</a> (reference)</i></div>
+          <div><i><a href="src_alog-facilities.ads.html#l56" title="alog-facilities.ads:56:34">alog-facilities.ads:56:34</a> (reference)</i></div>
+          <div><i><a href="src_alog-facilities.ads.html#l60" title="alog-facilities.ads:60:18">alog-facilities.ads:60:18</a> (reference)</i></div>
+          <div><i><a href="src_alog-facilities.ads.html#l67" title="alog-facilities.ads:67:18">alog-facilities.ads:67:18</a> (reference)</i></div>
+          <div><i><a href="src_alog-facilities.ads.html#l79" title="alog-facilities.ads:79:25">alog-facilities.ads:79:25</a> (reference)</i></div>
+          <div><i><a href="src_alog-facilities.ads.html#l84" title="alog-facilities.ads:84:25">alog-facilities.ads:84:25</a> (reference)</i></div>
+          <div><i><a href="src_alog-facilities.ads.html#l88" title="alog-facilities.ads:88:44">alog-facilities.ads:88:44</a> (reference)</i></div>
+          <div><i><a href="src_alog-facilities.ads.html#l91" title="alog-facilities.ads:91:42">alog-facilities.ads:91:42</a> (reference)</i></div>
+          <div><i><a href="src_alog-facilities.ads.html#l95" title="alog-facilities.ads:95:25">alog-facilities.ads:95:25</a> (reference)</i></div>
+          <div><i><a href="src_alog-facilities.ads.html#l99" title="alog-facilities.ads:99:43">alog-facilities.ads:99:43</a> (reference)</i></div>
+          <div><i><a href="src_alog-facilities.ads.html#l103" title="alog-facilities.ads:103:25">alog-facilities.ads:103:25</a> (reference)</i></div>
+          <div><i><a href="src_alog-facilities.ads.html#l107" title="alog-facilities.ads:107:41">alog-facilities.ads:107:41</a> (reference)</i></div>
+          <div><i><a href="src_alog-logger.ads.html#l127" title="alog-logger.ads:127:28">alog-logger.ads:127:28</a> (reference)</i></div>
+          <div><i><a href="src_alog-logger.ads.html#l168" title="alog-logger.ads:168:36">alog-logger.ads:168:36</a> (reference)</i></div>
+      </div>
+    </div>
+    <div class="class">
+      <h3>
+        <a name='alog-facilities.ads:44:9' id='alog-facilities.ads:44:9'></a>
+<span class="droplink">Handle<ul>
+  <li><a href="src_alog-facilities.ads.html#l44">Goto declaration in source</a></li>
+</ul></span>
+      </h3>
+      <div class='details'><pre><span class="keyword">type</span> <span class="name"><b>Handle</b></span> <span class="keyword">is</span> <span class="keyword">access</span> <span class="keyword">all</span> <a href="alog-facilities.ads.html#alog-facilities.ads:42:12" title="defined at alog-facilities.ads:42:12">Class</a>;</pre></div>
+      <div class='profile'>
+          <h4>References:</h4>
+          <div><i><a href="src_alog-facilities.ads.html#l44" title="alog-facilities.ads:44:9">alog-facilities.ads:44:9</a> (declaration)</i></div>
+          <div><i>alog-active_logger.adb:50:36 (reference)</i></div>
+          <div><i><a href="src_alog-active_logger.ads.html#l48" title="alog-active_logger.ads:48:36">alog-active_logger.ads:48:36</a> (reference)</i></div>
+          <div><i>alog-facilities.adb:35:15 (reference)</i></div>
+          <div><i>alog-facilities.adb:36:15 (reference)</i></div>
+          <div><i><a href="src_alog-facilities.ads.html#l47" title="alog-facilities.ads:47:15">alog-facilities.ads:47:15</a> (reference)</i></div>
+          <div><i><a href="src_alog-facilities.ads.html#l48" title="alog-facilities.ads:48:15">alog-facilities.ads:48:15</a> (reference)</i></div>
+          <div><i>alog-logger.adb:44:39 (reference)</i></div>
+          <div><i>alog-logger.adb:53:36 (reference)</i></div>
+          <div><i>alog-logger.adb:93:56 (reference)</i></div>
+          <div><i>alog-logger.adb:96:56 (reference)</i></div>
+          <div><i>alog-logger.adb:188:49 (reference)</i></div>
+          <div><i>alog-logger.adb:216:54 (reference)</i></div>
+          <div><i>alog-logger.adb:219:54 (reference)</i></div>
+          <div><i>alog-logger.adb:262:49 (reference)</i></div>
+          <div><i>alog-logger.adb:271:39 (reference)</i></div>
+          <div><i><a href="src_alog-logger.ads.html#l48" title="alog-logger.ads:48:36">alog-logger.ads:48:36</a> (reference)</i></div>
+          <div><i><a href="src_alog-logger.ads.html#l72" title="alog-logger.ads:72:49">alog-logger.ads:72:49</a> (reference)</i></div>
+          <div><i><a href="src_alog-logger.ads.html#l79" title="alog-logger.ads:79:49">alog-logger.ads:79:49</a> (reference)</i></div>
+          <div><i><a href="src_alog-logger.ads.html#l128" title="alog-logger.ads:128:28">alog-logger.ads:128:28</a> (reference)</i></div>
+          <div><i><a href="src_alog-logger.ads.html#l169" title="alog-logger.ads:169:36">alog-logger.ads:169:36</a> (reference)</i></div>
+          <div><i>alog-tasked_logger.adb:34:52 (reference)</i></div>
+          <div><i>alog-tasked_logger.adb:62:62 (reference)</i></div>
+          <div><i><a href="src_alog-tasked_logger.ads.html#l36" title="alog-tasked_logger.ads:36:60">alog-tasked_logger.ads:36:60</a> (reference)</i></div>
+          <div><i><a href="src_alog-tasked_logger.ads.html#l41" title="alog-tasked_logger.ads:41:52">alog-tasked_logger.ads:41:52</a> (reference)</i></div>
+      </div>
+    </div>
+  </div>
+
+
+    <div class='subprograms'>
+      <h1><a name='Methods' id='Methods'></a>Subprograms &amp; Entries</h1>
+      <div class="class">
+        <h3>
+          <a name='alog-facilities.ads:46:13' id='alog-facilities.ads:46:13'></a>
+<span class="droplink">=<ul>
+  <li><a href="src_alog-facilities.ads.html#l46">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">function</span> <span class="name"><b>"="</b></span>     <table><tr><td>(</td><td><span class="name"><a name="alog-facilities.ads:47:7"></a>Left</span></td><td>: <a href="alog-facilities.ads.html#alog-facilities.ads:44:9" title="defined at alog-facilities.ads:44:9">Handle</a>;</td></tr><tr><td></td><td><span class="name"><a name="alog-facilities.ads:48:7"></a>Right</span></td><td>: <a href="alog-facilities.ads.html#alog-facilities.ads:44:9" title="defined at alog-facilities.ads:44:9">Handle</a>)</td></tr></table><span class="keyword">return</span> Boolean;</pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-facilities.ads.html#l46" title="alog-facilities.ads:46:13">alog-facilities.ads:46:13</a> (declaration)</i></div>
+            <div><i>alog-facilities.adb:34:13 (body)</i></div>
+            <div><i>alog-facilities.adb:40:8 (label)</i></div>
+        </div>
+        <div class='profile'>
+          <h4>Calls:</h4>
+            <div><i><a href="alog-facilities.ads.html#alog-facilities.ads:56:13" title="defined at alog-facilities.ads:56:13">Get_Name</a> defined at <a href="src_alog-facilities.ads.html#l56" title="alog-facilities.ads:56:13">alog-facilities.ads:56:13</a></i></div>
+        </div>
+        <div class='comment'>Equal function.&#10;</div>
+      </div>
+      <div class="class">
+        <h3>
+          <a name='alog-facilities.ads:51:14' id='alog-facilities.ads:51:14'></a>
+<span class="droplink">Set_Name<ul>
+  <li><a href="src_alog-facilities.ads.html#l51">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">procedure</span> <span class="name"><b>Set_Name</b></span>     <table><tr><td>(</td><td><span class="name"><a name="alog-facilities.ads:52:7"></a>Facility</span></td><td>: <span class="keyword">in</span> <span class="keyword">out</span> <a href="alog-facilities.ads.html#alog-facilities.ads:42:12" title="defined at alog-facilities.ads:42:12">Class</a>;</td></tr><tr><td></td><td><span class="name"><a name="alog-facilities.ads:53:7"></a>Name</span></td><td>:        String);</td></tr></table></pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-facilities.ads.html#l51" title="alog-facilities.ads:51:14">alog-facilities.ads:51:14</a> (declaration)</i></div>
+            <div><i>alog-facilities.adb:150:14 (body)</i></div>
+            <div><i>alog-facilities.adb:156:8 (label)</i></div>
+            <div><i>alog-logger.adb:41:28 (reference)</i></div>
+        </div>
+        <div class='profile'>
+          <h4>Called by:</h4>
+            <div><i><a href="alog-logger.ads.html#alog-logger.ads:51:14" title="defined at alog-logger.ads:51:14">Alog.Logger.Attach_Default_Facility</a> defined at <a href="src_alog-logger.ads.html#l51" title="alog-logger.ads:51:14">alog-logger.ads:51:14</a></i></div>
+        </div>
+        <div class='profile'>
+          <h4>Calls:</h4>
+            <div><i>To_Unbounded_String defined at a-strunb.ads:57:13</i></div>
+        </div>
+        <div class='comment'>Set facility name.&#10;</div>
+      </div>
+      <div class="class">
+        <h3>
+          <a name='alog-facilities.ads:56:13' id='alog-facilities.ads:56:13'></a>
+<span class="droplink">Get_Name<ul>
+  <li><a href="src_alog-facilities.ads.html#l56">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">function</span> <span class="name"><b>Get_Name</b></span> <table><tr><td>(</td><td><span class="name"><a name="alog-facilities.ads:56:23"></a>Facility</span></td><td>: <a href="alog-facilities.ads.html#alog-facilities.ads:42:12" title="defined at alog-facilities.ads:42:12">Class</a>)</td></tr></table><span class="keyword">return</span> String;</pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-facilities.ads.html#l56" title="alog-facilities.ads:56:13">alog-facilities.ads:56:13</a> (declaration)</i></div>
+            <div><i>alog-facilities-smtp.adb:44:29 (reference)</i></div>
+            <div><i>alog-facilities.adb:39:19 (reference)</i></div>
+            <div><i>alog-facilities.adb:39:36 (reference)</i></div>
+            <div><i>alog-facilities.adb:44:13 (body)</i></div>
+            <div><i>alog-facilities.adb:47:8 (label)</i></div>
+            <div><i>alog-facilities.adb:122:33 (reference)</i></div>
+            <div><i>alog-logger.adb:56:39 (reference)</i></div>
+        </div>
+        <div class='profile'>
+          <h4>Called by:</h4>
+            <div><i><a href="alog-facilities.ads.html#alog-facilities.ads:46:13" title="defined at alog-facilities.ads:46:13">=</a> defined at <a href="src_alog-facilities.ads.html#l46" title="alog-facilities.ads:46:13">alog-facilities.ads:46:13</a></i></div>
+            <div><i><a href="alog-facilities.ads.html#alog-facilities.ads:46:13" title="defined at alog-facilities.ads:46:13">=</a> defined at <a href="src_alog-facilities.ads.html#l46" title="alog-facilities.ads:46:13">alog-facilities.ads:46:13</a></i></div>
+            <div><i>Alog.Facilities.SMTP.Format_Message defined at <a href="src_alog-facilities-smtp.ads.html#l79" title="alog-facilities-smtp.ads:79:13">alog-facilities-smtp.ads:79:13</a></i></div>
+            <div><i><a href="alog-logger.ads.html#alog-logger.ads:46:14" title="defined at alog-logger.ads:46:14">Alog.Logger.Attach_Facility</a> defined at <a href="src_alog-logger.ads.html#l46" title="alog-logger.ads:46:14">alog-logger.ads:46:14</a></i></div>
+            <div><i><a href="alog-facilities.ads.html#alog-facilities.ads:66:14" title="defined at alog-facilities.ads:66:14">Process</a> defined at <a href="src_alog-facilities.ads.html#l66" title="alog-facilities.ads:66:14">alog-facilities.ads:66:14</a></i></div>
+        </div>
+        <div class='profile'>
+          <h4>Calls:</h4>
+            <div><i>To_String defined at a-strunb.ads:63:13</i></div>
+        </div>
+        <div class='comment'>Get facility name.&#10;</div>
+      </div>
+      <div class="class">
+        <h3>
+          <a name='alog-facilities.ads:59:13' id='alog-facilities.ads:59:13'></a>
+<span class="droplink">Get_Timestamp<ul>
+  <li><a href="src_alog-facilities.ads.html#l59">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">function</span> <span class="name"><b>Get_Timestamp</b></span>     <table><tr><td>(</td><td><span class="name"><a name="alog-facilities.ads:60:7"></a>Facility</span></td><td>: <a href="alog-facilities.ads.html#alog-facilities.ads:42:12" title="defined at alog-facilities.ads:42:12">Class</a>;</td></tr><tr><td></td><td><span class="name"><a name="alog-facilities.ads:61:7"></a>Time</span></td><td>: Ada.Calendar.Time := Ada.Calendar.Clock)</td></tr></table><span class="keyword">return</span> String;</pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-facilities.ads.html#l59" title="alog-facilities.ads:59:13">alog-facilities.ads:59:13</a> (declaration)</i></div>
+            <div><i>alog-facilities-smtp.adb:43:36 (reference)</i></div>
+            <div><i>alog-facilities.adb:51:13 (body)</i></div>
+            <div><i>alog-facilities.adb:80:8 (label)</i></div>
+            <div><i>alog-facilities.adb:127:42 (reference)</i></div>
+        </div>
+        <div class='profile'>
+          <h4>Called by:</h4>
+            <div><i>Alog.Facilities.SMTP.Format_Message defined at <a href="src_alog-facilities-smtp.ads.html#l79" title="alog-facilities-smtp.ads:79:13">alog-facilities-smtp.ads:79:13</a></i></div>
+            <div><i><a href="alog-facilities.ads.html#alog-facilities.ads:66:14" title="defined at alog-facilities.ads:66:14">Process</a> defined at <a href="src_alog-facilities.ads.html#l66" title="alog-facilities.ads:66:14">alog-facilities.ads:66:14</a></i></div>
+        </div>
+        <div class='profile'>
+          <h4>Calls:</h4>
+            <div><i>- defined at a-calend.ads:96:13</i></div>
+            <div><i>Clock defined at a-calend.ads:52:13</i></div>
+            <div><i>Image defined at g-catiio.ads:113:13</i></div>
+            <div><i><a href="alog-facilities.ads.html#alog-facilities.ads:91:13" title="defined at alog-facilities.ads:91:13">Is_UTC_Timestamp</a> defined at <a href="src_alog-facilities.ads.html#l91" title="alog-facilities.ads:91:13">alog-facilities.ads:91:13</a></i></div>
+            <div><i>UTC_Time_Offset defined at a-catizo.ads:29:13</i></div>
+        </div>
+        <div class='comment'>Creates a timestamp and returns it as String. If no Time is given, the&#10;current time is used.&#10;</div>
+      </div>
+      <div class="class">
+        <h3>
+          <a name='alog-facilities.ads:66:14' id='alog-facilities.ads:66:14'></a>
+<span class="droplink">Process<ul>
+  <li><a href="src_alog-facilities.ads.html#l66">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">procedure</span> <span class="name"><b>Process</b></span>     <table><tr><td>(</td><td><span class="name"><a name="alog-facilities.ads:67:7"></a>Facility</span></td><td>: <a href="alog-facilities.ads.html#alog-facilities.ads:42:12" title="defined at alog-facilities.ads:42:12">Class</a>;</td></tr><tr><td></td><td><span class="name"><a name="alog-facilities.ads:68:7"></a>Request</span></td><td>: <a href="alog-log_request.ads.html#alog-log_request.ads:33:9" title="defined at alog-log_request.ads:33:9">Log_Request.Instance</a>);</td></tr></table></pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-facilities.ads.html#l66" title="alog-facilities.ads:66:14">alog-facilities.ads:66:14</a> (declaration)</i></div>
+            <div><i>alog-facilities.adb:112:14 (body)</i></div>
+            <div><i>alog-facilities.adb:146:8 (label)</i></div>
+            <div><i>alog-logger.adb:227:26 (reference)</i></div>
+        </div>
+        <div class='profile'>
+          <h4>Called by:</h4>
+            <div><i>Alog.Logger.Log_Message.Do_Log defined at alog-logger.adb:216:17</i></div>
+        </div>
+        <div class='profile'>
+          <h4>Calls:</h4>
+            <div><i><a href="alog-log_request.ads.html#alog-log_request.ads:51:13" title="defined at alog-log_request.ads:51:13">Alog.Log_Request.Get_Log_Level</a> defined at <a href="src_alog-log_request.ads.html#l51" title="alog-log_request.ads:51:13">alog-log_request.ads:51:13</a></i></div>
+            <div><i><a href="alog-log_request.ads.html#alog-log_request.ads:54:13" title="defined at alog-log_request.ads:54:13">Alog.Log_Request.Get_Message</a> defined at <a href="src_alog-log_request.ads.html#l54" title="alog-log_request.ads:54:13">alog-log_request.ads:54:13</a></i></div>
+            <div><i><a href="alog-log_request.ads.html#alog-log_request.ads:48:13" title="defined at alog-log_request.ads:48:13">Alog.Log_Request.Get_Source</a> defined at <a href="src_alog-log_request.ads.html#l48" title="alog-log_request.ads:48:13">alog-log_request.ads:48:13</a></i></div>
+            <div><i><a href="alog-policy_db.ads.html#alog-policy_db.ads:84:13" title="defined at alog-policy_db.ads:84:13">Alog.Policy_DB.Accept_Dst</a> defined at <a href="src_alog-policy_db.ads.html#l84" title="alog-policy_db.ads:84:13">alog-policy_db.ads:84:13</a></i></div>
+            <div><i>Append defined at a-strunb.ads:74:14</i></div>
+            <div><i><a href="alog-facilities.ads.html#alog-facilities.ads:56:13" title="defined at alog-facilities.ads:56:13">Get_Name</a> defined at <a href="src_alog-facilities.ads.html#l56" title="alog-facilities.ads:56:13">alog-facilities.ads:56:13</a></i></div>
+            <div><i><a href="alog-facilities.ads.html#alog-facilities.ads:59:13" title="defined at alog-facilities.ads:59:13">Get_Timestamp</a> defined at <a href="src_alog-facilities.ads.html#l59" title="alog-facilities.ads:59:13">alog-facilities.ads:59:13</a></i></div>
+            <div><i><a href="alog-facilities.ads.html#alog-facilities.ads:99:13" title="defined at alog-facilities.ads:99:13">Is_Write_Loglevel</a> defined at <a href="src_alog-facilities.ads.html#l99" title="alog-facilities.ads:99:13">alog-facilities.ads:99:13</a></i></div>
+            <div><i><a href="alog-facilities.ads.html#alog-facilities.ads:107:13" title="defined at alog-facilities.ads:107:13">Is_Write_Source</a> defined at <a href="src_alog-facilities.ads.html#l107" title="alog-facilities.ads:107:13">alog-facilities.ads:107:13</a></i></div>
+            <div><i><a href="alog-facilities.ads.html#alog-facilities.ads:88:13" title="defined at alog-facilities.ads:88:13">Is_Write_Timestamp</a> defined at <a href="src_alog-facilities.ads.html#l88" title="alog-facilities.ads:88:13">alog-facilities.ads:88:13</a></i></div>
+            <div><i>To_String defined at a-strunb.ads:63:13</i></div>
+            <div><i><a href="alog-facilities.ads.html#alog-facilities.ads:71:14" title="defined at alog-facilities.ads:71:14">Write</a> defined at <a href="src_alog-facilities.ads.html#l71" title="alog-facilities.ads:71:14">alog-facilities.ads:71:14</a></i></div>
+        </div>
+        <div class='comment'>Process a log request.&#10;</div>
+      </div>
+      <div class="class">
+        <h3>
+          <a name='alog-facilities.ads:71:14' id='alog-facilities.ads:71:14'></a>
+<span class="droplink">Write (abstract)<ul>
+  <li><a href="src_alog-facilities.ads.html#l71">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">procedure</span> <span class="name"><b>Write</b></span>     <table><tr><td>(</td><td><span class="name"><a name="alog-facilities.ads:72:7"></a>Facility</span></td><td>: <a href="alog-facilities.ads.html#alog-facilities.ads:38:9" title="defined at alog-facilities.ads:38:9">Instance</a>;</td></tr><tr><td></td><td><span class="name"><a name="alog-facilities.ads:73:7"></a>Level</span></td><td>: <a href="alog.ads.html#alog.ads:32:9" title="defined at alog.ads:32:9">Log_Level</a> := Info;</td></tr><tr><td></td><td><span class="name"><a name="alog-facilities.ads:74:7"></a>Msg</span></td><td>: String)</td></tr></table><span class="keyword">is</span> <span class="keyword">abstract</span>;</pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-facilities.ads.html#l71" title="alog-facilities.ads:71:14">alog-facilities.ads:71:14</a> (declaration)</i></div>
+            <div><i>alog-facilities.adb:143:19 (dispatching call)</i></div>
+        </div>
+        <div class='profile'>
+          <h4>Called by:</h4>
+            <div><i><a href="alog-facilities.ads.html#alog-facilities.ads:66:14" title="defined at alog-facilities.ads:66:14">Process</a> defined at <a href="src_alog-facilities.ads.html#l66" title="alog-facilities.ads:66:14">alog-facilities.ads:66:14</a></i></div>
+        </div>
+        <div class='comment'>Write message with specified log level. This procedure must be&#10;implemented by all facilities.&#10;</div>
+      </div>
+      <div class="class">
+        <h3>
+          <a name='alog-facilities.ads:78:14' id='alog-facilities.ads:78:14'></a>
+<span class="droplink">Toggle_Write_Timestamp<ul>
+  <li><a href="src_alog-facilities.ads.html#l78">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">procedure</span> <span class="name"><b>Toggle_Write_Timestamp</b></span>     <table><tr><td>(</td><td><span class="name"><a name="alog-facilities.ads:79:7"></a>Facility</span></td><td>: <span class="keyword">in</span> <span class="keyword">out</span> <a href="alog-facilities.ads.html#alog-facilities.ads:42:12" title="defined at alog-facilities.ads:42:12">Class</a>;</td></tr><tr><td></td><td><span class="name"><a name="alog-facilities.ads:80:7"></a>State</span></td><td>:        Boolean);</td></tr></table></pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-facilities.ads.html#l78" title="alog-facilities.ads:78:14">alog-facilities.ads:78:14</a> (declaration)</i></div>
+            <div><i>alog-facilities.adb:190:14 (body)</i></div>
+            <div><i>alog-facilities.adb:196:8 (label)</i></div>
+        </div>
+        <div class='comment'>Enable/disable whether a timestamp is written for log messages.&#10;</div>
+      </div>
+      <div class="class">
+        <h3>
+          <a name='alog-facilities.ads:83:14' id='alog-facilities.ads:83:14'></a>
+<span class="droplink">Toggle_UTC_Timestamp<ul>
+  <li><a href="src_alog-facilities.ads.html#l83">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">procedure</span> <span class="name"><b>Toggle_UTC_Timestamp</b></span>     <table><tr><td>(</td><td><span class="name"><a name="alog-facilities.ads:84:7"></a>Facility</span></td><td>: <span class="keyword">in</span> <span class="keyword">out</span> <a href="alog-facilities.ads.html#alog-facilities.ads:42:12" title="defined at alog-facilities.ads:42:12">Class</a>;</td></tr><tr><td></td><td><span class="name"><a name="alog-facilities.ads:85:7"></a>State</span></td><td>:        Boolean);</td></tr></table></pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-facilities.ads.html#l83" title="alog-facilities.ads:83:14">alog-facilities.ads:83:14</a> (declaration)</i></div>
+            <div><i>alog-facilities.adb:160:14 (body)</i></div>
+            <div><i>alog-facilities.adb:166:8 (label)</i></div>
+        </div>
+        <div class='comment'>Enable/disable UTC timestamps for log messages.&#10;</div>
+      </div>
+      <div class="class">
+        <h3>
+          <a name='alog-facilities.ads:88:13' id='alog-facilities.ads:88:13'></a>
+<span class="droplink">Is_Write_Timestamp<ul>
+  <li><a href="src_alog-facilities.ads.html#l88">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">function</span> <span class="name"><b>Is_Write_Timestamp</b></span> <table><tr><td>(</td><td><span class="name"><a name="alog-facilities.ads:88:33"></a>Facility</span></td><td>: <a href="alog-facilities.ads.html#alog-facilities.ads:42:12" title="defined at alog-facilities.ads:42:12">Class</a>)</td></tr></table><span class="keyword">return</span> Boolean;</pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-facilities.ads.html#l88" title="alog-facilities.ads:88:13">alog-facilities.ads:88:13</a> (declaration)</i></div>
+            <div><i>alog-facilities.adb:105:13 (body)</i></div>
+            <div><i>alog-facilities.adb:108:8 (label)</i></div>
+            <div><i>alog-facilities.adb:125:22 (reference)</i></div>
+        </div>
+        <div class='profile'>
+          <h4>Called by:</h4>
+            <div><i><a href="alog-facilities.ads.html#alog-facilities.ads:66:14" title="defined at alog-facilities.ads:66:14">Process</a> defined at <a href="src_alog-facilities.ads.html#l66" title="alog-facilities.ads:66:14">alog-facilities.ads:66:14</a></i></div>
+        </div>
+        <div class='comment'>Returns the current value of Write_Timestamp.&#10;</div>
+      </div>
+      <div class="class">
+        <h3>
+          <a name='alog-facilities.ads:91:13' id='alog-facilities.ads:91:13'></a>
+<span class="droplink">Is_UTC_Timestamp<ul>
+  <li><a href="src_alog-facilities.ads.html#l91">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">function</span> <span class="name"><b>Is_UTC_Timestamp</b></span> <table><tr><td>(</td><td><span class="name"><a name="alog-facilities.ads:91:31"></a>Facility</span></td><td>: <a href="alog-facilities.ads.html#alog-facilities.ads:42:12" title="defined at alog-facilities.ads:42:12">Class</a>)</td></tr></table><span class="keyword">return</span> Boolean;</pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-facilities.ads.html#l91" title="alog-facilities.ads:91:13">alog-facilities.ads:91:13</a> (declaration)</i></div>
+            <div><i>alog-facilities.adb:58:19 (reference)</i></div>
+            <div><i>alog-facilities.adb:84:13 (body)</i></div>
+            <div><i>alog-facilities.adb:87:8 (label)</i></div>
+        </div>
+        <div class='profile'>
+          <h4>Called by:</h4>
+            <div><i><a href="alog-facilities.ads.html#alog-facilities.ads:59:13" title="defined at alog-facilities.ads:59:13">Get_Timestamp</a> defined at <a href="src_alog-facilities.ads.html#l59" title="alog-facilities.ads:59:13">alog-facilities.ads:59:13</a></i></div>
+        </div>
+        <div class='comment'>Returns True if the timestamp of the facility is written in UTC time.&#10;</div>
+      </div>
+      <div class="class">
+        <h3>
+          <a name='alog-facilities.ads:94:14' id='alog-facilities.ads:94:14'></a>
+<span class="droplink">Toggle_Write_Loglevel<ul>
+  <li><a href="src_alog-facilities.ads.html#l94">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">procedure</span> <span class="name"><b>Toggle_Write_Loglevel</b></span>     <table><tr><td>(</td><td><span class="name"><a name="alog-facilities.ads:95:7"></a>Facility</span></td><td>: <span class="keyword">in</span> <span class="keyword">out</span> <a href="alog-facilities.ads.html#alog-facilities.ads:42:12" title="defined at alog-facilities.ads:42:12">Class</a>;</td></tr><tr><td></td><td><span class="name"><a name="alog-facilities.ads:96:7"></a>State</span></td><td>:        Boolean);</td></tr></table></pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-facilities.ads.html#l94" title="alog-facilities.ads:94:14">alog-facilities.ads:94:14</a> (declaration)</i></div>
+            <div><i>alog-facilities.adb:170:14 (body)</i></div>
+            <div><i>alog-facilities.adb:176:8 (label)</i></div>
+        </div>
+        <div class='comment'>Enable/disable whether the loglevel is written for log messages.&#10;</div>
+      </div>
+      <div class="class">
+        <h3>
+          <a name='alog-facilities.ads:99:13' id='alog-facilities.ads:99:13'></a>
+<span class="droplink">Is_Write_Loglevel<ul>
+  <li><a href="src_alog-facilities.ads.html#l99">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">function</span> <span class="name"><b>Is_Write_Loglevel</b></span> <table><tr><td>(</td><td><span class="name"><a name="alog-facilities.ads:99:32"></a>Facility</span></td><td>: <a href="alog-facilities.ads.html#alog-facilities.ads:42:12" title="defined at alog-facilities.ads:42:12">Class</a>)</td></tr></table><span class="keyword">return</span> Boolean;</pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-facilities.ads.html#l99" title="alog-facilities.ads:99:13">alog-facilities.ads:99:13</a> (declaration)</i></div>
+            <div><i>alog-facilities.adb:91:13 (body)</i></div>
+            <div><i>alog-facilities.adb:94:8 (label)</i></div>
+            <div><i>alog-facilities.adb:130:22 (reference)</i></div>
+        </div>
+        <div class='profile'>
+          <h4>Called by:</h4>
+            <div><i><a href="alog-facilities.ads.html#alog-facilities.ads:66:14" title="defined at alog-facilities.ads:66:14">Process</a> defined at <a href="src_alog-facilities.ads.html#l66" title="alog-facilities.ads:66:14">alog-facilities.ads:66:14</a></i></div>
+        </div>
+        <div class='comment'>Returns the current value of Write_Loglevel.&#10;</div>
+      </div>
+      <div class="class">
+        <h3>
+          <a name='alog-facilities.ads:102:14' id='alog-facilities.ads:102:14'></a>
+<span class="droplink">Toggle_Write_Source<ul>
+  <li><a href="src_alog-facilities.ads.html#l102">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">procedure</span> <span class="name"><b>Toggle_Write_Source</b></span>     <table><tr><td>(</td><td><span class="name"><a name="alog-facilities.ads:103:7"></a>Facility</span></td><td>: <span class="keyword">in</span> <span class="keyword">out</span> <a href="alog-facilities.ads.html#alog-facilities.ads:42:12" title="defined at alog-facilities.ads:42:12">Class</a>;</td></tr><tr><td></td><td><span class="name"><a name="alog-facilities.ads:104:7"></a>State</span></td><td>:        Boolean);</td></tr></table></pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-facilities.ads.html#l102" title="alog-facilities.ads:102:14">alog-facilities.ads:102:14</a> (declaration)</i></div>
+            <div><i>alog-facilities.adb:180:14 (body)</i></div>
+            <div><i>alog-facilities.adb:186:8 (label)</i></div>
+        </div>
+        <div class='comment'>Enable/disable whether the source of the message is logged.&#10;</div>
+      </div>
+      <div class="class">
+        <h3>
+          <a name='alog-facilities.ads:107:13' id='alog-facilities.ads:107:13'></a>
+<span class="droplink">Is_Write_Source<ul>
+  <li><a href="src_alog-facilities.ads.html#l107">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">function</span> <span class="name"><b>Is_Write_Source</b></span> <table><tr><td>(</td><td><span class="name"><a name="alog-facilities.ads:107:30"></a>Facility</span></td><td>: <a href="alog-facilities.ads.html#alog-facilities.ads:42:12" title="defined at alog-facilities.ads:42:12">Class</a>)</td></tr></table><span class="keyword">return</span> Boolean;</pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-facilities.ads.html#l107" title="alog-facilities.ads:107:13">alog-facilities.ads:107:13</a> (declaration)</i></div>
+            <div><i>alog-facilities.adb:98:13 (body)</i></div>
+            <div><i>alog-facilities.adb:101:8 (label)</i></div>
+            <div><i>alog-facilities.adb:135:49 (reference)</i></div>
+        </div>
+        <div class='profile'>
+          <h4>Called by:</h4>
+            <div><i><a href="alog-facilities.ads.html#alog-facilities.ads:66:14" title="defined at alog-facilities.ads:66:14">Process</a> defined at <a href="src_alog-facilities.ads.html#l66" title="alog-facilities.ads:66:14">alog-facilities.ads:66:14</a></i></div>
+        </div>
+        <div class='comment'>Returns True if writing of log message sources is enabled.&#10;</div>
+      </div>
+      <div class="class">
+        <h3>
+          <a name='alog-facilities.ads:110:14' id='alog-facilities.ads:110:14'></a>
+<span class="droplink">Setup<ul>
+  <li><a href="src_alog-facilities.ads.html#l110">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">procedure</span> <span class="name"><b>Setup</b></span> <table><tr><td>(</td><td><span class="name"><a name="alog-facilities.ads:110:21"></a>Facility</span></td><td>: <span class="keyword">in</span> <span class="keyword">out</span> <a href="alog-facilities.ads.html#alog-facilities.ads:38:9" title="defined at alog-facilities.ads:38:9">Instance</a>)</td></tr></table><span class="keyword">is</span> <span class="keyword">null</span>;</pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-facilities.ads.html#l110" title="alog-facilities.ads:110:14">alog-facilities.ads:110:14</a> (declaration)</i></div>
+        </div>
+        <div class='comment'>Each facility must provide a Setup-procedure. These procedures are called&#10;by Logger instances when attaching Facilities. All needed operations&#10;prior to writing log messages should be done here.&#10;</div>
+      </div>
+      <div class="class">
+        <h3>
+          <a name='alog-facilities.ads:115:14' id='alog-facilities.ads:115:14'></a>
+<span class="droplink">Teardown<ul>
+  <li><a href="src_alog-facilities.ads.html#l115">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">procedure</span> <span class="name"><b>Teardown</b></span> <table><tr><td>(</td><td><span class="name"><a name="alog-facilities.ads:115:24"></a>Facility</span></td><td>: <span class="keyword">in</span> <span class="keyword">out</span> <a href="alog-facilities.ads.html#alog-facilities.ads:38:9" title="defined at alog-facilities.ads:38:9">Instance</a>)</td></tr></table><span class="keyword">is</span> <span class="keyword">null</span>;</pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-facilities.ads.html#l115" title="alog-facilities.ads:115:14">alog-facilities.ads:115:14</a> (declaration)</i></div>
+            <div><i>alog-logger.adb:98:17 (dispatching call)</i></div>
+        </div>
+        <div class='profile'>
+          <h4>Called by:</h4>
+            <div><i>Alog.Logger.Clear.Teardown_Facility defined at alog-logger.adb:93:17</i></div>
+        </div>
+        <div class='comment'>Each facility must provide a Teardown-procedure. These procedures are&#10;called by Logger instances when detaching Facilities or when the logger&#10;object gets out of scope.&#10;</div>
+      </div>
+    </div>
+</div> <!-- documentation -->
+
+</body>
+</html>

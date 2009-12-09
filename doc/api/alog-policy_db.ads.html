@@ -1,0 +1,320 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html><head>
+  <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript"/>
+
+  <title>
+    Package: Alog.Policy_DB
+  </title>
+  <link rel='stylesheet' href='support/docgen.css' type='text/css'/>
+  <link rel='stylesheet' href='support/tags.css' type='text/css'/>
+  <script src='support/docgen.js' type='text/javascript' charset='utf-8'></script>
+</head>
+<body onload="onloadDoc();">
+
+<div id='leftSide'>
+  <div id='leftSideInside'>
+  <div id='header'>
+    <h2 class="button">Documentation</h2>
+    <a href='index.html'><div class="button2">Table of Contents</div></a>
+
+    <a href='tree.html'><div class="button2">Class Inheritance Tree</div></a>
+
+  </div>
+
+  <div id='navigation'>
+    <h2 class="button">Navigation</h2>
+    <a href='#Description'><div class="button2">Description</div></a>
+    <a href='#Constants'><div class="button2">Constants &amp; Global variables</div></a>
+    <a href='#Methods'><div class="button2">Subprograms &amp; Entries</div></a>
+  </div><!-- navigation -->
+  </div>
+</div> <!-- leftSide -->
+
+<div class='default' id='rightSide'>
+ <div id='rightSideInside'>
+ <div id='Index'>
+  <h2>Index</h2>
+  <script type="text/javascript">
+    var names = new Array (
+new Array ('Alog_<wbr/>Default_<wbr/>Level', 'alog-policy_db.ads:30:4', 'var-spec'),
+new Array ('No_<wbr/>Ident_<wbr/>Loglevel', 'alog-policy_db.ads:92:4', 'var-spec'),
+new Array ('Set_<wbr/>Default_<wbr/>Loglevel', 'alog-policy_db.ads:33:14', 'subp-spec'),
+new Array ('Get_<wbr/>Default_<wbr/>Loglevel', 'alog-policy_db.ads:36:13', 'subp-spec'),
+new Array ('Set_<wbr/>Loglevel', 'alog-policy_db.ads:39:14', 'subp-spec'),
+new Array ('Set_<wbr/>Loglevel', 'alog-policy_db.ads:61:14', 'subp-spec'),
+new Array ('Get_<wbr/>Loglevel', 'alog-policy_db.ads:64:13', 'subp-spec'),
+new Array ('Lookup', 'alog-policy_db.ads:69:13', 'subp-spec'),
+new Array ('Reset', 'alog-policy_db.ads:73:14', 'subp-spec'),
+new Array ('Accept_<wbr/>Src', 'alog-policy_db.ads:76:13', 'subp-spec'),
+new Array ('Accept_<wbr/>Dst', 'alog-policy_db.ads:84:13', 'subp-spec'),
+      new Array ('dummy', '', ''));
+    printIndexList (names);
+  </script>
+  <noscript>
+    <ul>
+      <li class='var-spec'><a href="#alog-policy_db.ads:30:4">Alog_<wbr/>Default_<wbr/>Level</a></li>
+      <li class='var-spec'><a href="#alog-policy_db.ads:92:4">No_<wbr/>Ident_<wbr/>Loglevel</a></li>
+      <li class='subp-spec'><a href="#alog-policy_db.ads:33:14">Set_<wbr/>Default_<wbr/>Loglevel</a></li>
+      <li class='subp-spec'><a href="#alog-policy_db.ads:36:13">Get_<wbr/>Default_<wbr/>Loglevel</a></li>
+      <li class='subp-spec'><a href="#alog-policy_db.ads:39:14">Set_<wbr/>Loglevel</a></li>
+      <li class='subp-spec'><a href="#alog-policy_db.ads:61:14">Set_<wbr/>Loglevel</a></li>
+      <li class='subp-spec'><a href="#alog-policy_db.ads:64:13">Get_<wbr/>Loglevel</a></li>
+      <li class='subp-spec'><a href="#alog-policy_db.ads:69:13">Lookup</a></li>
+      <li class='subp-spec'><a href="#alog-policy_db.ads:73:14">Reset</a></li>
+      <li class='subp-spec'><a href="#alog-policy_db.ads:76:13">Accept_<wbr/>Src</a></li>
+      <li class='subp-spec'><a href="#alog-policy_db.ads:84:13">Accept_<wbr/>Dst</a></li>
+    </ul>
+  </noscript>
+ </div>
+ </div>
+</div>
+
+<div class='default' id='documentation'>
+  <div class='title'>
+    Package:
+<span class="droplink"><i>Alog.Policy_DB</i><ul>
+  <li><a href="src_alog-policy_db.ads.html">Goto spec source</a></li>
+</ul></span>
+  </div>
+  <div class='subprograms'>
+    <h1><a name='Description' id='Description'></a>Description</h1>
+    <div class="class">
+    <div class='details'><pre><span class="keyword">package</span> <span class="name"><b>Alog.Policy_DB</b></span> <span class="keyword">is</span></pre></div>
+    <div class='comment'>Logging policy database package. This DB stores logging policies. Policies&#10;in the database are used inside the framework for logging decisions.&#10;</div>
+    </div>
+  </div>
+
+
+
+
+
+  <div class='subprograms'>
+    <h1><a name='Constants' id='Constants'></a>Constants &amp; Global variables</h1>
+    <div class="class">
+      <h3><a name='alog-policy_db.ads:30:4' id='alog-policy_db.ads:30:4'></a>
+<span class="droplink">Alog_Default_Level<ul>
+  <li><a href="src_alog-policy_db.ads.html#l30">Goto declaration in source</a></li>
+</ul></span>
+        <span class="type">(<a href="alog.ads.html#alog.ads:32:9" title="defined at alog.ads:32:9">Alog.Log_Level</a>)</span>
+      </h3>
+      <div class='details'><pre><span class="name"><b>Alog_Default_Level</b></span> : <span class="keyword">constant</span> <a href="alog.ads.html#alog.ads:32:9" title="defined at alog.ads:32:9">Log_Level</a> := Debug;</pre></div>
+      <div class='profile'>
+        <h4>References:</h4>
+          <div><i><a href="src_alog-policy_db.ads.html#l30" title="alog-policy_db.ads:30:4">alog-policy_db.ads:30:4</a> (declaration)</i></div>
+          <div><i>alog-policy_db.adb:26:44 (reference)</i></div>
+          <div><i>alog-policy_db.adb:100:35 (reference)</i></div>
+      </div>
+      <div class='comment'>Framework default loglevel.&#10;</div>
+    </div>
+    <div class="class">
+      <h3><a name='alog-policy_db.ads:92:4' id='alog-policy_db.ads:92:4'></a>
+<span class="droplink">No_Ident_Loglevel<ul>
+  <li><a href="src_alog-policy_db.ads.html#l92">Goto declaration in source</a></li>
+</ul></span>
+      </h3>
+      <div class='details'><pre><span class="name"><b>No_Ident_Loglevel</b></span> : <span class="keyword">exception</span>;</pre></div>
+      <div class='profile'>
+        <h4>References:</h4>
+          <div><i><a href="src_alog-policy_db.ads.html#l92" title="alog-policy_db.ads:92:4">alog-policy_db.ads:92:4</a> (declaration)</i></div>
+          <div><i>alog-policy_db.adb:77:16 (reference)</i></div>
+      </div>
+      <div class='comment'>Will be raised if loglevel is not found for a requested identifier.&#10;</div>
+    </div>
+  </div>
+
+    <div class='subprograms'>
+      <h1><a name='Methods' id='Methods'></a>Subprograms &amp; Entries</h1>
+      <div class="class">
+        <h3>
+          <a name='alog-policy_db.ads:33:14' id='alog-policy_db.ads:33:14'></a>
+<span class="droplink">Set_Default_Loglevel<ul>
+  <li><a href="src_alog-policy_db.ads.html#l33">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">procedure</span> <span class="name"><b>Set_Default_Loglevel</b></span> <table><tr><td>(</td><td><span class="name"><a name="alog-policy_db.ads:33:36"></a>Level</span></td><td>: <a href="alog.ads.html#alog.ads:32:9" title="defined at alog.ads:32:9">Log_Level</a>);</td></tr></table></pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-policy_db.ads.html#l33" title="alog-policy_db.ads:33:14">alog-policy_db.ads:33:14</a> (declaration)</i></div>
+            <div><i>alog-policy_db.adb:106:14 (body)</i></div>
+            <div><i>alog-policy_db.adb:109:8 (label)</i></div>
+        </div>
+        <div class='comment'>Set given loglevel as default loglevel.&#10;</div>
+      </div>
+      <div class="class">
+        <h3>
+          <a name='alog-policy_db.ads:36:13' id='alog-policy_db.ads:36:13'></a>
+<span class="droplink">Get_Default_Loglevel<ul>
+  <li><a href="src_alog-policy_db.ads.html#l36">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">function</span> <span class="name"><b>Get_Default_Loglevel</b></span> <span class="keyword">return</span> <a href="alog.ads.html#alog.ads:32:9" title="defined at alog.ads:32:9">Log_Level</a>;</pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-policy_db.ads.html#l36" title="alog-policy_db.ads:36:13">alog-policy_db.ads:36:13</a> (declaration)</i></div>
+            <div><i>alog-policy_db.adb:64:13 (body)</i></div>
+            <div><i>alog-policy_db.adb:67:8 (label)</i></div>
+        </div>
+        <div class='comment'>Return current default loglevel.&#10;</div>
+      </div>
+      <div class="class">
+        <h3>
+          <a name='alog-policy_db.ads:39:14' id='alog-policy_db.ads:39:14'></a>
+<span class="droplink">Set_Loglevel<ul>
+  <li><a href="src_alog-policy_db.ads.html#l39">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">procedure</span> <span class="name"><b>Set_Loglevel</b></span>     <table><tr><td>(</td><td><span class="name"><a name="alog-policy_db.ads:40:7"></a>Identifier</span></td><td>: String;</td></tr><tr><td></td><td><span class="name"><a name="alog-policy_db.ads:41:7"></a>Level</span></td><td>: <a href="alog.ads.html#alog.ads:32:9" title="defined at alog.ads:32:9">Log_Level</a>);</td></tr></table></pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-policy_db.ads.html#l39" title="alog-policy_db.ads:39:14">alog-policy_db.ads:39:14</a> (declaration)</i></div>
+            <div><i>alog-policy_db.adb:113:14 (body)</i></div>
+            <div><i>alog-policy_db.adb:120:8 (label)</i></div>
+        </div>
+        <div class='profile'>
+          <h4>Calls:</h4>
+            <div><i>Alog.Maps.Insert defined at <a href="src_alog-maps.ads.html#l74" title="alog-maps.ads:74:14">alog-maps.ads:74:14</a></i></div>
+        </div>
+        <div class='comment'>Set given loglevel for specified identifier string. If the identifier is&#10;already present the loglevel is updated. Identifier strings are&#10;case-sensitive.&#10;&#10;Use wildcards to specify a loglevel for a range of identifiers.&#10;Identifier hierarchies are separated by dots, the wildcard is &apos;*&apos;. The&#10;following example sets a Debug loglevel for all log-identifiers in&#10;Foo.Bar (including Foo.Bar).&#10;&#10;Example:&#10;   Foo.Bar.* = Debug&#10;&#10;Direct matches take precedence over wildcard matches. In the following&#10;example the loglevel for identifier &apos;Foo.Bar&apos; is explicitly set to Info.&#10;&#10;Example:&#10;   Foo.Bar   = Info&#10;   Foo.Bar.* = Debug&#10;</div>
+      </div>
+      <div class="class">
+        <h3>
+          <a name='alog-policy_db.ads:61:14' id='alog-policy_db.ads:61:14'></a>
+<span class="droplink">Set_Loglevel<ul>
+  <li><a href="src_alog-policy_db.ads.html#l61">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">procedure</span> <span class="name"><b>Set_Loglevel</b></span> <table><tr><td>(</td><td><span class="name"><a name="alog-policy_db.ads:61:28"></a>Identifiers</span></td><td>: Maps.Wildcard_Level_Map);</td></tr></table></pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-policy_db.ads.html#l61" title="alog-policy_db.ads:61:14">alog-policy_db.ads:61:14</a> (declaration)</i></div>
+            <div><i>alog-policy_db.adb:124:14 (body)</i></div>
+            <div><i>alog-policy_db.adb:127:8 (label)</i></div>
+        </div>
+        <div class='comment'>Apply loglevels for identifiers stored in map.&#10;</div>
+      </div>
+      <div class="class">
+        <h3>
+          <a name='alog-policy_db.ads:64:13' id='alog-policy_db.ads:64:13'></a>
+<span class="droplink">Get_Loglevel<ul>
+  <li><a href="src_alog-policy_db.ads.html#l64">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">function</span> <span class="name"><b>Get_Loglevel</b></span> <table><tr><td>(</td><td><span class="name"><a name="alog-policy_db.ads:64:27"></a>Identifier</span></td><td>: String)</td></tr></table><span class="keyword">return</span> <a href="alog.ads.html#alog.ads:32:9" title="defined at alog.ads:32:9">Log_Level</a>;</pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-policy_db.ads.html#l64" title="alog-policy_db.ads:64:13">alog-policy_db.ads:64:13</a> (declaration)</i></div>
+            <div><i>alog-policy_db.adb:71:13 (body)</i></div>
+            <div><i>alog-policy_db.adb:79:8 (label)</i></div>
+        </div>
+        <div class='profile'>
+          <h4>Calls:</h4>
+            <div><i>Alog.Maps.Element defined at <a href="src_alog-maps.ads.html#l40" title="alog-maps.ads:40:13">alog-maps.ads:40:13</a></i></div>
+        </div>
+        <div class='comment'>Return loglevel for given identifier string. Raises No_Ident_Loglevel&#10;exception if no entry for given identifier is found (exact match only, no&#10;wildcard lookup).&#10;</div>
+      </div>
+      <div class="class">
+        <h3>
+          <a name='alog-policy_db.ads:69:13' id='alog-policy_db.ads:69:13'></a>
+<span class="droplink">Lookup<ul>
+  <li><a href="src_alog-policy_db.ads.html#l69">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">function</span> <span class="name"><b>Lookup</b></span> <table><tr><td>(</td><td><span class="name"><a name="alog-policy_db.ads:69:21"></a>Identifier</span></td><td>: String)</td></tr></table><span class="keyword">return</span> <a href="alog.ads.html#alog.ads:32:9" title="defined at alog.ads:32:9">Log_Level</a>;</pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-policy_db.ads.html#l69" title="alog-policy_db.ads:69:13">alog-policy_db.ads:69:13</a> (declaration)</i></div>
+            <div><i>alog-policy_db.adb:59:23 (reference)</i></div>
+            <div><i>alog-policy_db.adb:83:13 (body)</i></div>
+            <div><i>alog-policy_db.adb:94:8 (label)</i></div>
+        </div>
+        <div class='profile'>
+          <h4>Called by:</h4>
+            <div><i><a href="alog-policy_db.ads.html#alog-policy_db.ads:76:13" title="defined at alog-policy_db.ads:76:13">Accept_Src</a> defined at <a href="src_alog-policy_db.ads.html#l76" title="alog-policy_db.ads:76:13">alog-policy_db.ads:76:13</a></i></div>
+        </div>
+        <div class='profile'>
+          <h4>Calls:</h4>
+            <div><i>Alog.Maps.Element defined at <a href="src_alog-maps.ads.html#l46" title="alog-maps.ads:46:13">alog-maps.ads:46:13</a></i></div>
+            <div><i>Alog.Maps.Lookup defined at <a href="src_alog-maps.ads.html#l56" title="alog-maps.ads:56:13">alog-maps.ads:56:13</a></i></div>
+        </div>
+        <div class='comment'>Return loglevel for given identifier string. Returns the closest match,&#10;if no associated loglevel is found the default loglevel is returned.&#10;</div>
+      </div>
+      <div class="class">
+        <h3>
+          <a name='alog-policy_db.ads:73:14' id='alog-policy_db.ads:73:14'></a>
+<span class="droplink">Reset<ul>
+  <li><a href="src_alog-policy_db.ads.html#l73">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">procedure</span> <span class="name"><b>Reset</b></span>;</pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-policy_db.ads.html#l73" title="alog-policy_db.ads:73:14">alog-policy_db.ads:73:14</a> (declaration)</i></div>
+            <div><i>alog-policy_db.adb:98:14 (body)</i></div>
+            <div><i>alog-policy_db.adb:102:8 (label)</i></div>
+        </div>
+        <div class='profile'>
+          <h4>Calls:</h4>
+            <div><i>Alog.Maps.Clear defined at <a href="src_alog-maps.ads.html#l81" title="alog-maps.ads:81:14">alog-maps.ads:81:14</a></i></div>
+        </div>
+        <div class='comment'>Reset the logging policy database to the initial state.&#10;</div>
+      </div>
+      <div class="class">
+        <h3>
+          <a name='alog-policy_db.ads:76:13' id='alog-policy_db.ads:76:13'></a>
+<span class="droplink">Accept_Src<ul>
+  <li><a href="src_alog-policy_db.ads.html#l76">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">function</span> <span class="name"><b>Accept_Src</b></span>     <table><tr><td>(</td><td><span class="name"><a name="alog-policy_db.ads:77:7"></a>Identifier</span></td><td>: String := <span class="string">""</span>;</td></tr><tr><td></td><td><span class="name"><a name="alog-policy_db.ads:78:7"></a>Level</span></td><td>: <a href="alog.ads.html#alog.ads:32:9" title="defined at alog.ads:32:9">Log_Level</a>)</td></tr></table><span class="keyword">return</span> Boolean;</pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-policy_db.ads.html#l76" title="alog-policy_db.ads:76:13">alog-policy_db.ads:76:13</a> (declaration)</i></div>
+            <div><i>alog-active_logger.adb:173:20 (reference)</i></div>
+            <div><i>alog-logger.adb:240:20 (reference)</i></div>
+            <div><i>alog-policy_db.adb:53:13 (body)</i></div>
+            <div><i>alog-policy_db.adb:60:8 (label)</i></div>
+        </div>
+        <div class='profile'>
+          <h4>Called by:</h4>
+            <div><i><a href="alog-active_logger.ads.html#alog-active_logger.ads:98:14" title="defined at alog-active_logger.ads:98:14">Alog.Active_Logger.Log_Message</a> defined at <a href="src_alog-active_logger.ads.html#l98" title="alog-active_logger.ads:98:14">alog-active_logger.ads:98:14</a></i></div>
+            <div><i><a href="alog-logger.ads.html#alog-logger.ads:114:14" title="defined at alog-logger.ads:114:14">Alog.Logger.Log_Message</a> defined at <a href="src_alog-logger.ads.html#l114" title="alog-logger.ads:114:14">alog-logger.ads:114:14</a></i></div>
+        </div>
+        <div class='profile'>
+          <h4>Calls:</h4>
+            <div><i><a href="alog-policy_db.ads.html#alog-policy_db.ads:69:13" title="defined at alog-policy_db.ads:69:13">Lookup</a> defined at <a href="src_alog-policy_db.ads.html#l69" title="alog-policy_db.ads:69:13">alog-policy_db.ads:69:13</a></i></div>
+        </div>
+        <div class='comment'>Returns True if the given loglevel is accepted for a source identifier.&#10;If no identifier is given, the loglevel is verified against the default&#10;loglevel.&#10;</div>
+      </div>
+      <div class="class">
+        <h3>
+          <a name='alog-policy_db.ads:84:13' id='alog-policy_db.ads:84:13'></a>
+<span class="droplink">Accept_Dst<ul>
+  <li><a href="src_alog-policy_db.ads.html#l84">Goto spec in source</a></li>
+</ul></span>
+        </h3>
+        <div class='details'><pre><span class="keyword">function</span> <span class="name"><b>Accept_Dst</b></span>     <table><tr><td>(</td><td><span class="name"><a name="alog-policy_db.ads:85:7"></a>Identifier</span></td><td>: String;</td></tr><tr><td></td><td><span class="name"><a name="alog-policy_db.ads:86:7"></a>Level</span></td><td>: <a href="alog.ads.html#alog.ads:32:9" title="defined at alog.ads:32:9">Log_Level</a>)</td></tr></table><span class="keyword">return</span> Boolean;</pre></div>
+        <div class='profile'>
+          <h4>References:</h4>
+            <div><i><a href="src_alog-policy_db.ads.html#l84" title="alog-policy_db.ads:84:13">alog-policy_db.ads:84:13</a> (declaration)</i></div>
+            <div><i>alog-facilities.adb:121:20 (reference)</i></div>
+            <div><i>alog-policy_db.adb:34:13 (body)</i></div>
+            <div><i>alog-policy_db.adb:49:8 (label)</i></div>
+        </div>
+        <div class='profile'>
+          <h4>Called by:</h4>
+            <div><i><a href="alog-facilities.ads.html#alog-facilities.ads:66:14" title="defined at alog-facilities.ads:66:14">Alog.Facilities.Process</a> defined at <a href="src_alog-facilities.ads.html#l66" title="alog-facilities.ads:66:14">alog-facilities.ads:66:14</a></i></div>
+        </div>
+        <div class='profile'>
+          <h4>Calls:</h4>
+            <div><i>Alog.Maps.Element defined at <a href="src_alog-maps.ads.html#l46" title="alog-maps.ads:46:13">alog-maps.ads:46:13</a></i></div>
+            <div><i>Alog.Maps.Lookup defined at <a href="src_alog-maps.ads.html#l56" title="alog-maps.ads:56:13">alog-maps.ads:56:13</a></i></div>
+        </div>
+        <div class='comment'>Returns True if the given loglevel is accepted for a destination&#10;identifier. If no match for the given identifier is found True is&#10;returned.&#10;</div>
+      </div>
+    </div>
+</div> <!-- documentation -->
+
+</body>
+</html>

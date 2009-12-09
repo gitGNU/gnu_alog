@@ -1,0 +1,505 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html><head>
+  <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript"/>
+
+  <title>
+    Package: Alog.Protected_Containers
+  </title>
+  <link rel='stylesheet' href='support/docgen.css' type='text/css'/>
+  <link rel='stylesheet' href='support/tags.css' type='text/css'/>
+  <script src='support/docgen.js' type='text/javascript' charset='utf-8'></script>
+</head>
+<body onload="onloadDoc();">
+
+<div id='leftSide'>
+  <div id='leftSideInside'>
+  <div id='header'>
+    <h2 class="button">Documentation</h2>
+    <a href='index.html'><div class="button2">Table of Contents</div></a>
+
+    <a href='tree.html'><div class="button2">Class Inheritance Tree</div></a>
+
+  </div>
+
+  <div id='navigation'>
+    <h2 class="button">Navigation</h2>
+    <a href='#Description'><div class="button2">Description</div></a>
+    <a href='#Tasks'><div class="button2">Tasks &amp; Protected</div></a>
+    <a href='#Types'><div class="button2">Types</div></a>
+  </div><!-- navigation -->
+  </div>
+</div> <!-- leftSide -->
+
+<div class='default' id='rightSide'>
+ <div id='rightSideInside'>
+ <div id='Index'>
+  <h2>Index</h2>
+  <script type="text/javascript">
+    var names = new Array (
+new Array ('Log_<wbr/>Request_<wbr/>List', 'alog-protected_containers.ads:41:19', 'var-spec'),
+new Array ('Protected_<wbr/>Exception_<wbr/>Map', 'alog-protected_containers.ads:83:19', 'var-spec'),
+new Array ('Log_<wbr/>Request_<wbr/>Storage', 'alog-protected_containers.ads:39:9', 'type-spec'),
+new Array ('Exception_<wbr/>Storage', 'alog-protected_containers.ads:81:9', 'type-spec'),
+new Array ('Log_<wbr/>Request_<wbr/>List.<wbr/>Put', 'alog-protected_containers.ads:43:17', 'subp-spec'),
+new Array ('Log_<wbr/>Request_<wbr/>List.<wbr/>Get (abstract)', 'alog-protected_containers.ads:46:13', 'subp-spec'),
+new Array ('Log_<wbr/>Request_<wbr/>List.<wbr/>Done', 'alog-protected_containers.ads:49:17', 'subp-spec'),
+new Array ('Log_<wbr/>Request_<wbr/>List.<wbr/>All_<wbr/>Done (abstract)', 'alog-protected_containers.ads:52:13', 'subp-spec'),
+new Array ('Log_<wbr/>Request_<wbr/>List.<wbr/>Clear', 'alog-protected_containers.ads:58:17', 'subp-spec'),
+new Array ('Log_<wbr/>Request_<wbr/>List.<wbr/>Length', 'alog-protected_containers.ads:61:16', 'subp-spec'),
+new Array ('Log_<wbr/>Request_<wbr/>List.<wbr/>Pending', 'alog-protected_containers.ads:64:16', 'subp-spec'),
+new Array ('Protected_<wbr/>Exception_<wbr/>Map.<wbr/>Insert', 'alog-protected_containers.ads:85:17', 'subp-spec'),
+new Array ('Protected_<wbr/>Exception_<wbr/>Map.<wbr/>Get', 'alog-protected_containers.ads:91:17', 'subp-spec'),
+new Array ('Protected_<wbr/>Exception_<wbr/>Map.<wbr/>Delete', 'alog-protected_containers.ads:97:17', 'subp-spec'),
+new Array ('Protected_<wbr/>Exception_<wbr/>Map.<wbr/>Contains', 'alog-protected_containers.ads:102:16', 'subp-spec'),
+new Array ('Protected_<wbr/>Exception_<wbr/>Map.<wbr/>Is_<wbr/>Empty', 'alog-protected_containers.ads:105:16', 'subp-spec'),
+new Array ('Protected_<wbr/>Exception_<wbr/>Map.<wbr/>Clear', 'alog-protected_containers.ads:108:17', 'subp-spec'),
+      new Array ('dummy', '', ''));
+    printIndexList (names);
+  </script>
+  <noscript>
+    <ul>
+      <li class='task-spec'><a href="#alog-protected_containers.ads:41:19">Log_<wbr/>Request_<wbr/>List</a></li>
+      <li class='task-spec'><a href="#alog-protected_containers.ads:83:19">Protected_<wbr/>Exception_<wbr/>Map</a></li>
+      <li class='type-spec'><a href="#alog-protected_containers.ads:39:9">Log_<wbr/>Request_<wbr/>Storage</a></li>
+      <li class='type-spec'><a href="#alog-protected_containers.ads:81:9">Exception_<wbr/>Storage</a></li>
+        <li class='subp-spec'><a href="#alog-protected_containers.ads:43:17">Put</a></li>
+        <li class='subp-spec'><a href="#alog-protected_containers.ads:46:13">Get (abstract)</a></li>
+        <li class='subp-spec'><a href="#alog-protected_containers.ads:49:17">Done</a></li>
+        <li class='subp-spec'><a href="#alog-protected_containers.ads:52:13">All_<wbr/>Done (abstract)</a></li>
+        <li class='subp-spec'><a href="#alog-protected_containers.ads:58:17">Clear</a></li>
+        <li class='subp-spec'><a href="#alog-protected_containers.ads:61:16">Length</a></li>
+        <li class='subp-spec'><a href="#alog-protected_containers.ads:64:16">Pending</a></li>
+        <li class='subp-spec'><a href="#alog-protected_containers.ads:85:17">Insert</a></li>
+        <li class='subp-spec'><a href="#alog-protected_containers.ads:91:17">Get</a></li>
+        <li class='subp-spec'><a href="#alog-protected_containers.ads:97:17">Delete</a></li>
+        <li class='subp-spec'><a href="#alog-protected_containers.ads:102:16">Contains</a></li>
+        <li class='subp-spec'><a href="#alog-protected_containers.ads:105:16">Is_<wbr/>Empty</a></li>
+        <li class='subp-spec'><a href="#alog-protected_containers.ads:108:17">Clear</a></li>
+    </ul>
+  </noscript>
+ </div>
+ </div>
+</div>
+
+<div class='default' id='documentation'>
+  <div class='title'>
+    Package:
+<span class="droplink"><i>Alog.Protected_Containers</i><ul>
+  <li><a href="src_alog-protected_containers.ads.html">Goto spec source</a></li>
+</ul></span>
+  </div>
+  <div class='subprograms'>
+    <h1><a name='Description' id='Description'></a>Description</h1>
+    <div class="class">
+    <div class='details'><pre><span class="keyword">package</span> <span class="name"><b>Alog.Protected_Containers</b></span> <span class="keyword">is</span></pre></div>
+    <div class='comment'>Alog Protected Containers. This package provides protected containers which&#10;are safe for concurrent access.&#10;</div>
+    </div>
+  </div>
+
+
+
+  <div class='subprograms'>
+    <h1><a name='Tasks' id='Tasks'></a>Tasks &amp; Protected</h1>
+    <div class="class">
+      <h3>
+        <a name='alog-protected_containers.ads:41:19' id='alog-protected_containers.ads:41:19'></a>
+<span class="droplink">Log_Request_List<ul>
+  <li><a href="src_alog-protected_containers.ads.html#l41">Goto spec in source</a></li>
+</ul></span>
+         (protected type)
+      </h3>
+      <div class="details"><b>Entries:</b><a href="alog-protected_containers.ads.html#alog-protected_containers.ads:43:17" title="Put">Put</a>, <a href="alog-protected_containers.ads.html#alog-protected_containers.ads:46:13" title="Get">Get</a>, <a href="alog-protected_containers.ads.html#alog-protected_containers.ads:49:17" title="Done">Done</a>, <a href="alog-protected_containers.ads.html#alog-protected_containers.ads:52:13" title="All_Done">All_Done</a>, <a href="alog-protected_containers.ads.html#alog-protected_containers.ads:58:17" title="Clear">Clear</a>, <a href="alog-protected_containers.ads.html#alog-protected_containers.ads:61:16" title="Length">Length</a>, <a href="alog-protected_containers.ads.html#alog-protected_containers.ads:64:16" title="Pending">Pending</a></div>
+      <div class='profile'>
+          <h4>References:</h4>
+          <div><i><a href="src_alog-protected_containers.ads.html#l41" title="alog-protected_containers.ads:41:19">alog-protected_containers.ads:41:19</a> (declaration)</i></div>
+          <div><i><a href="src_alog-active_logger.ads.html#l164" title="alog-active_logger.ads:164:44">alog-active_logger.ads:164:44</a> (reference)</i></div>
+          <div><i>alog-protected_containers.adb:37:19 (body)</i></div>
+          <div><i>alog-protected_containers.adb:102:8 (label)</i></div>
+          <div><i><a href="src_alog-protected_containers.ads.html#l73" title="alog-protected_containers.ads:73:8">alog-protected_containers.ads:73:8</a> (label)</i></div>
+      </div>
+      <div class='comment'>Protected variant of a log request list. This list holds log request&#10;objects and is safe for concurrent access. It operates in FIFO-Mode.&#10;</div>
+    </div>
+    <div class="class">
+      <h3>
+        <a name='alog-protected_containers.ads:83:19' id='alog-protected_containers.ads:83:19'></a>
+<span class="droplink">Protected_Exception_Map<ul>
+  <li><a href="src_alog-protected_containers.ads.html#l83">Goto spec in source</a></li>
+</ul></span>
+         (protected type)
+      </h3>
+      <div class="details"><b>Entries:</b><a href="alog-protected_containers.ads.html#alog-protected_containers.ads:85:17" title="Insert">Insert</a>, <a href="alog-protected_containers.ads.html#alog-protected_containers.ads:91:17" title="Get">Get</a>, <a href="alog-protected_containers.ads.html#alog-protected_containers.ads:97:17" title="Delete">Delete</a>, <a href="alog-protected_containers.ads.html#alog-protected_containers.ads:102:16" title="Contains">Contains</a>, <a href="alog-protected_containers.ads.html#alog-protected_containers.ads:105:16" title="Is_Empty">Is_Empty</a>, <a href="alog-protected_containers.ads.html#alog-protected_containers.ads:108:17" title="Clear">Clear</a></div>
+      <div class='profile'>
+          <h4>References:</h4>
+          <div><i><a href="src_alog-protected_containers.ads.html#l83" title="alog-protected_containers.ads:83:19">alog-protected_containers.ads:83:19</a> (declaration)</i></div>
+          <div><i>alog-protected_containers.adb:106:19 (body)</i></div>
+          <div><i>alog-protected_containers.adb:169:8 (label)</i></div>
+          <div><i><a href="src_alog-protected_containers.ads.html#l116" title="alog-protected_containers.ads:116:8">alog-protected_containers.ads:116:8</a> (label)</i></div>
+          <div><i>alog-tasked_logger.adb:51:52 (reference)</i></div>
+      </div>
+      <div class='profile'>
+          <h4>Called by:</h4>
+          <div><i><a href="alog-tasked_logger.ads.html#alog-tasked_logger.ads:39:14" title="defined at alog-tasked_logger.ads:39:14">Alog.Tasked_Logger.Instance</a> defined at <a href="src_alog-tasked_logger.ads.html#l39" title="alog-tasked_logger.ads:39:14">alog-tasked_logger.ads:39:14</a></i></div>
+      </div>
+      <div class='comment'>Protected map of exceptions. To make memory management more robust only&#10;copies of Excpetion_Occurrences and not handles are returned by the map.&#10;The memory of an occurrence pointed to by a previously inserted handle is&#10;freed upon calling Delete, Clear or during finalization of the protected&#10;type.&#10;</div>
+    </div>
+  </div>
+
+  <div class='subprograms'>
+    <h1><a name='Types' id='Types'></a>Types</h1>
+    <div class="class">
+      <h3>
+        <a name='alog-protected_containers.ads:39:9' id='alog-protected_containers.ads:39:9'></a>
+<span class="droplink">Log_Request_Storage<ul>
+  <li><a href="src_alog-protected_containers.ads.html#l39">Goto declaration in source</a></li>
+  <li><a href="src_alog-protected_containers.ads.html#l133">Goto full declaration in source</a></li>
+</ul></span>
+      </h3>
+      <div class='details'><pre><span class="keyword">type</span> <span class="name"><b>Log_Request_Storage</b></span> <span class="keyword">is</span> <span class="keyword">private</span>;</pre></div>
+      <div class='profile'>
+          <h4>References:</h4>
+          <div><i><a href="src_alog-protected_containers.ads.html#l39" title="alog-protected_containers.ads:39:9">alog-protected_containers.ads:39:9</a> (declaration)</i></div>
+          <div><i><a href="src_alog-protected_containers.ads.html#l69" title="alog-protected_containers.ads:69:28">alog-protected_containers.ads:69:28</a> (reference)</i></div>
+          <div><i><a href="src_alog-protected_containers.ads.html#l133" title="alog-protected_containers.ads:133:9">alog-protected_containers.ads:133:9</a> (full declaration)</i></div>
+      </div>
+    </div>
+    <div class="class">
+      <h3>
+        <a name='alog-protected_containers.ads:81:9' id='alog-protected_containers.ads:81:9'></a>
+<span class="droplink">Exception_Storage<ul>
+  <li><a href="src_alog-protected_containers.ads.html#l81">Goto declaration in source</a></li>
+  <li><a href="src_alog-protected_containers.ads.html#l145">Goto full declaration in source</a></li>
+</ul></span>
+      </h3>
+      <div class='details'><pre><span class="keyword">type</span> <span class="name"><b>Exception_Storage</b></span> <span class="keyword">is</span> <span class="keyword">limited</span> <span class="keyword">private</span>;</pre></div>
+      <div class='profile'>
+          <h4>References:</h4>
+          <div><i><a href="src_alog-protected_containers.ads.html#l81" title="alog-protected_containers.ads:81:9">alog-protected_containers.ads:81:9</a> (declaration)</i></div>
+          <div><i><a href="src_alog-protected_containers.ads.html#l114" title="alog-protected_containers.ads:114:14">alog-protected_containers.ads:114:14</a> (reference)</i></div>
+          <div><i><a href="src_alog-protected_containers.ads.html#l145" title="alog-protected_containers.ads:145:9">alog-protected_containers.ads:145:9</a> (full declaration)</i></div>
+      </div>
+    </div>
+  </div>
+
+
+    <div class='subprograms'>
+      <h1><a name='Methods' id='Methods'></a>Subprograms &amp; Entries</h1>
+        <div class='class'>
+          <div>
+            <h3>
+              <a name='alog-protected_containers.ads:43:17' id='alog-protected_containers.ads:43:17'></a>
+              <span class="type"><a href="#alog-protected_containers.ads:41:19">Log_Request_List</a></span>.
+<span class="droplink">Put<ul>
+  <li><a href="src_alog-protected_containers.ads.html#l43">Goto spec in source</a></li>
+</ul></span>
+            </h3>
+            <div class='details'><pre><span class="keyword">procedure</span> <span class="name"><b>Put</b></span> <table><tr><td>(</td><td><span class="name"><a name="alog-protected_containers.ads:43:22"></a>Element</span></td><td>: <a href="alog-log_request.ads.html#alog-log_request.ads:33:9" title="defined at alog-log_request.ads:33:9">Log_Request.Instance</a>);</td></tr></table></pre></div>
+            <div class='profile'>
+              <h4>References:</h4>
+                <div><i><a href="src_alog-protected_containers.ads.html#l43" title="alog-protected_containers.ads:43:17">alog-protected_containers.ads:43:17</a> (declaration)</i></div>
+                <div><i>alog-active_logger.adb:185:34 (reference)</i></div>
+                <div><i>alog-protected_containers.adb:96:17 (body)</i></div>
+                <div><i>alog-protected_containers.adb:100:11 (label)</i></div>
+            </div>
+            <div class='profile'>
+              <h4>Called by:</h4>
+                <div><i><a href="alog-active_logger.ads.html#alog-active_logger.ads:98:14" title="defined at alog-active_logger.ads:98:14">Alog.Active_Logger.Log_Message</a> defined at <a href="src_alog-active_logger.ads.html#l98" title="alog-active_logger.ads:98:14">alog-active_logger.ads:98:14</a></i></div>
+            </div>
+            <div class='comment'>Put an element at the end of the request list.&#10;</div>
+          </div>
+        </div>
+        <div class='class'>
+          <div>
+            <h3>
+              <a name='alog-protected_containers.ads:46:13' id='alog-protected_containers.ads:46:13'></a>
+              <span class="type"><a href="#alog-protected_containers.ads:41:19">Log_Request_List</a></span>.
+<span class="droplink">Get (abstract)<ul>
+  <li><a href="src_alog-protected_containers.ads.html#l46">Goto spec in source</a></li>
+</ul></span>
+            </h3>
+            <div class='details'><pre><span class="keyword">entry</span> <span class="name"><b>Get</b></span> <table><tr><td>(</td><td><span class="name"><a name="alog-protected_containers.ads:46:18"></a>Element</span></td><td>: <span class="keyword">out</span> <a href="alog-log_request.ads.html#alog-log_request.ads:33:9" title="defined at alog-log_request.ads:33:9">Log_Request.Instance</a>);</td></tr></table></pre></div>
+            <div class='profile'>
+              <h4>References:</h4>
+                <div><i><a href="src_alog-protected_containers.ads.html#l46" title="alog-protected_containers.ads:46:13">alog-protected_containers.ads:46:13</a> (declaration)</i></div>
+                <div><i>alog-active_logger.adb:263:37 (reference)</i></div>
+                <div><i>alog-protected_containers.adb:68:13 (body)</i></div>
+                <div><i>alog-protected_containers.adb:78:11 (label)</i></div>
+            </div>
+            <div class='profile'>
+              <h4>Called by:</h4>
+                <div><i>Alog.Active_Logger.Logging_Task defined at <a href="src_alog-active_logger.ads.html#l149" title="alog-active_logger.ads:149:14">alog-active_logger.ads:149:14</a></i></div>
+            </div>
+            <div class='comment'>Get the first element from the list (and delete it).&#10;</div>
+          </div>
+        </div>
+        <div class='class'>
+          <div>
+            <h3>
+              <a name='alog-protected_containers.ads:49:17' id='alog-protected_containers.ads:49:17'></a>
+              <span class="type"><a href="#alog-protected_containers.ads:41:19">Log_Request_List</a></span>.
+<span class="droplink">Done<ul>
+  <li><a href="src_alog-protected_containers.ads.html#l49">Goto spec in source</a></li>
+</ul></span>
+            </h3>
+            <div class='details'><pre><span class="keyword">procedure</span> <span class="name"><b>Done</b></span>;</pre></div>
+            <div class='profile'>
+              <h4>References:</h4>
+                <div><i><a href="src_alog-protected_containers.ads.html#l49" title="alog-protected_containers.ads:49:17">alog-protected_containers.ads:49:17</a> (declaration)</i></div>
+                <div><i>alog-active_logger.adb:272:37 (reference)</i></div>
+                <div><i>alog-protected_containers.adb:58:17 (body)</i></div>
+                <div><i>alog-protected_containers.adb:64:11 (label)</i></div>
+            </div>
+            <div class='profile'>
+              <h4>Called by:</h4>
+                <div><i>Alog.Active_Logger.Logging_Task defined at <a href="src_alog-active_logger.ads.html#l149" title="alog-active_logger.ads:149:14">alog-active_logger.ads:149:14</a></i></div>
+            </div>
+            <div class='comment'>Signal successfull processing of request previously gotten from list.&#10;</div>
+          </div>
+        </div>
+        <div class='class'>
+          <div>
+            <h3>
+              <a name='alog-protected_containers.ads:52:13' id='alog-protected_containers.ads:52:13'></a>
+              <span class="type"><a href="#alog-protected_containers.ads:41:19">Log_Request_List</a></span>.
+<span class="droplink">All_Done (abstract)<ul>
+  <li><a href="src_alog-protected_containers.ads.html#l52">Goto spec in source</a></li>
+</ul></span>
+            </h3>
+            <div class='details'><pre><span class="keyword">entry</span> <span class="name"><b>All_Done</b></span>;</pre></div>
+            <div class='profile'>
+              <h4>References:</h4>
+                <div><i><a href="src_alog-protected_containers.ads.html#l52" title="alog-protected_containers.ads:52:13">alog-protected_containers.ads:52:13</a> (declaration)</i></div>
+                <div><i>alog-active_logger.adb:35:28 (reference)</i></div>
+                <div><i>alog-active_logger.adb:201:31 (reference)</i></div>
+                <div><i>alog-protected_containers.adb:41:13 (body)</i></div>
+                <div><i>alog-protected_containers.adb:46:11 (label)</i></div>
+            </div>
+            <div class='profile'>
+              <h4>Called by:</h4>
+                <div><i><a href="alog-active_logger.ads.html#alog-active_logger.ads:125:14" title="defined at alog-active_logger.ads:125:14">Alog.Active_Logger.All_Done</a> defined at <a href="src_alog-active_logger.ads.html#l125" title="alog-active_logger.ads:125:14">alog-active_logger.ads:125:14</a></i></div>
+                <div><i><a href="alog-active_logger.ads.html#alog-active_logger.ads:115:14" title="defined at alog-active_logger.ads:115:14">Alog.Active_Logger.Shutdown</a> defined at <a href="src_alog-active_logger.ads.html#l115" title="alog-active_logger.ads:115:14">alog-active_logger.ads:115:14</a></i></div>
+            </div>
+            <div class='comment'>This procedure blocks until the list is empty and there are no pending&#10;requests. A requests is pending when it is taken off the list via Get&#10;but it&apos;s successfull processing has not been signaled back via the&#10;procedure Done.&#10;</div>
+          </div>
+        </div>
+        <div class='class'>
+          <div>
+            <h3>
+              <a name='alog-protected_containers.ads:58:17' id='alog-protected_containers.ads:58:17'></a>
+              <span class="type"><a href="#alog-protected_containers.ads:41:19">Log_Request_List</a></span>.
+<span class="droplink">Clear<ul>
+  <li><a href="src_alog-protected_containers.ads.html#l58">Goto spec in source</a></li>
+</ul></span>
+            </h3>
+            <div class='details'><pre><span class="keyword">procedure</span> <span class="name"><b>Clear</b></span>;</pre></div>
+            <div class='profile'>
+              <h4>References:</h4>
+                <div><i><a href="src_alog-protected_containers.ads.html#l58" title="alog-protected_containers.ads:58:17">alog-protected_containers.ads:58:17</a> (declaration)</i></div>
+                <div><i>alog-protected_containers.adb:50:17 (body)</i></div>
+                <div><i>alog-protected_containers.adb:54:11 (label)</i></div>
+            </div>
+            <div class='comment'>Clear the request list by deleting all log requests.&#10;</div>
+          </div>
+        </div>
+        <div class='class'>
+          <div>
+            <h3>
+              <a name='alog-protected_containers.ads:61:16' id='alog-protected_containers.ads:61:16'></a>
+              <span class="type"><a href="#alog-protected_containers.ads:41:19">Log_Request_List</a></span>.
+<span class="droplink">Length<ul>
+  <li><a href="src_alog-protected_containers.ads.html#l61">Goto spec in source</a></li>
+</ul></span>
+            </h3>
+            <div class='details'><pre><span class="keyword">function</span> <span class="name"><b>Length</b></span> <span class="keyword">return</span> Natural;</pre></div>
+            <div class='profile'>
+              <h4>References:</h4>
+                <div><i><a href="src_alog-protected_containers.ads.html#l61" title="alog-protected_containers.ads:61:16">alog-protected_containers.ads:61:16</a> (declaration)</i></div>
+                <div><i>alog-active_logger.adb:142:35 (reference)</i></div>
+                <div><i>alog-protected_containers.adb:82:16 (body)</i></div>
+                <div><i>alog-protected_containers.adb:85:11 (label)</i></div>
+            </div>
+            <div class='profile'>
+              <h4>Called by:</h4>
+                <div><i><a href="alog-active_logger.ads.html#alog-active_logger.ads:112:13" title="defined at alog-active_logger.ads:112:13">Alog.Active_Logger.Get_Queue_Length</a> defined at <a href="src_alog-active_logger.ads.html#l112" title="alog-active_logger.ads:112:13">alog-active_logger.ads:112:13</a></i></div>
+            </div>
+            <div class='comment'>Return the number of elements in the list.&#10;</div>
+          </div>
+        </div>
+        <div class='class'>
+          <div>
+            <h3>
+              <a name='alog-protected_containers.ads:64:16' id='alog-protected_containers.ads:64:16'></a>
+              <span class="type"><a href="#alog-protected_containers.ads:41:19">Log_Request_List</a></span>.
+<span class="droplink">Pending<ul>
+  <li><a href="src_alog-protected_containers.ads.html#l64">Goto spec in source</a></li>
+</ul></span>
+            </h3>
+            <div class='details'><pre><span class="keyword">function</span> <span class="name"><b>Pending</b></span> <span class="keyword">return</span> Natural;</pre></div>
+            <div class='profile'>
+              <h4>References:</h4>
+                <div><i><a href="src_alog-protected_containers.ads.html#l64" title="alog-protected_containers.ads:64:16">alog-protected_containers.ads:64:16</a> (declaration)</i></div>
+                <div><i>alog-protected_containers.adb:89:16 (body)</i></div>
+                <div><i>alog-protected_containers.adb:92:11 (label)</i></div>
+            </div>
+            <div class='comment'>Return the number of pending requests.&#10;</div>
+          </div>
+        </div>
+        <div class='class'>
+          <div>
+            <h3>
+              <a name='alog-protected_containers.ads:85:17' id='alog-protected_containers.ads:85:17'></a>
+              <span class="type"><a href="#alog-protected_containers.ads:83:19">Protected_Exception_Map</a></span>.
+<span class="droplink">Insert<ul>
+  <li><a href="src_alog-protected_containers.ads.html#l85">Goto spec in source</a></li>
+</ul></span>
+            </h3>
+            <div class='details'><pre><span class="keyword">procedure</span> <span class="name"><b>Insert</b></span>        <table><tr><td>(</td><td><span class="name"><a name="alog-protected_containers.ads:86:10"></a>Key</span></td><td>: Ada.Task_Identification.Task_Id;</td></tr><tr><td></td><td><span class="name"><a name="alog-protected_containers.ads:87:10"></a>Item</span></td><td>: Ada.Exceptions.Exception_Occurrence_Access);</td></tr></table></pre></div>
+            <div class='profile'>
+              <h4>References:</h4>
+                <div><i><a href="src_alog-protected_containers.ads.html#l85" title="alog-protected_containers.ads:85:17">alog-protected_containers.ads:85:17</a> (declaration)</i></div>
+                <div><i>alog-protected_containers.adb:153:17 (body)</i></div>
+                <div><i>alog-protected_containers.adb:160:11 (label)</i></div>
+                <div><i>alog-tasked_logger.adb:116:33 (reference)</i></div>
+                <div><i>alog-tasked_logger.adb:138:33 (reference)</i></div>
+                <div><i>alog-tasked_logger.adb:231:33 (reference)</i></div>
+            </div>
+            <div class='profile'>
+              <h4>Called by:</h4>
+                <div><i><a href="alog-tasked_logger.ads.html#alog-tasked_logger.ads:39:14" title="defined at alog-tasked_logger.ads:39:14">Alog.Tasked_Logger.Instance</a> defined at <a href="src_alog-tasked_logger.ads.html#l39" title="alog-tasked_logger.ads:39:14">alog-tasked_logger.ads:39:14</a></i></div>
+                <div><i><a href="alog-tasked_logger.ads.html#alog-tasked_logger.ads:39:14" title="defined at alog-tasked_logger.ads:39:14">Alog.Tasked_Logger.Instance</a> defined at <a href="src_alog-tasked_logger.ads.html#l39" title="alog-tasked_logger.ads:39:14">alog-tasked_logger.ads:39:14</a></i></div>
+                <div><i><a href="alog-tasked_logger.ads.html#alog-tasked_logger.ads:39:14" title="defined at alog-tasked_logger.ads:39:14">Alog.Tasked_Logger.Instance</a> defined at <a href="src_alog-tasked_logger.ads.html#l39" title="alog-tasked_logger.ads:39:14">alog-tasked_logger.ads:39:14</a></i></div>
+            </div>
+            <div class='comment'>Insert the given Exception_Occurrence &apos;Element&apos; with key &apos;Key&apos; into&#10;the map.&#10;</div>
+          </div>
+        </div>
+        <div class='class'>
+          <div>
+            <h3>
+              <a name='alog-protected_containers.ads:91:17' id='alog-protected_containers.ads:91:17'></a>
+              <span class="type"><a href="#alog-protected_containers.ads:83:19">Protected_Exception_Map</a></span>.
+<span class="droplink">Get<ul>
+  <li><a href="src_alog-protected_containers.ads.html#l91">Goto spec in source</a></li>
+</ul></span>
+            </h3>
+            <div class='details'><pre><span class="keyword">procedure</span> <span class="name"><b>Get</b></span>        <table><tr><td>(</td><td><span class="name"><a name="alog-protected_containers.ads:92:10"></a>Key</span></td><td>:     Ada.Task_Identification.Task_Id;</td></tr><tr><td></td><td><span class="name"><a name="alog-protected_containers.ads:93:10"></a>Element</span></td><td>: <span class="keyword">out</span> Ada.Exceptions.Exception_Occurrence);</td></tr></table></pre></div>
+            <div class='profile'>
+              <h4>References:</h4>
+                <div><i><a href="src_alog-protected_containers.ads.html#l91" title="alog-protected_containers.ads:91:17">alog-protected_containers.ads:91:17</a> (declaration)</i></div>
+                <div><i>alog-protected_containers.adb:135:17 (body)</i></div>
+                <div><i>alog-protected_containers.adb:149:11 (label)</i></div>
+                <div><i>alog-tasked_logger.adb:191:30 (reference)</i></div>
+            </div>
+            <div class='profile'>
+              <h4>Called by:</h4>
+                <div><i><a href="alog-tasked_logger.ads.html#alog-tasked_logger.ads:100:13" title="defined at alog-tasked_logger.ads:100:13">Alog.Tasked_Logger.Instance.Get_Last_Exception</a> defined at <a href="src_alog-tasked_logger.ads.html#l100" title="alog-tasked_logger.ads:100:13">alog-tasked_logger.ads:100:13</a></i></div>
+            </div>
+            <div class='comment'>Get the Exception_Occurrence with key &apos;Key&apos; from the map. If the key&#10;is not found in the map Null_Occurrence is stored in element.&#10;</div>
+          </div>
+        </div>
+        <div class='class'>
+          <div>
+            <h3>
+              <a name='alog-protected_containers.ads:97:17' id='alog-protected_containers.ads:97:17'></a>
+              <span class="type"><a href="#alog-protected_containers.ads:83:19">Protected_Exception_Map</a></span>.
+<span class="droplink">Delete<ul>
+  <li><a href="src_alog-protected_containers.ads.html#l97">Goto spec in source</a></li>
+</ul></span>
+            </h3>
+            <div class='details'><pre><span class="keyword">procedure</span> <span class="name"><b>Delete</b></span> <table><tr><td>(</td><td><span class="name"><a name="alog-protected_containers.ads:97:25"></a>Key</span></td><td>: Ada.Task_Identification.Task_Id);</td></tr></table></pre></div>
+            <div class='profile'>
+              <h4>References:</h4>
+                <div><i><a href="src_alog-protected_containers.ads.html#l97" title="alog-protected_containers.ads:97:17">alog-protected_containers.ads:97:17</a> (declaration)</i></div>
+                <div><i>alog-protected_containers.adb:128:17 (body)</i></div>
+                <div><i>alog-protected_containers.adb:131:11 (label)</i></div>
+                <div><i>alog-tasked_logger.adb:107:30 (reference)</i></div>
+                <div><i>alog-tasked_logger.adb:130:30 (reference)</i></div>
+                <div><i>alog-tasked_logger.adb:220:30 (reference)</i></div>
+            </div>
+            <div class='profile'>
+              <h4>Called by:</h4>
+                <div><i><a href="alog-tasked_logger.ads.html#alog-tasked_logger.ads:39:14" title="defined at alog-tasked_logger.ads:39:14">Alog.Tasked_Logger.Instance</a> defined at <a href="src_alog-tasked_logger.ads.html#l39" title="alog-tasked_logger.ads:39:14">alog-tasked_logger.ads:39:14</a></i></div>
+                <div><i><a href="alog-tasked_logger.ads.html#alog-tasked_logger.ads:39:14" title="defined at alog-tasked_logger.ads:39:14">Alog.Tasked_Logger.Instance</a> defined at <a href="src_alog-tasked_logger.ads.html#l39" title="alog-tasked_logger.ads:39:14">alog-tasked_logger.ads:39:14</a></i></div>
+                <div><i><a href="alog-tasked_logger.ads.html#alog-tasked_logger.ads:39:14" title="defined at alog-tasked_logger.ads:39:14">Alog.Tasked_Logger.Instance</a> defined at <a href="src_alog-tasked_logger.ads.html#l39" title="alog-tasked_logger.ads:39:14">alog-tasked_logger.ads:39:14</a></i></div>
+            </div>
+            <div class='comment'>Delete the Exception_Occurrence with key &apos;Key&apos; from the map. Memory&#10;of the exception occurrence is freed. The user must make sure to not&#10;access deleted elements.&#10;</div>
+          </div>
+        </div>
+        <div class='class'>
+          <div>
+            <h3>
+              <a name='alog-protected_containers.ads:102:16' id='alog-protected_containers.ads:102:16'></a>
+              <span class="type"><a href="#alog-protected_containers.ads:83:19">Protected_Exception_Map</a></span>.
+<span class="droplink">Contains<ul>
+  <li><a href="src_alog-protected_containers.ads.html#l102">Goto spec in source</a></li>
+</ul></span>
+            </h3>
+            <div class='details'><pre><span class="keyword">function</span> <span class="name"><b>Contains</b></span> <table><tr><td>(</td><td><span class="name"><a name="alog-protected_containers.ads:102:26"></a>Key</span></td><td>: Ada.Task_Identification.Task_Id)</td></tr></table><span class="keyword">return</span> Boolean;</pre></div>
+            <div class='profile'>
+              <h4>References:</h4>
+                <div><i><a href="src_alog-protected_containers.ads.html#l102" title="alog-protected_containers.ads:102:16">alog-protected_containers.ads:102:16</a> (declaration)</i></div>
+                <div><i>alog-protected_containers.adb:118:16 (body)</i></div>
+                <div><i>alog-protected_containers.adb:124:11 (label)</i></div>
+                <div><i>alog-protected_containers.adb:140:13 (reference)</i></div>
+                <div><i>alog-tasked_logger.adb:106:30 (reference)</i></div>
+                <div><i>alog-tasked_logger.adb:129:30 (reference)</i></div>
+                <div><i>alog-tasked_logger.adb:219:30 (reference)</i></div>
+            </div>
+            <div class='profile'>
+              <h4>Called by:</h4>
+                <div><i><a href="alog-tasked_logger.ads.html#alog-tasked_logger.ads:39:14" title="defined at alog-tasked_logger.ads:39:14">Alog.Tasked_Logger.Instance</a> defined at <a href="src_alog-tasked_logger.ads.html#l39" title="alog-tasked_logger.ads:39:14">alog-tasked_logger.ads:39:14</a></i></div>
+                <div><i><a href="alog-tasked_logger.ads.html#alog-tasked_logger.ads:39:14" title="defined at alog-tasked_logger.ads:39:14">Alog.Tasked_Logger.Instance</a> defined at <a href="src_alog-tasked_logger.ads.html#l39" title="alog-tasked_logger.ads:39:14">alog-tasked_logger.ads:39:14</a></i></div>
+                <div><i><a href="alog-tasked_logger.ads.html#alog-tasked_logger.ads:39:14" title="defined at alog-tasked_logger.ads:39:14">Alog.Tasked_Logger.Instance</a> defined at <a href="src_alog-tasked_logger.ads.html#l39" title="alog-tasked_logger.ads:39:14">alog-tasked_logger.ads:39:14</a></i></div>
+                <div><i><a href="alog-protected_containers.ads.html#alog-protected_containers.ads:91:17" title="defined at alog-protected_containers.ads:91:17">Get</a> defined at <a href="src_alog-protected_containers.ads.html#l91" title="alog-protected_containers.ads:91:17">alog-protected_containers.ads:91:17</a></i></div>
+            </div>
+            <div class='comment'>Returns True if an element with key &apos;Key&apos; is in the map.&#10;</div>
+          </div>
+        </div>
+        <div class='class'>
+          <div>
+            <h3>
+              <a name='alog-protected_containers.ads:105:16' id='alog-protected_containers.ads:105:16'></a>
+              <span class="type"><a href="#alog-protected_containers.ads:83:19">Protected_Exception_Map</a></span>.
+<span class="droplink">Is_Empty<ul>
+  <li><a href="src_alog-protected_containers.ads.html#l105">Goto spec in source</a></li>
+</ul></span>
+            </h3>
+            <div class='details'><pre><span class="keyword">function</span> <span class="name"><b>Is_Empty</b></span> <span class="keyword">return</span> Boolean;</pre></div>
+            <div class='profile'>
+              <h4>References:</h4>
+                <div><i><a href="src_alog-protected_containers.ads.html#l105" title="alog-protected_containers.ads:105:16">alog-protected_containers.ads:105:16</a> (declaration)</i></div>
+                <div><i>alog-protected_containers.adb:164:16 (body)</i></div>
+                <div><i>alog-protected_containers.adb:167:11 (label)</i></div>
+            </div>
+            <div class='comment'>Return True if the map is empty.&#10;</div>
+          </div>
+        </div>
+        <div class='class'>
+          <div>
+            <h3>
+              <a name='alog-protected_containers.ads:108:17' id='alog-protected_containers.ads:108:17'></a>
+              <span class="type"><a href="#alog-protected_containers.ads:83:19">Protected_Exception_Map</a></span>.
+<span class="droplink">Clear<ul>
+  <li><a href="src_alog-protected_containers.ads.html#l108">Goto spec in source</a></li>
+</ul></span>
+            </h3>
+            <div class='details'><pre><span class="keyword">procedure</span> <span class="name"><b>Clear</b></span>;</pre></div>
+            <div class='profile'>
+              <h4>References:</h4>
+                <div><i><a href="src_alog-protected_containers.ads.html#l108" title="alog-protected_containers.ads:108:17">alog-protected_containers.ads:108:17</a> (declaration)</i></div>
+                <div><i>alog-protected_containers.adb:110:17 (body)</i></div>
+                <div><i>alog-protected_containers.adb:114:11 (label)</i></div>
+                <div><i>alog-tasked_logger.adb:170:30 (reference)</i></div>
+            </div>
+            <div class='profile'>
+              <h4>Called by:</h4>
+                <div><i><a href="alog-tasked_logger.ads.html#alog-tasked_logger.ads:96:13" title="defined at alog-tasked_logger.ads:96:13">Alog.Tasked_Logger.Instance.Clear</a> defined at <a href="src_alog-tasked_logger.ads.html#l96" title="alog-tasked_logger.ads:96:13">alog-tasked_logger.ads:96:13</a></i></div>
+            </div>
+            <div class='comment'>Remove all Exception_Occurrences in the map. Memory of the exception&#10;occurrences is freed.&#10;</div>
+          </div>
+        </div>
+    </div>
+</div> <!-- documentation -->
+
+</body>
+</html>
