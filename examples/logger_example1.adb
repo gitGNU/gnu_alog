@@ -20,7 +20,7 @@ begin
         new Facilities.File_Descriptor.Instance;
    begin
       FD.Set_Logfile (Path => "/tmp/alog.log");
-      Log.Attach_Facility (Facility => Facilities. Handle (FD));
+      Log.Attach_Facility (Facility => Facilities.Handle (FD));
 
       --  Log a message to file and stdout.
       Log.Log_Message (Source => "Example",
