@@ -1,4 +1,6 @@
 alog.ads
+alog-active_logger.adb
+alog-active_logger.ads
 alog-controlled_map.adb
 alog-controlled_map.ads
 alog-facilities.adb
