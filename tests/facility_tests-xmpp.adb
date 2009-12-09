@@ -65,7 +65,7 @@ package body Facility_Tests.XMPP is
            (Level   => Debug,
             Message => "this should not work"));
 
-      Fail (Message => "exception not thrown");
+      Fail (Message => "Expected No_Recipient exception");
 
    exception
       when Alog.Facilities.XMPP.No_Recipient =>
@@ -84,7 +84,7 @@ package body Facility_Tests.XMPP is
            (Level   => Debug,
             Message => "this should not work"));
 
-      Fail (Message => "exception not thrown");
+      Fail (Message => "Expected No_Sender exception");
 
    exception
       when Alog.Facilities.XMPP.No_Sender =>
@@ -107,7 +107,7 @@ package body Facility_Tests.XMPP is
            (Level   => Debug,
             Message => "this should not work"));
 
-      Fail (Message => "exception not thrown");
+      Fail (Message => "Expected No_Server exception");
 
    exception
       when Alog.Facilities.XMPP.No_Server =>
@@ -128,12 +128,6 @@ package body Facility_Tests.XMPP is
         (Request => Create
            (Level   => Debug,
             Message => "This is a test message from Alog!"));
-
-      Fail (Message => "not yet implemented");
-
-   exception
-      when Alog.Facilities.XMPP.Delivery_Failed =>
-         Fail (Message => "could not deliver msg");
    end Send_XMPP_Message;
 
 end Facility_Tests.XMPP;
