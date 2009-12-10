@@ -71,7 +71,7 @@ You should then see `PASS` behind each of the tests.
 Limitations
 -----------
 The XMPP facility is considered experimental. To use this facility the AWS
-version from the Adacore subversion repository must be installed. Older
+version from the AdaCore subversion repository must be installed. Older
 AWS versions are not fully XMPP/1.0 compliant.
 
 
