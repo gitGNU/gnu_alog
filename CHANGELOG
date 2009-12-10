@@ -1,5 +1,18 @@
-Alog ChangeLog
+Alog Changelog
 ==============
+
+Version 0.3
+-----------
+.Additions and changes
+- Architecture cleanup.
+- Tasked and Active loggers.
+- Loglevel policies (source and destination filtering).
+- Coverage report generation.
+- Profiling support.
+- Provide code examples.
+
+.Bug fixes
+- Make stdout redirection work with FD facility.
 
 Version 0.2
 -----------
