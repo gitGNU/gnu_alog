@@ -37,7 +37,7 @@ SOURCEDIR = src
 OBJECTDIR = obj/$(TARGET)
 LIBDIR = lib/$(TARGET)
 COVDIR = cov/$(TARGET)
-PERFDIR = perf/$(TARGET)
+PROFDIR = prof/$(TARGET)
 ALI_FILES = lib/$(TARGET)/*.ali
 
 TMPDIR = /tmp
@@ -59,7 +59,7 @@ build_tests: prepare
 	@gnatmake -p -Palog_$(TARGET)_tests -j$(NUM_CPUS) -XALOG_BUILD="tests"
 
 prepare: $(SOURCEDIR)/alog-version.ads
-	@mkdir -p $(COVDIR) $(PERFDIR)
+	@mkdir -p $(COVDIR) $(PROFDIR)
 
 $(SOURCEDIR)/alog-version.ads:
 	@echo "package Alog.Version is"                 > $@
@@ -73,13 +73,13 @@ clean:
 	@rm -rf $(OBJECTDIR)/*
 	@rm -rf $(LIBDIR)/*
 	@rm -rf $(COVDIR)/*
-	@rm -rf $(PERFDIR)/*
+	@rm -rf $(PROFDIR)/*
 
 distclean: clean
 	@rm -rf obj
 	@rm -rf lib
 	@rm -rf cov
-	@rm -rf perf
+	@rm -rf prof
 	@rm -f $(SOURCEDIR)/alog-version.ads
 
 dist: distclean $(SOURCEDIR)/alog-version.ads
@@ -120,7 +120,7 @@ prof: prepare
 	@gnatmake -p -Palog_$(TARGET)_tests -j$(NUM_CPUS) -XALOG_BUILD="profiling"
 	@cd $(OBJECTDIR) && \
 		valgrind -q --tool=callgrind ./profiler_$(TARGET)
-	@cp $(OBJECTDIR)/callgrind.* $(PERFDIR)
-	@callgrind_annotate $(PERFDIR)/callgrind.* > $(PERFDIR)/profiler_$(TARGET).txt
+	@cp $(OBJECTDIR)/callgrind.* $(PROFDIR)
+	@callgrind_annotate $(PROFDIR)/callgrind.* > $(PROFDIR)/profiler_$(TARGET).txt
 
 .PHONY: cov dist prof tests
