@@ -66,10 +66,10 @@ package body Facility_Tests.PGSQL is
       F     : Alog.Facilities.Pgsql.Instance;
       State : constant Boolean := True;
    begin
-      F.Toggle_SQL_Trace (Set => State);
+      F.Toggle_SQL_Trace (State => State);
       Assert (Condition => (F.Is_SQL_Trace = State),
               Message   => "unable to set to " & Boolean'Image (State));
-      F.Toggle_SQL_Trace (Set => not State);
+      F.Toggle_SQL_Trace (State => not State);
       Assert (Condition => (F.Is_SQL_Trace = not State),
               Message   => "unable to set to " & Boolean'Image (not State));
    end Enable_SQL_Trace;
@@ -226,7 +226,7 @@ package body Facility_Tests.PGSQL is
    procedure Write_Message is
       F : Alog.Facilities.Pgsql.Instance;
    begin
-      F.Toggle_Write_Timestamp (State => True);
+      F.Toggle_Write_Timestamp (State => False);
 
       F.Set_DB_Name (DB_Name => "alog");
       F.Set_Credentials (Username => "alog",
@@ -238,10 +238,6 @@ package body Facility_Tests.PGSQL is
       F.Process (Request => Create (Message => "Test message"));
 
       F.Teardown;
-
-   exception
-      when others =>
-         Fail (Message => "could not write msg to database");
    end Write_Message;
 
 end Facility_Tests.PGSQL;

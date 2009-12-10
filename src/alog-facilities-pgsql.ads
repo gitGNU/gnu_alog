@@ -62,7 +62,7 @@ package Alog.Facilities.Pgsql is
 
    procedure Toggle_SQL_Trace
      (Facility : in out Instance;
-      Set      :        Boolean);
+      State    :        Boolean);
    --  Toggles tracing of SQL statements.
 
    function Is_SQL_Trace (Facility : Instance) return Boolean;
@@ -138,7 +138,7 @@ private
       --  Database connection used for logging.
 
       Trace_Filename   : Unbounded_String :=
-        To_Unbounded_String ("./data/trace.sql");
+        To_Unbounded_String ("./trace.sql");
       Trace_Mode       :  APQ.Trace_Mode_Type := APQ.Trace_APQ;
       --  SQL trace parameters
 

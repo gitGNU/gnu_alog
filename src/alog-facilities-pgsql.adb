@@ -212,10 +212,10 @@ package body Alog.Facilities.Pgsql is
 
    procedure Toggle_SQL_Trace
      (Facility : in out Instance;
-      Set      :        Boolean)
+      State    :        Boolean)
    is
    begin
-      Facility.Log_Connection.Set_Trace (Set);
+      Facility.Log_Connection.Set_Trace (Trace_On => State);
    end Toggle_SQL_Trace;
 
    -------------------------------------------------------------------------
