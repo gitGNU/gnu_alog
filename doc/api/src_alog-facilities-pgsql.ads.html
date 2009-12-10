@@ -89,7 +89,7 @@
 <li id="l62"><pre> </pre></li>
 <li id="l63"><pre>   <span class="keyword">procedure</span> <span class="droplink">Toggle_SQL_Trace<ul><li><a href="alog-facilities-pgsql.ads.html#alog-facilities-pgsql.ads:63:14" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities-pgsql.adb.html#l213" title="To body">To body</a></li></ul></span> </pre></li>
 <li id="l64"><pre>     (<span class="droplink">Facility<ul><li><a href="alog-facilities-pgsql.ads.html#alog-facilities-pgsql.ads:64:7" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities-pgsql.adb.html#l214" title="To body">To body</a></li></ul></span> : <span class="keyword">in</span> <span class="keyword">out</span> <span class="droplink">Instance<ul><li><a href="alog-facilities-pgsql.ads.html#alog-facilities-pgsql.ads:29:9" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities-pgsql.ads.html#l29" title="To spec">To spec</a></li><li><a href="src_alog-facilities-pgsql.ads.html#l136" title="To body">To body</a></li></ul></span>; </pre></li>
-<li id="l65"><pre>      <a href="alog-facilities-pgsql.ads.html#alog-facilities-pgsql.ads:65:7" title="defined at alog-facilities-pgsql.ads:65:7">Set</a>      :        Boolean); </pre></li>
+<li id="l65"><pre>      <a href="alog-facilities-pgsql.ads.html#alog-facilities-pgsql.ads:65:7" title="defined at alog-facilities-pgsql.ads:65:7">State</a>    :        Boolean); </pre></li>
 <li id="l66"><pre>   <span class="comment">--  Toggles tracing of SQL statements.</span> </pre></li>
 <li id="l67"><pre> </pre></li>
 <li id="l68"><pre>   <span class="keyword">function</span> <span class="droplink">Is_SQL_Trace<ul><li><a href="alog-facilities-pgsql.ads.html#alog-facilities-pgsql.ads:68:13" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities-pgsql.adb.html#l92" title="To body">To body</a></li></ul></span> (<span class="droplink">Facility<ul><li><a href="alog-facilities-pgsql.ads.html#alog-facilities-pgsql.ads:68:27" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities-pgsql.adb.html#l92" title="To body">To body</a></li></ul></span> : <span class="droplink">Instance<ul><li><a href="alog-facilities-pgsql.ads.html#alog-facilities-pgsql.ads:29:9" title="To API doc">To API doc</a></li><li><a href="src_alog-facilities-pgsql.ads.html#l29" title="To spec">To spec</a></li><li><a href="src_alog-facilities-pgsql.ads.html#l136" title="To body">To body</a></li></ul></span>) <span class="keyword">return</span> Boolean; </pre></li>
@@ -165,7 +165,7 @@
 <li id="l138"><pre>      <span class="comment">--  Database connection used for logging.</span> </pre></li>
 <li id="l139"><pre> </pre></li>
 <li id="l140"><pre>      Trace_Filename   : Unbounded_String := </pre></li>
-<li id="l141"><pre>        To_Unbounded_String (<span class="string">&quot;./data/trace.sql&quot;</span>); </pre></li>
+<li id="l141"><pre>        To_Unbounded_String (<span class="string">&quot;./trace.sql&quot;</span>); </pre></li>
 <li id="l142"><pre>      Trace_Mode       :  APQ.Trace_Mode_Type := APQ.Trace_APQ; </pre></li>
 <li id="l143"><pre>      <span class="comment">--  SQL trace parameters</span> </pre></li>
 <li id="l144"><pre> </pre></li>

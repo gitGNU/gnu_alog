@@ -228,6 +228,15 @@ new Array ('Length', 'alog-maps.ads:85:13', 'subp-spec'),
             <div><i>alog-maps.adb:44:8 (label)</i></div>
             <div><i>alog-policy_db.adb:73:27 (reference)</i></div>
         </div>
+        <div class='profile'>
+          <h4>Called by:</h4>
+            <div><i><a href="alog-policy_db.ads.html#alog-policy_db.ads:64:13" title="defined at alog-policy_db.ads:64:13">Alog.Policy_DB.Get_Loglevel</a> defined at <a href="src_alog-policy_db.ads.html#l64" title="alog-policy_db.ads:64:13">alog-policy_db.ads:64:13</a></i></div>
+        </div>
+        <div class='profile'>
+          <h4>Calls:</h4>
+            <div><i>Element defined at a-cohama.ads:235:13</i></div>
+            <div><i>To_Unbounded_String defined at a-strunb.ads:57:13</i></div>
+        </div>
         <div class='comment'>Returns the loglevel element for given key.&#10;</div>
       </div>
       <div class="class">
@@ -245,6 +254,15 @@ new Array ('Length', 'alog-maps.ads:85:13', 'subp-spec'),
             <div><i>alog-maps.adb:51:8 (label)</i></div>
             <div><i>alog-policy_db.adb:45:31 (reference)</i></div>
             <div><i>alog-policy_db.adb:90:22 (reference)</i></div>
+        </div>
+        <div class='profile'>
+          <h4>Called by:</h4>
+            <div><i><a href="alog-policy_db.ads.html#alog-policy_db.ads:84:13" title="defined at alog-policy_db.ads:84:13">Alog.Policy_DB.Accept_Dst</a> defined at <a href="src_alog-policy_db.ads.html#l84" title="alog-policy_db.ads:84:13">alog-policy_db.ads:84:13</a></i></div>
+            <div><i><a href="alog-policy_db.ads.html#alog-policy_db.ads:69:13" title="defined at alog-policy_db.ads:69:13">Alog.Policy_DB.Lookup</a> defined at <a href="src_alog-policy_db.ads.html#l69" title="alog-policy_db.ads:69:13">alog-policy_db.ads:69:13</a></i></div>
+        </div>
+        <div class='profile'>
+          <h4>Calls:</h4>
+            <div><i>Element defined at a-cohama.ads:101:13</i></div>
         </div>
         <div class='comment'>Returns the loglevel element at given position.&#10;</div>
       </div>
@@ -264,6 +282,15 @@ new Array ('Length', 'alog-maps.ads:85:13', 'subp-spec'),
             <div><i>alog-maps.adb:104:23 (reference)</i></div>
             <div><i>alog-maps.adb:115:29 (reference)</i></div>
         </div>
+        <div class='profile'>
+          <h4>Called by:</h4>
+            <div><i><a href="alog-maps.ads.html#alog-maps.ads:57:13" title="defined at alog-maps.ads:57:13">Lookup</a> defined at <a href="src_alog-maps.ads.html#l57" title="alog-maps.ads:57:13">alog-maps.ads:57:13</a></i></div>
+        </div>
+        <div class='profile'>
+          <h4>Calls:</h4>
+            <div><i>Find defined at a-cohama.ads:226:13</i></div>
+            <div><i>To_Unbounded_String defined at a-strunb.ads:57:13</i></div>
+        </div>
         <div class='comment'>Returns the position for an element with specified key. If no element is&#10;found No_Element is returned.&#10;</div>
       </div>
       <div class="class">
@@ -281,6 +308,15 @@ new Array ('Length', 'alog-maps.ads:85:13', 'subp-spec'),
             <div><i>alog-maps.adb:131:8 (label)</i></div>
             <div><i>alog-policy_db.adb:42:32 (reference)</i></div>
             <div><i>alog-policy_db.adb:87:32 (reference)</i></div>
+        </div>
+        <div class='profile'>
+          <h4>Called by:</h4>
+            <div><i><a href="alog-policy_db.ads.html#alog-policy_db.ads:84:13" title="defined at alog-policy_db.ads:84:13">Alog.Policy_DB.Accept_Dst</a> defined at <a href="src_alog-policy_db.ads.html#l84" title="alog-policy_db.ads:84:13">alog-policy_db.ads:84:13</a></i></div>
+            <div><i><a href="alog-policy_db.ads.html#alog-policy_db.ads:69:13" title="defined at alog-policy_db.ads:69:13">Alog.Policy_DB.Lookup</a> defined at <a href="src_alog-policy_db.ads.html#l69" title="alog-policy_db.ads:69:13">alog-policy_db.ads:69:13</a></i></div>
+        </div>
+        <div class='profile'>
+          <h4>Calls:</h4>
+            <div><i><a href="alog-maps.ads.html#alog-maps.ads:50:13" title="defined at alog-maps.ads:50:13">Find</a> defined at <a href="src_alog-maps.ads.html#l50" title="alog-maps.ads:50:13">alog-maps.ads:50:13</a></i></div>
         </div>
         <div class='comment'>Returns the position of the element with the closest match to given key.&#10;This function considers wildcards when searching for an element.&#10;&#10;Example:      Key   | Element&#10;           -------------------&#10;            Foo.*   |  Debug&#10;            Foo.Bar |  Alert&#10;&#10;A lookup for &quot;Foo.Foo&quot; has no exact match. The next closest match is&#10;&quot;Foo.*&quot; which will return the Debug element. Looking for &quot;Foo&quot; will&#10;return Debug since it matches the wildcard &quot;Foo.*&quot;.&#10;&#10;If no exact and wildcard match is found No_Element is returned.&#10;</div>
       </div>
@@ -300,6 +336,17 @@ new Array ('Length', 'alog-maps.ads:85:13', 'subp-spec'),
             <div><i>alog-maps.adb:83:8 (label)</i></div>
             <div><i>alog-policy_db.adb:118:20 (reference)</i></div>
         </div>
+        <div class='profile'>
+          <h4>Called by:</h4>
+            <div><i><a href="alog-helpers.ads.html#alog-helpers.ads:38:14" title="defined at alog-helpers.ads:38:14">Alog.Helpers.Read_Loglevels</a> defined at <a href="src_alog-helpers.ads.html#l38" title="alog-helpers.ads:38:14">alog-helpers.ads:38:14</a></i></div>
+            <div><i><a href="alog-policy_db.ads.html#alog-policy_db.ads:39:14" title="defined at alog-policy_db.ads:39:14">Alog.Policy_DB.Set_Loglevel</a> defined at <a href="src_alog-policy_db.ads.html#l39" title="alog-policy_db.ads:39:14">alog-policy_db.ads:39:14</a></i></div>
+        </div>
+        <div class='profile'>
+          <h4>Calls:</h4>
+            <div><i>Insert defined at a-cohama.ads:129:14</i></div>
+            <div><i>Replace_Element defined at a-cohama.ads:104:14</i></div>
+            <div><i>To_Unbounded_String defined at a-strunb.ads:57:13</i></div>
+        </div>
         <div class='comment'>Insert given key/item pair into map. If given key is already present the&#10;associated item is replaced.&#10;</div>
       </div>
       <div class="class">
@@ -317,6 +364,14 @@ new Array ('Length', 'alog-maps.ads:85:13', 'subp-spec'),
             <div><i>alog-maps.adb:33:8 (label)</i></div>
             <div><i>alog-policy_db.adb:101:20 (reference)</i></div>
         </div>
+        <div class='profile'>
+          <h4>Called by:</h4>
+            <div><i><a href="alog-policy_db.ads.html#alog-policy_db.ads:73:14" title="defined at alog-policy_db.ads:73:14">Alog.Policy_DB.Reset</a> defined at <a href="src_alog-policy_db.ads.html#l73" title="alog-policy_db.ads:73:14">alog-policy_db.ads:73:14</a></i></div>
+        </div>
+        <div class='profile'>
+          <h4>Calls:</h4>
+            <div><i>Clear defined at a-cohama.ads:95:14</i></div>
+        </div>
         <div class='comment'>Clears the wildcard map.&#10;</div>
       </div>
       <div class="class">
@@ -332,6 +387,10 @@ new Array ('Length', 'alog-maps.ads:85:13', 'subp-spec'),
             <div><i><a href="src_alog-maps.ads.html#l85" title="alog-maps.ads:85:13">alog-maps.ads:85:13</a> (declaration)</i></div>
             <div><i>alog-maps.adb:87:13 (body)</i></div>
             <div><i>alog-maps.adb:90:8 (label)</i></div>
+        </div>
+        <div class='profile'>
+          <h4>Calls:</h4>
+            <div><i>Length defined at a-cohama.ads:89:13</i></div>
         </div>
         <div class='comment'>Return the number of elements in the map.&#10;</div>
       </div>
