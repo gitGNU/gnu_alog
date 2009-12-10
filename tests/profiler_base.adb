@@ -22,14 +22,15 @@
 --
 
 with Alog.Logger;
+with Alog.Policy_DB;
 
 procedure Profiler_Base is
    use Alog;
 
    Log : Logger.Instance (Init => False);
 begin
-   Log.Set_Source_Loglevel (Source => "Foo.*",
-                            Level  => Debug);
+   Policy_DB.Set_Loglevel (Identifier => "Foo.*",
+                           Level      => Debug);
 
    for I in 1 .. 100000 loop
       Log.Log_Message (Source => "Foo.Foo.Foo.Foo",
