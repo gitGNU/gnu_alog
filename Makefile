@@ -79,7 +79,7 @@ distclean: clean
 	@rm -rf obj
 	@rm -rf lib
 	@rm -rf cov
-	@rm -rf $(PERFDIR)
+	@rm -rf perf
 	@rm -f $(SOURCEDIR)/alog-version.ads
 
 dist: distclean $(SOURCEDIR)/alog-version.ads
