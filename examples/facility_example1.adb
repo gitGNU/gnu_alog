@@ -20,5 +20,6 @@ begin
         (Level   => Warning,
          Message => "This is a testmessage from Alog FD facility"));
 
+   --  Teardown the facility.
    Facility.Teardown;
 end Facility_Example1;
