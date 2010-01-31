@@ -1,0 +1,87 @@
+Source: libalog
+Section: libs
+Priority: optional
+Maintainer: Adrian-Ken Rueegsegger <ken@codelabs.ch>
+Uploaders: Reto Buerki <reet@codelabs.ch>
+Build-Depends: debhelper (>= 7), gnat (>= 4.3), libahven-dev (>= 1.2),
+ libaws-dev (>= 2.5~124785), libapq-postgresql-dev
+Standards-Version: 3.8.1
+Homepage: http://www.nongnu.org/alog/
+Vcs-Git: git://git.savannah.nongnu.org/alog.git
+Vcs-Browser: http://git.savannah.nongnu.org/gitweb/?p=alog.git
+
+Package: libalog0-base
+Section: libs
+Architecture: alpha amd64 i386 ia64 powerpc s390 sparc kfreebsd-i386
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Conflicts: libalog0-full
+Replaces: libalog0-full
+Description: Logging framework for Ada (base)
+ Alog is a logging framework for Ada and aims to be straight forward to use and
+ easily extendable. Alog base provides file-based and syslog logging facilities
+ and log-level support.
+
+Package: libalog0-full
+Section: libs
+Architecture: alpha amd64 i386 ia64 powerpc s390 sparc kfreebsd-i386
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Conflicts: libalog0-base
+Replaces: libalog0-base
+Description: Logging framework for Ada (full)
+ Alog is a logging framework for Ada and aims to be straight forward to use and
+ easily extendable. Alog full more facilities than Alog base, notably SMTP and
+ XMPP/Jabber.
+
+Package: libalog-base-dev
+Section: libdevel
+Architecture: alpha amd64 i386 ia64 powerpc s390 sparc kfreebsd-i386
+Depends: libalog0-base (= ${binary:Version}), libahven-dev
+Conflicts: libalog-full-dev
+Replaces: libalog-full-dev
+Description: Logging framework for Ada (development)
+ Alog is a logging framework for Ada and aims to be straight forward to use and
+ easily extendable. Alog base provides file-based and syslog logging facilities
+ and log-level support.
+ .
+ This package contains the development files.
+
+Package: libalog-full-dev
+Section: libdevel
+Architecture: alpha amd64 i386 ia64 powerpc s390 sparc kfreebsd-i386
+Depends: libalog0-full (= ${binary:Version}), libahven-dev, libaws-dev (>= 2.5~124785)
+Conflicts: libalog-base-dev
+Replaces: libalog-base-dev
+Description: Logging framework for Ada (development)
+ Alog is a logging framework for Ada and aims to be straight forward to use and
+ easily extendable. Alog full more facilities than Alog base, notably SMTP and
+ XMPP/Jabber.
+ .
+ This package contains the development files.
+
+Package: libalog-base-dbg
+Section: debug
+Priority: extra
+Architecture: alpha amd64 i386 ia64 powerpc s390 sparc kfreebsd-i386
+Depends: libalog0-base (= ${binary:Version}), libalog-base-dev (= ${binary:Version})
+Conflicts: libalog-full-dbg
+Replaces: libalog-full-dbg
+Description: Logging framework for Ada (debug)
+ Alog is a logging framework for Ada and aims to be straight forward to use and
+ easily extendable. Alog base provides file-based and syslog logging facilities
+ and log-level support.
+ .
+ This package contains the debugging symbols.
+
+Package: libalog-full-dbg
+Section: debug
+Priority: extra
+Architecture: alpha amd64 i386 ia64 powerpc s390 sparc kfreebsd-i386
+Depends: libalog0-full (= ${binary:Version}), libalog-full-dev (= ${binary:Version})
+Conflicts: libalog-base-dbg
+Replaces: libalog-base-dbg
+Description: Logging framework for Ada (debug)
+ Alog is a logging framework for Ada and aims to be straight forward to use and
+ easily extendable. Alog full more facilities than Alog base, notably SMTP and
+ XMPP/Jabber.
+ .
+ This package contains the debugging symbols.

@@ -1,0 +1,103 @@
+#!/usr/bin/make -f
+
+clean:
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp
+	rm -rf base
+	rm -rf full
+	rm -rf debian/tmp-base
+	rm -rf debian/tmp-full
+
+	$(MAKE) distclean
+
+	dh_clean
+
+build: build-base build-full
+
+build-base: build-base-stamp
+build-base-stamp:
+	dh_testdir
+	$(MAKE) distclean
+
+	$(MAKE)
+	$(MAKE) LIBRARY_KIND=static
+
+	$(MAKE) tests
+
+	touch build-base-stamp
+
+build-full: build-full-stamp
+build-full-stamp:
+	dh_testdir
+	$(MAKE) TARGET=full clean
+
+	$(MAKE) TARGET=full
+	$(MAKE) TARGET=full LIBRARY_KIND=static
+
+	$(MAKE) TARGET=full tests
+
+	touch build-full-stamp
+
+install: install-base install-full
+
+install-base: build-base
+	dh_testdir
+	dh_testroot
+	dh_prep
+	dh_installdirs
+
+	$(MAKE) PREFIX=$(CURDIR)/debian/tmp-base/usr install
+	$(MAKE) PREFIX=$(CURDIR)/debian/tmp-base/usr LIBRARY_KIND=static install
+
+	mv debian/tmp-base/usr/lib/alog/libalog.* debian/tmp-base/usr/lib
+
+	mkdir -p debian/tmp-base/usr/share/ada/adainclude
+	mv debian/tmp-base/usr/include/alog debian/tmp-base/usr/share/ada/adainclude
+
+	mkdir -p debian/tmp-base/usr/lib/ada/adalib/alog
+	mv debian/tmp-base/usr/lib/alog/*.ali debian/tmp-base/usr/lib/ada/adalib/alog
+	rm -rf debian/tmp-base/usr/lib/alog
+	cp debian/misc/alog.gpr debian/tmp-base/usr/share/ada/adainclude
+
+install-full: build-full
+	dh_testdir
+	dh_testroot
+	dh_prep
+	dh_installdirs
+
+	$(MAKE) TARGET=full PREFIX=$(CURDIR)/debian/tmp-full/usr install
+	$(MAKE) TARGET=full PREFIX=$(CURDIR)/debian/tmp-full/usr LIBRARY_KIND=static  install
+	mv debian/tmp-full/usr/lib/alog/libalog.* debian/tmp-full/usr/lib
+
+	mkdir -p debian/tmp-full/usr/share/ada/adainclude
+	mv debian/tmp-full/usr/include/alog debian/tmp-full/usr/share/ada/adainclude
+
+	mkdir -p debian/tmp-full/usr/lib/ada/adalib/alog
+	mv debian/tmp-full/usr/lib/alog/*.ali debian/tmp-full/usr/lib/ada/adalib/alog
+	rm -rf debian/tmp-full/usr/lib/alog
+	cp debian/misc/alog.gpr debian/tmp-full/usr/share/ada/adainclude
+
+binary: binary-arch
+
+binary-arch: build install
+	dh_testdir
+	dh_testroot
+	dh_installchangelogs CHANGELOG
+	dh_installdocs
+	dh_install -p libalog0-base -p libalog-base-dev --fail-missing --sourcedir=debian/tmp-base
+	dh_install -p libalog0-full -p libalog-full-dev --fail-missing --sourcedir=debian/tmp-full
+	dh_strip -Xlibalog0-full --dbg-package=libalog-base-dbg
+	dh_strip -Xlibalog0-base --dbg-package=libalog-full-dbg
+	dh_compress
+	dh_fixperms
+	dh_makeshlibs
+	dh_installdeb
+	dh_shlibdeps
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+binary-indep:
+
+.PHONY: clean build build-base build-full install install-base install-full binary binary-arch binary-indep
