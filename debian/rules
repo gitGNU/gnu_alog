@@ -85,10 +85,10 @@ binary-arch: build install
 	dh_testroot
 	dh_installchangelogs CHANGELOG
 	dh_installdocs
-	dh_install -p libalog0-base -p libalog-base-dev --fail-missing --sourcedir=debian/tmp-base
-	dh_install -p libalog0-full -p libalog-full-dev --fail-missing --sourcedir=debian/tmp-full
-	dh_strip -Xlibalog0-full --dbg-package=libalog-base-dbg
-	dh_strip -Xlibalog0-base --dbg-package=libalog-full-dbg
+	dh_install -p libalog0.3-base -p libalog1-base-dev --fail-missing --sourcedir=debian/tmp-base
+	dh_install -p libalog0.3-full -p libalog1-full-dev --fail-missing --sourcedir=debian/tmp-full
+	dh_strip -Xlibalog0.3-full --dbg-package=libalog-base-dbg
+	dh_strip -Xlibalog0.3-base --dbg-package=libalog-full-dbg
 	dh_compress
 	dh_fixperms
 	dh_makeshlibs
