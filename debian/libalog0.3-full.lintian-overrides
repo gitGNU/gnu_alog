@@ -1,0 +1,2 @@
+libalog0.3-full: package-name-doesnt-match-sonames libalog0.3
+libalog0.3-full: shlib-with-executable-stack usr/lib/libalog.so.0.3
