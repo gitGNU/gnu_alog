@@ -1,6 +1,8 @@
 #!/usr/bin/make -f
 
-clean:
+include /usr/share/quilt/quilt.make
+
+clean: unpatch
 	dh_testdir
 	dh_testroot
 	rm -f build-stamp
@@ -16,7 +18,7 @@ clean:
 build: build-base build-full
 
 build-base: build-base-stamp
-build-base-stamp:
+build-base-stamp: patch
 	dh_testdir
 	$(MAKE) distclean
 
@@ -28,7 +30,7 @@ build-base-stamp:
 	touch build-base-stamp
 
 build-full: build-full-stamp
-build-full-stamp:
+build-full-stamp: patch
 	dh_testdir
 	$(MAKE) TARGET=full clean
 

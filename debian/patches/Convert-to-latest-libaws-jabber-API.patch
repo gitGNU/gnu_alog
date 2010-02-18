@@ -1,0 +1,85 @@
+Author: Adrian-Ken Rueegsegger <ken@codelabs.ch>
+Description: Convert to latest libaws jabber API.
+
+--- alog.orig/src/alog-facilities-xmpp.adb
++++ alog/src/alog-facilities-xmpp.adb
+@@ -22,7 +22,7 @@
+ 
+ with Ada.Exceptions;
+ 
+-with AWS.Jabber;
++with AWS.Jabber.Client;
+ 
+ package body Alog.Facilities.XMPP is
+ 
+@@ -30,7 +30,7 @@
+ 
+    procedure Set_Recipient
+      (Facility : in out Instance;
+-                            JID      :        String)
++      JID      :        String)
+    is
+    begin
+       Facility.Recipient    := To_Unbounded_String (JID);
+@@ -87,38 +87,34 @@
+       end if;
+ 
+       declare
+-         Server : AWS.Jabber.Server;
+-         Status : AWS.Jabber.Presence_Status;
++         Client    : AWS.Jabber.Client.Account;
++         Recipient : constant AWS.Jabber.Client.Jabber_ID :=
++           AWS.Jabber.Client.To_Jabber_ID
++             (Username => "ken",
++              Server   => "swissjabber.org");
+       begin
+-         --  Init xmpp server.
+-         AWS.Jabber.Connect
+-           (Server,
+-            To_String (Facility.Server),
+-            To_String (Facility.Sender.JID),
+-            To_String (Facility.Sender.Password));
+-
+-         --  Check presence of recipient
+-         AWS.Jabber.Check_Presence
+-           (Server,
+-            To_String (Facility.Recipient),
+-            Status);
+-         if Status not in Available .. Do_Not_Disturb then
+-            raise Recipient_Not_Present;
+-         end if;
+-
+-         --  Try to send message.
+-         Send_Message
+-           (Server,
+-            JID     => To_String (Facility.Recipient),
+-            Subject => To_String (Facility.Subject),
+-            Content => Msg);
++         AWS.Jabber.Client.Set_Host
++           (Account => Client,
++            Host    => To_String (Facility.Server));
++         AWS.Jabber.Client.Set_Login_Information
++           (Account  => Client,
++            User     => To_String (Facility.Sender.JID),
++            Password => To_String (Facility.Sender.Password));
++
++         AWS.Jabber.Client.Connect (Account => Client);
++
++         AWS.Jabber.Client.Send
++           (Account => Client,
++            JID     => Recipient,
++            Content => Msg,
++            Subject => To_String (Facility.Subject));
+ 
+-         AWS.Jabber.Close (Server);
++         AWS.Jabber.Client.Close (Account => Client);
+ 
+       exception
+-         when Error : Server_Error =>
++         when Error : AWS.Jabber.Client.Server_Error =>
+             --  Make sure that connecion to server is closed.
+-            AWS.Jabber.Close (Server);
++            AWS.Jabber.Client.Close (Account => Client);
+             --  Raise Delivery_Failure exception, something went wrong.
+             raise Delivery_Failed
+               with Ada.Exceptions.Exception_Message (Error);
