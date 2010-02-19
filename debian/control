@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Adrian-Ken Rueegsegger <ken@codelabs.ch>
 Uploaders: Reto Buerki <reet@codelabs.ch>
 Build-Depends: debhelper (>= 7), quilt, gnat, gnat-4.4, libahven1-dev, libaws2.7-dev,
- libapq-postgresql1-dev
+ libapq-postgresql1-dev (>= 3.0-2)
 Standards-Version: 3.8.4
 Homepage: http://www.nongnu.org/alog/
 Vcs-Git: git://git.savannah.nongnu.org/alog.git
@@ -49,7 +49,7 @@ Package: libalog1-full-dev
 Section: libdevel
 Architecture: any
 Depends: ${misc:Depends}, libalog0.3-full (= ${binary:Version}), libaws2.7-dev,
- libapq-postgresql1-dev, gnat-4.4
+ libapq-postgresql1-dev (>= 3.0-2), gnat-4.4
 Conflicts: libalog-dev, libalog1-base-dev
 Replaces: libalog-dev, libalog1-base-dev
 Description: Logging framework for Ada (development)
