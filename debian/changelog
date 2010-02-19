@@ -1,3 +1,20 @@
+libalog (0.3-1) unstable; urgency=low
+
+  * Adding latest debian version (Closes: #514824).
+  * Fix dependencies and package names (Closes: #555098, #562378,
+    #533153).
+  * Convert to latest libaws jabber API.
+  * Fix lintian warning debian-watch-file-in-native-package.
+  * Adjust install and doc to new package names.
+  * Update copyright to include current year.
+  * Adjust installed alog project file.
+  * Override lintian warnings (false positives).
+  * Make alog compilable with libaws2.7.
+  * Update to Standards-Version 3.8.4 (no changes).
+  * Tighten apq-postgresql dep to version >= 3.0-2.
+
+ -- Adrian-Ken Rueegsegger <ken@codelabs.ch>  Fri, 19 Feb 2010 20:27:13 +0100
+
 libalog (0.1-4) unstable; urgency=low
 
   * Remove hppa as supported architecture (see #506681).
