@@ -1,0 +1,13 @@
+Author: Adrian-Ken Rueegsegger <ken@codelabs.ch>
+Description: Disable stack checks.
+
+--- alog.orig/alog_common.gpr
++++ alog/alog_common.gpr
+@@ -34,7 +34,6 @@
+                          "-gnat05",
+                          "-gnatwal",
+                          "-gnatf",
+-                         "-fstack-check",
+                          "-gnato");
+ end Alog_Common;
+ 
