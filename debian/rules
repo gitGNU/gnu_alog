@@ -18,7 +18,7 @@ clean: unpatch
 build: build-base build-full
 
 build-base: build-base-stamp
-build-base-stamp: patch
+build-base-stamp: $(QUILT_STAMPFN)
 	dh_testdir
 	$(MAKE) distclean
 
@@ -30,7 +30,7 @@ build-base-stamp: patch
 	touch build-base-stamp
 
 build-full: build-full-stamp
-build-full-stamp: patch
+build-full-stamp: $(QUILT_STAMPFN)
 	dh_testdir
 	$(MAKE) TARGET=full clean
 
