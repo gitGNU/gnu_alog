@@ -161,7 +161,7 @@ package body Alog.Logger is
 
    function Facility_Count (Logger : Instance) return Natural is
    begin
-      return Natural (Logger.Facilities.Length);
+      return Logger.Facilities.Length;
    end Facility_Count;
 
    -------------------------------------------------------------------------
@@ -250,7 +250,7 @@ package body Alog.Logger is
 
    function Transform_Count (Logger : Instance) return Natural is
    begin
-      return Natural (Logger.Transforms.Length);
+      return Logger.Transforms.Length;
    end Transform_Count;
 
    -------------------------------------------------------------------------
