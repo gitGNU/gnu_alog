@@ -30,7 +30,6 @@ with Alog.Logger;
 with Alog.Facilities.File_Descriptor;
 with Alog.Facilities.Syslog;
 with Alog.Transforms.Casing;
-with Alog.Policy_DB;
 
 package body Logger_Tests is
 
@@ -445,23 +444,14 @@ package body Logger_Tests is
       --  Call facility fd specific procedures.
       Facilities.File_Descriptor.Handle
         (Facility).Set_Logfile (Testfile);
-
       Log.Attach_Facility (Facility => Facility);
-
-      Assert (Condition => Policy_DB.Get_Default_Loglevel = Debug,
-              Message   => "Unexpected default loglevel");
 
       Log.Log_Message (Level  => Debug,
                        Msg    => "Debug message (logged)");
-      Policy_DB.Set_Default_Loglevel (Level => Notice);
-
-      Log.Log_Message (Level  => Debug,
-                       Msg    => "Debug message (discard)");
       Log.Log_Message (Level  => Notice,
                        Msg    => "Notice message (logged)");
 
       Log.Clear;
-      Policy_DB.Reset;
 
       Assert (Condition => Helpers.Assert_Files_Equal
               (Filename1 => Reffile,
@@ -482,19 +472,10 @@ package body Logger_Tests is
    begin
       Facility.Toggle_Write_Timestamp (State => False);
       Facility.Toggle_Write_Loglevel (State => True);
-
       Facilities.File_Descriptor.Handle
         (Facility).Set_Logfile (Testfile);
-
       Log.Attach_Facility (Facility => Facility);
 
-      Policy_DB.Set_Default_Loglevel (Level => Debug);
-      Policy_DB.Set_Loglevel (Identifier => "Test",
-                              Level      => Info);
-
-      Log.Log_Message (Source => "Test",
-                       Level  => Debug,
-                       Msg    => "Source test (discard)");
       Log.Log_Message (Source => "Test",
                        Level  => Info,
                        Msg    => "Source test (logged)");
@@ -505,7 +486,6 @@ package body Logger_Tests is
                        Msg    => "Unknown source (logged)");
 
       Log.Clear;
-      Policy_DB.Reset;
 
       Assert (Condition => Helpers.Assert_Files_Equal
               (Filename1 => Reffile,

@@ -1,5 +1,5 @@
 --
---  Copyright (c) 2008,
+--  Copyright (c) 2008-2010,
 --  Reto Buerki, Adrian-Ken Rueegsegger
 --  secunet SwissIT AG
 --
@@ -21,7 +21,6 @@
 --  MA  02110-1301  USA
 --
 
-with Alog.Policy_DB;
 with Alog.Log_Request;
 with Alog.Facilities.File_Descriptor;
 
@@ -237,13 +236,8 @@ package body Alog.Logger is
             Msg   => Out_Msg);
       end Do_Transform;
    begin
-      if Policy_DB.Accept_Src
-        (Identifier => Source,
-         Level      => Level)
-      then
-         Logger.Iterate (Process => Do_Transform'Access);
-         Logger.Iterate (Process => Do_Log'Access);
-      end if;
+      Logger.Iterate (Process => Do_Transform'Access);
+      Logger.Iterate (Process => Do_Log'Access);
    end Log_Message;
 
    -------------------------------------------------------------------------

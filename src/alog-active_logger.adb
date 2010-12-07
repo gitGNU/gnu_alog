@@ -1,5 +1,5 @@
 --
---  Copyright (c) 2009,
+--  Copyright (c) 2009-2010,
 --  Reto Buerki, Adrian-Ken Rueegsegger
 --  secunet SwissIT AG
 --
@@ -23,7 +23,6 @@
 
 with Ada.Task_Identification;
 
-with Alog.Policy_DB;
 with Alog.Log_Request;
 
 package body Alog.Active_Logger is
@@ -170,28 +169,20 @@ package body Alog.Active_Logger is
       Msg    :        String)
    is
    begin
-      if Policy_DB.Accept_Src
-        (Identifier => Source,
-         Level      => Level)
-      then
-         declare
-            New_Request : constant Log_Request.Instance :=
-              Log_Request.Create
-                (ID      => Ada.Task_Identification.Current_Task,
-                 Source  => Source,
-                 Level   => Level,
-                 Message => Msg);
-         begin
-            Logger.Message_Queue.Put (Element => New_Request);
-         end;
-      end if;
+      Logger.Message_Queue.Put
+        (Element => Log_Request.Create
+           (ID      => Ada.Task_Identification.Current_Task,
+            Source  => Source,
+            Level   => Level,
+            Message => Msg));
    end Log_Message;
 
    -------------------------------------------------------------------------
 
    procedure Shutdown
      (Logger : in out Instance;
-      Flush  :        Boolean := True) is
+      Flush  :        Boolean := True)
+   is
    begin
       if Logger.Is_Terminated then
          return;
