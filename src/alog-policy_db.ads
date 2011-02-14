@@ -27,7 +27,7 @@ with Alog.Maps;
 --  in the database are used inside the framework for logging decisions.
 package Alog.Policy_DB is
 
-   Alog_Default_Level : constant Log_Level := Debug;
+   Alog_Default_Level : constant Log_Level := Info;
    --  Framework default loglevel.
 
    procedure Set_Default_Loglevel (Level : Log_Level);
