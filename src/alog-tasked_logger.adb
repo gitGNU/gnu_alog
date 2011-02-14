@@ -206,8 +206,8 @@ package body Alog.Tasked_Logger is
                   Current_Level   := Level;
                   Current_Message := To_Unbounded_String (Msg);
 
-                  --  Log_Message'Caller can not be used as default parameter so
-                  --  we need to check for 'Null_Task_Id' instead.
+                  --  Log_Message'Caller can not be used as default parameter
+                  --  so we need to check for 'Null_Task_Id' instead.
 
                   if Caller = Ada.Task_Identification.Null_Task_Id then
                      Current_Caller := Log_Message'Caller;
@@ -245,9 +245,9 @@ package body Alog.Tasked_Logger is
                terminate;
             end select;
 
-            --  Exceptions raised during a rendezvous are raised here and in the
-            --  calling task. Catch and ignore it so the tasked logger does not
-            --  get terminated after an exception.
+            --  Exceptions raised during a rendezvous are raised here and in
+            --  the calling task. Catch and ignore it so the tasked logger does
+            --  not get terminated after an exception.
 
          exception
             when others =>

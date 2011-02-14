@@ -50,10 +50,10 @@ package Alog.Protected_Containers is
       --  Signal successfull processing of request previously gotten from list.
 
       entry All_Done;
-      --  This procedure blocks until the list is empty and there are no pending
-      --  requests. A requests is pending when it is taken off the list via Get
-      --  but it's successfull processing has not been signaled back via the
-      --  procedure Done.
+      --  This procedure blocks until the list is empty and there are no
+      --  pending requests. A requests is pending when it is taken off the list
+      --  via Get but it's successfull processing has not been signaled back
+      --  via the procedure Done.
 
       procedure Clear;
       --  Clear the request list by deleting all log requests.
@@ -116,9 +116,9 @@ package Alog.Protected_Containers is
    end Protected_Exception_Map;
    --  Protected map of exceptions. To make memory management more robust only
    --  copies of Excpetion_Occurrences and not handles are returned by the map.
-   --  The memory of an occurrence pointed to by a previously inserted handle is
-   --  freed upon calling Delete, Clear or during finalization of the protected
-   --  type.
+   --  The memory of an occurrence pointed to by a previously inserted handle
+   --  is freed upon calling Delete, Clear or during finalization of the
+   --  protected type.
 
 private
 

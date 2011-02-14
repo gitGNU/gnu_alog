@@ -407,7 +407,8 @@ package body Active_Logger_Tests is
       Test_Message   : constant String  := "logger tasked test message";
       Nr_Of_Messages : constant Natural := 10;
 
-      task type Test_Log_Task (Logger : not null access Active_Logger.Instance);
+      task type Test_Log_Task
+        (Logger : not null access Active_Logger.Instance);
       --  This task logs Nr_Of_Messages to the given Active logger instance.
 
       task body Test_Log_Task is
@@ -459,8 +460,11 @@ package body Active_Logger_Tests is
 
    -------------------------------------------------------------------------
 
-   procedure Toggle_Timestamp
-     (Facility_Handle : Facilities.Handle)
+   procedure Toggle_Timestamp (Facility_Handle : Facilities.Handle);
+   --  Helper function for update facility test: Set the facility's write
+   --  timestamp flag to True.
+
+   procedure Toggle_Timestamp (Facility_Handle : Facilities.Handle)
    is
    begin
       Facility_Handle.Toggle_Write_Timestamp (State => True);

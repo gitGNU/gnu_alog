@@ -89,9 +89,9 @@ package Alog.Tasked_Logger is
       --  Since Log_Message'Caller can not be used as default parameter the
       --  entry checks if the variable is set to 'Null_Task_Id' in the body.
       --
-      --  Prior to actually processing the given log message the policy database
-      --  is inquired if the log message with given source and level should be
-      --  logged.
+      --  Prior to actually processing the given log message the policy
+      --  database is inquired if the log message with given source and level
+      --  should be logged.
 
       entry Clear;
       --  Clear tasked logger instance. Detach and teardown all attached
@@ -101,11 +101,12 @@ package Alog.Tasked_Logger is
         (Occurrence : out Ada.Exceptions.Exception_Occurrence;
          Caller     :     Ada.Task_Identification.Task_Id :=
            Ada.Task_Identification.Null_Task_Id);
-      --  Return last known Exception_Occurrence. If no exception occured return
-      --  Null_Occurrence.
+      --  Return last known Exception_Occurrence. If no exception occured
+      --  return Null_Occurrence.
       --  If caller is not specified the executing task's ID is used instead.
       --  Since Get_Last_Exception'Caller can not be used as default parameter
-      --  the entry checks if the variable is set to 'Null_Task_Id' in the body.
+      --  the entry checks if the variable is set to 'Null_Task_Id' in the
+      --  body.
 
       entry Shutdown;
       --  Explicitly shutdown tasked logger.
@@ -113,8 +114,8 @@ package Alog.Tasked_Logger is
    end Instance;
    --  Tasked logger instance. The Init discriminant defines whether or not a
    --  default 'stdout' (FD facility without logfile set) is attached
-   --  automatically. Default is 'False'. Set Init to 'True' if you want to make
-   --  sure minimal stdout logging is possible as soon as a new logger is
+   --  automatically. Default is 'False'. Set Init to 'True' if you want to
+   --  make sure minimal stdout logging is possible as soon as a new logger is
    --  instantiated.
 
    type Handle is access all Instance;

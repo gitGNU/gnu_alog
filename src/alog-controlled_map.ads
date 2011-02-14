@@ -78,8 +78,8 @@ package Alog.Controlled_Map is
    procedure Iterate
      (Container : Map;
       Process   : not null access procedure (Handle : Element_Handle));
-   --  Iterate over all elements in the map and call the 'Process' procedure for
-   --  each handle.
+   --  Iterate over all elements in the map and call the 'Process' procedure
+   --  for each handle.
 
 private
 

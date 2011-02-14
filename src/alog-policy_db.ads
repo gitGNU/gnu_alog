@@ -63,8 +63,8 @@ package Alog.Policy_DB is
 
    function Get_Loglevel (Identifier : String) return Log_Level;
    --  Return loglevel for given identifier string. Raises No_Ident_Loglevel
-   --  exception if no entry for given identifier is found (exact match only, no
-   --  wildcard lookup).
+   --  exception if no entry for given identifier is found (exact match only,
+   --  no wildcard lookup).
 
    function Lookup (Identifier : String) return Log_Level;
    --  Return loglevel for given identifier string. Returns the closest match,

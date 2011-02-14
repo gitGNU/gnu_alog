@@ -108,9 +108,9 @@ package Alog.Facilities is
    --  Returns True if writing of log message sources is enabled.
 
    procedure Setup (Facility : in out Instance) is null;
-   --  Each facility must provide a Setup-procedure. These procedures are called
-   --  by Logger instances when attaching Facilities. All needed operations
-   --  prior to writing log messages should be done here.
+   --  Each facility must provide a Setup-procedure. These procedures are
+   --  called by Logger instances when attaching Facilities. All needed
+   --  operations prior to writing log messages should be done here.
 
    procedure Teardown (Facility : in out Instance) is null;
    --  Each facility must provide a Teardown-procedure. These procedures are

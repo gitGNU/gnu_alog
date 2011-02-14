@@ -177,10 +177,10 @@ package body Logger_Tests is
 
       Logger2.Attach_Default_Facility;
       Assert (Condition => Logger2.Facility_Count = 1,
-              Message   => "Attached facility to initialzed logger");
+              Message   => "Attached facility to initialized logger");
       Logger2.Detach_Default_Facility;
       Assert (Condition => Logger2.Facility_Count = 0,
-              Message   => "Unable to detach facility from initialized logger");
+              Message   => "Unable to detach facility from logger");
    end Default_Facility_Handling;
 
    -------------------------------------------------------------------------
@@ -520,8 +520,10 @@ package body Logger_Tests is
          Facility_Name : constant String            :=
            "Test_Facility";
 
-         procedure Update_Facility
-           (Facility_Handle : Facilities.Handle)
+         procedure Update_Facility (Facility_Handle : Facilities.Handle);
+         --  Set the facility's write timestamp flag to True.
+
+         procedure Update_Facility (Facility_Handle : Facilities.Handle)
          is
          begin
             Facility_Handle.Toggle_Write_Timestamp (State => True);
@@ -569,8 +571,10 @@ package body Logger_Tests is
          Suffix         : constant String            :=
            "_Updated";
 
-         procedure Update_Transform
-           (Transform_Handle : Transforms.Handle)
+         procedure Update_Transform (Transform_Handle : Transforms.Handle);
+         --  Set the transform's name to a test string.
+
+         procedure Update_Transform (Transform_Handle : Transforms.Handle)
          is
          begin
             Transform_Handle.Set_Name (Name => Transform_Name & Suffix);

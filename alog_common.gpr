@@ -29,7 +29,7 @@ project Alog_Common is
 
    for Languages use ("Ada");
 
-   Compiler_Switches := ("-gnaty3aAbcdefhiIklnprStuxM80o",
+   Compiler_Switches := ("-gnatygAdISuxo",
                          "-gnatVa",
                          "-gnat05",
                          "-gnatwal",

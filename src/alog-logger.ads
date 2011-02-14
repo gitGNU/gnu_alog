@@ -29,15 +29,15 @@ with Alog.Facilities;
 with Alog.Transforms;
 with Alog.Controlled_Map;
 
---  Logger instance. Facilities can be attached to a logger instance in order to
---  log to different targets simultaneously. A logger provides different helper
---  functions for logging facilities configuration.
+--  Logger instance. Facilities can be attached to a logger instance in order
+--  to log to different targets simultaneously. A logger provides different
+--  helper functions for logging facilities configuration.
 package Alog.Logger is
 
    type Instance (Init : Boolean) is tagged limited private;
    --  Logger instance. The Init discriminant defines whether or not a default
-   --  'stdout' (FD facility without logfile set) is attached automatically. Set
-   --  Init to 'True' if you want to make sure minimal stdout logging is
+   --  'stdout' (FD facility without logfile set) is attached automatically.
+   --- Set Init to 'True' if you want to make sure minimal stdout logging is
    --  possible as soon as a new logger is instantiated.
 
    type Handle is access all Instance;
@@ -120,8 +120,9 @@ package Alog.Logger is
    --  is called. Depending on the Log-Threshold set, the message is logged to
    --  different targets (depending on the facilites) automatically.
    --
-   --  Prior to actually processing the given log message the policy database is
-   --  inquired if the log message with given source and level should be logged.
+   --  Prior to actually processing the given log message the policy database
+   --  is inquired if the log message with given source and level should be
+   --  logged.
 
    procedure Free is new Ada.Unchecked_Deallocation
      (Object => Facilities.Class,

@@ -137,7 +137,7 @@ package body Tasked_Logger_Tests is
       Logger2.Detach_Default_Facility;
       Logger2.Facility_Count (Count => F_Count);
       Assert (Condition => F_Count = 0,
-              Message   => "Unable to detach facility from initialized logger");
+              Message   => "Unable to detach facility from logger");
    end Default_Facility_Handling;
 
    -------------------------------------------------------------------------
@@ -163,8 +163,8 @@ package body Tasked_Logger_Tests is
          F_Count : Natural := Natural'Last;
       begin
 
-         --  Tasking_Error will be raised if tasked logger has terminated due to
-         --  an unhandled exception.
+         --  Tasking_Error will be raised if tasked logger has terminated due
+         --  to an unhandled exception.
 
          Log.Facility_Count (Count => F_Count);
 
@@ -214,8 +214,8 @@ package body Tasked_Logger_Tests is
          T_Count : Natural := Natural'Last;
       begin
 
-         --  Tasking_Error will be raised if tasked logger has terminated due to
-         --  an unhandled exception.
+         --  Tasking_Error will be raised if tasked logger has terminated due
+         --  to an unhandled exception.
 
          Log.Transform_Count (Count => T_Count);
 
