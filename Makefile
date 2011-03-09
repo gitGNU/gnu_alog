@@ -113,7 +113,7 @@ cov: prepare
 	@$(OBJECTDIR)/cov/runner_$(TARGET) || true
 	@lcov -c -d $(OBJECTDIR)/cov/ -o $(OBJECTDIR)/cov/alog_tmp.info
 	@lcov -e $(OBJECTDIR)/cov/alog_tmp.info "$(PWD)/src/*.adb" -o $(OBJECTDIR)/cov/alog.info
-	@genhtml $(OBJECTDIR)/cov/alog.info -o $(COVDIR)
+	@genhtml --no-branch-coverage $(OBJECTDIR)/cov/alog.info -o $(COVDIR)
 
 prof: prepare
 	@rm -f $(OBJECTDIR)/callgrind.*
