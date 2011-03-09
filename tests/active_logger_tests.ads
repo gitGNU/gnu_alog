@@ -1,5 +1,5 @@
 --
---  Copyright (c) 2008-2009,
+--  Copyright (c) 2008-2011,
 --  Reto Buerki, Adrian-Ken Rueegsegger
 --  secunet SwissIT AG
 --
@@ -59,9 +59,6 @@ package Active_Logger_Tests is
 
    procedure Verify_Logger_Initialization;
    --  Test active logger instance initialization behavior.
-
-   procedure Verify_Logger_Exception_Handling;
-   --  Test active logger instance exception handling.
 
    procedure Default_Facility_Handling;
    --  Test attaching/detaching of default facility.

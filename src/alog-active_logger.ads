@@ -1,5 +1,5 @@
 --
---  Copyright (c) 2009,
+--  Copyright (c) 2009-2011,
 --  Reto Buerki, Adrian-Ken Rueegsegger
 --  secunet SwissIT AG
 --
@@ -21,7 +21,6 @@
 --  MA  02110-1301  USA
 --
 
-with Ada.Exceptions;
 with Ada.Finalization;
 
 with Alog.Facilities;
@@ -103,10 +102,6 @@ package Alog.Active_Logger is
    --  Log the given message asynchronously. The message is put into a log
    --  request queue which is continuously consumed by a logging task.
    --
-   --  Prior to actually processing the given log message the policy database
-   --  is inquired if the log message with given source and level should be
-   --  logged.
-   --
    --  This procedure is *safe* to call from protected actions (e.g. from an
    --  entry call statement or rendezvous).
 
@@ -127,12 +122,6 @@ package Alog.Active_Logger is
    --  This procedure blocks until all queued logging requests have been
    --  consumed.
 
-   procedure Get_Last_Exception
-     (Logger     : in out Instance;
-      Occurrence :    out Ada.Exceptions.Exception_Occurrence);
-   --  Return last known Exception_Occurrence for caller. If no exception
-   --  occured Null_Occurrence is returned.
-
    type Shutdown_Helper (Logger : not null access Instance) is private;
    --  This helper will call Shutdown on the logger given as discriminant when
    --  it goes out of scope. This relieves the user from having to excplicitly
@@ -142,10 +131,6 @@ package Alog.Active_Logger is
    --  work.
 
 private
-
-   procedure Check_Exception (Logger : in out Instance);
-   --  Check if call to backend raised an exception. Explicitly reraise if an
-   --  exception occured; do nothing otherwise.
 
    task type Logging_Task (Parent : not null access Instance);
    --  This task takes logging requests from the parent's message queue and

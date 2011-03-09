@@ -1,5 +1,5 @@
 --
---  Copyright (c) 2009-2010,
+--  Copyright (c) 2009-2011,
 --  Reto Buerki, Adrian-Ken Rueegsegger
 --  secunet SwissIT AG
 --
@@ -64,15 +64,6 @@ package body Alog.Active_Logger is
 
    -------------------------------------------------------------------------
 
-   procedure Check_Exception (Logger : in out Instance) is
-      EO : Ada.Exceptions.Exception_Occurrence;
-   begin
-      Logger.Backend.Get_Last_Exception (Occurrence => EO);
-      Ada.Exceptions.Reraise_Occurrence (X => EO);
-   end Check_Exception;
-
-   -------------------------------------------------------------------------
-
    procedure Clear (Logger : in out Instance) is
    begin
       Logger.Backend.Clear;
@@ -124,18 +115,6 @@ package body Alog.Active_Logger is
 
    -------------------------------------------------------------------------
 
-   procedure Get_Last_Exception
-     (Logger     : in out Instance;
-      Occurrence :    out Ada.Exceptions.Exception_Occurrence)
-   is
-   begin
-      Logger.Backend.Get_Last_Exception
-        (Occurrence => Occurrence,
-         Caller     => Ada.Task_Identification.Current_Task);
-   end Get_Last_Exception;
-
-   -------------------------------------------------------------------------
-
    function Get_Queue_Length (Logger : Instance) return Natural is
    begin
       return Logger.Message_Queue.Length;
@@ -157,7 +136,6 @@ package body Alog.Active_Logger is
    is
    begin
       Logger.Backend.Iterate (Process);
-      Logger.Check_Exception;
    end Iterate;
 
    -------------------------------------------------------------------------
@@ -216,7 +194,6 @@ package body Alog.Active_Logger is
    begin
       Logger.Backend.Update (Name    => Name,
                              Process => Process);
-      Logger.Check_Exception;
    end Update;
 
    -------------------------------------------------------------------------

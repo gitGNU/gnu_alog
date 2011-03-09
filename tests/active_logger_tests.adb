@@ -1,5 +1,5 @@
 --
---  Copyright (c) 2008-2009,
+--  Copyright (c) 2008-2011,
 --  Reto Buerki, Adrian-Ken Rueegsegger
 --  secunet SwissIT AG
 --
@@ -22,14 +22,12 @@
 --
 
 with Ada.Directories;
-with Ada.Exceptions.Is_Null_Occurrence;
 
 with Ahven;
 
 with Alog.Helpers;
 with Alog.Facilities.File_Descriptor;
 with Alog.Facilities.Syslog;
-with Alog.Facilities.Mock;
 with Alog.Transforms.Casing;
 with Alog.Logger;
 with Alog.Active_Logger;
@@ -42,6 +40,7 @@ package body Active_Logger_Tests is
    Ref_Facility_Name : constant String := "Test_Facility_Name";
 
    Counter : Natural := 0;
+   pragma Atomic (Counter);
 
    procedure Check_Facility (Facility_Handle : Facilities.Handle);
    --  Verify that facility with given name is present in the logger.
@@ -49,9 +48,14 @@ package body Active_Logger_Tests is
    procedure Inc_Counter (F_Handle : Facilities.Handle);
    --  Increment counter.
 
+   procedure Toggle_Timestamp (Facility_Handle : Facilities.Handle);
+   --  Helper function for update facility test: Set the facility's write
+   --  timestamp flag to True.
+
    -------------------------------------------------------------------------
 
-   procedure Attach_Facility is
+   procedure Attach_Facility
+   is
       Log      : aliased Active_Logger.Instance (Init => False);
       Facility : constant Facilities.Handle :=
         new Facilities.File_Descriptor.Instance;
@@ -62,33 +66,22 @@ package body Active_Logger_Tests is
          Shutdown : Active_Logger.Shutdown_Helper (Logger => Log'Access);
          pragma Unreferenced (Shutdown);
       begin
-
          Assert (Condition => Log.Facility_Count = 0,
-                 Message   => "facility count not 0");
-
-         begin
-            Log.Update (Name    => Facility.Get_Name,
-                        Process => Check_Facility'Access);
-
-         exception
-            when Logger.Facility_Not_Found =>
-               null;
-         end;
+                 Message   => "Facility count not 0");
 
          Log.Attach_Facility (Facility => Facility);
          Assert (Condition => Log.Facility_Count = 1,
-                 Message => "could not attach facility");
+                 Message => "Could not attach facility");
 
          Log.Update (Name    => Facility.Get_Name,
                      Process => Check_Facility'Access);
 
          begin
             Log.Attach_Facility (Facility => Facility);
-            Fail (Message => "attached duplicate facility");
+            Fail (Message => "Attached duplicate facility");
 
          exception
-            when Logger.Facility_Already_Present =>
-               null;
+            when Logger.Facility_Already_Present => null;
          end;
 
       end;
@@ -287,10 +280,6 @@ package body Active_Logger_Tests is
 
    -------------------------------------------------------------------------
 
-   procedure Do_Nothing (Facility_Handle : Facilities.Handle) is null;
-
-   -------------------------------------------------------------------------
-
    procedure Inc_Counter (F_Handle : Facilities.Handle)
    is
       pragma Unreferenced (F_Handle);
@@ -329,9 +318,6 @@ package body Active_Logger_Tests is
       T.Add_Test_Routine
         (Routine => Verify_Logger_Initialization'Access,
          Name    => "logger initialization behavior");
-      T.Add_Test_Routine
-        (Routine => Verify_Logger_Exception_Handling'Access,
-         Name    => "active logger exception handling");
       T.Add_Test_Routine
         (Routine => Default_Facility_Handling'Access,
          Name    => "default facility handling");
@@ -460,10 +446,6 @@ package body Active_Logger_Tests is
 
    -------------------------------------------------------------------------
 
-   procedure Toggle_Timestamp (Facility_Handle : Facilities.Handle);
-   --  Helper function for update facility test: Set the facility's write
-   --  timestamp flag to True.
-
    procedure Toggle_Timestamp (Facility_Handle : Facilities.Handle)
    is
    begin
@@ -479,16 +461,6 @@ package body Active_Logger_Tests is
          Shutdown : Active_Logger.Shutdown_Helper (Logger => Log'Access);
          pragma Unreferenced (Shutdown);
       begin
-         begin
-            Log.Update (Name    => "Nonexistent",
-                        Process => Do_Nothing'Access);
-            Fail (Message => "Expected Facility_Not_Found");
-
-         exception
-            when Logger.Facility_Not_Found =>
-               null;
-         end;
-
          declare
             Facility      : constant Facilities.Handle :=
               new Facilities.File_Descriptor.Instance;
@@ -503,6 +475,12 @@ package body Active_Logger_Tests is
             Log.Attach_Facility (Facility => Facility);
             Log.Update (Name    => Facility_Name,
                         Process => Toggle_Timestamp'Access);
+
+            for I in 1 .. 30 loop
+               exit when Facility.Is_Write_Timestamp;
+               delay 0.1;
+            end loop;
+
             Assert (Condition => Facility.Is_Write_Timestamp,
                     Message   => "Update failed");
          end;
@@ -530,56 +508,15 @@ package body Active_Logger_Tests is
 
          Log.Iterate (Process => Inc_Counter'Access);
 
+         for I in 1 .. 30 loop
+            exit when Counter /= 0;
+            delay 0.1;
+         end loop;
+
          Assert (Condition => Counter = 2,
-                 Message   => "counter not 2");
+                 Message   => "Counter not 2");
       end;
    end Verify_Iterate_Facilities;
-
-   -------------------------------------------------------------------------
-
-   procedure Verify_Logger_Exception_Handling is
-      use Ada.Exceptions;
-
-      Log           : aliased Active_Logger.Instance (Init => False);
-      Mock_Facility : constant Facilities.Handle :=
-        new Facilities.Mock.Instance;
-      EO            : Exception_Occurrence;
-   begin
-      declare
-         Shutdown : Active_Logger.Shutdown_Helper (Logger => Log'Access);
-         pragma Unreferenced (Shutdown);
-      begin
-         Log.Get_Last_Exception (Occurrence => EO);
-         Assert
-           (Condition => Is_Null_Occurrence (X => EO),
-            Message   => "Exception not Null_Occurence");
-
-         Log.Attach_Facility (Facility => Mock_Facility);
-         Log.Log_Message (Level => Debug,
-                          Msg   => "Test message");
-         Log.All_Done;
-
-         Log.Get_Last_Exception (Occurrence => EO);
-         Assert
-           (Condition => Exception_Name (X => EO) = "CONSTRAINT_ERROR",
-            Message   => "Expected Constraint_Error");
-
-         Assert
-           (Condition => Exception_Message (X => EO) =
-              Facilities.Mock.Exception_Message,
-            Message   => "Found wrong exception message");
-
-         Log.Detach_Facility (Name => Mock_Facility.Get_Name);
-         Log.Log_Message (Level => Debug,
-                          Msg   => "Test message 2");
-         Log.All_Done;
-
-         Log.Get_Last_Exception (Occurrence => EO);
-         Assert
-           (Condition => Is_Null_Occurrence (X => EO),
-            Message   => "Exception not reset");
-      end;
-   end Verify_Logger_Exception_Handling;
 
    -------------------------------------------------------------------------
 

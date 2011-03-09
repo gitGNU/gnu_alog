@@ -1,5 +1,5 @@
 --
---  Copyright (c) 2008-2009,
+--  Copyright (c) 2008-2011,
 --  Reto Buerki, Adrian-Ken Rueegsegger
 --  secunet SwissIT AG
 --
@@ -21,7 +21,7 @@
 --  MA  02110-1301  USA
 --
 
-with Ada.Exceptions.Is_Null_Occurrence;
+with Ada.Exceptions;
 with Ada.Task_Identification;
 
 with Ahven;
@@ -39,7 +39,7 @@ package body Tasked_Logger_Tests is
    use Alog;
 
    Counter : Natural := 0;
-   --  Iterate counter.
+   pragma Atomic (Counter);
 
    procedure Do_Nothing (Facility_Handle : Facilities.Handle) is null;
    --  Just do nothing.
@@ -51,6 +51,12 @@ package body Tasked_Logger_Tests is
    --  Raise constraint error.
 
    procedure Enable_Facility_Timestamp (Facility_Handle : Facilities.Handle);
+   --  Enable write timestamp of facility.
+
+   procedure Except_Handler
+     (Except : Ada.Exceptions.Exception_Occurrence;
+      Caller : Ada.Task_Identification.Task_Id);
+   --  Exception handler used in tests. Just increments the atomic counter.
 
    -------------------------------------------------------------------------
 
@@ -154,8 +160,10 @@ package body Tasked_Logger_Tests is
 
       exception
          when Logger.Facility_Not_Found =>
+
             --  Free not attached facility, this is not done by the logger
             --  (since it was never attached).
+
             Alog.Logger.Free (Facility);
       end;
 
@@ -231,6 +239,17 @@ package body Tasked_Logger_Tests is
    begin
       Facility_Handle.Toggle_Write_Timestamp (State => True);
    end Enable_Facility_Timestamp;
+
+   -------------------------------------------------------------------------
+
+   procedure Except_Handler
+     (Except : Ada.Exceptions.Exception_Occurrence;
+      Caller : Ada.Task_Identification.Task_Id)
+   is
+      pragma Unreferenced (Except, Caller);
+   begin
+      Counter := Counter + 1;
+   end Except_Handler;
 
    -------------------------------------------------------------------------
 
@@ -314,23 +333,21 @@ package body Tasked_Logger_Tests is
       Log       : Tasked_Logger.Instance (Init => False);
       Facility1 : constant Facilities.Handle :=
         new Facilities.File_Descriptor.Instance;
-      EO        : Exception_Occurrence;
    begin
+      Counter := 0;
+      Log.Set_Except_Handler (Proc => Except_Handler'Access);
       Facility1.Set_Name (Name => "Facility1");
 
       Log.Attach_Facility (Facility => Facility1);
       Log.Iterate (Process => Raise_Exception'Access);
 
-      Log.Get_Last_Exception (Occurrence => EO);
-      Assert
-        (Condition => Exception_Name (X => EO) = "CONSTRAINT_ERROR",
-         Message   => "Expected Constraint_Error");
+      for I in 1 .. 30 loop
+         exit when Counter /= 0;
+         delay 0.1;
+      end loop;
 
-      Log.Iterate (Process => Inc_Counter'Access);
-      Log.Get_Last_Exception (Occurrence => EO);
-      Assert
-        (Condition => Is_Null_Occurrence (X => EO),
-         Message   => "Exception not Null_Occurence");
+      Assert (Condition => Counter = 1,
+              Message   => "Exception counter not 1");
 
       Log.Clear;
    end Iterate_Facilities_Exceptions;
@@ -338,55 +355,23 @@ package body Tasked_Logger_Tests is
    -------------------------------------------------------------------------
 
    procedure Logger_Exception_Handling is
-      use Ada.Exceptions;
-
       Log           : Tasked_Logger.Instance;
       Mock_Facility : constant Facilities.Handle :=
         new Facilities.Mock.Instance;
-      EO            : Exception_Occurrence;
    begin
-      Log.Get_Last_Exception (Occurrence => EO);
-      Assert
-        (Condition => Is_Null_Occurrence (X => EO),
-         Message   => "Exception not Null_Occurence");
-
+      Counter := 0;
+      Log.Set_Except_Handler (Proc => Except_Handler'Access);
       Log.Attach_Facility (Facility => Mock_Facility);
       Log.Log_Message (Level => Debug,
                        Msg   => "Test message");
 
-      Log.Get_Last_Exception (Occurrence => EO);
-      Assert
-        (Condition => Exception_Name (X => EO) = "CONSTRAINT_ERROR",
-         Message   => "Expected Constraint_Error");
-      Assert
-        (Condition => Exception_Message (X => EO) =
-           Facilities.Mock.Exception_Message,
-         Message   => "Found wrong exception message");
+      for I in 1 .. 30 loop
+         exit when Counter /= 0;
+         delay 0.1;
+      end loop;
 
-      --  Exception handling with explicit caller ID.
-
-      Log.Log_Message (Level  => Debug,
-                       Msg    => "Test message with caller ID",
-                       Caller => Ada.Task_Identification.Current_Task);
-      Log.Get_Last_Exception
-        (Occurrence => EO,
-         Caller     => Ada.Task_Identification.Current_Task);
-      Assert
-        (Condition => Exception_Name (X => EO) = "CONSTRAINT_ERROR",
-         Message   => "Expected Constraint_Error for specific caller");
-      Assert
-        (Condition => Exception_Message (X => EO) =
-           Facilities.Mock.Exception_Message,
-         Message   => "Found wrong exception message for specific caller");
-
-      Log.Detach_Facility (Name => Mock_Facility.Get_Name);
-      Log.Log_Message (Level => Debug,
-                       Msg   => "Test message 2");
-
-      Log.Get_Last_Exception (Occurrence => EO);
-      Assert
-        (Condition => Is_Null_Occurrence (X => EO),
-         Message   => "Exception not reset");
+      Assert (Condition => Counter = 1,
+              Message   => "Exception counter not 1");
    end Logger_Exception_Handling;
 
    -------------------------------------------------------------------------
@@ -399,18 +384,20 @@ package body Tasked_Logger_Tests is
    -------------------------------------------------------------------------
 
    procedure Update_Facility is
-      use Ada.Exceptions;
-
       Log : Tasked_Logger.Instance (Init => False);
-      EO  : Ada.Exceptions.Exception_Occurrence;
    begin
+      Counter := 0;
+      Log.Set_Except_Handler (Proc => Except_Handler'Access);
       Log.Update (Name    => "Nonexistent",
                   Process => Do_Nothing'Access);
 
-      Log.Get_Last_Exception (Occurrence => EO);
-      Assert (Condition => Exception_Name (X => EO) =
-                "ALOG.LOGGER.FACILITY_NOT_FOUND",
-              Message   => "Expected Facility_Not_Found");
+      for I in 1 .. 30 loop
+         exit when Counter /= 0;
+         delay 0.1;
+      end loop;
+
+      Assert (Condition => Counter = 1,
+              Message   => "Exception counter not 1");
 
       declare
          Facility      : constant Facilities.Handle :=

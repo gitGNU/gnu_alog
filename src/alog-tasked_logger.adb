@@ -1,5 +1,5 @@
 --
---  Copyright (c) 2009,
+--  Copyright (c) 2009-2011,
 --  Reto Buerki, Adrian-Ken Rueegsegger
 --  secunet SwissIT AG
 --
@@ -21,14 +21,14 @@
 --  MA  02110-1301  USA
 --
 
+with Ada.Text_IO;
+with Ada.Exceptions;
 with Ada.Strings.Unbounded;
 
 with Alog.Logger;
-with Alog.Protected_Containers;
 
 package body Alog.Tasked_Logger is
 
-   use Ada.Exceptions;
    use Ada.Strings.Unbounded;
 
    procedure F_Dummy (Facility_Handle : Facilities.Handle) is null;
@@ -36,10 +36,36 @@ package body Alog.Tasked_Logger is
    --  handle of type Facility_Update_Handle since that type is defined as
    --  'not null'.
 
+   procedure Default_Handler
+     (Except : Ada.Exceptions.Exception_Occurrence;
+      Caller : Ada.Task_Identification.Task_Id);
+   --  Tasked logger default exception handling callback. Prints the calling
+   --  task's ID and exception information to stderr.
+
+   -------------------------------------------------------------------------
+
+   procedure Default_Handler
+     (Except : Ada.Exceptions.Exception_Occurrence;
+      Caller : Ada.Task_Identification.Task_Id)
+   is
+      use Ada.Task_Identification;
+   begin
+      Ada.Text_IO.Put_Line
+        (File => Ada.Text_IO.Current_Error,
+         Item => "Logging exception while processing request for task with ID "
+         & Image (T => Caller));
+      Ada.Text_IO.Put_Line
+        (File => Ada.Text_IO.Current_Error,
+         Item => Ada.Exceptions.Exception_Information (Except));
+   end Default_Handler;
+
    -------------------------------------------------------------------------
 
    task body Instance is
       use type Ada.Task_Identification.Task_Id;
+
+      Except_Handler : Exceptions.Exception_Handler := Default_Handler'Access;
+      --  Exception handler callback, initialized to default handler.
 
       Logsink               : Alog.Logger.Instance (Init => Init);
       Current_Source        : Unbounded_String;
@@ -48,13 +74,11 @@ package body Alog.Tasked_Logger is
       Current_Caller        : Ada.Task_Identification.Task_Id;
       Current_Facility_Name : Unbounded_String;
       Current_Facility_Proc : Facility_Update_Handle := F_Dummy'Access;
-      Exceptions            : Protected_Containers.Protected_Exception_Map;
    begin
 
       Main_Loop :
       loop
          begin
-
             select
 
                -------------------------------------------------------------
@@ -103,19 +127,14 @@ package body Alog.Tasked_Logger is
                   Current_Caller        := Instance.Update'Caller;
                end Update;
 
-               if Exceptions.Contains (Key => Current_Caller) then
-                  Exceptions.Delete (Key => Current_Caller);
-               end if;
-
                begin
                   Logsink.Update (Name    => To_String (Current_Facility_Name),
                                   Process => Current_Facility_Proc);
 
                exception
                   when E : others =>
-                     Exceptions.Insert
-                       (Key  => Current_Caller,
-                        Item => Save_Occurrence (Source => E));
+                     Except_Handler (Except => E,
+                                     Caller => Current_Caller);
                end;
             or
 
@@ -126,18 +145,13 @@ package body Alog.Tasked_Logger is
                   Current_Caller        := Instance.Iterate'Caller;
                end Iterate;
 
-               if Exceptions.Contains (Key => Current_Caller) then
-                  Exceptions.Delete (Key => Current_Caller);
-               end if;
-
                begin
                   Logsink.Iterate (Process => Current_Facility_Proc);
 
                exception
                   when E : others =>
-                     Exceptions.Insert
-                       (Key  => Current_Caller,
-                        Item => Save_Occurrence (Source => E));
+                     Except_Handler (Except => E,
+                                     Caller => Current_Caller);
                end;
             or
 
@@ -167,30 +181,7 @@ package body Alog.Tasked_Logger is
 
                accept Clear do
                   Logsink.Clear;
-                  Exceptions.Clear;
                end Clear;
-            or
-
-               -------------------------------------------------------------
-
-               accept Get_Last_Exception
-                 (Occurrence : out Exception_Occurrence;
-                  Caller     :     Ada.Task_Identification.Task_Id :=
-                    Ada.Task_Identification.Null_Task_Id)
-               do
-
-                  --  Get_Last_Exception'Caller can not be used as default
-                  --  parameter so we need to check for 'Null_Task_Id 'instead.
-
-                  if Caller = Ada.Task_Identification.Null_Task_Id then
-                     Current_Caller := Get_Last_Exception'Caller;
-                  else
-                     Current_Caller := Caller;
-                  end if;
-
-                  Exceptions.Get (Key     => Current_Caller,
-                                  Element => Occurrence);
-               end Get_Last_Exception;
             or
 
                -------------------------------------------------------------
@@ -216,10 +207,6 @@ package body Alog.Tasked_Logger is
                   end if;
                end Log_Message;
 
-               if Exceptions.Contains (Key => Current_Caller) then
-                  Exceptions.Delete (Key => Current_Caller);
-               end if;
-
                begin
                   Logsink.Log_Message
                     (Source => To_String (Current_Source),
@@ -228,10 +215,8 @@ package body Alog.Tasked_Logger is
 
                exception
                   when E : others =>
-                     Exceptions.Insert
-                       (Key  => Current_Caller,
-                        Item => Save_Occurrence (Source => E));
-
+                     Except_Handler (Except => E,
+                                     Caller => Current_Caller);
                end;
 
             or
@@ -240,6 +225,16 @@ package body Alog.Tasked_Logger is
 
                accept Shutdown;
                exit Main_Loop;
+
+            or
+
+               -----------------------------------------------------------
+
+               accept Set_Except_Handler
+                 (Proc : Exceptions.Exception_Handler)
+               do
+                  Except_Handler := Proc;
+               end Set_Except_Handler;
 
             or
                terminate;

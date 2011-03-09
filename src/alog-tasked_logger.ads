@@ -1,5 +1,5 @@
 --
---  Copyright (c) 2009,
+--  Copyright (c) 2009-2011,
 --  Reto Buerki, Adrian-Ken Rueegsegger
 --  secunet SwissIT AG
 --
@@ -21,9 +21,9 @@
 --  MA  02110-1301  USA
 --
 
-with Ada.Exceptions;
 with Ada.Task_Identification;
 
+with Alog.Exceptions;
 with Alog.Facilities;
 with Alog.Transforms;
 
@@ -32,8 +32,8 @@ with Alog.Transforms;
 --  task-safe concurrent logging.
 package Alog.Tasked_Logger is
 
-   type Facility_Update_Handle is
-   not null access procedure (Facility_Handle : Facilities.Handle);
+   type Facility_Update_Handle is not null access
+     procedure (Facility_Handle : Facilities.Handle);
    --  Handle to facility update procedure.
 
    task type Instance (Init : Boolean := False) is
@@ -82,34 +82,22 @@ package Alog.Tasked_Logger is
       --  Log a message. The Write_Message() procedure of all attached
       --  facilities is called. Depending on the Log-Threshold set, the message
       --  is logged to different targets (depending on the facilites)
-      --  automatically. Clear the last exception occurrence for the caller if
-      --  none occurred or replace existing occurrence with new raised
-      --  exception.
+      --  automatically. If an exception occurs, the exception handler
+      --  procedure is called.
+      --
       --  If caller is not specified the executing task's ID is used instead.
       --  Since Log_Message'Caller can not be used as default parameter the
       --  entry checks if the variable is set to 'Null_Task_Id' in the body.
-      --
-      --  Prior to actually processing the given log message the policy
-      --  database is inquired if the log message with given source and level
-      --  should be logged.
 
       entry Clear;
       --  Clear tasked logger instance. Detach and teardown all attached
       --  facilities and transforms and clear any stored exceptions.
 
-      entry Get_Last_Exception
-        (Occurrence : out Ada.Exceptions.Exception_Occurrence;
-         Caller     :     Ada.Task_Identification.Task_Id :=
-           Ada.Task_Identification.Null_Task_Id);
-      --  Return last known Exception_Occurrence. If no exception occured
-      --  return Null_Occurrence.
-      --  If caller is not specified the executing task's ID is used instead.
-      --  Since Get_Last_Exception'Caller can not be used as default parameter
-      --  the entry checks if the variable is set to 'Null_Task_Id' in the
-      --  body.
-
       entry Shutdown;
       --  Explicitly shutdown tasked logger.
+
+      entry Set_Except_Handler (Proc : Exceptions.Exception_Handler);
+      --  Set custom exception handler procedure.
 
    end Instance;
    --  Tasked logger instance. The Init discriminant defines whether or not a
@@ -117,6 +105,10 @@ package Alog.Tasked_Logger is
    --  automatically. Default is 'False'. Set Init to 'True' if you want to
    --  make sure minimal stdout logging is possible as soon as a new logger is
    --  instantiated.
+   --
+   --  By default exceptions which occur during asynchronous processing are
+   --  printed to standard error. Use the Set_Except_Handler entry to register
+   --  a custom exception handler.
 
    type Handle is access all Instance;
    --  Handle to tasked logger type.
