@@ -21,7 +21,6 @@
 --  MA  02110-1301  USA
 --
 
-with Ada.Exceptions;
 with Ada.Task_Identification;
 
 with Ahven; use Ahven;
@@ -32,97 +31,6 @@ with Alog.Protected_Containers;
 package body Protected_Container_Tests is
 
    use Alog;
-
-   -------------------------------------------------------------------------
-
-   procedure Exception_Map_Clear is
-      Map       : Protected_Containers.Protected_Exception_Map;
-      Ex_Handle : constant Ada.Exceptions.Exception_Occurrence_Access :=
-        new Ada.Exceptions.Exception_Occurrence;
-      Task_ID   : constant Ada.Task_Identification.Task_Id            :=
-        Ada.Task_Identification.Current_Task;
-   begin
-
-      --  Verify that clear on empty map does not throw an exception
-
-      Map.Clear;
-
-      Map.Insert (Key  => Task_ID,
-                  Item => Ex_Handle);
-      Assert (Condition => Map.Contains (Key => Task_ID),
-              Message   => "unable to insert");
-
-      Map.Clear;
-      Assert (Condition => not Map.Contains (Key => Task_ID),
-              Message   => "unable to clear");
-   end Exception_Map_Clear;
-
-   -------------------------------------------------------------------------
-
-   procedure Exception_Map_Delete is
-      Map       : Protected_Containers.Protected_Exception_Map;
-      Ex_Handle : constant Ada.Exceptions.Exception_Occurrence_Access :=
-        new Ada.Exceptions.Exception_Occurrence;
-      Task_ID   : constant Ada.Task_Identification.Task_Id            :=
-        Ada.Task_Identification.Current_Task;
-   begin
-      begin
-         Map.Delete (Key => Task_ID);
-         Fail (Message => "expected constraint error");
-
-      exception
-         when Constraint_Error =>
-            null;
-      end;
-
-      Map.Insert (Key  => Task_ID,
-                  Item => Ex_Handle);
-
-      Assert (Condition => Map.Contains
-              (Key => Ada.Task_Identification.Current_Task),
-              Message   => "unable to insert");
-
-      Map.Delete (Key => Task_ID);
-
-      Assert (Condition => not Map.Contains (Key => Task_ID),
-              Message   => "unable to delete");
-   end Exception_Map_Delete;
-
-   -------------------------------------------------------------------------
-
-   procedure Exception_Map_Insert_Get is
-      use Ada.Exceptions;
-
-      Map       : Protected_Containers.Protected_Exception_Map;
-      Ex_Handle : constant Exception_Occurrence_Access :=
-        new Exception_Occurrence;
-      Task_ID   : constant Ada.Task_Identification.Task_Id :=
-        Ada.Task_Identification.Current_Task;
-   begin
-      Assert (Condition => Map.Is_Empty,
-              Message   => "New map not empty");
-
-      Map.Insert (Key  => Task_ID,
-                  Item => Ex_Handle);
-
-      Assert (Condition => Map.Contains
-              (Key => Ada.Task_Identification.Current_Task),
-              Message   => "unable to insert");
-      Assert (Condition => not Map.Is_Empty,
-              Message   => "Map still empty");
-
-      declare
-         Ex : Exception_Occurrence;
-      begin
-         Map.Get (Key     => Task_ID,
-                  Element => Ex);
-
-         Assert (Condition => Exception_Identity (X => Ex) =
-                   Exception_Identity (Ex_Handle.all),
-                 Message   => "Exception mismatch!");
-      end;
-
-   end Exception_Map_Insert_Get;
 
    -------------------------------------------------------------------------
 
@@ -138,15 +46,6 @@ package body Protected_Container_Tests is
       T.Add_Test_Routine
         (Routine => Log_Request_List_Done'Access,
          Name    => "log request list done");
-      T.Add_Test_Routine
-        (Routine => Exception_Map_Insert_Get'Access,
-         Name    => "exception map insert/get");
-      T.Add_Test_Routine
-        (Routine => Exception_Map_Delete'Access,
-         Name    => "exception map delete");
-      T.Add_Test_Routine
-        (Routine => Exception_Map_Clear'Access,
-         Name    => "exception map clear");
    end Initialize;
 
    -------------------------------------------------------------------------

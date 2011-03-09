@@ -40,13 +40,4 @@ package Protected_Container_Tests is
    procedure Log_Request_List_Done;
    --  Test log request list Done operation.
 
-   procedure Exception_Map_Insert_Get;
-   --  Test insert and get for protected exception map.
-
-   procedure Exception_Map_Delete;
-   --  Test delete for protected exception map.
-
-   procedure Exception_Map_Clear;
-   --  Test clear for protected exception map.
-
 end Protected_Container_Tests;

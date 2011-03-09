@@ -21,12 +21,9 @@
 --  MA  02110-1301  USA
 --
 
-with Ada.Exceptions;
-with Ada.Task_Identification;
 with Ada.Containers.Doubly_Linked_Lists;
 
 with Alog.Log_Request;
-with Alog.Controlled_Map;
 
 --  Alog Protected Containers. This package provides protected containers which
 --  are safe for concurrent access.
@@ -74,52 +71,6 @@ package Alog.Protected_Containers is
    --  Protected variant of a log request list. This list holds log request
    --  objects and is safe for concurrent access. It operates in FIFO-Mode.
 
-   -----------------------------
-   -- Protected_Exception_Map --
-   -----------------------------
-
-   type Exception_Storage is limited private;
-
-   protected type Protected_Exception_Map is
-
-      procedure Insert
-        (Key  : Ada.Task_Identification.Task_Id;
-         Item : Ada.Exceptions.Exception_Occurrence_Access);
-      --  Insert the given Exception_Occurrence 'Element' with key 'Key' into
-      --  the map.
-
-      procedure Get
-        (Key     :     Ada.Task_Identification.Task_Id;
-         Element : out Ada.Exceptions.Exception_Occurrence);
-      --  Get the Exception_Occurrence with key 'Key' from the map. If the key
-      --  is not found in the map Null_Occurrence is stored in element.
-
-      procedure Delete (Key : Ada.Task_Identification.Task_Id);
-      --  Delete the Exception_Occurrence with key 'Key' from the map. Memory
-      --  of the exception occurrence is freed. The user must make sure to not
-      --  access deleted elements.
-
-      function Contains (Key : Ada.Task_Identification.Task_Id) return Boolean;
-      --  Returns True if an element with key 'Key' is in the map.
-
-      function Is_Empty return Boolean;
-      --  Return True if the map is empty.
-
-      procedure Clear;
-      --  Remove all Exception_Occurrences in the map. Memory of the exception
-      --  occurrences is freed.
-
-   private
-
-      Data : Exception_Storage;
-
-   end Protected_Exception_Map;
-   --  Protected map of exceptions. To make memory management more robust only
-   --  copies of Excpetion_Occurrences and not handles are returned by the map.
-   --  The memory of an occurrence pointed to by a previously inserted handle
-   --  is freed upon calling Delete, Clear or during finalization of the
-   --  protected type.
-
 private
 
    use type Alog.Log_Request.Instance;
@@ -131,17 +82,5 @@ private
    package LOLRP renames List_Of_Log_Requests_Package;
 
    type Log_Request_Storage is new LOLRP.List with null record;
-
-   function "<" (Left, Right : Ada.Task_Identification.Task_Id) return Boolean;
-   --  Smaller-than function for Task_Id. Needed to use Task_Id as Key_Type.
-
-   package Map_Of_Exceptions_Package is new Alog.Controlled_Map
-     (Key_Type       => Ada.Task_Identification.Task_Id,
-      Element_Type   => Ada.Exceptions.Exception_Occurrence,
-      Element_Handle => Ada.Exceptions.Exception_Occurrence_Access);
-
-   package MOEP renames Map_Of_Exceptions_Package;
-
-   type Exception_Storage is limited new MOEP.Map with null record;
 
 end Alog.Protected_Containers;

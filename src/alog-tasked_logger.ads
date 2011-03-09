@@ -56,10 +56,8 @@ package Alog.Tasked_Logger is
       entry Update
         (Name    : String;
          Process : Facility_Update_Handle);
-      --  Update a specific facility identified by 'Name'. Call the 'Process'
-      --  procedure to perform the update operation. Clear the last exception
-      --  occurrence for the caller if none occurred or replace existing
-      --  occurrence with new raised exception.
+      --  Update a specific facility identified by 'Name'. Calls the 'Process'
+      --  procedure to perform the update operation.
 
       entry Iterate (Process : Facility_Update_Handle);
       --  Call 'Process' for all attached facilities.

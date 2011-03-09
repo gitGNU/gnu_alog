@@ -25,15 +25,6 @@ package body Alog.Protected_Containers is
 
    -------------------------------------------------------------------------
 
-   function "<" (Left, Right : Ada.Task_Identification.Task_Id) return Boolean
-   is
-      use Ada.Task_Identification;
-   begin
-      return Image (T => Left) < Image (T => Right);
-   end "<";
-
-   -------------------------------------------------------------------------
-
    protected body Log_Request_List is
 
       ----------------------------------------------------------------------
@@ -100,72 +91,5 @@ package body Alog.Protected_Containers is
       end Put;
 
    end Log_Request_List;
-
-   -------------------------------------------------------------------------
-
-   protected body Protected_Exception_Map is
-
-      ----------------------------------------------------------------------
-
-      procedure Clear is
-
-      begin
-         Data.Clear;
-      end Clear;
-
-      ----------------------------------------------------------------------
-
-      function Contains
-        (Key : Ada.Task_Identification.Task_Id)
-         return Boolean
-      is
-      begin
-         return Data.Contains (Key => Key);
-      end Contains;
-
-      ----------------------------------------------------------------------
-
-      procedure Delete (Key : Ada.Task_Identification.Task_Id) is
-      begin
-         Data.Delete (Key => Key);
-      end Delete;
-
-      ----------------------------------------------------------------------
-
-      procedure Get
-        (Key     :     Ada.Task_Identification.Task_Id;
-         Element : out Ada.Exceptions.Exception_Occurrence)
-      is
-      begin
-         if Contains (Key => Key) then
-            Ada.Exceptions.Save_Occurrence
-              (Target => Element,
-               Source => Data.Element (Key => Key).all);
-         else
-            Ada.Exceptions.Save_Occurrence
-              (Target => Element,
-               Source => Ada.Exceptions.Null_Occurrence);
-         end if;
-      end Get;
-
-      ----------------------------------------------------------------------
-
-      procedure Insert
-        (Key  : Ada.Task_Identification.Task_Id;
-         Item : Ada.Exceptions.Exception_Occurrence_Access)
-      is
-      begin
-         Data.Insert (Key      => Key,
-                      New_Item => Item);
-      end Insert;
-
-      ----------------------------------------------------------------------
-
-      function Is_Empty return Boolean is
-      begin
-         return Data.Is_Empty;
-      end Is_Empty;
-
-   end Protected_Exception_Map;
 
 end Alog.Protected_Containers;
