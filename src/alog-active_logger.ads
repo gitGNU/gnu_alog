@@ -27,6 +27,7 @@ with Alog.Facilities;
 with Alog.Transforms;
 with Alog.Tasked_Logger;
 with Alog.Protected_Containers;
+with Alog.Exceptions;
 
 --  Active Logger instance. This logger is an active object and implements
 --  concurrent, asynchronous logging. It provides the same functionality as the
@@ -35,9 +36,11 @@ package Alog.Active_Logger is
 
    type Instance (Init : Boolean) is tagged limited private;
    --  Active logger instance. Incoming messages (via Log_Message) are put into
-   --  a request queue. This queue is consumed by a logging task. Exceptions
-   --  that might be thrown while logging are saved into a map on a per-caller
-   --  basis.
+   --  a request queue. This queue is consumed by a logging task.
+   --
+   --  By default exceptions which occur during asynchronous processing are
+   --  printed to standard error. Use the Set_Except_Handler procedure to
+   --  register a custom exception handler.
 
    type Handle is access all Instance;
    --  Handle to active logger type.
@@ -121,6 +124,11 @@ package Alog.Active_Logger is
    procedure All_Done (Logger : in out Instance);
    --  This procedure blocks until all queued logging requests have been
    --  consumed.
+
+   procedure Set_Except_Handler
+     (Logger : Instance;
+      Proc   : Exceptions.Exception_Handler);
+   --  Set custom exception handler procedure.
 
    type Shutdown_Helper (Logger : not null access Instance) is private;
    --  This helper will call Shutdown on the logger given as discriminant when

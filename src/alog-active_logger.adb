@@ -157,6 +157,16 @@ package body Alog.Active_Logger is
 
    -------------------------------------------------------------------------
 
+   procedure Set_Except_Handler
+     (Logger : Instance;
+      Proc   : Exceptions.Exception_Handler)
+   is
+   begin
+      Logger.Backend.Set_Except_Handler (Proc => Proc);
+   end Set_Except_Handler;
+
+   -------------------------------------------------------------------------
+
    procedure Shutdown
      (Logger : in out Instance;
       Flush  :        Boolean := True)
