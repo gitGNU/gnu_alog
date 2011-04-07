@@ -39,6 +39,7 @@ LIBDIR = lib/$(TARGET)
 COVDIR = cov/$(TARGET)
 PROFDIR = prof/$(TARGET)
 ALI_FILES = lib/$(TARGET)/*.ali
+GPR_FILE = gnat/alog.gpr
 
 TMPDIR = /tmp
 DISTDIR = $(TMPDIR)/$(ALOG)
@@ -95,8 +96,10 @@ install: install_lib install_$(LIBRARY_KIND)
 install_lib: build_lib
 	@mkdir -p $(PREFIX)/include/alog
 	@mkdir -p $(PREFIX)/lib/alog
+	@mkdir -p $(PREFIX)/lib/gnat
 	$(INSTALL) -m 644 $(SOURCEDIR)/* $(PREFIX)/include/alog
 	$(INSTALL) -m 444 $(ALI_FILES) $(PREFIX)/lib/alog
+	$(INSTALL) -m 644 $(GPR_FILE) $(PREFIX)/lib/gnat
 
 install_static:
 	$(INSTALL) -m 444 $(LIBDIR)/$(A_LIBRARY) $(PREFIX)/lib/alog
