@@ -50,17 +50,20 @@ package body Alog.Facilities.Syslog is
       pragma Unreferenced (Facility);
 
       procedure C_Syslog
-        (Prio : C.int;
-         Msg  : C.Strings.chars_ptr);
+        (Prio   : C.int;
+         Format : C.Strings.chars_ptr;
+         Data   : C.Strings.chars_ptr);
       pragma Import (C, C_Syslog, "syslog");
 
-      Char_Ptr : C.Strings.chars_ptr;
+      C_Fmt : C.Strings.chars_ptr := C.Strings.New_String (Str => "%s");
+      C_Msg : C.Strings.chars_ptr := C.Strings.New_String (Str => Msg);
    begin
-      Char_Ptr := C.Strings.New_String (Str => Msg);
-      C_Syslog (Prio => C.int (Level_Map (Level)),
-                Msg  => Char_Ptr);
+      C_Syslog (Prio   => C.int (Level_Map (Level)),
+                Format => C_Fmt,
+                Data   => C_Msg);
 
-      Interfaces.C.Strings.Free (Char_Ptr);
+      C.Strings.Free (C_Fmt);
+      C.Strings.Free (C_Msg);
    end Write;
 
 end Alog.Facilities.Syslog;
