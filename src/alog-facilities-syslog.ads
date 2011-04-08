@@ -28,15 +28,16 @@ package Alog.Facilities.Syslog is
 
    type Handle is access all Instance;
 
-   type S_Facility is
-     (LOG_AUTH,
-      LOG_USER,
-      LOG_MAIL,
+   type Syslog_Facility is
+     (LOG_AUTHPRIV,
+      LOG_CRON,
       LOG_DAEMON,
-      LOG_SYSLOG,
-      LOG_CRON);
-   --  Corresponding Ada-Implementation of syslogs "facility" parameter.
-   --  Only the important facilities are mapped.
+      LOG_FTP,
+      LOG_KERN,
+      LOG_MAIL,
+      LOG_NEWS,
+      LOG_USER);
+   --  Syslog facilties.
 
 private
 
