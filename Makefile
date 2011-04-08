@@ -48,6 +48,11 @@ PWD = `pwd`
 
 NUM_CPUS := $(shell getconf _NPROCESSORS_ONLN)
 
+CFLAGS = -fPIC -W -Wall -Werror -O3
+
+LIBGLUE_SOURCES = $(wildcard libglue/*.c)
+LIBGLUE_OBJECTS = $(LIBGLUE_SOURCES:.c=.o)
+
 all: build_lib
 
 tests: build_tests
@@ -56,10 +61,12 @@ tests: build_tests
 build_lib: prepare
 	@gnatmake -p -Palog_$(TARGET) -j$(NUM_CPUS) -XALOG_VERSION="$(VERSION)" -XLIBRARY_KIND="$(LIBRARY_KIND)"
 
-build_tests: prepare
+build_tests: prepare obj/lib/libglue.a
 	@gnatmake -p -Palog_$(TARGET)_tests -j$(NUM_CPUS) -XALOG_BUILD="tests"
 
-prepare: $(SOURCEDIR)/alog-version.ads
+prepare: $(SOURCEDIR)/alog-version.ads $(LIBGLUE_OBJECTS)
+	@mkdir -p $(OBJECTDIR)/lib
+	@cp $(LIBGLUE_OBJECTS) $(OBJECTDIR)/lib
 	@mkdir -p $(COVDIR) $(PROFDIR)
 
 $(SOURCEDIR)/alog-version.ads:
@@ -70,6 +77,7 @@ $(SOURCEDIR)/alog-version.ads:
 
 clean:
 	@rm -f alog.specs
+	@rm -f $(LIBGLUE_OBJECTS)
 	@rm -rf $(OBJECTDIR)/lib/*
 	@rm -rf $(OBJECTDIR)/*
 	@rm -rf $(LIBDIR)/*
@@ -125,5 +133,9 @@ prof: prepare
 		valgrind -q --tool=callgrind ./profiler_$(TARGET)
 	@cp $(OBJECTDIR)/callgrind.* $(PROFDIR)
 	@callgrind_annotate $(PROFDIR)/callgrind.* > $(PROFDIR)/profiler_$(TARGET).txt
+
+obj/lib/libglue.a: $(LIBGLUE_OBJECTS)
+	@mkdir -p obj/lib
+	$(AR) $(ARFLAGS) $@ $^
 
 .PHONY: cov dist prof tests

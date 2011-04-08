@@ -27,7 +27,7 @@ project Alog_Common is
 
    Version := external ("ALOG_VERSION", "0.1");
 
-   for Languages use ("Ada");
+   Languages := ("Ada", "C");
 
    Compiler_Switches := ("-gnatygAdISuxo",
                          "-gnatVa",
@@ -36,5 +36,10 @@ project Alog_Common is
                          "-gnatf",
                          "-fstack-check",
                          "-gnato");
+
+   Linker_Switches := ("-Wl,--as-needed",
+                       "-Lobj/lib",
+                       "-lglue");
+
 end Alog_Common;
 

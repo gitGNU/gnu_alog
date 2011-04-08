@@ -31,11 +31,12 @@ project Alog_Full_Tests is
    type Build_Type is ("tests", "coverage");
    Build : Build_Type := external ("ALOG_BUILD", "tests");
 
+   for Languages use Alog_Common.Languages;
    for Source_Dirs use ("src", "tests");
    for Main use ("runner_full.adb");
 
    Compiler_Switches := Alog_Common.Compiler_Switches;
-   Linker_Switches   := ();
+   Linker_Switches   := Alog_Common.Linker_Switches;
 
    case Build is
       when "tests" =>
