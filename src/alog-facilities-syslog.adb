@@ -1,5 +1,5 @@
 --
---  Copyright (c) 2008,
+--  Copyright (c) 2008-2011,
 --  Reto Buerki, Adrian-Ken Rueegsegger
 --  secunet SwissIT AG
 --
@@ -25,6 +25,8 @@ with Interfaces.C.Strings;
 
 package body Alog.Facilities.Syslog is
 
+   package C renames Interfaces.C;
+
    -------------------------------------------------------------------------
 
    procedure Write
@@ -34,16 +36,17 @@ package body Alog.Facilities.Syslog is
    is
       pragma Unreferenced (Facility);
 
-      procedure C_Syslog (Prio : Natural;
-                          Msg  : Interfaces.C.Strings.chars_ptr);
+      procedure C_Syslog
+        (Prio : C.int;
+         Msg  : C.Strings.chars_ptr);
       pragma Import (C, C_Syslog, "syslog");
-      Char_Ptr : Interfaces.C.Strings.chars_ptr;
+
+      Char_Ptr : C.Strings.chars_ptr;
    begin
-      Char_Ptr := Interfaces.C.Strings.New_String (Str => Msg);
+      Char_Ptr := C.Strings.New_String (Str => Msg);
       C_Syslog (Prio => Log_Level'Pos (Level),
                 Msg  => Char_Ptr);
 
-      --  Free message memory.
       Interfaces.C.Strings.Free (Char_Ptr);
    end Write;
 

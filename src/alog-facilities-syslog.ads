@@ -1,5 +1,5 @@
 --
---  Copyright (c) 2008-2009,
+--  Copyright (c) 2008-2011,
 --  Reto Buerki, Adrian-Ken Rueegsegger
 --  secunet SwissIT AG
 --
@@ -20,11 +20,7 @@
 --  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,
 --  MA  02110-1301  USA
 
---  Syslog facility. Used to log to systems syslog. At the moment, this
---  facility is a thin binding to syslog function calls. The implementation
---  attempts to resemble the native libc-functions of your system, so that
---  anyone being familiar with syslog.h should be able to use this module right
---  away.
+--  Syslog facility: Used to log to systems syslog.
 package Alog.Facilities.Syslog is
 
    type Instance is new Alog.Facilities.Instance with private;
@@ -40,18 +36,9 @@ package Alog.Facilities.Syslog is
       LOG_SYSLOG,
       LOG_CRON);
    --  Corresponding Ada-Implementation of syslogs "facility" parameter.
-   --  Only the important/usable facilities are mapped.
+   --  Only the important facilities are mapped.
 
 private
-
-   for S_Facility use
-     (LOG_AUTH   => 0,
-      LOG_USER   => 8,
-      LOG_MAIL   => 16,
-      LOG_DAEMON => 24,
-      LOG_SYSLOG => 40,
-      LOG_CRON   => 72);
-   --  Facility map table.
 
    overriding
    procedure Write
