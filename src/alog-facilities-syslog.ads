@@ -42,6 +42,8 @@ package Alog.Facilities.Syslog is
    --  Corresponding Ada-Implementation of syslogs "facility" parameter.
    --  Only the important/usable facilities are mapped.
 
+private
+
    for S_Facility use
      (LOG_AUTH   => 0,
       LOG_USER   => 8,
@@ -50,8 +52,6 @@ package Alog.Facilities.Syslog is
       LOG_SYSLOG => 40,
       LOG_CRON   => 72);
    --  Facility map table.
-
-private
 
    overriding
    procedure Write
