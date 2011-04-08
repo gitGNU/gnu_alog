@@ -4,3 +4,4 @@ obj
 perf
 src/alog-version.ads
 alog.specs
+*.o
