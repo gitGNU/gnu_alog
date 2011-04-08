@@ -27,6 +27,19 @@ package body Alog.Facilities.Syslog is
 
    package C renames Interfaces.C;
 
+   type L_Type is mod 2 ** 3;
+   for L_Type'Size use 3;
+
+   Level_Map : constant array (Log_Level) of L_Type
+     := (Debug     => 7,
+         Info      => 6,
+         Notice    => 5,
+         Warning   => 4,
+         Error     => 3,
+         Critical  => 2,
+         Alert     => 1,
+         Emergency => 0);
+
    -------------------------------------------------------------------------
 
    procedure Write
@@ -44,7 +57,7 @@ package body Alog.Facilities.Syslog is
       Char_Ptr : C.Strings.chars_ptr;
    begin
       Char_Ptr := C.Strings.New_String (Str => Msg);
-      C_Syslog (Prio => Log_Level'Pos (Level),
+      C_Syslog (Prio => C.int (Level_Map (Level)),
                 Msg  => Char_Ptr);
 
       Interfaces.C.Strings.Free (Char_Ptr);
