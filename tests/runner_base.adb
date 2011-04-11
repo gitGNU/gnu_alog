@@ -1,5 +1,5 @@
 --
---  Copyright (c) 2008,
+--  Copyright (c) 2008-2011,
 --  Reto Buerki, Adrian-Ken Rueegsegger
 --  secunet SwissIT AG
 --
@@ -28,6 +28,7 @@ with Helper_Tests;
 with Log_Request_Tests;
 with Protected_Container_Tests;
 with Facility_Tests.FD;
+with Facility_Tests.Syslog;
 with Transform_Tests.Casing;
 with Logger_Tests;
 with Tasked_Logger_Tests;
@@ -51,6 +52,8 @@ begin
                              T     => new Facility_Tests.Testcase);
    Ahven.Framework.Add_Test (Suite => S.all,
                              T     => new Facility_Tests.FD.Testcase);
+   Ahven.Framework.Add_Test (Suite => S.all,
+                             T     => new Facility_Tests.Syslog.Testcase);
    Ahven.Framework.Add_Test (Suite => S.all,
                              T     => new Transform_Tests.Testcase);
    Ahven.Framework.Add_Test (Suite => S.all,

@@ -37,7 +37,15 @@ package Alog.Facilities.Syslog is
       LOG_MAIL,
       LOG_NEWS,
       LOG_USER);
-   --  Syslog facilties.
+   --  Syslog facilties. Specifies what type of program is logging the message.
+
+   procedure Set_Origin
+     (Facility : in out Instance;
+      Value    :        Syslog_Origin);
+   --  Set origin of syslog message.
+
+   function Get_Origin (Facility : Instance) return Syslog_Origin;
+   --  Return currently set syslog origin of given facility.
 
 private
 
@@ -49,7 +57,7 @@ private
    --  Implementation of the Write procedure for syslog.
 
    type Instance is new Alog.Facilities.Instance with record
-      S_Facility : Syslog_Origin := LOG_USER;
+      Origin : Syslog_Origin := LOG_USER;
    end record;
 
 end Alog.Facilities.Syslog;

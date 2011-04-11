@@ -11,6 +11,7 @@ procedure Syslog_Example1 is
 begin
    Log.Attach_Facility (Facility => Facilities.Handle (Syslog));
 
+   Syslog.Set_Origin (Value => Facilities.Syslog.LOG_DAEMON);
    Log.Log_Message (Level  => Debug,
                     Msg    => "This is a testmessage");
 end Syslog_Example1;

@@ -55,6 +55,24 @@ package body Alog.Facilities.Syslog is
 
    -------------------------------------------------------------------------
 
+   function Get_Origin (Facility : Instance) return Syslog_Origin
+   is
+   begin
+      return Facility.Origin;
+   end Get_Origin;
+
+   -------------------------------------------------------------------------
+
+   procedure Set_Origin
+     (Facility : in out Instance;
+      Value    :        Syslog_Origin)
+   is
+   begin
+      Facility.Origin := Value;
+   end Set_Origin;
+
+   -------------------------------------------------------------------------
+
    procedure Write
      (Facility : Instance;
       Level    : Log_Level := Info;
@@ -69,7 +87,7 @@ package body Alog.Facilities.Syslog is
 
       C_Msg  : C.Strings.chars_ptr := C.Strings.New_String (Str => Msg);
       C_Prio : constant C.int      := C.int (Level_Map (Level)) +
-        C.int (Facility_Map (Facility.S_Facility));
+        C.int (Facility_Map (Facility.Origin));
    begin
       Syslog_Wrapper (Prio => C_Prio,
                       Msg  => C_Msg);
