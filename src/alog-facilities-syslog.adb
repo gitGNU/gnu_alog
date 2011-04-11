@@ -43,7 +43,7 @@ package body Alog.Facilities.Syslog is
          Alert     => 1,
          Emergency => 0);
 
-   Facility_Map : constant array (Syslog_Facility) of F_Type
+   Facility_Map : constant array (Syslog_Origin) of F_Type
      := (LOG_KERN     => 0,
          LOG_USER     => 8,
          LOG_MAIL     => 16,

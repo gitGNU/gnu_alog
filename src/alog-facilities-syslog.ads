@@ -28,7 +28,7 @@ package Alog.Facilities.Syslog is
 
    type Handle is access all Instance;
 
-   type Syslog_Facility is
+   type Syslog_Origin is
      (LOG_AUTHPRIV,
       LOG_CRON,
       LOG_DAEMON,
@@ -49,7 +49,7 @@ private
    --  Implementation of the Write procedure for syslog.
 
    type Instance is new Alog.Facilities.Instance with record
-      S_Facility : Syslog_Facility := LOG_USER;
+      S_Facility : Syslog_Origin := LOG_USER;
    end record;
 
 end Alog.Facilities.Syslog;
