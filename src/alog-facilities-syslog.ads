@@ -48,6 +48,8 @@ private
       Msg      : String);
    --  Implementation of the Write procedure for syslog.
 
-   type Instance is new Alog.Facilities.Instance with null record;
+   type Instance is new Alog.Facilities.Instance with record
+      S_Facility : Syslog_Facility := LOG_USER;
+   end record;
 
 end Alog.Facilities.Syslog;

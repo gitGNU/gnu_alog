@@ -30,6 +30,9 @@ package body Alog.Facilities.Syslog is
    type L_Type is mod 2 ** 3;
    for L_Type'Size use 3;
 
+   type F_Type is mod 2 ** 8;
+   for F_Type'Size use 8;
+
    Level_Map : constant array (Log_Level) of L_Type
      := (Debug     => 7,
          Info      => 6,
@@ -40,6 +43,16 @@ package body Alog.Facilities.Syslog is
          Alert     => 1,
          Emergency => 0);
 
+   Facility_Map : constant array (Syslog_Facility) of F_Type
+     := (LOG_KERN     => 0,
+         LOG_USER     => 8,
+         LOG_MAIL     => 16,
+         LOG_DAEMON   => 32,
+         LOG_NEWS     => 56,
+         LOG_CRON     => 72,
+         LOG_AUTHPRIV => 80,
+         LOG_FTP      => 88);
+
    -------------------------------------------------------------------------
 
    procedure Write
@@ -47,16 +60,18 @@ package body Alog.Facilities.Syslog is
       Level    : Log_Level := Info;
       Msg      : String)
    is
-      pragma Unreferenced (Facility);
+      use type C.int;
 
       procedure Syslog_Wrapper
         (Prio : C.int;
          Msg  : C.Strings.chars_ptr);
       pragma Import (C, Syslog_Wrapper, "syslog_wrapper");
 
-      C_Msg : C.Strings.chars_ptr := C.Strings.New_String (Str => Msg);
+      C_Msg  : C.Strings.chars_ptr := C.Strings.New_String (Str => Msg);
+      C_Prio : constant C.int      := C.int (Level_Map (Level)) +
+        C.int (Facility_Map (Facility.S_Facility));
    begin
-      Syslog_Wrapper (Prio => C.int (Level_Map (Level)),
+      Syslog_Wrapper (Prio => C_Prio,
                       Msg  => C_Msg);
 
       C.Strings.Free (C_Msg);
