@@ -29,14 +29,26 @@ package Alog.Facilities.Syslog is
    type Handle is access all Instance;
 
    type Syslog_Origin is
-     (LOG_AUTHPRIV,
+     (LOG_AUTH,
+      LOG_AUTHPRIV,
       LOG_CRON,
       LOG_DAEMON,
       LOG_FTP,
       LOG_KERN,
+      LOG_LOCAL0,
+      LOG_LOCAL1,
+      LOG_LOCAL2,
+      LOG_LOCAL3,
+      LOG_LOCAL4,
+      LOG_LOCAL5,
+      LOG_LOCAL6,
+      LOG_LOCAL7,
+      LOG_LPR,
       LOG_MAIL,
       LOG_NEWS,
-      LOG_USER);
+      LOG_SYSLOG,
+      LOG_USER,
+      LOG_UUCP);
    --  Syslog facilties. Specifies what type of program is logging the message.
 
    procedure Set_Origin
