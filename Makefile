@@ -120,6 +120,11 @@ install_dynamic:
 	ln -sf $(SO_LIBRARY) libalog.so && \
 	ln -sf $(SO_LIBRARY) libalog.so.$(MAJOR)
 
+install_tests:
+	$(INSTALL) -v -d $(PREFIX)/tests
+	$(INSTALL) -m 755 $(OBJECTDIR)/runner_$(TARGET) $(PREFIX)/tests/test_runner
+	@cp -vr data $(PREFIX)/tests
+
 cov: prepare
 	@rm -f $(OBJECTDIR)/cov/*.gcda
 	@gnatmake -p -Palog_$(TARGET)_tests -j$(NUM_CPUS) -XALOG_BUILD="coverage"
@@ -140,4 +145,4 @@ obj/lib/libglue.a: $(LIBGLUE_OBJECTS)
 	@mkdir -p obj/lib
 	$(AR) $(ARFLAGS) $@ $^
 
-.PHONY: cov dist prof tests build_all
+.PHONY: cov dist prof tests build_all install_tests
