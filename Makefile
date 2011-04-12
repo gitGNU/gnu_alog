@@ -48,6 +48,8 @@ PWD = `pwd`
 
 NUM_CPUS := $(shell getconf _NPROCESSORS_ONLN)
 
+GMAKE_OPTS = -p -j$(NUM_CPUS)
+
 CFLAGS = -fPIC -W -Wall -Werror -O3
 
 LIBGLUE_SOURCES = $(wildcard libglue/*.c)
@@ -59,10 +61,10 @@ tests: build_tests
 	@$(OBJECTDIR)/runner_$(TARGET)
 
 build_lib: prepare
-	@gnatmake -p -Palog_$(TARGET) -j$(NUM_CPUS) -XALOG_VERSION="$(VERSION)" -XLIBRARY_KIND="$(LIBRARY_KIND)"
+	@gnatmake $(GMAKE_OPTS) -Palog_$(TARGET) -XALOG_VERSION="$(VERSION)" -XLIBRARY_KIND="$(LIBRARY_KIND)"
 
 build_tests: prepare obj/lib/libglue.a
-	@gnatmake -p -Palog_$(TARGET)_tests -j$(NUM_CPUS) -XALOG_BUILD="tests"
+	@gnatmake $(GMAKE_OPTS) -Palog_$(TARGET)_tests -XALOG_BUILD="tests"
 
 build_all: build_lib build_tests
 
@@ -127,7 +129,7 @@ install_tests:
 
 cov: prepare
 	@rm -f $(OBJECTDIR)/cov/*.gcda
-	@gnatmake -p -Palog_$(TARGET)_tests -j$(NUM_CPUS) -XALOG_BUILD="coverage"
+	@gnatmake $(GMAKE_OPTS) -Palog_$(TARGET)_tests -XALOG_BUILD="coverage"
 	@$(OBJECTDIR)/cov/runner_$(TARGET) || true
 	@lcov -c -d $(OBJECTDIR)/cov/ -o $(OBJECTDIR)/cov/alog_tmp.info
 	@lcov -e $(OBJECTDIR)/cov/alog_tmp.info "$(PWD)/src/*.adb" -o $(OBJECTDIR)/cov/alog.info
@@ -135,7 +137,7 @@ cov: prepare
 
 prof: prepare
 	@rm -f $(OBJECTDIR)/callgrind.*
-	@gnatmake -p -Palog_$(TARGET)_tests -j$(NUM_CPUS) -XALOG_BUILD="profiling"
+	@gnatmake $(GMAKE_OPTS) -Palog_$(TARGET)_tests -XALOG_BUILD="profiling"
 	@cd $(OBJECTDIR) && \
 		valgrind -q --tool=callgrind ./profiler_$(TARGET)
 	@cp $(OBJECTDIR)/callgrind.* $(PROFDIR)
