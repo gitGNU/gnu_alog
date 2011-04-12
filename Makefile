@@ -75,9 +75,9 @@ prepare: $(SOURCEDIR)/alog-version.ads $(LIBGLUE_OBJECTS)
 
 $(SOURCEDIR)/alog-version.ads:
 	@echo "package Alog.Version is"                > $@
-	@echo "   Version_Number : constant Float :="  >> $@
-	@echo "      $(VERSION);"                      >> $@
-	@echo "end Alog.Version;"                      >> $@
+	@echo "   Version_Number : constant Float :=" >> $@
+	@echo "      $(VERSION);"                     >> $@
+	@echo "end Alog.Version;"                     >> $@
 
 clean:
 	@rm -f alog.specs
