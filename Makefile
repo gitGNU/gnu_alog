@@ -48,7 +48,7 @@ PWD = `pwd`
 
 NUM_CPUS := $(shell getconf _NPROCESSORS_ONLN)
 
-GMAKE_OPTS = -p -j$(NUM_CPUS)
+GMAKE_OPTS = -p -R -j$(NUM_CPUS)
 
 CFLAGS = -fPIC -W -Wall -Werror -O3
 
