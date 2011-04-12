@@ -64,6 +64,8 @@ build_lib: prepare
 build_tests: prepare obj/lib/libglue.a
 	@gnatmake -p -Palog_$(TARGET)_tests -j$(NUM_CPUS) -XALOG_BUILD="tests"
 
+build_all: build_lib build_tests
+
 prepare: $(SOURCEDIR)/alog-version.ads $(LIBGLUE_OBJECTS)
 	@mkdir -p $(OBJECTDIR)/lib
 	@cp $(LIBGLUE_OBJECTS) $(OBJECTDIR)/lib
@@ -138,4 +140,4 @@ obj/lib/libglue.a: $(LIBGLUE_OBJECTS)
 	@mkdir -p obj/lib
 	$(AR) $(ARFLAGS) $@ $^
 
-.PHONY: cov dist prof tests
+.PHONY: cov dist prof tests build_all
