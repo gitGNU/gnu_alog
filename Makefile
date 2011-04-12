@@ -1,5 +1,5 @@
 #
-#  Copyright (c) 2008,
+#  Copyright (c) 2008-2011,
 #  Reto Buerki, Adrian-Ken Rueegsegger
 #  secunet SwissIT AG
 #
