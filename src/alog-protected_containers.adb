@@ -56,9 +56,17 @@ package body Alog.Protected_Containers is
 
       ----------------------------------------------------------------------
 
-      entry Get (Element : out Log_Request.Instance) when Requests_Available
+      entry Get
+        (Element : out Log_Request.Instance;
+         Stop    : out Boolean)
+        when Requests_Available or Stop_Flag
       is
       begin
+         if Stop_Flag then
+            Stop := True;
+            return;
+         end if;
+
          Element := Requests.First_Element;
          Requests.Delete_First;
          Pending_Counter := Pending_Counter + 1;
@@ -89,6 +97,13 @@ package body Alog.Protected_Containers is
          Requests.Append (New_Item => Element);
          Requests_Available := True;
       end Put;
+
+      ----------------------------------------------------------------------
+
+      procedure Signal_Stop is
+      begin
+         Stop_Flag := True;
+      end Signal_Stop;
 
    end Log_Request_List;
 

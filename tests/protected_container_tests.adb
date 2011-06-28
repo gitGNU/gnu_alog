@@ -81,6 +81,7 @@ package body Protected_Container_Tests is
       Ref_Request : Log_Request.Instance;
       Ref_ID      : constant Task_Id := Current_Task;
       Ref_Msg     : constant String  := "Some log message";
+      S_Flag      : Boolean;
    begin
       Ref_Request := Log_Request.Create (ID      => Ref_ID,
                                          Level   => Notice,
@@ -94,7 +95,8 @@ package body Protected_Container_Tests is
               Message   => "done on new list failed");
 
       R_List.Put (Element => Ref_Request);
-      R_List.Get (Element => Ref_Request);
+      R_List.Get (Element => Ref_Request,
+                  Stop    => S_Flag);
 
       Assert (Condition => R_List.Pending = 1,
               Message   => "No request pending");
@@ -129,8 +131,10 @@ package body Protected_Container_Tests is
          use type Alog.Log_Request.Instance;
 
          New_Request : Log_Request.Instance;
+         S_Flag      : Boolean;
       begin
-         R_List.Get (Element => New_Request);
+         R_List.Get (Element => New_Request,
+                     Stop    => S_Flag);
 
          Assert (Condition => New_Request = Ref_Request,
                  Message   => "Request mismatch");

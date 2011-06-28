@@ -40,8 +40,10 @@ package Alog.Protected_Containers is
       procedure Put (Element : Log_Request.Instance);
       --  Put an element at the end of the request list.
 
-      entry Get (Element : out Log_Request.Instance);
-      --  Get the first element from the list (and delete it).
+      entry Get (Element : out Log_Request.Instance;
+                 Stop    : out Boolean);
+      --  Get the first element from the list (and delete it). If stop is True
+      --  caller's should perform an orderly shutdown.
 
       procedure Done;
       --  Signal successfull processing of request previously gotten from list.
@@ -55,6 +57,9 @@ package Alog.Protected_Containers is
       procedure Clear;
       --  Clear the request list by deleting all log requests.
 
+      procedure Signal_Stop;
+      --  Signal all users of the list to perform an orderly shutdown.
+
       function Length return Natural;
       --  Return the number of elements in the list.
 
@@ -66,7 +71,7 @@ package Alog.Protected_Containers is
       Requests           : Log_Request_Storage;
       Requests_Available : Boolean := False;
       Pending_Counter    : Natural := 0;
-
+      Stop_Flag          : Boolean := False;
    end Log_Request_List;
    --  Protected variant of a log request list. This list holds log request
    --  objects and is safe for concurrent access. It operates in FIFO-Mode.

@@ -181,7 +181,7 @@ package body Alog.Active_Logger is
       end if;
 
       Logger.Clear;
-      Logger.Trigger.Shutdown;
+      Logger.Message_Queue.Signal_Stop;
       Logger.Backend.Shutdown;
    end Shutdown;
 
@@ -208,63 +208,45 @@ package body Alog.Active_Logger is
 
    -------------------------------------------------------------------------
 
-   protected body Trigger_Type is
-
-      ----------------------------------------------------------------------
-
-      procedure Shutdown is
-      begin
-         Shutdown_Requested := True;
-      end Shutdown;
-
-      ----------------------------------------------------------------------
-
-      entry Stop when Shutdown_Requested is
-      begin
-         null;
-      end Stop;
-
-   end Trigger_Type;
-
-   -------------------------------------------------------------------------
-
-   task body Logging_Task is
+   task body Logging_Task
+   is
    begin
-      select
-         Parent.Trigger.Stop;
-      then abort
-         Log_Loop :
-         loop
-            declare
-               Current_Request : Log_Request.Instance;
-            begin
-               Parent.Message_Queue.Get
-                 (Element => Current_Request);
+      Log_Loop :
+      loop
+         declare
+            Current_Request : Log_Request.Instance;
+            Shutdown        : Boolean;
+         begin
+            Parent.Message_Queue.Get
+              (Element => Current_Request,
+               Stop    => Shutdown);
 
-               Parent.Backend.Log_Message
-                 (Source => Current_Request.Get_Source,
-                  Level  => Current_Request.Get_Log_Level,
-                  Msg    => Current_Request.Get_Message,
-                  Caller => Current_Request.Get_Caller_ID);
+            if Shutdown then
+               exit Log_Loop;
+            end if;
 
-               Parent.Message_Queue.Done;
+            Parent.Backend.Log_Message
+              (Source => Current_Request.Get_Source,
+               Level  => Current_Request.Get_Log_Level,
+               Msg    => Current_Request.Get_Message,
+               Caller => Current_Request.Get_Caller_ID);
 
-            exception
-               when Program_Error =>
+            Parent.Message_Queue.Done;
 
-                  --  The Queue has terminated, let's shutdown.
+         exception
+            when Program_Error =>
 
-                  exit Log_Loop;
+               --  The Queue has terminated, let's shutdown.
+
+               exit Log_Loop;
 
                when others =>
 
-                  --  Ignore other errors and resume normal operation.
+               --  Ignore other errors and resume normal operation.
 
-                  null;
-            end;
-         end loop Log_Loop;
-      end select;
-
+               null;
+         end;
+      end loop Log_Loop;
    end Logging_Task;
 
 end Alog.Active_Logger;

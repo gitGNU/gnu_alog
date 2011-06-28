@@ -144,19 +144,10 @@ private
    --  This task takes logging requests from the parent's message queue and
    --  logs them using the parent's backend logger.
 
-   protected type Trigger_Type is
-      procedure Shutdown;
-      entry Stop;
-   private
-      Shutdown_Requested : Boolean := False;
-   end Trigger_Type;
-   --  This trigger is used to terminate the logger task by means of ATC.
-
    type Instance (Init : Boolean) is tagged limited record
       Logger_Task   : Logging_Task (Parent => Instance'Access);
       Backend       : Tasked_Logger.Instance (Init);
       Message_Queue : Protected_Containers.Log_Request_List;
-      Trigger       : Trigger_Type;
    end record;
 
    type Shutdown_Helper (Logger : not null access Instance) is
