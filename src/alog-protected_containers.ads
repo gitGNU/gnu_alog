@@ -40,8 +40,9 @@ package Alog.Protected_Containers is
       procedure Put (Element : Log_Request.Instance);
       --  Put an element at the end of the request list.
 
-      entry Get (Element : out Log_Request.Instance;
-                 Stop    : out Boolean);
+      entry Get
+        (Element : out Log_Request.Instance;
+         Stop    : out Boolean);
       --  Get the first element from the list (and delete it). If stop is True
       --  caller's should perform an orderly shutdown.
 
